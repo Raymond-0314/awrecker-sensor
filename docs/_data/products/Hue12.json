@@ -1,0 +1,33 @@
+{
+  "slug": "Hue12",
+  "order": 3,
+  "code": "Hue12",
+  "name": {
+    "zh": "MBC Hue12",
+    "en": "MBC Hue12"
+  },
+  "summary": {
+    "zh": "觸碰輸入與力量觸發",
+    "en": "Touch input and force-triggered actions"
+  },
+  "image": "/images/products/Hue12/Hue12.svg",
+  "imageAlt": {
+    "zh": "MBC Hue12 示意圖",
+    "en": "MBC Hue12 illustration"
+  },
+  "routeBase": "products/Hue12",
+  "support": {
+    "spike": [
+      "app",
+      "block",
+      "python"
+    ],
+    "ev3": [
+      "python"
+    ]
+  },
+  "compatibilityNote": {
+    "zh": "此為預覽版路徑設定，實際控制器、語言與韌體支援待產品資料確認。",
+    "en": "Preview learning paths only. Product, controller, language and firmware support still require confirmation."
+  }
+}

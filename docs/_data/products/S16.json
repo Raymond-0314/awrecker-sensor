@@ -1,0 +1,33 @@
+{
+  "slug": "S16",
+  "order": 2,
+  "code": "S16",
+  "name": {
+    "zh": "MBC S16",
+    "en": "MBC S16"
+  },
+  "summary": {
+    "zh": "顏色辨識與循線應用",
+    "en": "Color detection and line-following"
+  },
+  "image": "/images/products/S16/S16.svg",
+  "imageAlt": {
+    "zh": "MBC S16 示意圖",
+    "en": "MBC S16 illustration"
+  },
+  "routeBase": "products/S16",
+  "support": {
+    "spike": [
+      "app",
+      "block",
+      "python"
+    ],
+    "ev3": [
+      "python"
+    ]
+  },
+  "compatibilityNote": {
+    "zh": "此為預覽版路徑設定，實際控制器、語言與韌體支援待產品資料確認。",
+    "en": "Preview learning paths only. Product, controller, language and firmware support still require confirmation."
+  }
+}

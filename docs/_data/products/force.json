@@ -1,0 +1,33 @@
+{
+  "slug": "force",
+  "order": 3,
+  "code": "FORCE",
+  "name": {
+    "zh": "力量感測器",
+    "en": "Force sensor"
+  },
+  "summary": {
+    "zh": "觸碰輸入與力量觸發",
+    "en": "Touch input and force-triggered actions"
+  },
+  "image": "/images/products/force.svg",
+  "imageAlt": {
+    "zh": "力量感測器示意圖",
+    "en": "Force sensor illustration"
+  },
+  "routeBase": "products/force",
+  "support": {
+    "spike": [
+      "app",
+      "block",
+      "python"
+    ],
+    "ev3": [
+      "python"
+    ]
+  },
+  "compatibilityNote": {
+    "zh": "此為預覽版路徑設定，實際控制器、語言與韌體支援待產品資料確認。",
+    "en": "Preview learning paths only. Product, controller, language and firmware support still require confirmation."
+  }
+}

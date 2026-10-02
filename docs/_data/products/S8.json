@@ -1,0 +1,33 @@
+{
+  "slug": "S8",
+  "order": 1,
+  "code": "MBC S8",
+  "name": {
+    "zh": "MBC 8 路巡跡板",
+    "en": "MBC Line-Following Sensor S8"
+  },
+  "summary": {
+    "zh": "兼容 EV3 / SPIKE / MATRIX R4",
+    "en": "Compatible With EV3 / SPIKE / MATRIX R4"
+  },
+  "image": "/images/products/S8/S8-spike.webp",
+  "imageAlt": {
+    "zh": "MBC S8",
+    "en": "MBC S8"
+  },
+  "routeBase": "products/S8",
+  "support": {
+    "spike": [
+      "app",
+      "inventor",
+      "block",
+      "python"
+    ],
+    "ev3": [
+      "classroom",
+      "ev3g",
+      "clev3r",
+      "python"
+    ]
+  }
+}

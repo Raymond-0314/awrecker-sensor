@@ -1,0 +1,33 @@
+{
+  "slug": "color",
+  "order": 2,
+  "code": "COLOR",
+  "name": {
+    "zh": "顏色感測器",
+    "en": "Color sensor"
+  },
+  "summary": {
+    "zh": "顏色辨識與循線應用",
+    "en": "Color detection and line-following"
+  },
+  "image": "/images/products/color.svg",
+  "imageAlt": {
+    "zh": "顏色感測器示意圖",
+    "en": "Color sensor illustration"
+  },
+  "routeBase": "products/color",
+  "support": {
+    "spike": [
+      "app",
+      "block",
+      "python"
+    ],
+    "ev3": [
+      "python"
+    ]
+  },
+  "compatibilityNote": {
+    "zh": "此為預覽版路徑設定，實際控制器、語言與韌體支援待產品資料確認。",
+    "en": "Preview learning paths only. Product, controller, language and firmware support still require confirmation."
+  }
+}

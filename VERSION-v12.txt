@@ -1,0 +1,12 @@
+MBC v12 — 2026-10-02
+
+本包由目前 HTML 對應的原始碼重新打包，已由解壓後的專案重新建置驗證。
+首頁標題：MBC 產品說明書 / MBC Product Manual
+副標題：「你必須擁有的感應器」 / “The Sensors You Must Have”
+首頁無上下捲動、保留橫向產品瀏覽；無頁尾或預覽標籤。
+
+請解壓至新資料夾，以 VS Code 開啟其中的 awrecker-sensors。
+停止舊預覽（Ctrl+C），再執行 npm.cmd ci 與 npm.cmd run docs:dev。
+用新終端機顯示的網址開啟預覽。
+
+MBC-preview-v12.html 為相對應的離線畫面，可直接開啟。

@@ -1,0 +1,46 @@
+{
+  "controllers": [
+    {
+      "id": "spike",
+      "name": "SPIKE"
+    },
+    {
+      "id": "ev3",
+      "name": "EV3"
+    },
+    {
+      "id": "i2c",
+      "name": "General I2C"
+    }
+  ],
+  "languages": [
+    {
+      "id": "app",
+      "name": "SPIKE App"
+    },
+    {
+      "id": "inventor",
+      "name": "LEGO MINDSTORMS Inventor"
+    },
+    {
+      "id": "block",
+      "name": "Pybricks Block"
+    },
+    {
+      "id": "python",
+      "name": "Pybricks Python"
+    },
+    {
+      "id": "classroom",
+      "name": "EV3 Classroom APP"
+    },
+    {
+      "id": "ev3g",
+      "name": "LabVIEW EV3-G"
+    },
+    {
+      "id": "clev3r",
+      "name": "clev3r App"
+    }
+  ]
+}
