@@ -1,11 +1,10 @@
 import { defineConfig } from 'vitepress'
 
-const base = process.env.PAGES_BASE || '/awrecker-sensor/'
+const base = process.env.PAGES_BASE || '/'
 
 export default defineConfig({
   title: 'AWRECKER Sensors',
   description: '產品介紹、使用手冊與程式範例 / Product documentation and examples',
-
   base,
   appearance: 'dark',
   cleanUrls: false,
@@ -14,8 +13,7 @@ export default defineConfig({
   head: [
     ['link', {
       rel: 'icon',
-      type: 'image/png',
-      href: `${base}images/icon/icon.png?v=4`
+      href: `${base}images/icon/icon.png`
     }]
   ],
 
