@@ -305,3 +305,244 @@ html:has(.sensor-home),body:has(.sensor-home){overflow:hidden;height:100dvh;over
         font-size: inherit;
     }
 }
+
+/* ========================================
+   表格水平捲動箭頭
+   ======================================== */
+
+.vp-doc .table-wrapper.table-scroll-enhanced {
+    position: relative;
+}
+
+/* 左右箭頭 */
+.vp-doc .table-scroll-arrow {
+    position: sticky;
+    z-index: 5;
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 44px;
+
+    background: rgba(40, 40, 40, 0.85);
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 8px;
+
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+/* ========================================
+   VitePress 表格左右滑動箭頭
+   ======================================== */
+
+/* 箭頭定位容器 */
+.vp-doc .table-scroll-container {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    margin: 16px 0;
+}
+
+/* 表格水平捲動區域 */
+.vp-doc .table-scroll-content {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 左右箭頭 */
+.vp-doc .table-scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 48px;
+
+    background: rgba(45, 45, 45, 0.92);
+    color: #fff;
+    border: 1px solid #666;
+    border-radius: 8px;
+
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: opacity 0.2s, visibility 0.2s;
+}
+
+/* 有內容可以滑動才顯示 */
+.vp-doc .table-scroll-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* 左側 */
+.vp-doc .table-scroll-btn.left {
+    left: 6px;
+}
+
+/* 右側 */
+.vp-doc .table-scroll-btn.right {
+    right: 6px;
+}
+
+/* 手機版箭頭稍微縮小 */
+@media (max-width: 680px) {
+    .vp-doc .table-scroll-btn {
+        width: 30px;
+        height: 42px;
+        font-size: 26px;
+        background: rgba(45, 45, 45, 0.95);
+    }
+}
+/* 修正 VitePress 表格外層捲動衝突 */
+.vp-doc .table-scroll-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: visible;
+}
+
+.vp-doc .table-scroll-content {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+}
+
+/* 讓表格依內容決定寬度，超出時由容器負責捲動 */
+.vp-doc .table-scroll-content > table {
+    display: table !important;
+    width: max-content !important;
+    min-width: 100%;
+    max-width: none !important;
+    margin: 0 !important;
+}
+
+/* 讓箭頭保持在表格兩側 */
+.vp-doc .table-scroll-btn {
+    z-index: 30;
+}
+/* ========================================
+   表格滑動箭頭：半透明圓形
+   ======================================== */
+
+.vp-doc .table-scroll-btn {
+    /* 圓形尺寸 */
+    width: 42px;
+    height: 42px;
+    border-radius: 50% !important;
+
+    /* 半透明深色背景 */
+    background: rgba(35, 35, 35, 0.55) !important;
+
+    /* 半透明邊框 */
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+
+    /* 白色箭頭 */
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 30px;
+    font-weight: 600;
+
+    /* 毛玻璃效果 */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    /* 柔和陰影 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 滑鼠移上去時稍微變亮 */
+.vp-doc .table-scroll-btn:hover {
+    background: rgba(65, 65, 65, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* 手機版 */
+@media (max-width: 680px) {
+    .vp-doc .table-scroll-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 26px;
+    }
+}
+/* ========================================
+   半透明圓形箭頭 + 精準置中
+   ======================================== */
+
+.vp-doc .table-scroll-btn {
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+
+    border-radius: 50% !important;
+
+    /* 半透明圓形背景 */
+    background: rgba(35, 35, 35, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+
+    /* 箭頭置中 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+    line-height: 1;
+
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* 用 CSS 畫箭頭，避免字型偏移 */
+.vp-doc .table-scroll-btn .arrow-icon {
+    display: block;
+    width: 11px;
+    height: 11px;
+
+    border-top: 3px solid #fff;
+    border-right: 3px solid #fff;
+
+    box-sizing: border-box;
+}
+
+/* 右箭頭 */
+.vp-doc .table-scroll-btn.right .arrow-icon {
+    transform: translateX(-2px) rotate(45deg);
+}
+
+/* 左箭頭 */
+.vp-doc .table-scroll-btn.left .arrow-icon {
+    transform: translateX(2px) rotate(225deg);
+}
+
+/* 滑鼠移入時稍微加深 */
+.vp-doc .table-scroll-btn:hover {
+    background: rgba(35, 35, 35, 0.6) !important;
+}
+
+/* 手機版 */
+@media (max-width: 680px) {
+    .vp-doc .table-scroll-btn {
+        width: 36px !important;
+        height: 36px !important;
+    }
+}
