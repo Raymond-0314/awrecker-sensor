@@ -244,3 +244,64 @@ html:has(.sensor-home),body:has(.sensor-home){overflow:hidden;height:100dvh;over
         grid-template-columns: 1fr;
     }
 }
+
+/* ========================================
+   Feature Grid 響應式修正
+   ======================================== */
+
+/* 電腦版：4 欄 */
+.vp-doc .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    width: 100%;
+    margin: 24px 0;
+}
+
+.vp-doc .feature-box {
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+/* 平板：2 欄 */
+@media (min-width: 681px) and (max-width: 960px) {
+    .vp-doc .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+/* 手機：1 欄 */
+@media (max-width: 680px) {
+    .vp-doc .feature-grid {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 14px;
+    }
+
+    .vp-doc .feature-grid > .feature-box {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        grid-column: auto !important;
+        padding: 18px;
+    }
+
+    .vp-doc .feature-box > strong {
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    .vp-doc .feature-box li {
+        font-size: 15px;
+        line-height: 1.8;
+        overflow-wrap: break-word;
+        word-break: normal;
+    }
+
+    .vp-doc .feature-box li strong {
+        display: inline;
+        font-size: inherit;
+    }
+}
