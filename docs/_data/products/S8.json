@@ -28,6 +28,9 @@
       "ev3g",
       "clev3r",
       "python"
+    ],
+    "i2c":[
+      "general"
     ]
   }
 }

@@ -1,44 +1,79 @@
-## 使用教學 (S8 + SPIKE + SPIKE App)
+##
 
-::: warning
-在官方 SPIKE App 中，S8 巡跡板將以「SPIKE 顏色感應器」模式運作。
-:::
+# 使用教學
 
 ## 01 / 環境準備
 
-準備 SPIKE 控制器與 SPIKE App。變更韌體前，先確認產品驅動與韌體需求。
-
-1. 取得產品接線圖與驅動套件。
-2. 確認連接埠與數值單位。
-3. 先完成單次數值讀取，再加入迴圈。
-
-## 02 / 函數與功能概念
-
-| 官方圖形指令 | 功能 | 數值意義 |
-| --- | --- | --- |
-| ![黑線線寬](/images/tutorials/S8/spike-app/color.png) | 黑線線寬 | `0-8`<br>表示在黑線上的感應器數量。 |
-| ![黑線偏移](/images/tutorials/S8/spike-app/reflect.png) | 黑線偏移 | `0-16`<br>8 代表正中央，0 代表最左，16 代表最右。數值讀取後 -8 即為循線位置（數值為負代表黑線在左邊，數值為正代表黑線在右邊），數值明確，適合PID循線。 |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 高解析黑線偏移 | `0-200`<br>100 代表正中央，0 代表極左，200 代表極右。數值讀取後 -100 即為高精度循線位置（數值為負代表黑線在左邊，數值為正代表黑線在右邊），使用智能演算法提供更高精度的誤差範圍，使用此模式須確保感應器校準確實。 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 前 4 顆光電數值 | `0-65535`<br>前四顆光電數值：為每 4-bit 代表一個光電數值，精確度高達 15 段（數值範圍 0 ~ 15）。 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 前 4 顆光電數值 | `0-65535`<br>後四顆光電數值：為每 4-bit 代表一個光電數值，精確度高達 15 段（數值範圍 0 ~ 15）。 |
-
-
-<h2 id="example">03 / 範例程式</h2>
-
-以下展示積木邏輯順序。正式產品擴充積木與可匯入專案，將在資料確認後補上。
-
-<div class="block-flow"><div>當程式開始</div><div>設定門檻值為 200 mm</div><div>設定模擬距離為 150 mm</div><div>如果 距離 &lt; 門檻值</div><div>顯示「前方有物體」</div></div>
-
-## 04 / 動手練習
-
-把模擬距離從 `150` 改為 `300`。門檻為 `200` mm 時，結果會切換成「通道暢通」。數值剛好等於 `200` 時也不觸發接近判斷，因為條件使用 `<`。
-
-## 常見問題
-
-| 情況 | 檢查方式 |
+### ✔ 請確認你所使用的控制器、感應器與程式語言和本教學頁面相同：
+| 要求 | 符合本教學頁面的種類 |
 | --- | --- |
-| 沒有真實感測器讀值 | 本範例使用模擬資料，需補上正式產品驅動。 |
-| 找不到對應積木 | 產品擴充尚待提供，本頁先展示概念流程。 |
-| 數值單位不同 | 先確認驅動是否回傳 mm，再進行比較。 |
+| 控制器 | • LEGO® Education SPIKE™ Prime Set<br>• LEGO® MINDSTORMS® Robot Inventor |
+| 感應器 | • MBC 8 路巡跡板 |
+| 程式語言 | • LEGO Education SPIKE 3 App |
+
+### ✔ 事前準備
+1. 啟動你的機器人與 LEGO Education SPIKE 3 App。
+2. 確認一切運作正常。
+3. MBC 8 路巡跡板的場地光值校正。
+
+## 02 / 函數與功能說明
+
+::: info ℹ️ 補充資訊
+在官方 SPIKE App 中，S8 巡跡板將以「SPIKE 顏色感應器」模式運作。
+:::
+
+| 官方圖形指令 | 功能 | 數值意義說明 |
+| --- | --- | --- |
+| ![黑線線寬](/images/tutorials/S8/spike-app/color.png) | 黑線線寬 | `0-8`<br>• 表示在黑線上的感應器數量。 |
+| ![黑線偏移](/images/tutorials/S8/spike-app/reflect.png) | 黑線偏移 | `0-16`<br>• 8 代表正中央，0 代表最左，16 代表最右。<br>• 數值讀取後 -8 即為循線位置 (數值為負代表黑線在左邊，數值為正代表黑線在右邊)，數值明確，適合PID循線。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 高解析黑線偏移 | `0-200`<br>• 100 代表正中央，0 代表極左，200 代表極右。<br>• 數值讀取後 -100 即為高精度循線位置 (數值為負代表黑線在左邊，數值為正代表黑線在右邊)，使用智能演算法提供更高精度的誤差範圍，使用此模式須確保感應器校準確實。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 前 4 顆光電數值 | `0-65535`<br>• 每 4-bit 代表一個光電數值，精確度高達 15 段 (數值範圍 0~15)。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 前 4 顆光電數值 | `0-65535`<br>• 每 4-bit 代表一個光電數值，精確度高達 15 段 (數值範圍 0~15)。 |
+
+<div style="
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 24px auto;
+">
+
+  <!-- Shorts 影片 1 -->
+  <iframe
+    src="https://www.youtube.com/embed/WgacdWLatbk"
+    title="MBC S8 示範影片 1"
+    style="
+      width: 315px;
+      max-width: 100%;
+      aspect-ratio: 9 / 16;
+      height: auto;
+      border: none;
+      border-radius: 12px;
+      display: block;
+    "
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+
+  <!-- Shorts 影片 2 -->
+  <iframe
+    src="https://www.youtube.com/embed/Y2evkfTkOO4"
+    title="MBC S8 示範影片 2"
+    style="
+      width: 315px;
+      max-width: 100%;
+      aspect-ratio: 9 / 16;
+      height: auto;
+      border: none;
+      border-radius: 12px;
+      display: block;
+    "
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+
+</div>
 
 [回首頁選擇其他教學](/)

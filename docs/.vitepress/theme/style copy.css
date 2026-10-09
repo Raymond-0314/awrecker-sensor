@@ -125,61 +125,10 @@ html:has(.sensor-home),body:has(.sensor-home){overflow:hidden;height:100dvh;over
   }
 }
 
-/* ========================================
-   VitePress 提醒框配色
-   TIP 綠 / INFO 藍 / WARNING 橘 / DANGER 紅
-   ======================================== */
-
-/* 共用樣式 */
-.vp-doc .custom-block {
-    border: 1px solid;
-    border-radius: 10px;
-    padding: 16px 20px;
-    color: #eeeeee;
-}
-
-/* 💡 TIP：綠色 */
-.vp-doc .custom-block.tip {
-    background-color: #102b20;
-    border-color: #238653;
-    color: #d5f5e3;
-}
-
-.vp-doc .custom-block.tip .custom-block-title {
-    color: #4ade80;
-}
-
-/* ℹ️ INFO：藍色 */
-.vp-doc .custom-block.info {
-    background-color: #10263d;
-    border-color: #2563eb;
-    color: #dbeafe;
-}
-
-.vp-doc .custom-block.info .custom-block-title {
-    color: #60a5fa;
-}
-
-/* ⚠️ WARNING：橘色 */
 .vp-doc .custom-block.warning {
-    background-color: #35220e;
-    border-color: #d97706;
-    color: #ffedd5;
-}
-
-.vp-doc .custom-block.warning .custom-block-title {
-    color: #fbbf24;
-}
-
-/* 🚨 DANGER：紅色 */
-.vp-doc .custom-block.danger {
-    background-color: #350f17;
-    border-color: #dc2626;
-    color: #fee2e2;
-}
-
-.vp-doc .custom-block.danger .custom-block-title {
-    color: #f87171;
+  background-color: #330f0f;
+  border-color: #852c2c;
+  color: #FFFFFF;
 }
 
 /* 卡片標題 */
@@ -196,51 +145,4 @@ html:has(.sensor-home),body:has(.sensor-home){overflow:hidden;height:100dvh;over
     font-weight: 700;
     line-height: inherit;
     color: #3B82F6;
-}
-
-/* ==================================
-   Feature Grid 自動欄數
-   ================================== */
-
-/* 預設最多 4 欄 */
-.vp-doc .feature-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
-    margin: 25px 0;
-}
-
-/* 只有 1 張卡片 */
-.vp-doc .feature-grid:has(> .feature-box:first-child:last-child) {
-    grid-template-columns: 1fr;
-}
-
-/* 只有 2 張卡片 */
-.vp-doc .feature-grid:has(> .feature-box:nth-child(2):last-child) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-/* 只有 3 張卡片 */
-.vp-doc .feature-grid:has(> .feature-box:nth-child(3):last-child) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-/* 避免卡片內容撐破欄位 */
-.vp-doc .feature-grid > .feature-box {
-    min-width: 0;
-    overflow-wrap: anywhere;
-}
-
-/* 平板：最多 2 欄 */
-@media (min-width: 681px) and (max-width: 960px) {
-    .vp-doc .feature-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-/* 手機：固定 1 欄 */
-@media (max-width: 680px) {
-    .vp-doc .feature-grid {
-        grid-template-columns: 1fr;
-    }
 }

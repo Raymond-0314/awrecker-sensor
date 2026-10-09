@@ -41,6 +41,10 @@
     {
       "id": "clev3r",
       "name": "clev3r App"
+    },
+    {
+      "id": "general",
+      "name": "General I2C"
     }
   ]
 }
