@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 產品與教學
+title: 產品使用說明
 ---
 
 <SensorHome />
