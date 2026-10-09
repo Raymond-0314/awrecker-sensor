@@ -32,7 +32,7 @@ export default defineConfig({
   },
 
   themeConfig: {
-    logo: `images/icon/icon.png`,
+    logo: `/images/icon/icon.png`,
     siteTitle: 'AWRECKER',
     nav: [],
     sidebar: false,
