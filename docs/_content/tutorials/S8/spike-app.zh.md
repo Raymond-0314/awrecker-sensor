@@ -32,7 +32,7 @@
 | ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 後 4 顆光電數值 | `0-65535`<br>• 每 4-bit 代表一個光電數值，精確度高達 15 段 (數值範圍 0~15)。 |
 
 ## 03 / 範例程式
-<a href="programs/S8/spike-app/S8_Example.llsp3" class="zip-download-btn">
+<a href="/programs/S8/spike-app/S8_Example.llsp3" class="zip-download-btn">
   ⬇ 範例程式下載
 </a>
 
