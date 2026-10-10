@@ -547,23 +547,40 @@ html:has(.sensor-home),body:has(.sensor-home){overflow:hidden;height:100dvh;over
     }
 }
 
-.zip-download-btn {
+/* 下載按鈕：基本狀態 */
+.vp-doc a.zip-download-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
+
   padding: 12px 24px;
   margin: 16px 0;
-  background: #2563eb;
+
+  background-color: #2563eb;
   color: #ffffff !important;
+
   font-size: 16px;
   font-weight: 600;
   text-decoration: none !important;
   border-radius: 10px;
-  transition: background 0.2s, transform 0.2s;
+
+  transform: translate3d(0, 0, 0);
+
+  transition-property: transform, background-color, box-shadow;
+  transition-duration: 350ms;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0ms;
 }
 
-.zip-download-btn:hover {
-  background: #1d4ed8;
-  transform: translateY(-2px);
+/* 滑鼠移入 */
+.vp-doc a.zip-download-btn:hover {
+  background-color: #1d4ed8;
+  transform: translate3d(0, -4px, 0);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+/* 點擊 */
+.vp-doc a.zip-download-btn:active {
+  transform: translate3d(0, -1px, 0);
 }

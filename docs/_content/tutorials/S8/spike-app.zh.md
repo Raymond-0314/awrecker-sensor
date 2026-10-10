@@ -36,7 +36,7 @@
   ⬇ 範例程式下載
 </a>
 
-![範例程式](/images/tutorials/S8/spike-app/ex_program.png)
+![範例程式](/images/tutorials/S8/spike-app/ex_program.png){style="border-radius: 10px;"}
 
 ## 04 / 【Lego】 Lau Xiao 示範影片
 
