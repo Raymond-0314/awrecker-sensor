@@ -34,6 +34,22 @@ In the official LEGO MINDSTORMS Inventor App, the S8 Line Tracking Sensor Board 
 | ![Green Value](/images/tutorials/S8/spike-app/green.png) | First 4 Photosensor Values | `0-255`<br>• Every 2 bits represent one photosensor reading, with a value ranging from 0 to 3. |
 | ![Blue Value](/images/tutorials/S8/spike-app/blue.png) | Last 4 Photosensor Values | `0-255`<br>• Every 2 bits represent one photosensor reading, with a value ranging from 0 to 3. |
 
+## 03 / Example Program
+<script setup>
+  import { withBase } from 'vitepress'
+</script>
+
+<a
+  :href="withBase('/programs/S8/spike-inventor/S8_Example_Inventor.lms')"
+  download="S8_Example.llsp3"
+  class="zip-download-btn">
+  ⬇ Download Example Program
+</a>
+
+![範例程式](/images/tutorials/S8/spike-inventor/ex_program.webp){style="border-radius: 10px;"}
+
+## 04 / 【LEGO】 Lau Xiao Demonstration Videos
+
 <div style="
   display: flex;
   justify-content: center;

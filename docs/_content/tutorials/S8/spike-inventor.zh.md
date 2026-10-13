@@ -30,6 +30,22 @@
 | ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 前 4 顆光電數值 | `0-255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0~3。 |
 | ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 後 4 顆光電數值 | `0-255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0~3。 |
 
+## 03 / 範例程式
+<script setup>
+  import { withBase } from 'vitepress'
+</script>
+
+<a
+  :href="withBase('/programs/S8/spike-app/S8_Example_SpikeApp.llsp3')"
+  download="S8_Example.llsp3"
+  class="zip-download-btn">
+  ⬇ 範例程式下載
+</a>
+
+![範例程式](/images/tutorials/S8/spike-inventor/ex_program.webp){style="border-radius: 10px;"}
+
+## 04 / 【Lego】 Lau Xiao 示範影片
+
 <div style="
   display: flex;
   justify-content: center;

@@ -32,8 +32,14 @@ In the official SPIKE App, the S8 Line Following Sensor operates in "SPIKE Color
 | ![Blue Value](/images/tutorials/S8/spike-app/blue.png) | Last 4 Photoelectric Sensor Values | `0-65535`<br>• Each 4-bit segment represents one photoelectric sensor value, providing 15 levels of resolution (value range: 0–15). |
 
 ## 03 / Example Program
+<script setup>
+  import { withBase } from 'vitepress'
+</script>
 
-<a href="withBase('/programs/S8/spike-app/S8_Example.llsp3')" download="S8_Example.llsp3" class="zip-download-btn">
+<a
+  :href="withBase('/programs/S8/spike-app/S8_Example_SpikeApp.llsp3')"
+  download="S8_Example.llsp3"
+  class="zip-download-btn">
   ⬇ Download Example Program
 </a>
 

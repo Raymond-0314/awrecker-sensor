@@ -37,7 +37,7 @@
 </script>
 
 <a
-  :href="withBase('/programs/S8/spike-app/S8_Example.llsp3')"
+  :href="withBase('/programs/S8/spike-app/S8_Example_SpikeApp.llsp3')"
   download="S8_Example.llsp3"
   class="zip-download-btn">
   ⬇ 範例程式下載
