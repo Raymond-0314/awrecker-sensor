@@ -1,9 +1,9 @@
 ---
-title: "MBC 8 路巡跡板 · SPIKE · LEGO MINDSTORMS Inventor"
+title: "MBC 8 路巡跡板 · SPIKE · LEGO MINDSTORMS Robot Inventor"
 ---
 <!-- Generated route. Edit docs/_content and docs/_data. -->
 
-# MBC 8 路巡跡板 · SPIKE · LEGO MINDSTORMS Inventor
+# MBC 8 路巡跡板 · SPIKE · LEGO MINDSTORMS Robot Inventor
 
 <!--@include: ../../_content/products/S8.zh.md-->
 

@@ -1,45 +1,115 @@
-## 使用教學 · SPIKE · Pybricks Block
+##
 
-從連接準備、函數概念到範例流程，練習讀取與判斷距離。
-
-::: warning 示意教學
-目前尚無產品驅動與正式 API。下方範例使用模擬讀值，不會與感測器通訊；實際產品相容性需先驗證。
-:::
+# 使用教學
 
 ## 01 / 環境準備
 
-準備 SPIKE 控制器與對應的 Pybricks 程式環境。變更韌體前，先確認產品驅動與韌體需求。
-
-1. 取得產品接線圖與驅動套件。
-2. 確認連接埠與數值單位。
-3. 先完成單次數值讀取，再加入迴圈。
-
-## 02 / 函數與功能概念
-
-| 功能 | 本範例函數 | 回傳 / 輸出 |
-| --- | --- | --- |
-| 讀取數值 | `read_demo_distance()` | 模擬距離，單位 mm |
-| 門檻判斷 | `is_near(distance_mm, threshold_mm)` | 布林值 |
-| 顯示結果 | `print(message)` | 主控台訊息 |
-
-以上為本示例定義的函數，並非產品 API。正式驅動確認後，將模擬讀值函數替換為實際讀取函數。
-
-<h2 id="example">03 / 範例程式</h2>
-
-以下展示積木邏輯順序。正式產品擴充積木與可匯入專案，將在資料確認後補上。
-
-<div class="block-flow"><div>當程式開始</div><div>設定門檻值為 200 mm</div><div>設定模擬距離為 150 mm</div><div>如果 距離 &lt; 門檻值</div><div>顯示「前方有物體」</div></div>
-
-## 04 / 動手練習
-
-把模擬距離從 `150` 改為 `300`。門檻為 `200` mm 時，結果會切換成「通道暢通」。數值剛好等於 `200` 時也不觸發接近判斷，因為條件使用 `<`。
-
-## 常見問題
-
-| 情況 | 檢查方式 |
+### ✔ 請確認你所使用的控制器、感應器與程式語言和本教學頁面相同：
+| 要求 | 符合本教學頁面的種類 |
 | --- | --- |
-| 沒有真實感測器讀值 | 本範例使用模擬資料，需補上正式產品驅動。 |
-| 找不到對應積木 | 產品擴充尚待提供，本頁先展示概念流程。 |
-| 數值單位不同 | 先確認驅動是否回傳 mm，再進行比較。 |
+| 控制器 | • LEGO® Education SPIKE™ Prime Set<br>• LEGO® MINDSTORMS® Robot Inventor |
+| 感應器 | • MBC 8 路巡跡板 |
+| 程式語言 | • Pybricks |
+
+### ✔ 事前準備
+::: warning ⚠️ 注意
+針對 Pybricks 韌體版本，MBC 提供兩種函式庫，分別支援 Pybricks 韌體 V3.6.1 與 V4.0.0。請根據你的 Pybricks 韌體版本下載 MBC 8 路巡跡板專屬函式庫。
+:::
+
+<script setup>
+  import { withBase } from 'vitepress'
+</script>
+
+<div class="library-downloads">
+    <a
+    :href="withBase('/programs/S8/spike-pybricks/MBC_line8_Lib_v361.py')"
+    download="MBC_line8_Lib_v361.py"
+    class="zip-download-btn">
+        ⬇ V3.6.1 函式庫
+    </a>
+    <a
+    :href="withBase('/programs/S8/spike-pybricks/MBC_line8_obj_Lib_v400.py')"
+    download="MBC_line8_obj_Lib_v400.py"
+    class="zip-download-btn">
+        ⬇ V4.0.0 函式庫
+    </a>
+</div>
+
+1. 啟動你的機器人與 Pybricks。
+2. 確認一切運作正常。
+3. MBC 8 路巡跡板的場地光值校正。
+4. 匯入專為 Pybricks 與 MBC 8 路巡跡板設計的專屬 Python 函式庫。
+5. 函式庫匯入步驟
+
+
+
+## 02 / 函數與功能說明
+
+| 官方圖形指令 | 功能 | 數值意義說明 |
+| --- | --- | --- |
+| ![黑線線寬](/images/tutorials/S8/spike-app/color.png) | 黑線線寬 | `0-8`<br>• 表示在黑線上的感應器數量。 |
+| ![黑線偏移](/images/tutorials/S8/spike-app/reflect.png) | 黑線偏移 | `0-16`<br>• 8 代表正中央，0 代表最左，16 代表最右。<br>• 數值讀取後 -8 即為循線位置 (數值為負代表黑線在左邊，數值為正代表黑線在右邊)，數值明確，適合 PID 循線。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 高解析黑線偏移 | `0-200`<br>• 100 代表正中央，0 代表極左，200 代表極右。<br>• 數值讀取後 -100 即為高精度循線位置 (數值為負代表黑線在左邊，數值為正代表黑線在右邊)，使用智能演算法提供更高精度的誤差範圍，使用此模式須確保感應器校準確實。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 前 4 顆光電數值 | `0-255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0~3。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 後 4 顆光電數值 | `0-255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0~3。 |
+
+## 03 / 範例程式
+
+<a
+  :href="withBase('/programs/S8/spike-inventor/S8_Example_Inventor.lms')"
+  download="S8_Example_Inventor.lms"
+  class="zip-download-btn">
+  ⬇ 範例程式下載
+</a>
+
+![範例程式](/images/tutorials/S8/spike-inventor/ex_program.webp){style="border-radius: 10px;"}
+
+## 04 / 【Lego】 Lau Xiao 示範影片
+
+<div style="
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 24px auto;
+">
+
+  <!-- Shorts 影片 1 -->
+  <iframe
+    src="https://www.youtube.com/embed/WgacdWLatbk"
+    title="MBC S8 示範影片 1"
+    style="
+      width: 315px;
+      max-width: 100%;
+      aspect-ratio: 9 / 16;
+      height: auto;
+      border: none;
+      border-radius: 12px;
+      display: block;
+    "
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+
+  <!-- Shorts 影片 2 -->
+  <iframe
+    src="https://www.youtube.com/embed/Y2evkfTkOO4"
+    title="MBC S8 示範影片 2"
+    style="
+      width: 315px;
+      max-width: 100%;
+      aspect-ratio: 9 / 16;
+      height: auto;
+      border: none;
+      border-radius: 12px;
+      display: block;
+    "
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+
+</div>
 
 [回首頁選擇其他教學](/)

@@ -41,7 +41,7 @@ In the official LEGO MINDSTORMS Inventor App, the S8 Line Tracking Sensor Board 
 
 <a
   :href="withBase('/programs/S8/spike-inventor/S8_Example_Inventor.lms')"
-  download="S8_Example.llsp3"
+  download="S8_Example_Inventor.lms"
   class="zip-download-btn">
   ⬇ Download Example Program
 </a>

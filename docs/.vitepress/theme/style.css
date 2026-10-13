@@ -584,3 +584,80 @@ html:has(.sensor-home),body:has(.sensor-home){overflow:hidden;height:100dvh;over
 .vp-doc a.zip-download-btn:active {
   transform: translate3d(0, -1px, 0);
 }
+
+/* 程式語言選項：左右兩欄 */
+.tutorial-picker .choice-row.languages {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.tutorial-picker .choice-row.languages .choice {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.tutorial-picker .choice-row.languages .choice input {
+  flex-shrink: 0;
+}
+
+.tutorial-picker .choice-row.languages .choice span {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* 窄螢幕：每列一個選項 */
+@media (max-width: 640px) {
+  .tutorial-picker .choice-row.languages {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 函式庫下載：並排顯示 */
+.library-downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.vp-doc a.library-download-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 28px;
+  margin: 0;
+  border-radius: 12px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.vp-doc a.library-download-btn:hover {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+.vp-doc a.library-download-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+/* 手機：上下排列 */
+@media (max-width: 640px) {
+  .library-downloads {
+    flex-direction: column;
+  }
+
+  .vp-doc a.library-download-btn {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 18px;
+  }
+}
