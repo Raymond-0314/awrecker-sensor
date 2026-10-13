@@ -51,7 +51,7 @@ import { withBase } from 'vitepress'
   ⬇ Download Example Program
 </a>
 
-![Example Program](/images/tutorials/S8/ev3-classroom/ex_program.webp){style="border-radius: 10px;"}
+![Example Program](/images/tutorials/S8/ev3-classroom/ex_program.png){style="border-radius: 10px;"}
 
 ### ✔ EV3 Custom Blocks (My Blocks)
 
