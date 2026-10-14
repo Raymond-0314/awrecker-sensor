@@ -661,3 +661,22 @@ html:has(.sensor-home),body:has(.sensor-home){overflow:hidden;height:100dvh;over
     font-size: 18px;
   }
 }
+
+
+/* 只調整 EV3-G 功能表格的圖片 */
+.vp-doc .ev3g-function-table table td:first-child img {
+  height: 80px;
+  width: auto;
+  max-width: none;
+}
+
+/* 手機圖片高度 */
+@media (max-width: 640px) {
+  .vp-doc .ev3g-function-table table td:first-child img {
+    height: 56px;
+  }
+}
+
+.vp-doc .no-wrap {
+  white-space: nowrap;
+}
