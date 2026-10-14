@@ -1,9 +1,9 @@
 ---
-title: "MBC Hue12 · SPIKE · SPIKE App"
+title: "MBC Hue12 Vision Sensor · SPIKE · SPIKE App"
 ---
 <!-- Generated route. Edit docs/_content and docs/_data. -->
 
-# MBC Hue12 · SPIKE · SPIKE App
+# MBC Hue12 Vision Sensor · SPIKE · SPIKE App
 
 <!--@include: ../../../_content/products/Hue12.en.md-->
 

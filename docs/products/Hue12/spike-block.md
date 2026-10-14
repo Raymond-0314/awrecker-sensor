@@ -1,9 +1,9 @@
 ---
-title: "MBC Hue12 · SPIKE · Pybricks Block"
+title: "MBC Hue12 視覺板 · SPIKE · Pybricks Block"
 ---
 <!-- Generated route. Edit docs/_content and docs/_data. -->
 
-# MBC Hue12 · SPIKE · Pybricks Block
+# MBC Hue12 視覺板 · SPIKE · Pybricks Block
 
 <!--@include: ../../_content/products/Hue12.zh.md-->
 

@@ -1,9 +1,9 @@
 ---
-title: "MBC 8 路巡跡板 · EV3 · LabVIEW EV3-G"
+title: "MBC 8 路巡跡板 · EV3 · EV3-G"
 ---
 <!-- Generated route. Edit docs/_content and docs/_data. -->
 
-# MBC 8 路巡跡板 · EV3 · LabVIEW EV3-G
+# MBC 8 路巡跡板 · EV3 · EV3-G
 
 <!--@include: ../../_content/products/S8.zh.md-->
 

@@ -1,9 +1,9 @@
 ---
-title: "MBC Hue12"
+title: "MBC Hue12 Vision Sensor"
 ---
 <!-- Generated route. Edit docs/_content and docs/_data. -->
 
-# MBC Hue12
+# MBC Hue12 Vision Sensor
 
 <!--@include: ../../_content/products/Hue12.en.md-->
 

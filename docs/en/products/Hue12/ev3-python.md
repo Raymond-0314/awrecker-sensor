@@ -1,9 +1,9 @@
 ---
-title: "MBC Hue12 · EV3 · Pybricks Python"
+title: "MBC Hue12 Vision Sensor · EV3 · Pybricks Python"
 ---
 <!-- Generated route. Edit docs/_content and docs/_data. -->
 
-# MBC Hue12 · EV3 · Pybricks Python
+# MBC Hue12 Vision Sensor · EV3 · Pybricks Python
 
 <!--@include: ../../../_content/products/Hue12.en.md-->
 

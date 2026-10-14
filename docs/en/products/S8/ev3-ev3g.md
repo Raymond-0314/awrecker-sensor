@@ -1,9 +1,9 @@
 ---
-title: "MBC Line-Following Sensor S8 · EV3 · LabVIEW EV3-G"
+title: "MBC Line-Following Sensor S8 · EV3 · EV3-G"
 ---
 <!-- Generated route. Edit docs/_content and docs/_data. -->
 
-# MBC Line-Following Sensor S8 · EV3 · LabVIEW EV3-G
+# MBC Line-Following Sensor S8 · EV3 · EV3-G
 
 <!--@include: ../../../_content/products/S8.en.md-->
 

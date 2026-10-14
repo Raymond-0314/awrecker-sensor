@@ -1,9 +1,9 @@
 ---
-title: "MBC S16 · SPIKE · Pybricks Python"
+title: "MBC Line-Following Sensor S16 · SPIKE · Pybricks Python"
 ---
 <!-- Generated route. Edit docs/_content and docs/_data. -->
 
-# MBC S16 · SPIKE · Pybricks Python
+# MBC Line-Following Sensor S16 · SPIKE · Pybricks Python
 
 <!--@include: ../../../_content/products/S16.en.md-->
 
