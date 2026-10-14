@@ -1,5 +1,5 @@
 {
-  "slug": "S8",
+  "slug": "MBC S8",
   "order": 1,
   "code": "MBC S8",
   "name": {
@@ -27,6 +27,7 @@
       "classroom",
       "ev3g",
       "clev3r",
+      "block",
       "python"
     ],
     "i2c":[

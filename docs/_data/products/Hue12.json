@@ -1,19 +1,19 @@
 {
-  "slug": "Hue12",
+  "slug": "MBC Hue12",
   "order": 3,
-  "code": "Hue12",
+  "code": "MBC Hue12",
   "name": {
-    "zh": "MBC Hue12",
-    "en": "MBC Hue12"
+    "zh": "MBC Hue12 視覺板",
+    "en": "MBC Hue12 Vision Sensor"
   },
   "summary": {
-    "zh": "觸碰輸入與力量觸發",
-    "en": "Touch input and force-triggered actions"
+    "zh": "兼容 EV3 / SPIKE / MATRIX R4",
+    "en": "Compatible With EV3 / SPIKE / MATRIX R4"
   },
-  "image": "/images/products/Hue12/Hue12.svg",
+  "image": "/images/products/Hue12/Hue12-spike.webp",
   "imageAlt": {
-    "zh": "MBC Hue12 示意圖",
-    "en": "MBC Hue12 illustration"
+    "zh": "MBC Hue12",
+    "en": "MBC Hue12"
   },
   "routeBase": "products/Hue12",
   "support": {
@@ -23,11 +23,12 @@
       "python"
     ],
     "ev3": [
+      "ev3g",
+      "block",
       "python"
+    ],
+    "i2c":[
+      "general"
     ]
-  },
-  "compatibilityNote": {
-    "zh": "此為預覽版路徑設定，實際控制器、語言與韌體支援待產品資料確認。",
-    "en": "Preview learning paths only. Product, controller, language and firmware support still require confirmation."
   }
 }

@@ -1,33 +1,37 @@
 {
-  "slug": "S16",
+  "slug": "MBC S16",
   "order": 2,
-  "code": "S16",
+  "code": "MBC S16",
   "name": {
-    "zh": "MBC S16",
-    "en": "MBC S16"
+    "zh": "MBC 16 路巡跡板",
+    "en": "MBC Line-Following Sensor S16"
   },
   "summary": {
-    "zh": "顏色辨識與循線應用",
-    "en": "Color detection and line-following"
+    "zh": "兼容 EV3 / SPIKE / MATRIX R4",
+    "en": "Compatible With EV3 / SPIKE / MATRIX R4"
   },
-  "image": "/images/products/S16/S16.svg",
+  "image": "/images/products/S16/S16-spike.webp",
   "imageAlt": {
-    "zh": "MBC S16 示意圖",
-    "en": "MBC S16 illustration"
+    "zh": "MBC S16",
+    "en": "MBC S16"
   },
   "routeBase": "products/S16",
   "support": {
     "spike": [
       "app",
+      "inventor",
       "block",
       "python"
     ],
     "ev3": [
+      "classroom",
+      "ev3g",
+      "clev3r",
+      "block",
       "python"
+    ],
+    "i2c":[
+      "general"
     ]
-  },
-  "compatibilityNote": {
-    "zh": "此為預覽版路徑設定，實際控制器、語言與韌體支援待產品資料確認。",
-    "en": "Preview learning paths only. Product, controller, language and firmware support still require confirmation."
   }
 }
