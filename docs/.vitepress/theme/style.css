@@ -1537,6 +1537,19 @@ body:has(.sensor-home) {
   max-width: none !important;
   margin: 0 !important;
 }
+/* 依內容決定寬度，不強制填滿頁面 */
+/*.vp-doc .table-scroll-content > table {
+  display: table !important;
+  table-layout: auto;
+  width: auto !important;
+  min-width: 0;
+  max-width: none !important;
+  margin: 0 !important;
+}*/
+.vp-doc span.no-wrap {
+  display: inline-block;
+  white-space: nowrap;
+}
 
 .vp-doc .table-scroll-btn {
   z-index: 30;
@@ -2294,4 +2307,65 @@ body:has(.sensor-home) {
   color: #111 !important;
   border-color: #fff;
   box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+}
+
+/* 行內程式碼：無外框、半透明底色 */
+.vp-doc :not(pre) > code {
+  color: #38bdf8;
+  background-color: rgba(56, 189, 248, 0.12);
+  border: none;
+  box-shadow: none;
+  border-radius: 6px;
+  padding: 3px 8px;
+}
+
+/* 共用樣式 */
+.vp-doc :not(pre) > code.code-red,
+.vp-doc :not(pre) > code.code-green,
+.vp-doc :not(pre) > code.code-blue,
+.vp-doc :not(pre) > code.code-red-text,
+.vp-doc :not(pre) > code.code-green-text,
+.vp-doc :not(pre) > code.code-blue-text {
+  color: var(--label-color);
+  border: none;
+  box-shadow: none;
+  /*font-weight: 500;*/
+}
+
+/* 紅色 */
+.code-red,
+.code-red-text {
+  --label-color: #fca5a5;
+  --label-bg: rgba(248, 113, 113, 0.12);
+}
+
+/* 綠色 */
+.code-green,
+.code-green-text {
+  --label-color: #86efac;
+  --label-bg: rgba(74, 222, 128, 0.12);
+}
+
+/* 藍色 */
+.code-blue,
+.code-blue-text {
+  --label-color: #7dd3fc;
+  --label-bg: rgba(56, 189, 248, 0.12);
+}
+
+/* 有底色 */
+.vp-doc :not(pre) > code.code-red,
+.vp-doc :not(pre) > code.code-green,
+.vp-doc :not(pre) > code.code-blue {
+  background-color: var(--label-bg);
+  border-radius: 6px;
+  padding: 3px 8px;
+}
+
+/* 無底色 */
+.vp-doc :not(pre) > code.code-red-text,
+.vp-doc :not(pre) > code.code-green-text,
+.vp-doc :not(pre) > code.code-blue-text {
+  background-color: transparent;
+  padding: 0;
 }

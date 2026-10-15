@@ -30,18 +30,18 @@
 | 官方圖形指令 | 功能 | 數值意義說明 |
 | --- | --- | --- |
 | ![線位置](/images/tutorials/S16/ev3-classroom/proximity.png) | 線位置 | `-16 ~ +16`<br>• 0 代表線在正中央，負數偏左，正數偏右。<br>• +16 與 -16 表示線在感應器最邊緣。 |
-| ![光電 0 與 1 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | 光電 0 與 1 號數值 | `11 ~ 99`<br>• 十位數為通道 0 的光電光值，數值從 1 至 9。<br>• 個位數為通道 1 的光電光值，數值從 1 至 9。 |
-| ![光電 2 與 3 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | 光電 2 與 3 號數值 | `11 ~ 99`<br>• 十位數為通道 2 的光電光值，數值從 1 至 9。<br>• 個位數為通道 3 的光電光值，數值從 1 至 9。 |
-| ![光電 4 與 5 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | 光電 4 與 5 號數值 | `11 ~ 99`<br>• 十位數為通道 4 的光電光值，數值從 1 至 9。<br>• 個位數為通道 5 的光電光值，數值從 1 至 9。 |
-| ![光電 6 與 7 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 光電 6 與 7 號數值 | `11 ~ 99`<br>• 十位數為通道 6 的光電光值，數值從 1 至 9。<br>• 個位數為通道 7 的光電光值，數值從 1 至 9。 |
-| ![光電 8 與 9 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 光電 8 與 9 號數值 | `11 ~ 99`<br>• 十位數為通道 8 的光電光值，數值從 1 至 9。<br>• 個位數為通道 9 的光電光值，數值從 1 至 9。 |
-| ![光電 10 與 11 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 光電 10 與 11 號數值 | `11 ~ 99`<br>• 十位數為通道 10 的光電光值，數值從 1 至 9。<br>• 個位數為通道 11 的光電光值，數值從 1 至 9。 |
-| ![光電 12 與 13 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 光電 12 與 13 號數值 | `11 ~ 99`<br>• 十位數為通道 12 的光電光值，數值從 1 至 9。<br>• 個位數為通道 13 的光電光值，數值從 1 至 9。 |
-| ![光電 14 與 15 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 光電 14 與 15 號數值 | `11 ~ 99`<br>• 十位數為通道 14 的光電光值，數值從 1 至 9。<br>• 個位數為通道 15 的光電光值，數值從 1 至 9。 |
+| ![光電 0 與 1 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | 光電 0 與 1 號數值 | `11 ~ 99`<br>• 十位數為通道 0 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 1 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![光電 2 與 3 號數值](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | 光電 2 與 3 號數值 | `11 ~ 99`<br>• 十位數為通道 2 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 3 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![光電 4 與 5 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | 光電 4 與 5 號數值 | `11 ~ 99`<br>• 十位數為通道 4 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 5 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![光電 6 與 7 號數值](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | 光電 6 與 7 號數值 | `11 ~ 99`<br>• 十位數為通道 6 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 7 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![光電 8 與 9 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | 光電 8 與 9 號數值 | `11 ~ 99`<br>• 十位數為通道 8 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 9 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![光電 10 與 11 號數值](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | 光電 10 與 11 號數值 | `11 ~ 99`<br>• 十位數為通道 10 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 11 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![光電 12 與 13 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 光電 12 與 13 號數值 | `11 ~ 99`<br>• 十位數為通道 12 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 13 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![光電 14 與 15 號數值](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | 光電 14 與 15 號數值 | `11 ~ 99`<br>• 十位數為通道 14 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 15 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
 | ![高解析位置平移](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | 高解析位置平移 | `-100 ~ +100`<br>• 0 代表正中央，負值偏左，正值偏右。<br>• 超平滑的 PID 誤差輸入首選。 |
 | ![特徵線寬](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | 特徵線寬 | `0 ~ 16`<br>• 偵測到線的感測器數量。可用於偵測十字路口或 T 字路口。。 |
-| ![左邊界實體光值](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | 左邊界實體光值 | `0 ~ 100`<br>• 最左邊感測器 (通道 7) 的反射光。<br>• 0 表示純黑，100 表示純白。<br>• 可用於偵測賽道邊界或分岔。 |
-| ![右邊界實體光值](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | 右邊界實體光值 | `0 ~ 100`<br>• 最右邊感測器 (通道 0) 的反射光。<br>• 0 表示純黑，100 表示純白。<br>• 可用於偵測賽道邊界或分岔。 |
+| ![左邊界實體光值](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | 左邊界實體光值 | `0 ~ 100`<br>• 最左邊感測器 (通道 `15`{.code-green-text}) 的反射光。<br>• `0`{.code-green-text} 表示純黑，`100`{.code-green-text} 表示純白。<br>• 可用於偵測賽道邊界或分岔。 |
+| ![右邊界實體光值](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | 右邊界實體光值 | `0 ~ 100`<br>• 最右邊感測器 (通道 `0`{.code-green-text}) 的反射光。<br>• `0`{.code-green-text} 表示純黑，`100`{.code-green-text} 表示純白。<br>• 可用於偵測賽道邊界或分岔。 |
 
 ## 03 / 範例程式
 <script setup>
@@ -63,8 +63,8 @@ MBC 16 路循線感應器提供了三個「自訂積木 (My Blocks) 」。開發
 | 用途 | 函數 | 功能 |
 | --- | --- | --- |
 | 基礎循線函數 | `LinePos16_dataUpdate` | `-16 ~ +16`<br>• 快速讀取最基礎的 16 段循線位置，適合新手入門教學與基礎左右轉向判斷。<br>• 執行此函數後，系統會自動更新變數 `0_LinePos16`。<br>• 0 代表線在正中央，負數偏左，正數偏右。 |
-| 競技高精度函數 | `LinePos100_dataUpdate` | • 取得高解析度次像素級插值位置。<br>• 專為高階 PID 循線控制演算法設計，能提供極致平滑的修正動力。<br>• 需完成感應器校準。<br>• 執行此函數後，系統會自動更新變數：<br>&nbsp;&nbsp;&nbsp;&nbsp;1. `0_LinePos100`：高精度位置，範圍 -100 到 +100 (負值偏左、正值偏右) 。 <br>&nbsp;&nbsp;&nbsp;&nbsp;2. `0_LineWidth16`：偵測到線的感測器數量 (範圍 0 ~ 16)。可用於判斷路口類型。<br>&nbsp;&nbsp;&nbsp;&nbsp;3. `最左/最右邊界數值`：讀取最左/右邊感應器的實體光值，用於防掉線或路口偵測。 |
-| 全陣列展開函數 | `LineCh16_dataUpdate` | • 將 16 顆感應器解碼為獨立狀態。<br>• 可根據 16 顆不同光電的數值自訂進階演算法。<br>• 執行此函數後，會一氣呵成地更新 s1 到 s16 共 16 個獨立變數，完美對應感應器由左至右每一顆的即時讀數。 |
+| 競技高精度函數 | `LinePos100_dataUpdate` | • 取得高解析度次像素級插值位置。<br>• 專為高階 PID 循線控制演算法設計，能提供極致平滑的修正動力。<br>• 需完成感應器校準。<br>• 執行此函數後，系統會自動更新變數：<br>&emsp;1. `0_LinePos100`：高精度位置，範圍 -100 到 +100 (負值偏左、正值偏右) 。 <br>&emsp;2. `0_LineWidth16`：偵測到線的感測器數量 (範圍 0 ~ 16)。可用於判斷路口類型。<br>&emsp;3. `最左/最右邊界數值`：讀取最左/右邊感應器的實體光值，用於防掉線或路口偵測。 |
+| 全陣列展開函數 | `LineCh16_dataUpdate` | • 將 16 顆感應器解碼為獨立狀態。<br>• 可根據 16 顆不同光電的數值自訂進階演算法。<br>• 執行此函數後，會一氣呵成地更新 `s1`{.code-green-text} 到 `s16`{.code-green-text} 共 16 個獨立變數，完美對應感應器由左至右每一顆的即時讀數。 |
 
 ::: info ℹ️ 補充資訊
 將自訂積木放入無限迴圈中，即可確保機器與 MBC 16 路巡跡板隨時掌握即時場地資訊。

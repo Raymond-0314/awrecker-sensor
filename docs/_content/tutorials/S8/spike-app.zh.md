@@ -26,10 +26,10 @@
 | 官方圖形指令 | 功能 | 數值意義說明 |
 | --- | --- | --- |
 | ![黑線線寬](/images/tutorials/S8/spike-app/color.png) | 黑線線寬 | `0-8`<br>• 表示在黑線上的感應器數量。 |
-| ![黑線偏移](/images/tutorials/S8/spike-app/reflect.png) | 黑線偏移 | `0-16`<br>• 8 代表正中央，0 代表最左，16 代表最右。<br>• 數值讀取後 -8 即為循線位置 (數值為負代表黑線在左邊，數值為正代表黑線在右邊)，數值明確，適合 PID 循線。 |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 高解析黑線偏移 | `0-200`<br>• 100 代表正中央，0 代表極左，200 代表極右。<br>• 數值讀取後 -100 即為高精度循線位置 (數值為負代表黑線在左邊，數值為正代表黑線在右邊)，使用智能演算法提供更高精度的誤差範圍，使用此模式須確保感應器校準確實。 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 前 4 顆光電數值 | `0-65535`<br>• 每 4-bit 代表一個光電數值，精確度高達 15 段 (數值範圍 0~15)。 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 後 4 顆光電數值 | `0-65535`<br>• 每 4-bit 代表一個光電數值，精確度高達 15 段 (數值範圍 0~15)。 |
+| ![黑線偏移](/images/tutorials/S8/spike-app/reflect.png) | 黑線偏移 | `0-16`<br>• `8`{.code-green-text} 代表正中央，`0`{.code-green-text}代表最左，`16`{.code-green-text} 代表最右。<br>• 數值讀取後 `-8`{.code-green-text} 即為循線位置 (數值為負代表黑線在左邊，數值為正代表黑線在右邊)，數值明確，適合 PID 循線。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 高解析黑線偏移 | `0-200`<br>• `100`{.code-green-text} 代表正中央，`0`{.code-green-text} 代表極左，`200`{.code-green-text} 代表極右。<br>• 數值讀取後 `-100`{.code-green-text} 即為高精度循線位置 (數值為負代表黑線在左邊，數值為正代表黑線在右邊)，使用智能演算法提供更高精度的誤差範圍，使用此模式須確保感應器校準確實。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 前 4 顆光電數值 | `0-65535`<br>• 每 `4-bit`{.code-green-text} 代表一個光電數值，精確度高達 15 段 (數值範圍 `0 ~ 15`{.code-green-text})。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 後 4 顆光電數值 | `0-65535`<br>• 每 `4-bit`{.code-green-text} 代表一個光電數值，精確度高達 15 段 (數值範圍 `0 ~ 15`{.code-green-text})。 |
 
 ## 03 / 範例程式
 <script setup>
