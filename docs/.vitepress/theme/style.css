@@ -2368,4 +2368,19 @@ body:has(.sensor-home) {
 .vp-doc :not(pre) > code.code-blue-text {
   background-color: transparent;
   padding: 0;
+  /*font-size: inherit;
+  font-family: inherit;*/
+}
+
+
+
+/* 提示框內：縮小下載區域上下留白 */
+.vp-doc .custom-block .library-downloads {
+  margin: 12px 0 0;
+}
+
+/* 取消按鈕額外外距 */
+.vp-doc .custom-block a.library-download-btn,
+.vp-doc .custom-block a.zip-download-btn {
+  margin-block: 0;
 }

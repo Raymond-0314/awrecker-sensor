@@ -9,24 +9,20 @@
 | --- | --- |
 | 控制器 | • LEGO® Education SPIKE™ Prime Set<br>• LEGO® MINDSTORMS® Robot Inventor |
 | 感應器 | • MBC 8 路巡跡板 |
-| 程式語言 | • Pybricks |
+| 程式語言 | • Pybricks `v4.0.0`{.code-red} |
 
 ### ✔ 事前準備
 ::: warning ⚠️ 注意
-針對 Pybricks 韌體版本，MBC 提供兩種函式庫，分別支援 Pybricks 韌體 V3.6.1 與 V4.0.0。請根據你的 Pybricks 韌體版本下載 MBC 8 路巡跡板專屬函式庫。
-:::
+MBC 8 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階控制`{.code-blue} 兩種使用方法：
+- `基礎控制`{.code-blue}：簡單易懂，適合初學者。
+- `進階控制`{.code-blue}：功能廣泛，需要額外匯入 `MBC 8 路循跡板 Pybricks 函式庫`{.code-blue-text}。
 
+請根據你的需求決定是否下載函式庫：
 <script setup>
   import { withBase } from 'vitepress'
 </script>
 
 <div class="library-downloads">
-    <a
-    :href="withBase('/programs/S8/spike-pybricks/MBC_line8_Lib_v361.py')"
-    download="MBC_line8_Lib_v361.py"
-    class="zip-download-btn">
-        ⬇ V3.6.1 函式庫
-    </a>
     <a
     :href="withBase('/programs/S8/spike-pybricks/MBC_line8_obj_Lib_v400.py')"
     download="MBC_line8_obj_Lib_v400.py"
@@ -35,15 +31,21 @@
     </a>
 </div>
 
-1. 啟動你的機器人與 Pybricks。
+:::
+
+1. 啟動你的機器人與 Pybricks，確認 Pybricks 版本為 `v4.0.0`{.code-red}。
 2. 確認一切運作正常。
 3. MBC 8 路巡跡板的場地光值校正。
-4. 匯入專為 Pybricks 與 MBC 8 路巡跡板設計的專屬 Python 函式庫。
-5. 函式庫匯入步驟
+4. 根據你的需求完成以下表格內的準備工作。若同時需要 `基礎控制`{.code-blue} 與 `進階控制`{.code-blue} 功能，則兩組步驟皆須完成。
+
+| 控制種類 | 準備工作 |
+| --- | --- |
+| `基礎控制`{.code-blue} |  |
+| `進階控制`{.code-blue} | 1.  點選上方 `⬇ V4.0.0 函式庫`{.code-blue} 按鈕下載 `MBC 8 路循跡板 Pybricks 函式庫`{.code-blue}。<br>2. 確認函式庫檔名為 `MBC_line8_obj_Lib_v400.py`{.code-blue}。<br>3. 回到 Pybricks，在 `file explorer`{.code-blue} 工作區中點選 `import a file`{.code-blue} 按鈕 ![匯入](/images/tutorials/S8/spike-block/pybricks-import.svg){style="width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"}。<br>4. 選擇 `MBC_line8_obj_Lib_v400.py`{.code-blue} 函式庫並匯入。<br>5. 確認 `file explorer`{.code-blue} 工作區中出現 `MBC_line8_obj_Lib_v400.py`{.code-blue}。<br>6. 開啟你的 Pybricks 程式，在 `set up`{.code-blue} 積木下放入匯入與設定函式庫的程式積木，如下圖。其餘底盤與馬達感應器初始化則接續放置於`set up`{.code-blue} 積木下。<br>![函式庫設定](/images/tutorials/S8/spike-block/setup.png){style="display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"} |
 
 
 
-## 02 / 函數與功能說明
+## 02 / 基礎控制-函數與功能說明
 
 | 官方圖形指令 | 功能 | 數值意義說明 |
 | --- | --- | --- |
@@ -53,7 +55,9 @@
 | ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 前 4 顆光電數值 | `0-255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0~3。 |
 | ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 後 4 顆光電數值 | `0-255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0~3。 |
 
-## 03 / 範例程式
+## 03 / 進階控制-函數與功能說明
+
+## 04 / 範例程式
 
 <a
   :href="withBase('/programs/S8/spike-inventor/S8_Example_Inventor.lms')"
@@ -64,7 +68,7 @@
 
 ![範例程式](/images/tutorials/S8/spike-inventor/ex_program.webp){style="border-radius: 10px;"}
 
-## 04 / 【Lego】 Lau Xiao 示範影片
+## 05 / 【Lego】 Lau Xiao 示範影片
 
 <div style="
   display: flex;
