@@ -24,9 +24,9 @@ In the official SPIKE App, the S16 Line-Following Sensor operates in “SPIKE Co
 
 | Official Programming Block | Function | Returned Values |
 | --- | --- | --- |
-| ![Black Line Width](/images/tutorials/S16/spike-app/color.png) | Black Line Width | `0–16`<br>• The number of sensing elements detecting the black line.<br>• A typical black line produces a value of approximately 3–5. The value varies depending on line width and junction type. |
-| ![Black Line Offset](/images/tutorials/S16/spike-app/reflect.png) | Black Line Offset | `0–32`<br>• 16 indicates the center, 0 indicates the far left, and 32 indicates the far right.<br>• Subtract 16 from the reading to obtain the line-following position. Negative values indicate that the black line is on the left; positive values indicate that it is on the right.<br>• Suitable for PID line following. |
-| ![Red Value](/images/tutorials/S16/spike-app/red.png) | High-Resolution Black Line Offset | `0–200`<br>• 100 indicates the center, 0 indicates the far left, and 200 indicates the far right.<br>• Subtract 100 from the reading to obtain the high-precision line-following position. Negative values indicate that the black line is on the left; positive values indicate that it is on the right.<br>• Uses an intelligent algorithm for greater precision. Ensure that the sensor is properly calibrated before using this mode. |
+| ![Line Width](/images/tutorials/S16/spike-app/color.png) | Line Width | `0–16`<br>• The number of sensing elements detecting the line.<br>• A typical line produces a value of approximately 3–5. The value varies depending on line width and junction type. |
+| ![Line Offset](/images/tutorials/S16/spike-app/reflect.png) | Line Offset | `0–32`<br>• 16 indicates the center, 0 indicates the far left, and 32 indicates the far right.<br>• Subtract 16 from the reading to obtain the line-following position. Negative values indicate that the line is on the left; positive values indicate that it is on the right.<br>• Suitable for PID line following. |
+| ![Red Value](/images/tutorials/S16/spike-app/red.png) | High-Resolution Line Offset | `0–200`<br>• 100 indicates the center, 0 indicates the far left, and 200 indicates the far right.<br>• Subtract 100 from the reading to obtain the high-precision line-following position. Negative values indicate that the line is on the left; positive values indicate that it is on the right.<br>• Uses an intelligent algorithm for greater precision. Ensure that the sensor is properly calibrated before using this mode. |
 | ![Green Value](/images/tutorials/S16/spike-app/green.png) | Optical Values for the First 8 Sensing Elements | `0–65535`<br>• Each 2-bit field represents the value of one sensing element.<br>• Each individual value ranges from 0 to 3. |
 | ![Blue Value](/images/tutorials/S16/spike-app/blue.png) | Optical Values for the Last 8 Sensing Elements | `0–65535`<br>• Each 2-bit field represents the value of one sensing element.<br>• Each individual value ranges from 0 to 3. |
 
@@ -51,7 +51,7 @@ import { withBase } from 'vitepress'
 
   <iframe
     src="https://www.youtube.com/embed/kH8V2Pri37o?si=Zuk9fKAEN3bwXD7x"
-    title="MBC S16 Demonstration Video"
+    title="MBC S16 Demonstration Video 1"
     style="
       width: 800px;
       max-width: 100%;

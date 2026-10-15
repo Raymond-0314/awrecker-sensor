@@ -8,27 +8,27 @@
 | 要求 | 符合本教學頁面的種類 |
 | --- | --- |
 | 控制器 | • LEGO® MINDSTORMS® Robot Inventor |
-| 感應器 | • MBC 8 路巡跡板 |
+| 感應器 | • MBC 16 路巡跡板 |
 | 程式語言 | • LEGO MINDSTORMS Inventor App |
 
 ### ✔ 事前準備
 1. 啟動你的機器人與 LEGO MINDSTORMS Inventor App。
 2. 確認一切運作正常。
-3. MBC 8 路巡跡板的場地光值校正。
+3. MBC 16 路巡跡板的場地光值校正。
 
 ## 02 / 函數與功能說明
 
 ::: info ℹ️ 補充資訊
-在官方 LEGO MINDSTORMS Inventor App 中，S8 巡跡板將以「SPIKE 顏色感應器」模式運作。
+在官方 LEGO MINDSTORMS Inventor App 中，S16 巡跡板將以「SPIKE 顏色感應器」模式運作。
 :::
 
 | 官方圖形指令 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| ![黑線線寬](/images/tutorials/S8/spike-app/color.png) | 黑線線寬 | `0-8`<br>• 表示在黑線上的感應器數量。 |
-| ![黑線偏移](/images/tutorials/S8/spike-app/reflect.png) | 黑線偏移 | `0-16`<br>• 8 代表正中央，0 代表最左，16 代表最右。<br>• 數值讀取後 -8 即為循線位置 (數值為負代表黑線在左邊，數值為正代表黑線在右邊)，數值明確，適合 PID 循線。 |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 高解析黑線偏移 | `0-200`<br>• 100 代表正中央，0 代表極左，200 代表極右。<br>• 數值讀取後 -100 即為高精度循線位置 (數值為負代表黑線在左邊，數值為正代表黑線在右邊)，使用智能演算法提供更高精度的誤差範圍，使用此模式須確保感應器校準確實。 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 前 4 顆光電數值 | `0-255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0~3。 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 後 4 顆光電數值 | `0-255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0~3。 |
+| ![特徵線寬](/images/tutorials/S16/spike-app/color.png) | 特徵線寬 | `0-10`<br>• 表示在線上的感應器數量。<br>• 一般線寬約為 3 ~ 5，數值會隨線寬與路口種類而有增減。 |
+| ![線偏移量](/images/tutorials/S16/spike-app/reflect.png) | 線偏移量 | `0-32`<br>• 16 代表正中央，0 代表最左，32 代表最右。<br>• 數值讀取後 -16 即為循線位置 (數值為負代表線在左邊，數值為正代表線在右邊)。<br>• 適合 PID 循線。 |
+| ![紅色數值](/images/tutorials/S16/spike-app/red.png) | 高解析線偏移 | `0-200`<br>• 100 代表正中央，0 代表極左，200 代表極右。<br>• 數值讀取後 -100 即為高精度循線位置 (數值為負代表線在左邊，數值為正代表線在右邊)。<br>• 使用智能演算法提供更高精準度，使用此模式須確保感應器校準確實。 |
+| ![綠色數值](/images/tutorials/S16/spike-app/green.png) | 前 8 顆光電數值 | `0-255`<br>• 每 1-bit 代表一個光電數值。<br>•數值範圍 0 ~ 1。 |
+| ![藍色數值](/images/tutorials/S16/spike-app/blue.png) | 後 8 顆光電數值 | `0-255`<br>• 每 1-bit 代表一個光電數值。<br>•數值範圍 0 ~ 1。 |
 
 ## 03 / 範例程式
 <script setup>
@@ -36,52 +36,25 @@
 </script>
 
 <a
-  :href="withBase('/programs/S8/spike-inventor/S8_Example_Inventor.lms')"
-  download="S8_Example_Inventor.lms"
+  :href="withBase('/programs/S16/spike-inventor/S16_Example_Inventor.lms')"
+  download="S16_Example_Inventor.lms"
   class="zip-download-btn">
   ⬇ 範例程式下載
 </a>
 
-![範例程式](/images/tutorials/S8/spike-inventor/ex_program.webp){style="border-radius: 10px;"}
+![範例程式](/images/tutorials/S16/spike-inventor/ex_program.webp){style="border-radius: 10px;"}
 
 ## 04 / 【Lego】 Lau Xiao 示範影片
 
-<div style="
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
-  width: 100%;
-  margin: 24px auto;
-">
+<div style="display: flex; justify-content: center; align-items: center; gap: 24px; flex-wrap: wrap; margin: 24px auto;">
 
-  <!-- Shorts 影片 1 -->
   <iframe
-    src="https://www.youtube.com/embed/WgacdWLatbk"
-    title="MBC S8 示範影片 1"
+    src="https://www.youtube.com/embed/kH8V2Pri37o?si=Zuk9fKAEN3bwXD7x"
+    title="MBC S16 示範影片 1"
     style="
-      width: 315px;
+      width: 800px;
       max-width: 100%;
-      aspect-ratio: 9 / 16;
-      height: auto;
-      border: none;
-      border-radius: 12px;
-      display: block;
-    "
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-
-  <!-- Shorts 影片 2 -->
-  <iframe
-    src="https://www.youtube.com/embed/Y2evkfTkOO4"
-    title="MBC S8 示範影片 2"
-    style="
-      width: 315px;
-      max-width: 100%;
-      aspect-ratio: 9 / 16;
-      height: auto;
+      aspect-ratio: 16 / 9;
       border: none;
       border-radius: 12px;
       display: block;
