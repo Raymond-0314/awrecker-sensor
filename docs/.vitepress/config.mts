@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 const base = process.env.PAGES_BASE || '/'
 
 export default defineConfig({
-  title: 'AWRECKER Sensors',
+  title: 'AXIONE Sensors',
   description: '產品介紹、使用手冊與程式範例 / Product documentation and examples',
   base,
   appearance: 'dark',
@@ -33,7 +33,7 @@ export default defineConfig({
 
   themeConfig: {
     logo: `/images/icon/icon.png`,
-    siteTitle: 'AWRECKER',
+    siteTitle: 'AXIONE',
     nav: [],
     sidebar: false,
     outline: false,

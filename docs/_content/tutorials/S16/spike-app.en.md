@@ -50,9 +50,16 @@ import { withBase } from 'vitepress'
 <div style="display: flex; justify-content: center; align-items: center; gap: 24px; flex-wrap: wrap; margin: 24px auto;">
 
   <iframe
-    src="https://www.youtube.com/embed/kH8V2Pri37o"
-    title="MBC S16 Demonstration Video 1"
-    style="width: 315px; max-width: 100%; aspect-ratio: 9 / 16; border: none; border-radius: 12px; display: block;"
+    src="https://www.youtube.com/embed/kH8V2Pri37o?si=Zuk9fKAEN3bwXD7x"
+    title="MBC S16 Demonstration Video"
+    style="
+      width: 800px;
+      max-width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+      border-radius: 12px;
+      display: block;
+    "
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen>
   </iframe>
