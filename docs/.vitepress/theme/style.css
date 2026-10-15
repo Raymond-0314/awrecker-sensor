@@ -2279,3 +2279,19 @@ body:has(.sensor-home) {
     padding: 8px 4px;
   }
 } 
+
+/* 一般：透明底、白色文字與外框 */
+.vp-doc a.zip-download-btn {
+  background-color: transparent;
+  color: #fff !important;
+  border: 1px solid currentColor;
+  box-sizing: border-box;
+}
+
+/* 滑鼠移入：白底、黑字 */
+.vp-doc a.zip-download-btn:hover {
+  background-color: #fff;
+  color: #111 !important;
+  border-color: #fff;
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+}

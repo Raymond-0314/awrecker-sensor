@@ -1,65 +1,57 @@
-
 # Tutorial
 
 ## 01 / Getting Started
 
-### ✔ Make sure your controller, sensor, and programming environment match those used in this tutorial:
+### ✔ Confirm that your controller, sensor, and programming environment match this tutorial:
 
-| Requirement | Supported Hardware / Software |
+| Requirement | Supported Types for This Tutorial |
 | --- | --- |
 | Controller | • LEGO® Education SPIKE™ Prime Set<br>• LEGO® MINDSTORMS® Robot Inventor |
-| Sensor | • MBC 8-Channel Line Following Sensor |
+| Sensor | • MBC 16-Channel Line-Following Sensor |
 | Programming Environment | • LEGO Education SPIKE 3 App |
 
-### ✔ Before You Begin
+### ✔ Preparation
 
 1. Turn on your robot and launch the LEGO Education SPIKE 3 App.
-2. Make sure everything is working properly.
-3. Calibrate the MBC 8-Channel Line Following Sensor for the lighting conditions of your field.
+2. Confirm that everything is working properly.
+3. Calibrate the MBC 16-Channel Line-Following Sensor for the lighting conditions of your track.
 
 ## 02 / Functions and Features
 
 ::: info ℹ️ Additional Information
-In the official SPIKE App, the S8 Line Following Sensor operates in "SPIKE Color Sensor" mode.
+In the official SPIKE App, the S16 Line-Following Sensor operates in “SPIKE Color Sensor” mode.
 :::
 
-| Official Programming Block | Function | Value Description |
+| Official Programming Block | Function | Returned Values |
 | --- | --- | --- |
-| ![Black Line Width](/images/tutorials/S8/spike-app/color.png) | Black Line Width | `0-8`<br>• Indicates the number of sensors detecting the black line. |
-| ![Black Line Offset](/images/tutorials/S8/spike-app/reflect.png) | Black Line Offset | `0-16`<br>• 8 represents the center, 0 represents the far left, and 16 represents the far right.<br>• Subtract 8 from the reading to obtain the line-following position (negative values indicate the line is to the left; positive values indicate it is to the right). This provides a clear position value suitable for PID line following. |
-| ![Red Value](/images/tutorials/S8/spike-app/red.png) | High-Resolution Black Line Offset | `0-200`<br>• 100 represents the center, 0 represents the far left, and 200 represents the far right.<br>• Subtract 100 from the reading to obtain the high-precision line-following position (negative values indicate the line is to the left; positive values indicate it is to the right). An intelligent algorithm provides higher-resolution error values. Make sure the sensor is properly calibrated when using this mode. |
-| ![Green Value](/images/tutorials/S8/spike-app/green.png) | First 4 Photoelectric Sensor Values | `0-65535`<br>• Each 4-bit segment represents one photoelectric sensor value, providing 15 levels of resolution (value range: 0–15). |
-| ![Blue Value](/images/tutorials/S8/spike-app/blue.png) | Last 4 Photoelectric Sensor Values | `0-65535`<br>• Each 4-bit segment represents one photoelectric sensor value, providing 15 levels of resolution (value range: 0–15). |
+| ![Black Line Width](/images/tutorials/S16/spike-app/color.png) | Black Line Width | `0–16`<br>• The number of sensing elements detecting the black line.<br>• A typical black line produces a value of approximately 3–5. The value varies depending on line width and junction type. |
+| ![Black Line Offset](/images/tutorials/S16/spike-app/reflect.png) | Black Line Offset | `0–32`<br>• 16 indicates the center, 0 indicates the far left, and 32 indicates the far right.<br>• Subtract 16 from the reading to obtain the line-following position. Negative values indicate that the black line is on the left; positive values indicate that it is on the right.<br>• Suitable for PID line following. |
+| ![Red Value](/images/tutorials/S16/spike-app/red.png) | High-Resolution Black Line Offset | `0–200`<br>• 100 indicates the center, 0 indicates the far left, and 200 indicates the far right.<br>• Subtract 100 from the reading to obtain the high-precision line-following position. Negative values indicate that the black line is on the left; positive values indicate that it is on the right.<br>• Uses an intelligent algorithm for greater precision. Ensure that the sensor is properly calibrated before using this mode. |
+| ![Green Value](/images/tutorials/S16/spike-app/green.png) | Optical Values for the First 8 Sensing Elements | `0–65535`<br>• Each 2-bit field represents the value of one sensing element.<br>• Each individual value ranges from 0 to 3. |
+| ![Blue Value](/images/tutorials/S16/spike-app/blue.png) | Optical Values for the Last 8 Sensing Elements | `0–65535`<br>• Each 2-bit field represents the value of one sensing element.<br>• Each individual value ranges from 0 to 3. |
 
 ## 03 / Example Program
+
 <script setup>
-  import { withBase } from 'vitepress'
+import { withBase } from 'vitepress'
 </script>
 
 <a
-  :href="withBase('/programs/S8/spike-app/S8_Example_SpikeApp.llsp3')"
-  download="S8_Example.llsp3"
+  :href="withBase('/programs/S16/spike-app/S16_Example_SpikeApp.llsp3')"
+  download="S16_Example_SpikeApp.llsp3"
   class="zip-download-btn">
   ⬇ Download Example Program
 </a>
 
-![Example Program](/images/tutorials/S8/spike-app/ex_program.png){style="border-radius: 10px;"}
+![Example Program](/images/tutorials/S16/spike-app/ex_program.png){style="border-radius: 10px;"}
 
-## 04 / 【LEGO】 Lau Xiao Demonstration Videos
+## 04 / 【Lego】 Lau Xiao Demonstration Video
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 24px; flex-wrap: wrap; margin: 24px auto;">
 
   <iframe
-    src="https://www.youtube.com/embed/WgacdWLatbk"
-    title="MBC S8 Demonstration Video 1"
-    style="width: 315px; max-width: 100%; aspect-ratio: 9 / 16; border: none; border-radius: 12px; display: block;"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-
-  <iframe
-    src="https://www.youtube.com/embed/Y2evkfTkOO4"
-    title="MBC S8 Demonstration Video 2"
+    src="https://www.youtube.com/embed/kH8V2Pri37o"
+    title="MBC S16 Demonstration Video 1"
     style="width: 315px; max-width: 100%; aspect-ratio: 9 / 16; border: none; border-radius: 12px; display: block;"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen>
@@ -67,4 +59,4 @@ In the official SPIKE App, the S8 Line Following Sensor operates in "SPIKE Color
 
 </div>
 
-[Back to Home — Choose Another Tutorial](/)
+[Return to the homepage to choose another tutorial](/en/)

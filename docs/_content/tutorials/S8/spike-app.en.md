@@ -38,7 +38,7 @@ In the official SPIKE App, the S8 Line Following Sensor operates in "SPIKE Color
 
 <a
   :href="withBase('/programs/S8/spike-app/S8_Example_SpikeApp.llsp3')"
-  download="S8_Example.llsp3"
+  download="S8_Example_SpikeApp.llsp3"
   class="zip-download-btn">
   ⬇ Download Example Program
 </a>
