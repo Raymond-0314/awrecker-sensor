@@ -9,6 +9,7 @@ import TutorialPicker from './components/TutorialPicker.vue'
 import { initTableScroll } from './table-scroll'
 
 import './style.css'
+import DownloadButton from './components/DownloadButton.vue'
 
 export default {
   extends: DefaultTheme,
@@ -21,6 +22,7 @@ export default {
   enhanceApp({ app }) {
     app.component('SensorHome', Home)
     app.component('TutorialPicker', TutorialPicker)
+    app.component('DownloadButton', DownloadButton)
   },
 
   setup() {
