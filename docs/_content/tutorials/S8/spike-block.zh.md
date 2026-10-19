@@ -9,7 +9,7 @@
 | --- | --- |
 | 控制器 | • LEGO® Education SPIKE™ Prime Set<br>• LEGO® MINDSTORMS® Robot Inventor |
 | 感應器 | • MBC 8 路巡跡板 |
-| 程式語言 | • Pybricks `v4.0.0`{.code-red} |
+| 程式語言 | • Pybricks - Blocks `v4.0.0`{.code-red} |
 
 ### ✔ 事前準備
 ::: warning ⚠️ 注意
@@ -30,12 +30,12 @@ MBC 8 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階�
 2. 確認一切運作正常。
 3. MBC 8 路巡跡板的場地光值校正。
 
+::: info ℹ️ 補充資訊
+在 Pybricks 中，S8 巡跡板將以「SPIKE 顏色感應器」模式運作。
+:::
+
 
 ## 02 / 基礎控制-前置作業與函數功能說明
-
-::: info ℹ️ 補充資訊
-在官方 SPIKE App 中，S8 巡跡板將以「SPIKE 顏色感應器」模式運作。
-:::
 
 ### ✔ 數值解碼函數設定
 1. 開啟你的 Pybricks 程式，在 `set up`{.code-blue} 積木下放入顏色感應器設定積木，如下圖。其餘底盤與馬達感應器初始化則接續放置於`set up`{.code-blue} 積木下。
@@ -64,7 +64,7 @@ MBC 8 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階�
 
 ## 03 / 進階控制-前置作業與函數與功能說明
 ### ✔ 函數設定
-1.  點選上方 `⬇ V4.0.0 函式庫`{.code-blue} 按鈕下載 `MBC 8 路循跡板 Pybricks 函式庫`{.code-blue}。
+1.  點選上方 <code class="code-blue"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: inline-block; vertical-align: -0.125em; margin-right: 4px;"><path d="M12 3v12m-5-5 5 5 5-5"></path><path d="M5 16v5h14v-5"></path></svg>v4.0.0 函式庫</code> 按鈕下載 `MBC 8 路循跡板 Pybricks 函式庫`{.code-blue}。
 2. 確認函式庫檔名為 `MBC_line8_obj_Lib_v400.py`{.code-blue}。
 3. 回到 Pybricks，在 `file explorer`{.code-blue} 工作區中點選 `import a file`{.code-blue} 按鈕 ![匯入](/images/tutorials/S8/spike-block/pybricks-import.svg){style="width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"}。
 4. 選擇 `MBC_line8_obj_Lib_v400.py`{.code-blue} 函式庫並匯入。
