@@ -48,51 +48,36 @@ MBC 8 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階�
 #### set up
 | 官方圖形指令 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| ![導入函式庫](/images/tutorials/S8/ev3-block/setup.png) | 導入函式庫 | • 從檔案`MBC_line8_EV3_Lib.py`{.code-green} 中匯入以下函式： `line_init_port_multitask()`{.code-green}、`line_pos8()`{.code-green}、`line_ir_ch()`{.code-green}、`line_pos100()`{.code-green}、`line_width()`{.code-green}、`line_edge_l()`{.code-green}、`line_edge_r()`{.code-green}。<br>• 名稱需要完全相同。 |
-| ![函式庫設定](/images/tutorials/S8/ev3-block/setting.png) | 函式庫設定 | • `call`{.code-green} 與 `false` 為同步模式設定，`await/true`{.code-green} 啟動非同步模式，`call/false`{.code-green} 則保持同步模式。<br>• `line8`{.code-green} 為後續使用數值讀取功能時使用的名稱。<br>• `4`{.code-green} 為 MBC 8 路巡跡板的連接埠 (port)，`1 ~ 6`{.code-green} 依序為 `A ~ F`{.code-green}。 |
+| ![導入函式庫](/images/tutorials/S8/ev3-block/setup.png){style="display: block; width: 400px; height: auto;"} | 導入函式庫 | • 從檔案`MBC_line8_EV3_Lib.py`{.code-green} 中匯入以下函式： `line_init_port_multitask()`{.code-green}、`line_pos8()`{.code-green}、`line_ir_ch()`{.code-green}、`line_pos100()`{.code-green}、`line_width()`{.code-green}、`line_edge_l()`{.code-green}、`line_edge_r()`{.code-green}。<br>• 名稱需要完全相同。 |
+| ![函式庫設定](/images/tutorials/S8/ev3-block/setting.png){style="display: block; width: 400px; height: auto;"} | 函式庫設定 | • `call`{.code-green} 與 `false`{.code-green} 為同步模式設定，`await/true`{.code-green} 啟動非同步模式，`call/false`{.code-green} 則保持同步模式。<br>• `line8`{.code-green} 為後續使用數值讀取功能時使用的名稱。<br>• `4`{.code-green} 為 MBC 8 路巡跡板的連接埠 (port)，`1 ~ 6`{.code-green} 依序為 `A ~ F`{.code-green}。 |
 
 ::: info ℹ️ 補充資訊
 - 同步模式設定說明：
 
 | 官方圖形指令 | 模式 | 說明 |
 | --- | --- | --- |
-| ![導入函式庫](/images/tutorials/S8/spike-block/adv_import.png) | 導入函式庫 | • 從檔案`MBC_line8_EV3_Lib.py`{.code-green} 中匯入 `MBC_LINE8`{.code-green} 類別。<br>• 名稱需要完全相同。<br>• `MBC_LINE8`{.code-green} 為函式庫中設定的類別 (class) 名稱。 |
-| ![函式庫設定](/images/tutorials/S8/spike-block/adv_setting_false.png) | 同步模式，設定為 `false`{.code-green} | • 數值讀取時須搭配 `call`{.code-green} 做使用。![await](/images/tutorials/S8/spike-block/adv_pos8_call.png){style="display: block; width: 300px; max-width: 100%; height: auto; margin: 10px;"}• 不可搭配 `multitask`{.code-green} 積木使用。 |
+| ![函式庫設定](/images/tutorials/S8/ev3-block/setting_await.png) | 非同步模式，設定為 `await`{.code-green} 與 `true`{.code-green} | • 數值讀取時須搭配 `await`{.code-green} 做使用。![await](/images/tutorials/S8/ev3-block/pos8_await.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"}• 可以搭配 `multitask`{.code-green} 積木使用。![multitask](/images/tutorials/S8/spike-block/multitask.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"} |
+| ![函式庫設定](/images/tutorials/S8/ev3-block/setting_call.png) | 同步模式，設定為 `call`{.code-green} 與 `false`{.code-green} | • 數值讀取時須搭配 `call`{.code-green} 做使用。![await](/images/tutorials/S8/ev3-block/pos8.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"}• 不可搭配 `multitask`{.code-green} 積木使用。 |
 :::
 
 #### 數值讀取
 | 官方圖形指令 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| ![循線位置](/images/tutorials/S8/spike-block/adv_pos8.png) | 循線位置 | `-8 ~ +8`<br>• 取得循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 適合基本 PID 循線控制。 |
-| ![高解析循線位置](/images/tutorials/S8/spike-block/adv_pos100.png) | 高解析循線位置 | `-100 ~ +100`<br>• 取得高解析度循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 精度遠高於 `getLinePos8()`{.code-green}。<br>• 適合高階 PID 精密循線。<br>• 必須確實完成感應器校準，校準越精確數值越準確。 |
-| ![特徵線寬](/images/tutorials/S8/spike-block/adv_width.png) | 特徵線寬 | `0 ~ 8`<br>• 在線上的感測器數量。<br>• 用於偵測十字路口、T 字路口等寬線特徵。<br>• 同時適用於 `line_pos8()`{.code-green} 與 `line_pos100()`{.code-green} 兩種解析度模式。 |
-| ![8 路光電數值](/images/tutorials/S8/spike-block/adv_ir_cal.png) | 8 通道紅外線反射光值 | `list[8]`<br>• 回傳 8 路校正後紅外線反射光值陣列。<br>• `index = 0`{.code-green} 表示通道 `0`{.code-green-text} 的紅外線感應器，`index = 0`{.code-green} 表示通道 `8`{.code-green-text} 的紅外線感應器。<br>• 各光電數值範圍 `0 ~ 100`{.code-green}。 |
-| ![指定通道紅外線反射光值](/images/tutorials/S8/spike-block/adv_ir_ch.png) | 指定通道紅外線反射光值 | `0 ~ 100`<br>• 設定通道編號並讀取單一通道的校正光值。<br>• 輸入數值範圍 `1 ~ 8`{.code-green}，表示欲讀取的通道編號。 |
-| ![線群數量](/images/tutorials/S8/spike-block/adv_junc.png) | 線群數量 | `0, 1, 2+`<br>• 回傳偵測到的線群數量。<br>• `0`{.code-green-text} 表示無線，`1`{.code-green-text} 表示單線，`2+`{.code-green-text} 表示路口分叉。 |
-| ![路口種類](/images/tutorials/S8/spike-block/adv_junc_name.png) | 路口種類 | `str`<br>• 回傳路口狀態的文字描述。<br>• `none`{.code-green-text} 表示無線，`line`{.code-green-text} 表示單線，`junction`{.code-green-text} 表示路口分叉。 |
-| ![8 通道紅外線感應器是否在線上](/images/tutorials/S8/spike-block/adv_bin.png) | 8 通道紅外線感應器是否在線上 | `0 ~ 255`<br>• 讀取 8 通道紅外線感應器是否偵測到線。<br>• 以 `8-bit`{.code-green}表示，需先轉為 2 進位表示法，此時會有 8 個數字，分別代表 8 通道測線狀況。<br>• `bit 0`{.code-green} 為通道 `1`{.code-green-text} 的狀態。`1`{.code-green-text} 表示偵測到線，`0`{.code-green-text} 表示未偵測到線。<br>• 舉例：回傳 `6`{.code-green-text} (十進位)，轉為二進位表示法為 `00000110`{.code-green-text}，表示通道 `2`{.code-green-text} 與通道 `3`{.code-green-text} 偵測到線。 |
-| ![8 通道紅外線感應器測線列表](/images/tutorials/S8/spike-block/adv_on_sensors.png) | 8 通道紅外線感應器測線列表 | `list[int]`<br>• 回傳測到線的紅外線感應器編號列表。<br>• 舉例：`[4, 5]`{.code-green} 表示通道 `4`{.code-green-text} 與通道 `5`{.code-green-text} 偵測到線。 |
-| ![all](/images/tutorials/S8/spike-block/adv_all.png) | 讀取所有數值 | `dict`<br>• 一次讀取上述所有數據。<br>• 回傳含有所有欄位的字典 `dict`{.code-green}。<br>• 包含：`ir_calibration`{.code-green}、`line_pos8`{.code-green}、`line_pos100`{.code-green}、`line_width`{.code-green}、`bin_raw`{.code-green}、`on_sensors`{.code-green}、`junction`{.code-green}、`junction_name`{.code-green} 等。 |
+| ![循線位置](/images/tutorials/S8/ev3-block/pos8.png) | 循線位置 | `-8 ~ +8`<br>• 取得循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 適合基本 PID 循線控制。 |
+| ![指定通道紅外線反射光值](/images/tutorials/S8/ev3-block/ir_ch.png) | 指定通道紅外線反射光值 | `1 ~ 9`<br>• 設定通道編號並讀取單一通道的校正光值。<br>• 輸入數值範圍 `1 ~ 8`{.code-green}，表示欲讀取的通道編號。<br>• 回傳數值 `1`{.code-green-text} 最暗，`9`{.code-green-text} 最亮。 |
+| ![高解析循線位置](/images/tutorials/S8/ev3-block/pos100.png) | 高解析循線位置 | `-100 ~ +100`<br>• 取得高解析度循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 精度遠高於 `line_pos8()`{.code-green}。<br>• 適合高階 PID 精密循線。<br>• 必須確實完成感應器校準，校準越精確數值越準確。 |
+| ![特徵線寬](/images/tutorials/S8/ev3-block/width.png) | 特徵線寬 | `0 ~ 8`<br>• 在線上的感測器數量。<br>• 用於偵測十字路口、T 字路口等寬線特徵。<br>• 同時適用於 `line_pos8()`{.code-green} 與 `line_pos100()`{.code-green} 兩種解析度模式。 |
+| ![左邊界感測器光值](/images/tutorials/S8/ev3-block/edge_l.png) | 左邊界感測器光值 | `0 ~ 100`<br>• 取得左邊界感測器的光值，用於防掉線。<br>• `0`{.code-green-text} 為黑，`100`{.code-green-text} 為白。 |
+| ![右邊界感測器光值](/images/tutorials/S8/ev3-block/edge_r.png) | 右邊界感測器光值 | `0 ~ 100`<br>• 取得右邊界感測器的光值，用於防掉線。<br>• `0`{.code-green-text} 為黑，`100`{.code-green-text} 為白。 |
 
 ## 03 / 範例程式
-
-### ✔ 基礎控制
 <DownloadButton
-  href="/programs/S8/spike-pybricks/S8_Example_Pybricks_Block_Basic.py"
-  download="S8_Example_Pybricks_Block_Basic.py"
-  label="範例程式下載（基礎控制）"
+  href="/programs/S8/ev3-pybricks/S8_Example_Pybricks_Blocks_EV3.py"
+  download="S8_Example_Pybricks_Blocks_EV3.py"
+  label="範例程式下載"
 />
 
-![範例程式](/images/tutorials/S8/spike-block/ex_program_basic.png){style="border-radius: 10px;"}
-
-### ✔ 進階控制
-<DownloadButton
-  href="/programs/S8/spike-pybricks/S8_Example_Pybricks_Block_Advanced.py"
-  download="S8_Example_Pybricks_Block_Advanced.py"
-  label="範例程式下載 (進階控制)"
-/>
-
-![範例程式](/images/tutorials/S8/spike-block/ex_program_adv.png){style="border-radius: 10px;"}
+![範例程式](/images/tutorials/S8/ev3-block/ex_program.png){style="border-radius: 10px;"}
 
 ## 04 / 【Lego】 Lau Xiao 示範影片
 

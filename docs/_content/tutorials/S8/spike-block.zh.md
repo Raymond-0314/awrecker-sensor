@@ -93,8 +93,8 @@ MBC 8 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階�
 | 官方圖形指令 | 功能 | 數值意義說明 |
 | --- | --- | --- |
 | ![循線位置](/images/tutorials/S8/spike-block/adv_pos8.png) | 循線位置 | `-8 ~ +8`<br>• 取得循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 適合基本 PID 循線控制。 |
-| ![高解析循線位置](/images/tutorials/S8/spike-block/adv_pos100.png) | 高解析循線位置 | `-100 ~ +100`<br>• 取得高解析度循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 精度遠高於 `getLinePos8()`{.code-green}。<br>• 適合高階 PID 精密循線。<br>• 必須確實完成感應器校準，校準越精確數值越準確。 |
-| ![特徵線寬](/images/tutorials/S8/spike-block/adv_width.png) | 特徵線寬 | `0 ~ 8`<br>• 在線上的感測器數量。<br>• 用於偵測十字路口、T 字路口等寬線特徵。<br>• 同時適用於 `line_pos8()`{.code-green} 與 `line_pos100()`{.code-green} 兩種解析度模式。 |
+| ![高解析循線位置](/images/tutorials/S8/spike-block/adv_pos100.png) | 高解析循線位置 | `-100 ~ +100`<br>• 取得高解析度循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 精度遠高於 `pos8()`{.code-green}。<br>• 適合高階 PID 精密循線。<br>• 必須確實完成感應器校準，校準越精確數值越準確。 |
+| ![特徵線寬](/images/tutorials/S8/spike-block/adv_width.png) | 特徵線寬 | `0 ~ 8`<br>• 在線上的感測器數量。<br>• 用於偵測十字路口、T 字路口等寬線特徵。<br>• 同時適用於 `pos8()`{.code-green} 與 `pos100()`{.code-green} 兩種解析度模式。 |
 | ![8 路光電數值](/images/tutorials/S8/spike-block/adv_ir_cal.png) | 8 通道紅外線反射光值 | `list[8]`<br>• 回傳 8 路校正後紅外線反射光值陣列。<br>• `index = 0`{.code-green} 表示通道 `0`{.code-green-text} 的紅外線感應器，`index = 0`{.code-green} 表示通道 `8`{.code-green-text} 的紅外線感應器。<br>• 各光電數值範圍 `0 ~ 100`{.code-green}。 |
 | ![指定通道紅外線反射光值](/images/tutorials/S8/spike-block/adv_ir_ch.png) | 指定通道紅外線反射光值 | `0 ~ 100`<br>• 設定通道編號並讀取單一通道的校正光值。<br>• 輸入數值範圍 `1 ~ 8`{.code-green}，表示欲讀取的通道編號。 |
 | ![線群數量](/images/tutorials/S8/spike-block/adv_junc.png) | 線群數量 | `0, 1, 2+`<br>• 回傳偵測到的線群數量。<br>• `0`{.code-green-text} 表示無線，`1`{.code-green-text} 表示單線，`2+`{.code-green-text} 表示路口分叉。 |
