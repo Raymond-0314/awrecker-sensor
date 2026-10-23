@@ -57,7 +57,7 @@ def getLineWidth100():
 ```
 
 ### ✔ 函數功能說明
-| 官方圖形指令 | 功能 | 數值意義說明 |
+| 程式碼 | 功能 | 數值意義說明 |
 | --- | --- | --- |
 | `getLinePos8()`{.code-blue} | 循線位置 | `-8 ~ +8`<br>• 取得循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 適合基本 PID 循線控制。 |
 | `getLineWidth8()`{.code-blue} | 特徵線寬 | `0 ~ 8`<br>• 在線上的感測器數量。<br>• 用於偵測十字路口、T 字路口等寬線特徵。 |
@@ -86,7 +86,7 @@ line8 = MBC_LINE8(3, True)
 ### ✔ 函數功能說明
 
 #### set up
-| 官方圖形指令 | 功能 | 數值意義說明 |
+| 程式碼 | 功能 | 數值意義說明 |
 | --- | --- | --- |
 | `from MBC_line8_obj_Lib_v400 import MBC_LINE8`{.code-blue} | 導入函式庫 | • 從檔案`MBC_line8_obj_Lib_v400.py`{.code-green} 中匯入 `MBC_LINE8`{.code-green} 類別。<br>• 名稱需要完全相同。<br>• `MBC_LINE8`{.code-green} 為函式庫中設定的類別 (class) 名稱。 |
 | `line8 = MBC_LINE8(3, True)`{.code-blue} | 函式庫設定 | • `line8`{.code-green} 為後續使用數值讀取功能時使用的名稱。<br>• `MBC_LINE8`{.code-green} 為函式庫中設定的類別 (class) 名稱。<br>• `3`{.code-green} 為 MBC 8 路巡跡板的連接埠 (port)，`1 ~ 6`{.code-green} 依序為 `A ~ F`{.code-green}。<br>• `true`{.code-green} 為同步模式設定，`True`{.code-green} 啟動非同步模式，`False`{.code-green} 則保持同步模式。 |
@@ -94,14 +94,14 @@ line8 = MBC_LINE8(3, True)
 ::: info ℹ️ 補充資訊
 - 同步模式設定說明：
 
-| 官方圖形指令 | 模式 | 說明 |
+| 程式碼 | 模式 | 說明 |
 | --- | --- | --- |
 | `line8 = MBC_LINE8(3, True)`{.code-blue} | 非同步模式，設定為 `true`{.code-green} | • 呼叫函數時須搭配 `await`{.code-green} 做使用：`await line8.pos8()`{.code-green}。<br>• 可以搭配 `multitask`{.code-green} 積木使用：`await multitask()`{.code-green}。 |
 | `line8 = MBC_LINE8(3, False)`{.code-blue} | 同步模式，設定為 `false`{.code-green} | • 呼叫函數時可直接使用：`line8.pos8()`{.code-green}。<br>• 不可搭配 `multitask`{.code-green} 積木使用。 |
 :::
 
 #### 數值讀取
-| 官方圖形指令 | 功能 | 數值意義說明 |
+| 程式碼 | 功能 | 數值意義說明 |
 | --- | --- | --- |
 | `line8.pos8()`{.code-blue} | 循線位置 | `-8 ~ +8`<br>• 取得循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 適合基本 PID 循線控制。 |
 | `line8.pos100()`{.code-blue} | 高解析循線位置 | `-100 ~ +100`<br>• 取得高解析度循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 精度遠高於 `getLinePos8()`{.code-green}。<br>• 適合高階 PID 精密循線。<br>• 必須確實完成感應器校準，校準越精確數值越準確。 |
