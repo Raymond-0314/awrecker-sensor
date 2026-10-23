@@ -54,10 +54,11 @@ Download the library if required for your application:
 ### ✔ Functions and Features
 
 #### Setup
+
 | Programming Block | Function | Description |
 | --- | --- | --- |
 | ![Import Library](/images/tutorials/S8/ev3-block/setup.png){style="display: block; width: 400px; height: auto;"} | Import Library | • Imports the following functions from `MBC_line8_EV3_Lib.py`{.code-green}: `line_init_port_multitask()`{.code-green}, `line_pos8()`{.code-green}, `line_ir_ch()`{.code-green}, `line_pos100()`{.code-green}, `line_width()`{.code-green}, `line_edge_l()`{.code-green}, and `line_edge_r()`{.code-green}.<br>• The names must match exactly. |
-| ![Library Configuration](/images/tutorials/S8/ev3-block/setting.png){style="display: block; width: 400px; height: auto;"} | Library Configuration | • `call`{.code-green} and `false`{.code-green} select synchronous mode. Use `await/true`{.code-green} to enable asynchronous mode, or `call/false`{.code-green} to keep synchronous mode.<br>• `line8`{.code-green} is the name used for subsequent data-reading operations.<br>• `4`{.code-green} specifies the port connected to the MBC 8-Channel Line-Following Sensor. Values `1 ~ 6`{.code-green} correspond to ports `A ~ F`{.code-green}, respectively. |
+| ![Library Configuration](/images/tutorials/S8/ev3-block/setting.png){style="display: block; width: 400px; height: auto;"} | Library Configuration | • `call`{.code-green} and `false`{.code-green} select synchronous mode. Use `await/true`{.code-green} to enable asynchronous mode, or `call/false`{.code-green} to keep synchronous mode.<br>• `line8`{.code-green} is the name used for subsequent data-reading operations.<br>• `4`{.code-green} specifies the port connected to the MBC 8-Channel Line-Following Sensor. Values `1 ~ 4`{.code-green} correspond to ports `A ~ D`{.code-green}, respectively. |
 
 ::: info ℹ️ Additional Information
 - Synchronization mode settings:
@@ -71,16 +72,33 @@ Download the library if required for your application:
 
 #### Reading Values
 
+::: danger 🚨 Warning
+The MBC library provides six functions across three modes. Due to hardware communication limitations of the EV3 controller, switching between modes introduces a delay of approximately 0.5 seconds. During high-speed competition, this may cause the robot to lose control. Use only one mode for data readings within your program loop. For competition use, we recommend using the four functions in `Mode 3: Recommended for Competition`{.code-blue} throughout the program.
+:::
+
+##### Mode 1: General Functions
+
 | Programming Block | Function | Returned Values |
 | --- | --- | --- |
 | ![Line Position](/images/tutorials/S8/ev3-block/pos8.png) | Line Position | `-8 ~ +8`<br>• Retrieves the line position.<br>• `0`{.code-green-text} indicates the center. Negative values indicate left, and positive values indicate right.<br>• Suitable for basic PID line-following control. |
+
+##### Mode 2: Full Array / Custom Functions
+
+| Programming Block | Function | Returned Values |
+| --- | --- | --- |
 | ![Individual Channel Infrared Reflectance](/images/tutorials/S8/ev3-block/ir_ch.png) | Individual Channel Infrared Reflectance | `1 ~ 9`<br>• Reads the calibrated reflectance value of a single channel specified by its channel number.<br>• The input range is `1 ~ 8`{.code-green}, specifying the channel to read.<br>• A return value of `1`{.code-green-text} indicates the darkest reading, and `9`{.code-green-text} indicates the brightest. |
+
+##### Mode 3: Recommended for Competition
+
+| Programming Block | Function | Returned Values |
+| --- | --- | --- |
 | ![High-Resolution Line Position](/images/tutorials/S8/ev3-block/pos100.png) | High-Resolution Line Position | `-100 ~ +100`<br>• Retrieves the high-resolution line position.<br>• `0`{.code-green-text} indicates the center. Negative values indicate left, and positive values indicate right.<br>• Provides much higher precision than `line_pos8()`{.code-green}.<br>• Suitable for advanced, precise PID line following.<br>• Proper sensor calibration is required. More accurate calibration produces more accurate readings. |
 | ![Line Width](/images/tutorials/S8/ev3-block/width.png) | Line Width | `0 ~ 8`<br>• The number of sensing elements detecting the line.<br>• Used to detect wide-line features, such as crossroads and T-junctions.<br>• Works with both `line_pos8()`{.code-green} and `line_pos100()`{.code-green} resolution modes. |
 | ![Left Edge Sensor Reflectance](/images/tutorials/S8/ev3-block/edge_l.png) | Left Edge Sensor Reflectance | `0 ~ 100`<br>• Retrieves the reflectance value of the leftmost sensing element to help prevent line loss.<br>• `0`{.code-green-text} indicates black, and `100`{.code-green-text} indicates white. |
 | ![Right Edge Sensor Reflectance](/images/tutorials/S8/ev3-block/edge_r.png) | Right Edge Sensor Reflectance | `0 ~ 100`<br>• Retrieves the reflectance value of the rightmost sensing element to help prevent line loss.<br>• `0`{.code-green-text} indicates black, and `100`{.code-green-text} indicates white. |
 
 ## 03 / Example Program
+
 <DownloadButton
   href="/programs/S8/ev3-pybricks/S8_Example_Pybricks_Blocks_EV3.py"
   download="S8_Example_Pybricks_Blocks_EV3.py"

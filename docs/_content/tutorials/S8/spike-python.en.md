@@ -64,7 +64,7 @@ def getLineWidth100():
 
 ### ✔ Functions and Features
 
-| Function Call | Function | Returned Values |
+| Code | Function | Returned Values |
 | --- | --- | --- |
 | `getLinePos8()`{.code-blue} | Line Position | `-8 ~ +8`<br>• Retrieves the line position.<br>• `0`{.code-green-text} indicates the center. Negative values indicate left, and positive values indicate right.<br>• Suitable for basic PID line-following control. |
 | `getLineWidth8()`{.code-blue} | Line Width | `0 ~ 8`<br>• The number of sensing elements detecting the line.<br>• Used to detect wide-line features, such as crossroads and T-junctions. |
