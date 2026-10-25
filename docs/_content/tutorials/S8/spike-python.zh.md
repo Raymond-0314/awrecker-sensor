@@ -62,7 +62,7 @@ def getLineWidth100():
 | `getLinePos8()`{.code-blue} | 循線位置 | `-8 ~ +8`<br>• 取得循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 適合基本 PID 循線控制。 |
 | `getLineWidth8()`{.code-blue} | 特徵線寬 | `0 ~ 8`<br>• 在線上的感測器數量。<br>• 用於偵測十字路口、T 字路口等寬線特徵。 |
 | `getLinePos100()`{.code-blue} | 高解析循線位置 | `-100 ~ +100`<br>• 取得高解析度循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 精度遠高於 `getLinePos8()`{.code-green}。<br>• 適合高階 PID 精密循線。<br>• 必須確實完成感應器校準，校準越精確數值越準確。 |
-| `getLineWidth100()`{.code-blue} | 高解析特徵線寬 | `0 ~ 8`<br>• 在線上的感測器數量。<br>• 用於偵測十字路口、T 字路口等寬線特徵。<br>• 與 `getLinePos100()`{.code-green} 搭配使用，精度遠高於 `getLineWidth100()`{.code-green}。<br>• 必須確實完成感應器校準，校準越精確數值越準確。 |
+| `getLineWidth100()`{.code-blue} | 高解析特徵線寬 | `0 ~ 8`<br>• 在線上的感測器數量。<br>• 用於偵測十字路口、T 字路口等寬線特徵。<br>• 與 `getLinePos100()`{.code-green} 搭配使用，精度遠高於 `getLineWidth8()`{.code-green}。<br>• 必須確實完成感應器校準，校準越精確數值越準確。 |
 
 ::: warning ⚠️ 注意
 請選擇同一精度的 `循線位置`{.code-blue} 與 `特徵線寬`{.code-blue} 搭配使用：
@@ -106,13 +106,15 @@ line8 = MBC_LINE8(3, True)
 | `line8.pos8()`{.code-blue} | 循線位置 | `-8 ~ +8`<br>• 取得循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 適合基本 PID 循線控制。 |
 | `line8.pos100()`{.code-blue} | 高解析循線位置 | `-100 ~ +100`<br>• 取得高解析度循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 精度遠高於 `getLinePos8()`{.code-green}。<br>• 適合高階 PID 精密循線。<br>• 必須確實完成感應器校準，校準越精確數值越準確。 |
 | `line8.width`{.code-blue} | 特徵線寬 | `0 ~ 8`<br>• 在線上的感測器數量。<br>• 用於偵測十字路口、T 字路口等寬線特徵。<br>• 同時適用於 `line_pos8()`{.code-green} 與 `line_pos100()`{.code-green} 兩種解析度模式。 |
-| `line8.ir_calibration()`{.code-blue} | 8 通道紅外線反射光值 | `list[8]`<br>• 回傳 8 路校正後紅外線反射光值陣列。<br>• `index = 0`{.code-green} 表示通道 `0`{.code-green-text} 的紅外線感應器，`index = 0`{.code-green} 表示通道 `8`{.code-green-text} 的紅外線感應器。<br>• 各光電數值範圍 `0 ~ 100`{.code-green}。 |
+| `line8.ir_calibration()`{.code-blue} | 8 通道紅外線反射光值 | `list[8]`<br>• 回傳 8 路校正後紅外線反射光值陣列。<br>• `index = 0`{.code-green} 表示通道 `1`{.code-green-text} 的紅外線感應器，`index = 7`{.code-green} 表示通道 `8`{.code-green-text} 的紅外線感應器。<br>• 各光電數值範圍 `0 ~ 100`{.code-green}。 |
 | `line8.ir_ch(ch)`{.code-blue} | 指定通道紅外線反射光值 | `0 ~ 100`<br>• 設定通道編號並讀取單一通道的校正光值。<br>• `ch`{.code-green}輸入數值範圍 `1 ~ 8`{.code-green}，表示欲讀取的通道編號。 |
 | `line8.junction()`{.code-blue} | 線群數量 | `0, 1, 2+`<br>• 回傳偵測到的線群數量。<br>• `0`{.code-green-text} 表示無線，`1`{.code-green-text} 表示單線，`2+`{.code-green-text} 表示路口分叉。 |
 | `line8.junction_name()`{.code-blue} | 路口種類 | `str`<br>• 回傳路口狀態的文字描述。<br>• `none`{.code-green-text} 表示無線，`line`{.code-green-text} 表示單線，`junction`{.code-green-text} 表示路口分叉。 |
-| `line8.bin_raw()`{.code-blue} | 8 通道紅外線感應器是否在線上 | `0 ~ 255`<br>• 讀取 8 通道紅外線感應器是否偵測到線。<br>• 以 `8-bit`{.code-green}表示，需先轉為 2 進位表示法，此時會有 8 個數字，分別代表 8 通道測線狀況。<br>• `bit 0`{.code-green} 為通道 `1`{.code-green-text} 的狀態。`1`{.code-green-text} 表示偵測到線，`0`{.code-green-text} 表示未偵測到線。<br>• 舉例：回傳 `6`{.code-green-text} (十進位)，轉為二進位表示法為 `00000110`{.code-green-text}，表示通道 `2`{.code-green-text} 與通道 `3`{.code-green-text} 偵測到線。 |
+| `line8.bin_raw()`{.code-blue} | 8 通道紅外線感應器是否在線上<br>`參考下方 8 通道 bin 轉換器`{.code-red} | `0 ~ 255`<br>• 讀取 8 通道紅外線感應器是否偵測到線。<br>• 以 `8-bit`{.code-green}表示，需先轉為 2 進位表示法，此時會有 8 個數字，分別代表 8 通道測線狀況。<br>• `bit 0`{.code-green} 為通道 `1`{.code-green-text} 的狀態。`1`{.code-green-text} 表示偵測到線，`0`{.code-green-text} 表示未偵測到線。<br>• 舉例：回傳 `6`{.code-green-text} (十進位)，轉為二進位表示法為 `00000110`{.code-green-text}，表示通道 `2`{.code-green-text} 與通道 `3`{.code-green-text} 偵測到線。 |
 | `line8.on_sensors()`{.code-blue} | 8 通道紅外線感應器測線列表 | `list[int]`<br>• 回傳測到線的紅外線感應器編號列表。<br>• 舉例：`[4, 5]`{.code-green} 表示通道 `4`{.code-green-text} 與通道 `5`{.code-green-text} 偵測到線。 |
 | `line8.read_all()`{.code-blue} | 讀取所有數值 | `dict`<br>• 一次讀取上述所有數據。<br>• 回傳含有所有欄位的字典 `dict`{.code-green}。<br>• 包含：`ir_calibration`{.code-green}、`line_pos8`{.code-green}、`line_pos100`{.code-green}、`line_width`{.code-green}、`bin_raw`{.code-green}、`on_sensors`{.code-green}、`junction`{.code-green}、`junction_name`{.code-green} 等。 |
+
+<Sensor8 />
 
 ## 04 / 範例程式
 

@@ -10,6 +10,8 @@ import { initTableScroll } from './table-scroll'
 
 import './style.css'
 import DownloadButton from './components/DownloadButton.vue'
+import Sensor8 from './components/Sensor8.vue'
+import Sensor16 from './components/Sensor16.vue'
 
 export default {
   extends: DefaultTheme,
@@ -23,6 +25,8 @@ export default {
     app.component('SensorHome', Home)
     app.component('TutorialPicker', TutorialPicker)
     app.component('DownloadButton', DownloadButton)
+    app.component('Sensor8', Sensor8)
+    app.component('Sensor16', Sensor16)
   },
 
   setup() {
