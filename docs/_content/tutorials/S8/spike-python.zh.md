@@ -96,8 +96,8 @@ line8 = MBC_LINE8(3, True)
 
 | 程式碼 | 模式 | 說明 |
 | --- | --- | --- |
-| `line8 = MBC_LINE8(3, True)`{.code-blue} | 非同步模式，設定為 `true`{.code-green} | • 呼叫函數時須搭配 `await`{.code-green} 做使用：`await line8.pos8()`{.code-green}。<br>• 可以搭配 `multitask`{.code-green} 積木使用：`await multitask()`{.code-green}。 |
-| `line8 = MBC_LINE8(3, False)`{.code-blue} | 同步模式，設定為 `false`{.code-green} | • 呼叫函數時可直接使用：`line8.pos8()`{.code-green}。<br>• 不可搭配 `multitask`{.code-green} 積木使用。 |
+| `line8 = MBC_LINE8(3, True)`{.code-blue} | 非同步模式，設定為 `True`{.code-green} | • 呼叫函數時須搭配 `await`{.code-green} 做使用：`await line8.pos8()`{.code-green}。<br>• 可以搭配 `multitask`{.code-green} 使用：`await multitask()`{.code-green}。 |
+| `line8 = MBC_LINE8(3, False)`{.code-blue} | 同步模式，設定為 `False`{.code-green} | • 呼叫函數時可直接使用：`line8.pos8()`{.code-green}。<br>• 不可搭配 `multitask`{.code-green} 使用。 |
 :::
 
 #### 數值讀取
