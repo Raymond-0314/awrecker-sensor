@@ -97,7 +97,7 @@
 ### ✔ 循線結果
 | 暫存器 | 讀寫方向 | 長度 | 說明 |
 | --- | --- | --- | --- |
-| `0x10` | 寫入 | 1 byte | • 設定循線目標。<br>• `0`{.code-green-text} 表示黑線，`1`{.code-green-text} 表示白線。<br>• 重開機後回到按鈕設定。 |
+| `0x10` | 寫入 | 1 byte | • 設定循線目標。<br>• `0`{.code-green-text} 表示循白底黑線，`1`{.code-green-text} 表示循黑底白線。<br>• 重開機後回到按鈕設定。 |
 | `0x11` | 讀取 | 7 bytes | • 一次讀取 `0x12` ~ `0x17` 的數據。 |
 | `0x12` | 讀取 | 1 byte | `int8` `-16 ~ +16`<br>• 線位置。 |
 | `0x13` | 讀取 | 1 byte | `int8` `-100 ~ +100`<br>• 高解析度線位置。 |
@@ -118,7 +118,7 @@
 | 位元 | 說明 |
 | --- |--- |
 | bit 0 | • 感應器準備就緒。 |
-| bit 1 | • `0`{.code-green-text} 表示為黑線模式，`1`{.code-green-text} 表示白線模式。 |
+| bit 1 | • `0`{.code-green-text} 表示循白底黑線，`1`{.code-green-text} 表示循黑底白線。 |
 | bit 2 | • 表示正在校準中。<br>• 5 秒校準期間，更新序號 `0x33` 將會停住，此為正常狀況。 |
 | bit 3 | • 丟線。 |
 | bit 4 | • 遇到路口分岔，群組數 ≥ 2。 |
@@ -212,7 +212,7 @@ int rightSpeed = base + turn;
 ```c++
 uint8_t before[2], after[2];
 iicRead(LINE_ADDR, 0x21, before, 2);   // [閾值, 校準完成次數]
-iicWrite(LINE_ADDR, 0x20, 1);          // 開始 5 秒動態校準：這段時間左右移動車體掃過黑線
+iicWrite(LINE_ADDR, 0x20, 1);          // 開始 5 秒動態校準：這段時間左右移動車體掃過線
 do {
   delay(200);
   iicRead(LINE_ADDR, 0x21, after, 2);

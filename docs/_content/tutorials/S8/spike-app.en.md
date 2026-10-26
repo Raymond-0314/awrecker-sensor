@@ -1,37 +1,37 @@
-
 # Tutorial
 
 ## 01 / Getting Started
 
-### ✔ Make sure your controller, sensor, and programming environment match those used in this tutorial:
+### ✔ Confirm that your controller, sensor, and programming environment match this tutorial:
 
-| Requirement | Supported Hardware / Software |
+| Requirement | Supported Type for This Tutorial |
 | --- | --- |
 | Controller | • LEGO® Education SPIKE™ Prime Set<br>• LEGO® MINDSTORMS® Robot Inventor |
-| Sensor | • MBC 8-Channel Line Following Sensor |
+| Sensor | • MBC 8-Channel Line-Following Sensor |
 | Programming Environment | • LEGO Education SPIKE 3 App |
 
-### ✔ Before You Begin
+### ✔ Preparation
 
 1. Turn on your robot and launch the LEGO Education SPIKE 3 App.
-2. Make sure everything is working properly.
-3. Calibrate the MBC 8-Channel Line Following Sensor for the lighting conditions of your field.
+2. Confirm that everything is working properly.
+3. Calibrate the MBC 8-Channel Line-Following Sensor for your track.
 
 ## 02 / Functions and Features
 
 ::: info ℹ️ Additional Information
-In the official SPIKE App, the S8 Line Following Sensor operates in "SPIKE Color Sensor" mode.
+In the official SPIKE App, the S8 Line-Following Sensor operates in “SPIKE Color Sensor” mode.
 :::
 
-| Official Programming Block | Function | Value Description |
+| Programming Block | Function | Returned Values |
 | --- | --- | --- |
-| ![Black Line Width](/images/tutorials/S8/spike-app/color.png) | Black Line Width | `0-8`<br>• Indicates the number of sensors detecting the black line. |
-| ![Black Line Offset](/images/tutorials/S8/spike-app/reflect.png) | Black Line Offset | `0-16`<br>• 8 represents the center, 0 represents the far left, and 16 represents the far right.<br>• Subtract 8 from the reading to obtain the line-following position (negative values indicate the line is to the left; positive values indicate it is to the right). This provides a clear position value suitable for PID line following. |
-| ![Red Value](/images/tutorials/S8/spike-app/red.png) | High-Resolution Black Line Offset | `0-200`<br>• 100 represents the center, 0 represents the far left, and 200 represents the far right.<br>• Subtract 100 from the reading to obtain the high-precision line-following position (negative values indicate the line is to the left; positive values indicate it is to the right). An intelligent algorithm provides higher-resolution error values. Make sure the sensor is properly calibrated when using this mode. |
-| ![Green Value](/images/tutorials/S8/spike-app/green.png) | First 4 Photoelectric Sensor Values | `0-65535`<br>• Each 4-bit segment represents one photoelectric sensor value, providing 15 levels of resolution (value range: 0–15). |
-| ![Blue Value](/images/tutorials/S8/spike-app/blue.png) | Last 4 Photoelectric Sensor Values | `0-65535`<br>• Each 4-bit segment represents one photoelectric sensor value, providing 15 levels of resolution (value range: 0–15). |
+| ![Line Width](/images/tutorials/S8/spike-app/color.png) | Line Width | `0-8`<br>• The number of sensing elements detecting the line. |
+| ![Line Offset](/images/tutorials/S8/spike-app/reflect.png) | Line Offset | `0-16`<br>• `8`{.code-green-text} indicates the center, `0`{.code-green-text} indicates the far left, and `16`{.code-green-text} indicates the far right.<br>• Subtract `8`{.code-green-text} from the reading to obtain the line position. Negative values indicate that the line is on the left, and positive values indicate that the line is on the right. This provides a clear error value suitable for PID line following. |
+| ![Red Value](/images/tutorials/S8/spike-app/red.png) | High-Resolution Line Offset | `0-200`<br>• `100`{.code-green-text} indicates the center, `0`{.code-green-text} indicates the far left, and `200`{.code-green-text} indicates the far right.<br>• Subtract `100`{.code-green-text} from the reading to obtain the high-precision line position. Negative values indicate that the line is on the left, and positive values indicate that the line is on the right. An intelligent algorithm provides a more precise error value. Proper sensor calibration is required when using this mode. |
+| ![Green Value](/images/tutorials/S8/spike-app/green.png) | Optical Values of the First 4 Sensing Elements | `0-65535`<br>• Each `4-bit`{.code-green-text} group represents the optical value of one sensing element, providing up to 15 levels of precision (value range: `0 ~ 15`{.code-green-text}). |
+| ![Blue Value](/images/tutorials/S8/spike-app/blue.png) | Optical Values of the Last 4 Sensing Elements | `0-65535`<br>• Each `4-bit`{.code-green-text} group represents the optical value of one sensing element, providing up to 15 levels of precision (value range: `0 ~ 15`{.code-green-text}). |
 
 ## 03 / Example Program
+
 <script setup>
   import { withBase } from 'vitepress'
 </script>
@@ -45,7 +45,7 @@ In the official SPIKE App, the S8 Line Following Sensor operates in "SPIKE Color
 
 ![Example Program](/images/tutorials/S8/spike-app/ex_program.png){style="border-radius: 10px;"}
 
-## 04 / 【LEGO】 Lau Xiao Demonstration Videos
+## 04 / 【Lego】 Lau Xiao Demonstration Videos
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 24px; flex-wrap: wrap; margin: 24px auto;">
 
@@ -67,4 +67,4 @@ In the official SPIKE App, the S8 Line Following Sensor operates in "SPIKE Color
 
 </div>
 
-[Back to Home — Choose Another Tutorial](/)
+[Return to the homepage to choose another tutorial](/en/)
