@@ -1,83 +1,78 @@
-# Tutorial
 
-## 01 / Getting Started
+# 使用教學
 
-### ✔ Confirm that your controller, sensor, and programming environment match this tutorial:
+## 01 / 環境準備
 
-| Requirement | Supported Type for This Tutorial |
+### ✔ 請確認你所使用的控制器、感應器與程式語言和本教學頁面相同：
+
+| 要求 | 符合本教學頁面的種類 |
 | --- | --- |
-| Controller | • LEGO MINDSTORMS Education EV3 |
-| Sensor | • MBC 16-Channel Line-Following Sensor |
-| Programming Environment | • EV3 Classroom App |
+| 控制器 | • LEGO MINDSTORMS Education EV3 |
+| 感應器 | • MBC 16 路巡跡板 |
+| 程式語言 | • EV3 Classroom App |
 
-### ✔ Preparation
+### ✔ 事前準備
 
-1. Turn on your robot and launch the EV3 Classroom App.
-2. Confirm that everything is working properly.
-3. Calibrate the MBC 16-Channel Line-Following Sensor for the lighting conditions of your track.
+1. 啟動你的機器人與 EV3 Classroom App。
+2. 確認一切運作正常。
+3. MBC 16 路巡跡板的場地光值校正。
 
-## 02 / Functions and Features
+## 02 / 函數與功能說明
 
-::: info ℹ️ Additional Information
-In the official EV3 Classroom App, the S16 Line-Following Sensor operates in “EV3 Infrared Sensor” mode.
+::: info ℹ️ 補充資訊
+在官方 EV3 Classroom App 中，S16 巡跡板將以「EV3 紅外線感應器」模式運作。
 :::
 
-::: danger 🚨 Warning
-Due to hardware communication limitations of the EV3 controller, switching between infrared sensor modes (Proximity / Beacon / Remote) introduces a delay of approximately 0.5 seconds. During high-speed competition, this may cause the robot to lose control. We strongly recommend using only one mode throughout your program—for example, using Remote mode exclusively for PID line following.
+::: danger 🚨 警告
+由於 EV3 主機的硬體通訊限制，當程式切換不同紅外線感應器模式 (Proximity / Beacon / Remote) 時會產生約 0.5 秒延遲，高速比賽中可能導致機器失控。強烈建議在程式中僅選定一種模式做數值讀取 (例如只使用 Remote 進行 PID 循線)。
 :::
 
-| Official Programming Block | Function | Returned Values |
+| 官方圖形指令 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| ![Line Position](/images/tutorials/S16/ev3-classroom/proximity.png) | Line Position | `-16 ~ +16`<br>• 0 indicates that the line is centered. Negative values indicate left, and positive values indicate right.<br>• +16 and -16 indicate that the line is at the outermost edge of the sensor array. |
-| ![Optical Values for Channels 0 and 1](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | Optical Values for Channels 0 and 1 | `11 ~ 99`<br>• The tens digit represents the optical value of channel 0, ranging from 1 to 9.<br>• The ones digit represents the optical value of channel 1, ranging from 1 to 9. |
-| ![Optical Values for Channels 2 and 3](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | Optical Values for Channels 2 and 3 | `11 ~ 99`<br>• The tens digit represents the optical value of channel 2, ranging from 1 to 9.<br>• The ones digit represents the optical value of channel 3, ranging from 1 to 9. |
-| ![Optical Values for Channels 4 and 5](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | Optical Values for Channels 4 and 5 | `11 ~ 99`<br>• The tens digit represents the optical value of channel 4, ranging from 1 to 9.<br>• The ones digit represents the optical value of channel 5, ranging from 1 to 9. |
-| ![Optical Values for Channels 6 and 7](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | Optical Values for Channels 6 and 7 | `11 ~ 99`<br>• The tens digit represents the optical value of channel 6, ranging from 1 to 9.<br>• The ones digit represents the optical value of channel 7, ranging from 1 to 9. |
-| ![Optical Values for Channels 8 and 9](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | Optical Values for Channels 8 and 9 | `11 ~ 99`<br>• The tens digit represents the optical value of channel 8, ranging from 1 to 9.<br>• The ones digit represents the optical value of channel 9, ranging from 1 to 9. |
-| ![Optical Values for Channels 10 and 11](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | Optical Values for Channels 10 and 11 | `11 ~ 99`<br>• The tens digit represents the optical value of channel 10, ranging from 1 to 9.<br>• The ones digit represents the optical value of channel 11, ranging from 1 to 9. |
-| ![Optical Values for Channels 12 and 13](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | Optical Values for Channels 12 and 13 | `11 ~ 99`<br>• The tens digit represents the optical value of channel 12, ranging from 1 to 9.<br>• The ones digit represents the optical value of channel 13, ranging from 1 to 9. |
-| ![Optical Values for Channels 14 and 15](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | Optical Values for Channels 14 and 15 | `11 ~ 99`<br>• The tens digit represents the optical value of channel 14, ranging from 1 to 9.<br>• The ones digit represents the optical value of channel 15, ranging from 1 to 9. |
-| ![High-Resolution Line Position](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | High-Resolution Line Position | `-100 ~ +100`<br>• 0 indicates the center. Negative values indicate left, and positive values indicate right.<br>• Recommended for smooth, high-resolution PID error input. |
-| ![Line Width](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | Line Width | `0 ~ 16`<br>• The number of sensing elements detecting the line. This can be used to detect crossroads or T-junctions. |
-| ![Leftmost Reflectance Value](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | Leftmost Reflectance Value | `0 ~ 100`<br>• The reflected-light value of the leftmost sensing element (channel 7).<br>• 0 indicates pure black, and 100 indicates pure white.<br>• Can be used to detect track boundaries or junctions. |
-| ![Rightmost Reflectance Value](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | Rightmost Reflectance Value | `0 ~ 100`<br>• The reflected-light value of the rightmost sensing element (channel 0).<br>• 0 indicates pure black, and 100 indicates pure white.<br>• Can be used to detect track boundaries or junctions. |
+| ![線位置](/images/tutorials/S16/ev3-classroom/proximity.png) | 線位置 | `-16 ~ +16`<br>• 0 代表線在正中央，負數偏左，正數偏右。<br>• +16 與 -16 表示線在感應器最邊緣。 |
+| ![光電 0 與 1 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | 光電 0 與 1 號數值 | `11 ~ 99`<br>• 十位數為通道 0 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 1 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![光電 2 與 3 號數值](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | 光電 2 與 3 號數值 | `11 ~ 99`<br>• 十位數為通道 2 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 3 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![光電 4 與 5 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | 光電 4 與 5 號數值 | `11 ~ 99`<br>• 十位數為通道 4 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 5 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![光電 6 與 7 號數值](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | 光電 6 與 7 號數值 | `11 ~ 99`<br>• 十位數為通道 6 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 7 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![光電 8 與 9 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | 光電 8 與 9 號數值 | `11 ~ 99`<br>• 十位數為通道 8 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 9 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![光電 10 與 11 號數值](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | 光電 10 與 11 號數值 | `11 ~ 99`<br>• 十位數為通道 10 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 11 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![光電 12 與 13 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 光電 12 與 13 號數值 | `11 ~ 99`<br>• 十位數為通道 12 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 13 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![光電 14 與 15 號數值](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | 光電 14 與 15 號數值 | `11 ~ 99`<br>• 十位數為通道 14 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 15 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
+| ![高解析位置平移](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | 高解析位置平移 | `-100 ~ +100`<br>• 0 代表正中央，負值偏左，正值偏右。<br>• 超平滑的 PID 誤差輸入首選。 |
+| ![特徵線寬](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | 特徵線寬 | `0 ~ 16`<br>• 偵測到線的感測器數量。可用於偵測十字路口或 T 字路口。。 |
+| ![左邊界實體光值](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | 左邊界實體光值 | `0 ~ 100`<br>• 最左邊感測器 (通道 `15`{.code-green-text}) 的反射光。<br>• `0`{.code-green-text} 表示純黑，`100`{.code-green-text} 表示純白。<br>• 可用於偵測賽道邊界或分岔。 |
+| ![右邊界實體光值](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | 右邊界實體光值 | `0 ~ 100`<br>• 最右邊感測器 (通道 `0`{.code-green-text}) 的反射光。<br>• `0`{.code-green-text} 表示純黑，`100`{.code-green-text} 表示純白。<br>• 可用於偵測賽道邊界或分岔。 |
 
-## 03 / Example Program
+## 03 / 範例程式
 
-<script setup>
-import { withBase } from 'vitepress'
-</script>
-
-<a
-  :href="withBase('/programs/S16/ev3-classroom/S16_Example_ev3_classroom.lmsp')"
+<DownloadButton
+  href="/programs/S16/ev3-classroom/S16_Example_ev3_classroom.lmsp"
   download="S16_Example_ev3_classroom.lmsp"
-  class="zip-download-btn">
-  ⬇ Download Example Program
-</a>
+  label="範例程式下載"
+/>
 
-![Example Program](/images/tutorials/S16/ev3-classroom/ex_program.png){style="border-radius: 10px;"}
+![範例程式](/images/tutorials/S16/ev3-classroom/ex_program.png){style="border-radius: 10px;"}
 
-### ✔ EV3 Custom Blocks (My Blocks)
+### ✔ EV3 專屬自訂積木 (My Blocks) 說明
+MBC 16 路循線感應器提供了三個「自訂積木 (My Blocks) 」。開發時不需要額外安裝擴充包，只需在主程式中呼叫對應函數，並將最新感應器數據存入變數，便可供馬達控制直接使用。以下為三個核心函數的功能與使用時機介紹：
 
-The MBC 16-Channel Line-Following Sensor provides three custom blocks (My Blocks). No additional extension package is required. Simply call the appropriate function in your main program to store the latest sensor data in variables for direct use in motor control. The following table explains the purpose and usage of these three core functions:
-
-| Purpose | Function | Description |
+| 用途 | 函數 | 功能 |
 | --- | --- | --- |
-| Basic Line Following | `LinePos16_dataUpdate` | `-16 ~ +16`<br>• Quickly reads the basic 16-step line-position value. Suitable for introductory lessons and basic left/right steering decisions.<br>• Calling this function automatically updates the variable `0_LinePos16`.<br>• 0 indicates that the line is centered. Negative values indicate left, and positive values indicate right. |
-| High-Precision Competition Line Following | `LinePos100_dataUpdate` | • Retrieves a high-resolution line position using subpixel interpolation.<br>• Designed for advanced PID line-following algorithms to provide smooth steering corrections.<br>• Sensor calibration is required.<br>• Calling this function automatically updates the following variables:<br>&emsp;<span class="no-wrap">1. `0_LinePos100`: High-precision position, ranging from -100 to +100. Negative values indicate left, and positive values indicate right.</span><br>&emsp;<span class="no-wrap">2. `0_LineWidth16`: The number of sensing elements detecting the line, ranging from 0 to 16. Can be used to identify junction types.</span><br>&emsp;<span class="no-wrap">3. `Leftmost / Rightmost Boundary Values`: Reflectance values of the leftmost and rightmost sensing elements, used for line-loss prevention or junction detection.</span> |
-| Full Sensor Array Decoding | `LineCh16_dataUpdate` | • Decodes the 16 sensing elements into individual readings.<br>• Allows you to develop custom advanced algorithms using the values from all 16 channels.<br>• Calling this function updates 16 individual variables, `s1`{.code-green-text} through `s16`{.code-green-text}, corresponding to the real-time readings of each sensing element from left to right. |
+| 基礎循線函數 | `LinePos16_dataUpdate` | `-16 ~ +16`<br>• 快速讀取最基礎的 16 段循線位置，適合新手入門教學與基礎左右轉向判斷。<br>• 執行此函數後，系統會自動更新變數 `0_LinePos16`。<br>• 0 代表線在正中央，負數偏左，正數偏右。 |
+| 競技高精度函數 | `LinePos100_dataUpdate` | • 取得高解析度次像素級插值位置。<br>• 專為高階 PID 循線控制演算法設計，能提供極致平滑的修正動力。<br>• 需完成感應器校準。<br>• 執行此函數後，系統會自動更新變數：<br>&emsp;1. `0_LinePos100`：高精度位置，範圍 -100 到 +100 (負值偏左、正值偏右) 。 <br>&emsp;2. `0_LineWidth16`：偵測到線的感測器數量 (範圍 0 ~ 16)。可用於判斷路口類型。<br>&emsp;3. `最左/最右邊界數值`：讀取最左/右邊感應器的實體光值，用於防掉線或路口偵測。 |
+| 全陣列展開函數 | `LineCh16_dataUpdate` | • 將 16 顆感應器解碼為獨立狀態。<br>• 可根據 16 顆不同光電的數值自訂進階演算法。<br>• 執行此函數後，會一氣呵成地更新 `s1`{.code-green-text} 到 `s16`{.code-green-text} 共 16 個獨立變數，完美對應感應器由左至右每一顆的即時讀數。 |
 
-::: info ℹ️ Additional Information
-Place the custom block inside a forever loop to keep your robot continuously updated with the latest readings from the MBC 16-Channel Line-Following Sensor.
+::: info ℹ️ 補充資訊
+將自訂積木放入無限迴圈中，即可確保機器與 MBC 16 路巡跡板隨時掌握即時場地資訊。
 :::
 
-## 04 / 【Lego】 Lau Xiao Demonstration Video
+## 04 / 【Lego】 Lau Xiao 示範影片
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 24px; flex-wrap: wrap; margin: 24px auto;">
 
   <iframe
     src="https://www.youtube.com/embed/kH8V2Pri37o?si=Zuk9fKAEN3bwXD7x"
-    title="MBC S16 Demonstration Video 1"
+    title="MBC S16 示範影片 1"
     style="
       width: 800px;
       max-width: 100%;
@@ -92,4 +87,4 @@ Place the custom block inside a forever loop to keep your robot continuously upd
 
 </div>
 
-[Return to the homepage to choose another tutorial](/en/)
+[回首頁選擇其他教學](/)

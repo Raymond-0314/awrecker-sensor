@@ -44,16 +44,12 @@
 | ![右邊界實體光值](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | 右邊界實體光值 | `0 ~ 100`<br>• 最右邊感測器 (通道 `0`{.code-green-text}) 的反射光。<br>• `0`{.code-green-text} 表示純黑，`100`{.code-green-text} 表示純白。<br>• 可用於偵測賽道邊界或分岔。 |
 
 ## 03 / 範例程式
-<script setup>
-  import { withBase } from 'vitepress'
-</script>
 
-<a
-  :href="withBase('/programs/S16/ev3-classroom/S16_Example_ev3_classroom.lmsp')"
+<DownloadButton
+  href="/programs/S16/ev3-classroom/S16_Example_ev3_classroom.lmsp"
   download="S16_Example_ev3_classroom.lmsp"
-  class="zip-download-btn">
-  ⬇ 範例程式下載
-</a>
+  label="範例程式下載"
+/>
 
 ![範例程式](/images/tutorials/S16/ev3-classroom/ex_program.png){style="border-radius: 10px;"}
 

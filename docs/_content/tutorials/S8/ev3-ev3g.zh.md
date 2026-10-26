@@ -44,16 +44,12 @@
 </div>
 
 ## 03 / 範例程式
-<script setup>
-  import { withBase } from 'vitepress'
-</script>
 
-<a
-  :href="withBase('/programs/S8/ev3-ev3g/S8_Example_ev3_ev3g.ev3')"
+<DownloadButton
+  href="/programs/S8/ev3-ev3g/S8_Example_ev3_ev3g.ev3"
   download="S8_Example_ev3_ev3g.ev3"
-  class="zip-download-btn">
-  ⬇ 範例程式下載
-</a>
+  label="範例程式下載"
+/>
 
 ![範例程式](/images/tutorials/S8/ev3-ev3g/ex_program.png){style="border-radius: 10px;"}
 

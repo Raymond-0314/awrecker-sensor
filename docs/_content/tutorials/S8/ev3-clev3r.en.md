@@ -40,16 +40,11 @@ Due to hardware communication limitations of the EV3 controller, switching betwe
 
 ## 03 / Example Program
 
-<script setup>
-  import { withBase } from 'vitepress'
-</script>
-
-<a
-  :href="withBase('/programs/S8/ev3-clev3r/S8_Example_ev3_clev3r.bp')"
+<DownloadButton
+  href="/programs/S8/ev3-clev3r/S8_Example_ev3_clev3r.bp"
   download="S8_Example_ev3_clev3r.bp"
-  class="zip-download-btn">
-  ⬇ Download Example Program
-</a>
+  label="Download Example Program"
+/>
 
 ![Example Program](/images/tutorials/S8/ev3-clev3r/ex_program.png){style="border-radius: 10px;"}
 

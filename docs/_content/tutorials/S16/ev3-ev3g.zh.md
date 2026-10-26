@@ -44,16 +44,12 @@
 </div>
 
 ## 03 / 範例程式
-<script setup>
-  import { withBase } from 'vitepress'
-</script>
 
-<a
-  :href="withBase('/programs/S16/ev3-ev3g/S16_Example_ev3_ev3g.ev3')"
+<DownloadButton
+  href="/programs/S16/ev3-ev3g/S16_Example_ev3_ev3g.ev3"
   download="S16_Example_ev3_ev3g.ev3"
-  class="zip-download-btn">
-  ⬇ 範例程式下載
-</a>
+  label="範例程式下載"
+/>
 
 ![範例程式](/images/tutorials/S16/ev3-ev3g/ex_program.png){style="border-radius: 10px;"}
 
@@ -64,7 +60,7 @@ MBC 16 路循線感應器提供了三個「自訂積木 (My Blocks) 」。開發
 | --- | --- | --- |
 | 基礎循線函數 | `LinePos16_dataUpdate` | `-16 ~ +16`<br>• 快速讀取最基礎的 16 段循線位置，適合新手入門教學與基礎左右轉向判斷。<br>• 執行此函數後，系統會自動更新變數 `0_LinePos16`。<br>• `0`{.code-green-text} 代表線在正中央，負數偏左，正數偏右。 |
 | 競技高精度函數 | `LinePos100_dataUpdate` | • 取得高解析度次像素級插值位置。<br>• 專為高階 PID 循線控制演算法設計，能提供極致平滑的修正動力。<br>• 需完成感應器校準。<br>• 執行此函數後，系統會自動更新變數：<br>&emsp;1. `0_LinePos100`：高精度位置，範圍`-100 ~ +100`{.code-green-text} (負值偏左、正值偏右) 。 <br>&emsp;2. `0_LineWidth16`：偵測到線的感測器數量，範圍`0 ~ 16`{.code-green-text}。可用於判斷路口類型。<br>&emsp;3. `最左/最右邊界數值`：讀取最左/右邊感應器的實體光值，用於防掉線或路口偵測。 |
-| 單一通道解碼函數 | `LineCh16_dataUpdate` | `1 ~ 9`<br>• 將 16 顆感應器解碼為獨立狀態。<br>• 可根據 16 顆不同光電的數值自訂進階演算法。<br>• 在積木輸入端指定光電編號 `1 ~ 15`{.code-green-text}，輸出端將回傳該光電光值。<br>• `1`{.code-green-text} 表示最暗，`9`{.code-green-text} 表示最亮。 |
+| 單一通道解碼函數 | `LineCh16_dataUpdate` | `1 ~ 9`<br>• 將 16 顆感應器解碼為獨立狀態。<br>• 可根據 16 顆不同光電的數值自訂進階演算法。<br>• 在積木輸入端指定光電編號 `0 ~ 15`{.code-green-text}，輸出端將回傳該光電光值。<br>• `1`{.code-green-text} 表示最暗，`9`{.code-green-text} 表示最亮。 |
 
 ::: info ℹ️ 補充資訊
 將自訂積木放入無限迴圈中，即可確保機器與 MBC 16 路巡跡板隨時掌握即時場地資訊。

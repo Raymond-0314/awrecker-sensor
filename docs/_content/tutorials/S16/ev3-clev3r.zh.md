@@ -44,16 +44,12 @@
 | `Sensor.SetMode(port, 2)`<br>`value = Sensor.ReadRawValue(port, 4)[3]` | 右邊界實體光值 | `0 ~ 100`<br>• 最右邊感測器 (通道 `0`{.code-green-text}) 的反射光。<br>• `0`{.code-green-text} 表示純黑，`100`{.code-green-text} 表示純白。<br>• 可用於偵測賽道邊界或分岔。 |
 
 ## 03 / 範例程式
-<script setup>
-  import { withBase } from 'vitepress'
-</script>
 
-<a
-  :href="withBase('/programs/S16/ev3-clev3r/S16_Example_ev3_clev3r.bp')"
+<DownloadButton
+  href="/programs/S16/ev3-clev3r/S16_Example_ev3_clev3r.bp"
   download="S16_Example_ev3_clev3r.bp"
-  class="zip-download-btn">
-  ⬇ 範例程式下載
-</a>
+  label="範例程式下載"
+/>
 
 ![範例程式](/images/tutorials/S16/ev3-clev3r/ex_program.png){style="border-radius: 10px;"}
 
