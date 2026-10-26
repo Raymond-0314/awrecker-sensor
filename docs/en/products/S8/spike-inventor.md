@@ -1,9 +1,9 @@
 ---
-title: "MBC Line-Following Sensor S8 · SPIKE · LEGO MINDSTORMS Robot Inventor"
+title: "MBC Line-Following Sensor S8 · SPIKE · Robot Inventor"
 ---
 <!-- Generated route. Edit docs/_content and docs/_data. -->
 
-# MBC Line-Following Sensor S8 · SPIKE · LEGO MINDSTORMS Robot Inventor
+# MBC Line-Following Sensor S8 · SPIKE · Robot Inventor
 
 <!--@include: ../../../_content/products/S8.en.md-->
 

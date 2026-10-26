@@ -12,6 +12,7 @@ import './style.css'
 import DownloadButton from './components/DownloadButton.vue'
 import Sensor8 from './components/Sensor8.vue'
 import Sensor16 from './components/Sensor16.vue'
+import FeatureSection from './components/FeatureSection.vue'
 
 export default {
   extends: DefaultTheme,
@@ -27,6 +28,7 @@ export default {
     app.component('DownloadButton', DownloadButton)
     app.component('Sensor8', Sensor8)
     app.component('Sensor16', Sensor16)
+    app.component('FeatureSection', FeatureSection)
   },
 
   setup() {

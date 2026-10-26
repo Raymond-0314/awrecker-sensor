@@ -1,7 +1,6 @@
 /* MBC Sensors — 整理版 style.css
  * 以使用者提供的樣式為準；保留元件內的覆蓋順序與所有斷點。
- * 修改時先搜尋對應章節，避免將新規則不斷附加到檔案尾端。
- */
+ * 修改時先搜尋對應章節，避免將新規則不斷附加到檔案尾端。 */
 
 /* ==================================================
  * 01 全域色彩、導覽列與共用元件
@@ -70,7 +69,7 @@
   padding: 12px 22px;
   border: 1px solid #363636;
   cursor: pointer;
-  transition: background .2s;
+  transition: *background* .2s;
 }
 
 .VPFooter {
@@ -78,6 +77,7 @@
 }
 
 .VPDoc a:focus-visible,
+
 .primary-link:focus-visible {
   outline: 2px solid #363636;
   outline-offset: 4px;
@@ -110,12 +110,19 @@
 }
 
 .VPNavBarMenu,
+
 .VPNavBarTranslations,
+
 .VPNavBarExtra,
+
 .VPNavBarHamburger,
+
 .VPLocalNav,
+
 .VPDocAside,
+
 .VPSidebar,
+
 .VPDocFooter {
   display: none !important;
 }
@@ -356,6 +363,7 @@
 }
 
 .product-image:hover .quick-view,
+
 .product-item:focus-visible .quick-view {
   opacity: 1;
   transform: translateY(0);
@@ -541,6 +549,7 @@
 
 @media (max-width:680px) {
   .collection-carousel .product-item,
+
   .collection-carousel.many-products .product-item {
     flex-basis: calc(100% - 54px);
   }
@@ -644,6 +653,7 @@
 }
 
 html:has(.sensor-home),
+
 body:has(.sensor-home) {
   overflow: hidden;
   height: 100dvh;
@@ -865,13 +875,23 @@ body:has(.sensor-home) {
   .sensor-home .collection-carousel.can-next .product-track {
     mask-image: linear-gradient(
 
+
+
       to right,
+
+
 
       #000 0,
 
+
+
       #000 calc(100% - 16px),
 
+
+
       transparent 100%
+
+
 
     );
   }
@@ -881,13 +901,23 @@ body:has(.sensor-home) {
   .sensor-home .collection-carousel.can-prev .product-track {
     mask-image: linear-gradient(
 
+
+
       to right,
+
+
 
       transparent 0,
 
+
+
       #000 16px,
 
+
+
       #000 100%
+
+
 
     );
   }
@@ -897,15 +927,27 @@ body:has(.sensor-home) {
   .sensor-home .collection-carousel.can-prev.can-next .product-track {
     mask-image: linear-gradient(
 
+
+
       to right,
+
+
 
       transparent 0,
 
+
+
       #000 16px,
+
+
 
       #000 calc(100% - 16px),
 
+
+
       transparent 100%
+
+
 
     );
   }
@@ -1362,24 +1404,6 @@ body:has(.sensor-home) {
 }
 
 @media (max-width: 680px) {
-  .vp-doc .feature-grid {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) !important;
-    gap: 14px;
-  }
-}
-
-@media (max-width: 680px) {
-  .vp-doc .feature-grid > .feature-box {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    grid-column: auto !important;
-    padding: 18px;
-  }
-}
-
-@media (max-width: 680px) {
   .vp-doc .feature-box > strong {
     font-size: 18px;
     line-height: 1.5;
@@ -1402,6 +1426,50 @@ body:has(.sensor-home) {
   }
 }
 
+/* 手機功能卡片：單列橫向滑動，保留下一張卡片提示。 */
+
+@media (max-width: 767px) {
+  .vp-doc .feature-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 12px;
+
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    /* 左右預留空間，讓卡片置中 */
+    padding: 0 8% 12px;
+    overflow-x: auto;
+
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 8%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .vp-doc .feature-grid > .feature-box {
+    /* 占滿扣除左右留白後的寬度 */
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    box-sizing: border-box;
+
+    scroll-snap-align: center;
+  }
+
+  .vp-doc .feature-grid::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  .vp-doc .feature-grid::-webkit-scrollbar-thumb {
+    background: var(--vp-c-divider);
+    border-radius: 999px;
+  }
+}
+
 /* ==================================================
  * 05 表格尺寸、圖片與捲動箭頭
  * ================================================== */
@@ -1414,21 +1482,25 @@ body:has(.sensor-home) {
 }
 
 .vp-doc table th,
+
 .vp-doc table td {
   vertical-align: middle;
 }
 
 .vp-doc table th:nth-child(1),
+
 .vp-doc table td:nth-child(1) {
   min-width: 220px;
 }
 
 .vp-doc table th:nth-child(2),
+
 .vp-doc table td:nth-child(2) {
   min-width: 160px;
 }
 
 .vp-doc table th:nth-child(3),
+
 .vp-doc table td:nth-child(3) {
   min-width: 360px;
 }
@@ -1537,15 +1609,18 @@ body:has(.sensor-home) {
   max-width: none !important;
   margin: 0 !important;
 }
+
 /* 依內容決定寬度，不強制填滿頁面 */
-/*.vp-doc .table-scroll-content > table {
+
+/* .vp-doc .table-scroll-content > table {
   display: table !important;
   table-layout: auto;
   width: auto !important;
   min-width: 0;
   max-width: none !important;
   margin: 0 !important;
-}*/
+} */
+
 .vp-doc span.no-wrap {
   display: inline-block;
   white-space: nowrap;
@@ -1633,6 +1708,7 @@ body:has(.sensor-home) {
 }
 
 .vp-doc table th:nth-child(n),
+
 .vp-doc table td:nth-child(n) {
   width: auto;
   min-width: 0;
@@ -1692,7 +1768,7 @@ body:has(.sensor-home) {
   font-weight: 700;
   line-height: 1.5;
   text-decoration: none;
-  transition: background 0.2s;
+  transition: *background* 0.2s;
 }
 
 .vp-doc a.library-download-btn:hover {
@@ -1810,6 +1886,7 @@ body:has(.sensor-home) {
 }
 
 .panel-head,
+
 .panel-foot {
   display: flex;
   justify-content: space-between;
@@ -2123,6 +2200,7 @@ body:has(.sensor-home) {
 
 @media (max-width:680px) {
   .panel-head,
+
   .panel-foot {
     padding: 14px;
   }
@@ -2241,6 +2319,7 @@ body:has(.sensor-home) {
  * ================================================== */
 
 /* 10 手機首頁字級 */
+
 @media (max-width: 680px) {
   .sensor-home {
     --mobile-title-en: clamp(22px, 6.3vw, 40px);
@@ -2250,6 +2329,7 @@ body:has(.sensor-home) {
   }
 
   /* 英文主標題 */
+
   html:lang(en) .sensor-home .section-heading h1 {
     font-size: var(--mobile-title-en);
     line-height: 1.25;
@@ -2259,6 +2339,7 @@ body:has(.sensor-home) {
   }
 
   /* 首頁副標題：中英文共用 */
+
   .sensor-home .section-heading .eyebrow {
     font-size: var(--mobile-subtitle);
     line-height: 1.5;
@@ -2267,12 +2348,14 @@ body:has(.sensor-home) {
   }
 
   /* 產品名稱：中英文共用 */
+
   .sensor-home .product-name {
     font-size: var(--mobile-product-name);
     line-height: 1.5;
   }
 
   /* 產品簡介：中英文共用 */
+
   .sensor-home .product-description {
     font-size: var(--mobile-product-description);
     line-height: 1.7;
@@ -2281,19 +2364,22 @@ body:has(.sensor-home) {
 
 @media (max-width: 767px) {
   /* 保留 LOGO 左側及上下位置，只增加右側留白 */
+
   .VPNavBar .wrapper {
     padding-right: 24px;
   }
 
   /* 保留語言按鈕本身的大小與內距 */
+
   .VPNavBar .language-switch {
     margin-left: auto;
     margin-right: 0;
     padding: 8px 4px;
   }
-} 
+}
 
 /* 一般：透明底、白色文字與外框 */
+
 .vp-doc a.zip-download-btn {
   background-color: transparent;
   color: #fff !important;
@@ -2302,6 +2388,7 @@ body:has(.sensor-home) {
 }
 
 /* 滑鼠移入：白底、黑字 */
+
 .vp-doc a.zip-download-btn:hover {
   background-color: #fff;
   color: #111 !important;
@@ -2310,6 +2397,7 @@ body:has(.sensor-home) {
 }
 
 /* 行內程式碼：無外框、半透明底色 */
+
 .vp-doc :not(pre) > code {
   color: #38bdf8;
   background-color: rgba(56, 189, 248, 0.12);
@@ -2320,42 +2408,57 @@ body:has(.sensor-home) {
 }
 
 /* 共用樣式 */
+
 .vp-doc :not(pre) > code.code-red,
+
 .vp-doc :not(pre) > code.code-green,
+
 .vp-doc :not(pre) > code.code-blue,
+
 .vp-doc :not(pre) > code.code-red-text,
+
 .vp-doc :not(pre) > code.code-green-text,
+
 .vp-doc :not(pre) > code.code-blue-text {
   color: var(--label-color);
   border: none;
   box-shadow: none;
-  /*font-weight: 500;*/
+  /* font-weight: 500; */
 }
 
 /* 紅色 */
+
 .code-red,
+
 .code-red-text {
   --label-color: #fca5a5;
   --label-bg: rgba(248, 113, 113, 0.12);
 }
 
 /* 綠色 */
+
 .code-green,
+
 .code-green-text {
   --label-color: #86efac;
   --label-bg: rgba(74, 222, 128, 0.12);
 }
 
 /* 藍色 */
+
 .code-blue,
+
 .code-blue-text {
   --label-color: #7dd3fc;
   --label-bg: rgba(56, 189, 248, 0.12);
 }
 
 /* 有底色 */
+
 .vp-doc :not(pre) > code.code-red,
+
 .vp-doc :not(pre) > code.code-green,
+
 .vp-doc :not(pre) > code.code-blue {
   background-color: var(--label-bg);
   border-radius: 6px;
@@ -2363,24 +2466,36 @@ body:has(.sensor-home) {
 }
 
 /* 無底色 */
+
 .vp-doc :not(pre) > code.code-red-text,
+
 .vp-doc :not(pre) > code.code-green-text,
+
 .vp-doc :not(pre) > code.code-blue-text {
   background-color: transparent;
   padding: 0;
-  /*font-size: inherit;
-  font-family: inherit;*/
+  /* font-size: inherit;
+  font-family: inherit; */
 }
 
-
-
 /* 提示框內：縮小下載區域上下留白 */
+
 .vp-doc .custom-block .library-downloads {
   margin: 12px 0 0;
 }
 
 /* 取消按鈕額外外距 */
+
 .vp-doc .custom-block a.library-download-btn,
+
 .vp-doc .custom-block a.zip-download-btn {
   margin-block: 0;
+}
+
+.vp-doc .feature-grid {
+  scrollbar-width: none;
+}
+
+.vp-doc .feature-grid::-webkit-scrollbar {
+  display: none;
 }
