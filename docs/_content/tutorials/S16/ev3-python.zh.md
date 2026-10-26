@@ -63,16 +63,17 @@ line_init_port_multitask(4, False)
 #### set up
 | 程式碼 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| ![導入函式庫](/images/tutorials/S16/ev3-block/setup.png){style="display: block; width: 400px; height: auto;"} | 導入函式庫 | • 從檔案 `MBC_line16_EV3_Lib.py`{.code-green} 中匯入以下函式： `line_init_port_multitask()`{.code-green}、`line_pos16()`{.code-green}、`line_ir_ch()`{.code-green}、`line_pos100()`{.code-green}、`line_width()`{.code-green}、`line_edge_l()`{.code-green}、`line_edge_r()`{.code-green}。<br>• 名稱需要完全相同。 |
-| ![函式庫設定](/images/tutorials/S16/ev3-block/setting.png){style="display: block; width: 400px; height: auto;"} | 函式庫設定 | • `call`{.code-green} 與 `false`{.code-green} 為同步模式設定，`await/true`{.code-green} 啟動非同步模式，`call/false`{.code-green} 則保持同步模式。<br>• `line16`{.code-green} 為後續使用數值讀取功能時使用的名稱。<br>• `4`{.code-green} 為 MBC 16 路巡跡板的連接埠 (port)，`1 ~ 4`{.code-green} 依序為 `A ~ D`{.code-green}。 |
+| `from MBC_line16_EV3_Lib import(...)` | 導入函式庫 | • 從檔案 `MBC_line16_EV3_Lib.py`{.code-green} 中匯入以下函式： `line_init_port_multitask()`{.code-green}、`line_pos16()`{.code-green}、`line_ir_ch()`{.code-green}、`line_pos100()`{.code-green}、`line_width()`{.code-green}、`line_edge_l()`{.code-green}、`line_edge_r()`{.code-green}。<br>• 名稱需要完全相同。 |
+| `line_init_port_multitask(4, False)` | 函式庫設定 | • `call`{.code-green} 與 `false`{.code-green} 為同步模式設定，`await/true`{.code-green} 啟動非同步模式，`call/false`{.code-green} 則保持同步模式。<br>• `line16`{.code-green} 為後續使用數值讀取功能時使用的名稱。<br>• `4`{.code-green} 為 MBC 16 路巡跡板的連接埠 (port)，`1 ~ 4`{.code-green} 依序為 `A ~ D`{.code-green}。 |
 
 ::: info ℹ️ 補充資訊
 - 同步模式設定說明：
 
 | 程式碼 | 模式 | 說明 |
 | --- | --- | --- |
-| ![函式庫設定](/images/tutorials/S16/ev3-block/setting_await.png) | 非同步模式，設定為 `await`{.code-green} 與 `true`{.code-green} | • 數值讀取時須搭配 `await`{.code-green} 做使用。![await](/images/tutorials/S16/ev3-block/pos16_await.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"}• 可以搭配 `multitask`{.code-green} 積木使用。![multitask](/images/tutorials/S8/spike-block/multitask.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"} |
-| ![函式庫設定](/images/tutorials/S16/ev3-block/setting_call.png) | 同步模式，設定為 `call`{.code-green} 與 `false`{.code-green} | • 數值讀取時須搭配 `call`{.code-green} 做使用。![await](/images/tutorials/S16/ev3-block/pos16.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"}• 不可搭配 `multitask`{.code-green} 積木使用。 |
+| `line_init_port_multitask(4, True)`{.code-blue} | 非同步模式，設定為 `True`{.code-green}。 | • 呼叫函數時須搭配 `await`{.code-green} 做使用：`await pos16()`{.code-green}<br>• 數值讀取時可以搭配 `await multitask`{.code-green} 使用。 |
+| `line_init_port_multitask(4, False)`{.code-blue} | 同步模式，設定為 `False`{.code-green}。 | • 呼叫函數時可直接使用：`pos16()`{.code-green}。<br>• 數值讀取時不可搭配 `multitask`{.code-green} 使用。 |
+
 :::
 
 #### 數值讀取
@@ -82,18 +83,18 @@ MBC 函式庫提供 3 種模式共 6 種功能，由於 EV3 主機的硬體通�
 ##### 模式 1：一般功能
 | 程式碼 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| ![循線位置](/images/tutorials/S16/ev3-block/pos16.png) | 循線位置 | `-16 ~ +16`<br>• 取得循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 適合基本 PID 循線控制。 |
+| `line_pos16()` | 循線位置 | `-16 ~ +16`<br>• 取得循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 適合基本 PID 循線控制。 |
 ##### 模式 2：全覽/自訂功能
 | 程式碼 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| ![指定通道紅外線反射光值](/images/tutorials/S16/ev3-block/ir_ch.png) | 指定通道紅外線反射光值 | `1 ~ 9`<br>• 設定通道編號並讀取單一通道的校正光值。<br>• 輸入數值範圍 `1 ~ 16`{.code-green}，表示欲讀取的通道編號。<br>• 回傳數值 `1`{.code-green-text} 最暗，`9`{.code-green-text} 最亮。 |
+| `line_ir_ch(ch)` | 指定通道紅外線反射光值 | `1 ~ 9`<br>• 設定通道編號並讀取單一通道的校正光值。<br>• 輸入數值範圍 `1 ~ 16`{.code-green}，表示欲讀取的通道編號。<br>• 回傳數值 `1`{.code-green-text} 最暗，`9`{.code-green-text} 最亮。 |
 ##### 模式 3：競賽推薦
 | 程式碼 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| ![高解析循線位置](/images/tutorials/S16/ev3-block/pos100.png) | 高解析循線位置 | `-100 ~ +100`<br>• 取得高解析度循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 精度遠高於 `line_pos16()`{.code-green}。<br>• 適合高階 PID 精密循線。<br>• 必須確實完成感應器校準，校準越精確數值越準確。 |
-| ![特徵線寬](/images/tutorials/S16/ev3-block/width.png) | 特徵線寬 | `0 ~ 16`<br>• 在線上的感測器數量。<br>• 用於偵測十字路口、T 字路口等寬線特徵。<br>• 同時適用於 `line_pos16()`{.code-green} 與 `line_pos100()`{.code-green} 兩種解析度模式。 |
-| ![左邊界感測器光值](/images/tutorials/S16/ev3-block/edge_l.png) | 左邊界感測器光值 | `0 ~ 100`<br>• 取得左邊界感測器的光值，用於防掉線。<br>• `0`{.code-green-text} 為黑，`100`{.code-green-text} 為白。 |
-| ![右邊界感測器光值](/images/tutorials/S16/ev3-block/edge_r.png) | 右邊界感測器光值 | `0 ~ 100`<br>• 取得右邊界感測器的光值，用於防掉線。<br>• `0`{.code-green-text} 為黑，`100`{.code-green-text} 為白。 |
+| `line_pos100()` | 高解析循線位置 | `-100 ~ +100`<br>• 取得高解析度循線位置。<br>• `0`{.code-green-text} 為正中央，負數偏左，正數偏右。<br>• 精度遠高於 `line_pos16()`{.code-green}。<br>• 適合高階 PID 精密循線。<br>• 必須確實完成感應器校準，校準越精確數值越準確。 |
+| `line_width()` | 特徵線寬 | `0 ~ 16`<br>• 在線上的感測器數量。<br>• 用於偵測十字路口、T 字路口等寬線特徵。<br>• 同時適用於 `line_pos16()`{.code-green} 與 `line_pos100()`{.code-green} 兩種解析度模式。 |
+| `line_edge_l()` | 左邊界感測器光值 | `0 ~ 100`<br>• 取得左邊界感測器的光值，用於防掉線。<br>• `0`{.code-green-text} 為黑，`100`{.code-green-text} 為白。 |
+| `line_edge_r()` | 右邊界感測器光值 | `0 ~ 100`<br>• 取得右邊界感測器的光值，用於防掉線。<br>• `0`{.code-green-text} 為黑，`100`{.code-green-text} 為白。 |
 
 ## 04 / 範例程式
 <DownloadButton
@@ -102,7 +103,46 @@ MBC 函式庫提供 3 種模式共 6 種功能，由於 EV3 主機的硬體通�
   label="範例程式下載"
 />
 
-![範例程式](/images/tutorials/S16/ev3-block/ex_program.png){style="border-radius: 10px;"}
+```python
+from pybricks.ev3devices import Motor
+from pybricks.hubs import EV3Brick
+from pybricks.parameters import Direction, Port
+from pybricks.tools import wait
+
+from MBC_line16_EV3_Lib import (
+    line_edge_l,
+    line_edge_r,
+    line_init_port_multitask,
+    line_ir_ch,
+    line_pos100,
+    line_pos16,
+    line_width,
+)
+
+# Set up.
+ev3 = EV3Brick()
+motorL = Motor(Port.B, Direction.CLOCKWISE)
+motorR = Motor(Port.C, Direction.CLOCKWISE)
+PID = 0
+posLast = 0
+
+
+# The main program starts here.
+line_init_port_multitask(4, False)
+while True:
+    print(line_pos100(), line_width())
+    if line_width() > 10:
+        motorL.dc(0)
+        motorR.dc(0)
+    else:
+        PID = line_pos100() * 1.2 + (line_pos100() - posLast) * 3.6
+        posLast = line_pos100()
+        motorL.dc(75 + PID)
+        motorR.dc(75 - PID)
+    wait(10)
+```
+
+<!--![範例程式](/images/tutorials/S16/ev3-python/ex_program.png){style="border-radius: 10px;"}-->
 
 ## 05 / 【Lego】 Lau Xiao 示範影片
 
