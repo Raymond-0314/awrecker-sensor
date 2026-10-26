@@ -76,19 +76,19 @@ The MBC library provides six functions across three modes. Due to hardware commu
 
 ##### Mode 1: General Functions
 
-| Code | Function | Returned Values |
+| Programming Block | Function | Returned Values |
 | --- | --- | --- |
 | ![Line Position](/images/tutorials/S16/ev3-block/pos16.png) | Line Position | `-16 ~ +16`<br>• Reads the line position.<br>• `0`{.code-green-text} indicates the center. Negative values indicate left, and positive values indicate right.<br>• Suitable for basic PID line following. |
 
 ##### Mode 2: Overview / Custom Functions
 
-| Code | Function | Returned Values |
+| Programming Block | Function | Returned Values |
 | --- | --- | --- |
 | ![Infrared Reflectance Value for a Specified Channel](/images/tutorials/S16/ev3-block/ir_ch.png) | Infrared Reflectance Value for a Specified Channel | `1 ~ 9`<br>• Specifies a channel and reads its calibrated reflectance value.<br>• The input ranges from `1 ~ 16`{.code-green}, specifying the channel to read.<br>• A returned value of `1`{.code-green-text} indicates the darkest level, and `9`{.code-green-text} indicates the brightest level. |
 
 ##### Mode 3: Recommended for Competition
 
-| Code | Function | Returned Values |
+| Programming Block | Function | Returned Values |
 | --- | --- | --- |
 | ![High-Resolution Line Position](/images/tutorials/S16/ev3-block/pos100.png) | High-Resolution Line Position | `-100 ~ +100`<br>• Reads the high-resolution line position.<br>• `0`{.code-green-text} indicates the center. Negative values indicate left, and positive values indicate right.<br>• Provides much higher precision than `line_pos16()`{.code-green}.<br>• Suitable for advanced, precise PID line following.<br>• Proper sensor calibration is required. More accurate calibration produces more accurate readings. |
 | ![Line Width](/images/tutorials/S16/ev3-block/width.png) | Line Width | `0 ~ 16`<br>• The number of sensing elements detecting the line.<br>• Used to detect wide-line features such as crossroads and T-junctions.<br>• Supports both resolution modes: `line_pos16()`{.code-green} and `line_pos100()`{.code-green}. |
