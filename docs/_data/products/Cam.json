@@ -1,0 +1,36 @@
+{
+  "slug": "VisionSensorCamera",
+  "order": 3,
+  "code": "MBC VisionSensorCamera",
+  "name": {
+    "zh": "MBC 神攝手視覺板",
+    "en": "MBC Vision Camera Sensor"
+  },
+  "summary": {
+    "zh": "兼容 EV3 / SPIKE / MATRIX R4",
+    "en": "Compatible With EV3 / SPIKE / MATRIX R4"
+  },
+  "image": "/images/products/Cam/Cam-spike.webp",
+  "imageAlt": {
+    "zh": "MBC 神攝手視覺板",
+    "en": "MBC Vision Camera Sensor"
+  },
+  "routeBase": "products/Cam",
+  "support": {
+    "spike": [
+      "app",
+      "block",
+      "python",
+      "inventor"
+    ],
+    "ev3": [
+      "classroom",
+      "ev3g",
+      "block",
+      "python"
+    ],
+    "i2c":[
+      "general"
+    ]
+  }
+}

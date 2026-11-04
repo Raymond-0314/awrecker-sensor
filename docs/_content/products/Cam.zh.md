@@ -18,7 +18,7 @@
   ">
     <img
       src="/images/products/Hue12/Hue12-spike.webp"
-      alt="MBC Hue12 視覺感應器"
+      alt="MBC Vision Camera Sensor 視覺感應器"
       style="
         width: 100%;
         height: auto;
