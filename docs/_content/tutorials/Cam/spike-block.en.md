@@ -18,8 +18,15 @@
 
 ## 02 / Functions and data
 
-::: info ℹ️ Note
-Use the built-in Color Sensor blocks. Store reflection and ambient readings in variables and decode them for the selected camera mode. Select that mode on the camera.
+::: info ℹ️ Reading notes
+- Use the built-in Color Sensor blocks. Store reflection and ambient readings in variables and decode them for the selected camera mode. Select that mode on the camera.
+- Here ÷ means integer division and mod means remainder. Ambient readings retain one decimal place: use floor(reading) for the integer and round(reading × 10) % 10 for the digit.
+- Area, saturation, value, line width and junction distance are percentages. Their range labels omit the percent sign.
+:::
+
+::: warning ⚠️ Note
+- Only one camera submode is active at a time. Make sure its Mode ID matches the program.
+- Modes reuse the same read expressions; decode their results using the table for the selected mode.
 :::
 
 <CamModeAccordion>
@@ -36,61 +43,65 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="11" title="Color tracking - ① Most colors">
 
-Read positions for up to 2 targets.
+`Pybricks blocks provides: 2 color positions`
 
-| Block field | Reading |
-| --- | --- |
-| Reflection | X1×100+Y1 |
-| Ambient light | X2 . Y2 |
+::: info ℹ️ Reading notes
+- Reflected-light positions use a `40 × 30` grid; ambient-light positions or sizes use an `8 × 6` grid. X increases rightward and Y downward. These are grid units, not pixels; position 0 means not found.
+- For a negative reflected-light position, add 6399 before decoding.
+:::
 
-reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
-
-The reflection position uses a 40×30 grid. Add 6399 to a negative reading before splitting X and Y by 100. Ambient positions or sizes use an 8×6 grid. Y increases downward and position 0 means no target.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `reflection()`<br>[Image pending: Pybricks reflected-light block] | Color 1 X and Color 1 Y | `-3199 ~ 3199`<br>• Color 1 X range: `0, 1 ~ 40`{.code-green}.<br>• Color 1 X = reading ÷ 100.<br>• Color 1 Y range: `0, 1 ~ 30`{.code-green}.<br>• Color 1 Y = reading mod 100. |
+| `ambient()`<br>[Image pending: Pybricks ambient-light block] | Color 2 X and Color 2 Y | `0 ~ 8.6`<br>• Color 2 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 2 X = floor(reading).<br>• Color 2 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 2 Y = round(reading × 10) % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="12" title="Color tracking - ② Multiple colors">
 
-Read positions for up to 2 targets.
+`Pybricks blocks provides: 2 color positions`
 
-| Block field | Reading |
-| --- | --- |
-| Reflection | X1×100+Y1 |
-| Ambient light | X2 . Y2 |
+::: info ℹ️ Reading notes
+- Reflected-light positions use a `40 × 30` grid; ambient-light positions or sizes use an `8 × 6` grid. X increases rightward and Y downward. These are grid units, not pixels; position 0 means not found.
+- For a negative reflected-light position, add 6399 before decoding.
+:::
 
-reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
-
-The reflection position uses a 40×30 grid. Add 6399 to a negative reading before splitting X and Y by 100. Ambient positions or sizes use an 8×6 grid. Y increases downward and position 0 means no target.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `reflection()`<br>[Image pending: Pybricks reflected-light block] | Color 1 X and Color 1 Y | `-3199 ~ 3199`<br>• Color 1 X range: `0, 1 ~ 40`{.code-green}.<br>• Color 1 X = reading ÷ 100.<br>• Color 1 Y range: `0, 1 ~ 30`{.code-green}.<br>• Color 1 Y = reading mod 100. |
+| `ambient()`<br>[Image pending: Pybricks ambient-light block] | Color 2 X and Color 2 Y | `0 ~ 8.6`<br>• Color 2 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 2 X = floor(reading).<br>• Color 2 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 2 Y = round(reading × 10) % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="13" title="Color tracking - ③ Standard">
 
-Read positions for up to 2 targets.
+`Pybricks blocks provides: 2 color positions`
 
-| Block field | Reading |
-| --- | --- |
-| Reflection | X1×100+Y1 |
-| Ambient light | X2 . Y2 |
+::: info ℹ️ Reading notes
+- Reflected-light positions use a `40 × 30` grid; ambient-light positions or sizes use an `8 × 6` grid. X increases rightward and Y downward. These are grid units, not pixels; position 0 means not found.
+- For a negative reflected-light position, add 6399 before decoding.
+:::
 
-reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
-
-The reflection position uses a 40×30 grid. Add 6399 to a negative reading before splitting X and Y by 100. Ambient positions or sizes use an 8×6 grid. Y increases downward and position 0 means no target.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `reflection()`<br>[Image pending: Pybricks reflected-light block] | Color 1 X and Color 1 Y | `-3199 ~ 3199`<br>• Color 1 X range: `0, 1 ~ 40`{.code-green}.<br>• Color 1 X = reading ÷ 100.<br>• Color 1 Y range: `0, 1 ~ 30`{.code-green}.<br>• Color 1 Y = reading mod 100. |
+| `ambient()`<br>[Image pending: Pybricks ambient-light block] | Color 2 X and Color 2 Y | `0 ~ 8.6`<br>• Color 2 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 2 X = floor(reading).<br>• Color 2 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 2 Y = round(reading × 10) % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="14" title="Color tracking - ④ Fine">
 
-Read positions and sizes for up to 1 targets.
+`Pybricks blocks provides: 1 color positions and sizes`
 
-| Block field | Reading |
-| --- | --- |
-| Reflection | X1×100+Y1 |
-| Ambient light | W1 . H1 |
+::: info ℹ️ Reading notes
+- Reflected-light positions use a `40 × 30` grid; ambient-light positions or sizes use an `8 × 6` grid. X increases rightward and Y downward. These are grid units, not pixels; position 0 means not found.
+- For a negative reflected-light position, add 6399 before decoding.
+:::
 
-reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
-
-The reflection position uses a 40×30 grid. Add 6399 to a negative reading before splitting X and Y by 100. Ambient positions or sizes use an 8×6 grid. Y increases downward and position 0 means no target.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `reflection()`<br>[Image pending: Pybricks reflected-light block] | Color 1 X and Color 1 Y | `-3199 ~ 3199`<br>• Color 1 X range: `0, 1 ~ 40`{.code-green}.<br>• Color 1 X = reading ÷ 100.<br>• Color 1 Y range: `0, 1 ~ 30`{.code-green}.<br>• Color 1 Y = reading mod 100. |
+| `ambient()`<br>[Image pending: Pybricks ambient-light block] | Color 1 W and Color 1 H | `0 ~ 8.6`<br>• Color 1 W range: `0, 1 ~ 8`{.code-green}.<br>• Color 1 W = floor(reading).<br>• Color 1 H range: `0, 1 ~ 6`{.code-green}.<br>• Color 1 H = round(reading × 10) % 10. |
 
 </CamModeSection>
 
@@ -98,46 +109,54 @@ The reflection position uses a 40×30 grid. Add 6399 to a negative reading befor
 
 <CamModeSection mode="21" title="Coordinate sampling - ① Hue">
 
-Read hue for up to 2 sample points, at the precision described below.
+`Pybricks blocks provides: 2 points: hue`
 
-| Block field | Reading |
-| --- | --- |
-| Reflection | Hue1×10+floor(Sat1÷10) |
-| Ambient light | Hue2 . min(9,floor(Sat2÷10)) |
+::: info ℹ️ Reading notes
+- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
+- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+- Saturation retains tens only; the reconstructed value is approximate.
+- Only tens are retained; 9 represents about 90 or higher. Units are lost.
+:::
 
-reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
-
-Fields divided by 10 retain only tens information. Multiply by 10 for an approximate value, capped at 90.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `reflection()`<br>[Image pending: Pybricks reflected-light block] | S1 hue and S1 saturation | `0 ~ 2560`<br>• S1 hue range: `0 ~ 255`{.code-green}.<br>• S1 hue = reading ÷ 10.<br>• S1 saturation range: `0 ~ 90`{.code-green}.<br>• S1 saturation = (reading mod 10) × 10. |
+| `ambient()`<br>[Image pending: Pybricks ambient-light block] | S2 hue and S2 saturation (tens precision) | `0 ~ 255.9`<br>• S2 hue range: `0 ~ 255`{.code-green}.<br>• S2 hue = floor(reading).<br>• S2 saturation (tens precision) range: `0 ~ 90`{.code-green}.<br>• S2 saturation = (round(reading × 10) % 10) × 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="22" title="Coordinate sampling - ② Hue and saturation">
 
-Read hue and saturation for up to 2 sample points, at the precision described below.
+`Pybricks blocks provides: 2 points: hue and saturation`
 
-| Block field | Reading |
-| --- | --- |
-| Reflection | Hue1×10+floor(Sat1÷10) |
-| Ambient light | Hue2 . min(9,floor(Sat2÷10)) |
+::: info ℹ️ Reading notes
+- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
+- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+- Saturation retains tens only; the reconstructed value is approximate.
+- Only tens are retained; 9 represents about 90 or higher. Units are lost.
+:::
 
-reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
-
-Fields divided by 10 retain only tens information. Multiply by 10 for an approximate value, capped at 90.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `reflection()`<br>[Image pending: Pybricks reflected-light block] | S1 hue and S1 saturation | `0 ~ 2560`<br>• S1 hue range: `0 ~ 255`{.code-green}.<br>• S1 hue = reading ÷ 10.<br>• S1 saturation range: `0 ~ 90`{.code-green}.<br>• S1 saturation = (reading mod 10) × 10. |
+| `ambient()`<br>[Image pending: Pybricks ambient-light block] | S2 hue and S2 saturation (tens precision) | `0 ~ 255.9`<br>• S2 hue range: `0 ~ 255`{.code-green}.<br>• S2 hue = floor(reading).<br>• S2 saturation (tens precision) range: `0 ~ 90`{.code-green}.<br>• S2 saturation = (round(reading × 10) % 10) × 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="23" title="Coordinate sampling - ③ HSV">
 
-Read hue, saturation, and brightness for up to 1 sample points, at the precision described below.
+`Pybricks blocks provides: 1 points: hue, saturation and value`
 
-| Block field | Reading |
-| --- | --- |
-| Reflection | Hue1 |
-| Ambient light | Sat1 . min(9,floor(Val1÷10)) |
+::: info ℹ️ Reading notes
+- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
+- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+- Only tens are retained; 9 represents about 90 or higher. Units are lost.
+:::
 
-reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
-
-Fields divided by 10 retain only tens information. Multiply by 10 for an approximate value, capped at 90.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `reflection()`<br>[Image pending: Pybricks reflected-light block] | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
+| `ambient()`<br>[Image pending: Pybricks ambient-light block] | S1 saturation and S1 value (tens precision) | `0 ~ 100.9`<br>• S1 saturation range: `0 ~ 100`{.code-green}.<br>• S1 saturation = floor(reading).<br>• S1 value (tens precision) range: `0 ~ 90`{.code-green}.<br>• S1 value = (round(reading × 10) % 10) × 10. |
 
 </CamModeSection>
 
@@ -145,18 +164,17 @@ Fields divided by 10 retain only tens information. Multiply by 10 for an approxi
 
 <CamModeSection mode="30" title="Color order">
 
-Read the first 2 hues from left to right and the total block count.
+`Pybricks blocks provides: the first 2 block hues and total count`
 
-| Block field | Reading |
-| --- | --- |
-| Reflection | Hue1 |
-| Ambient light | Hue2 . min(Total,9) |
+::: info ℹ️ Reading notes
+- Blocks are ordered left to right. Read the total count before using hue entries; hue 0 can be red.
+- 9 means 9 or more.
+:::
 
-reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
-
-The count digit is capped at 9, meaning nine or more.
-
-Hue 0 can represent red. Use the total block count to identify valid entries.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `reflection()`<br>[Image pending: Pybricks reflected-light block] | Block 1 hue from the left | `0 ~ 255`<br>• Block 1 hue from the left = reading. |
+| `ambient()`<br>[Image pending: Pybricks ambient-light block] | Block 2 hue from the left and Total color blocks | `0 ~ 255.9`<br>• Block 2 hue from the left range: `0 ~ 255`{.code-green}.<br>• Block 2 hue from the left = floor(reading).<br>• Total color blocks range: `0 ~ 9`{.code-green}.<br>• Total color blocks = round(reading × 10) % 10. |
 
 </CamModeSection>
 
@@ -164,46 +182,52 @@ Hue 0 can represent red. Use the total block count to identify valid entries.
 
 <CamModeSection mode="41" title="Line following - ① Black">
 
-Read near and far offsets, junction type, and line flags: four values.
+`Pybricks blocks provides: near/far offsets, junction type and line-found flags`
 
-| Block field | Reading |
-| --- | --- |
-| Reflection | (Near offset+100)×10+Junction |
-| Ambient light | Far offset+100 . Flags |
+::: info ℹ️ Reading notes
+- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
+- This submode detects a black line on a light surface.
+- For example, a reading of 80 decodes to - 20.
+:::
 
-reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
-
-Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `reflection()`<br>[Image pending: Pybricks reflected-light block] | Near offset and Junction type | `0 ~ 2005`<br>• Near offset range: `0 ~ 200`{.code-green}.<br>• Near offset = (reading ÷ 10) - 100.<br>• Junction type range: `0 ~ 5`{.code-green}.<br>• Junction type = reading mod 10. |
+| `ambient()`<br>[Image pending: Pybricks ambient-light block] | Far offset and Line-found flags | `0 ~ 200.7`<br>• Far offset range: `0 ~ 200`{.code-green}.<br>• Far offset = (floor(reading)) - 100.<br>• Line-found flags range: `0 ~ 7`{.code-green}.<br>• Line-found flags = round(reading × 10) % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="42" title="Line following - ② White">
 
-Read near and far offsets, junction type, and line flags: four values.
+`Pybricks blocks provides: near/far offsets, junction type and line-found flags`
 
-| Block field | Reading |
-| --- | --- |
-| Reflection | (Near offset+100)×10+Junction |
-| Ambient light | Far offset+100 . Flags |
+::: info ℹ️ Reading notes
+- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
+- This submode detects a white line on a dark surface.
+- For example, a reading of 80 decodes to - 20.
+:::
 
-reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
-
-Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `reflection()`<br>[Image pending: Pybricks reflected-light block] | Near offset and Junction type | `0 ~ 2005`<br>• Near offset range: `0 ~ 200`{.code-green}.<br>• Near offset = (reading ÷ 10) - 100.<br>• Junction type range: `0 ~ 5`{.code-green}.<br>• Junction type = reading mod 10. |
+| `ambient()`<br>[Image pending: Pybricks ambient-light block] | Far offset and Line-found flags | `0 ~ 200.7`<br>• Far offset range: `0 ~ 200`{.code-green}.<br>• Far offset = (floor(reading)) - 100.<br>• Line-found flags range: `0 ~ 7`{.code-green}.<br>• Line-found flags = round(reading × 10) % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="43" title="Line following - ③ Colored">
 
-Read near and far offsets, junction type, and line flags: four values.
+`Pybricks blocks provides: near/far offsets, junction type and line-found flags`
 
-| Block field | Reading |
-| --- | --- |
-| Reflection | (Near offset+100)×10+Junction |
-| Ambient light | Far offset+100 . Flags |
+::: info ℹ️ Reading notes
+- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
+- Before using colored-line mode, teach the line color as target 1.
+- For example, a reading of 80 decodes to - 20.
+:::
 
-reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
-
-Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `reflection()`<br>[Image pending: Pybricks reflected-light block] | Near offset and Junction type | `0 ~ 2005`<br>• Near offset range: `0 ~ 200`{.code-green}.<br>• Near offset = (reading ÷ 10) - 100.<br>• Junction type range: `0 ~ 5`{.code-green}.<br>• Junction type = reading mod 10. |
+| `ambient()`<br>[Image pending: Pybricks ambient-light block] | Far offset and Line-found flags | `0 ~ 200.7`<br>• Far offset range: `0 ~ 200`{.code-green}.<br>• Far offset = (floor(reading)) - 100.<br>• Line-found flags range: `0 ~ 7`{.code-green}.<br>• Line-found flags = round(reading × 10) % 10. |
 
 </CamModeSection>
 
@@ -211,37 +235,39 @@ Offsets run from −100 to 100, negative to the left; angles run from −90 to 9
 
 <CamModeSection mode="51" title="Object detection - ① Object list">
 
-Read codes and positions for the first 1 objects, plus the total count.
+`Pybricks blocks provides: codes and positions of the first 1 objects, plus total count`
 
-| Block field | Reading |
-| --- | --- |
-| Reflection | X1×100+Y1 |
-| Ambient light | Code1 . min(Total,9) |
+::: info ℹ️ Reading notes
+- Reflected-light positions use a `40 × 30` grid. X increases rightward and Y downward. These are grid units, not pixels; position 0 means not found. Ambient light provides object data, rather than a second position.
+- Only target colors 1 ~ 8 are used. Objects are ordered largest first, and X/Y is the centroid. Shape codes 0 ~ 9 mean other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star and trapezoid.
+- For a negative reflected-light position, add 6399 before decoding.
+- For example, 13 means color 1 triangle; 0 means no object.
+- 9 means 9 or more.
+:::
 
-reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
-
-The reflection position uses a 40×30 grid. Add 6399 to a negative reading before splitting X and Y by 100. Ambient positions or sizes use an 8×6 grid. Y increases downward and position 0 means no target.
-
-Detection uses target colors 1–8. Objects are ordered largest first and positions are centroids. Code = color ID×10+shape; 0 means no object. Shapes 0–9 mean other, circle, oval, triangle, square, rectangle, pentagon, hexagon, star, and trapezoid.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `reflection()`<br>[Image pending: Pybricks reflected-light block] | Object 1 X and Object 1 Y | `-3199 ~ 3199`<br>• Object 1 X range: `0, 1 ~ 40`{.code-green}.<br>• Object 1 X = reading ÷ 100.<br>• Object 1 Y range: `0, 1 ~ 30`{.code-green}.<br>• Object 1 Y = reading mod 100. |
+| `ambient()`<br>[Image pending: Pybricks ambient-light block] | Object 1 code and Object count | `0 ~ 89.9`<br>• Object 1 code range: `0, 10 ~ 89`{.code-green}.<br>• Object 1 color ID = (floor(reading)) // 10.<br>• Object 1 shape code = (floor(reading)) % 10.<br>• Object count range: `0 ~ 9`{.code-green}.<br>• Object count = round(reading × 10) % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="52" title="Object detection - ② Object details">
 
-Read detailed data for the first 1 objects using the fields below.
+`Pybricks blocks provides: details of the first 1 objects`
 
-| Block field | Reading |
-| --- | --- |
-| Reflection | X1×100+Y1 |
-| Ambient light | Code1 . min(9,floor(Area1÷10)) |
+::: info ℹ️ Reading notes
+- Reflected-light positions use a `40 × 30` grid. X increases rightward and Y downward. These are grid units, not pixels; position 0 means not found. Ambient light provides object data, rather than a second position.
+- Only target colors 1 ~ 8 are used. Objects are ordered largest first, and X/Y is the centroid. Shape codes 0 ~ 9 mean other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star and trapezoid.
+- For a negative reflected-light position, add 6399 before decoding.
+- For example, 13 means color 1 triangle; 0 means no object.
+- Only tens are retained; 9 represents about 90 or higher. Units are lost.
+:::
 
-reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
-
-The reflection position uses a 40×30 grid. Add 6399 to a negative reading before splitting X and Y by 100. Ambient positions or sizes use an 8×6 grid. Y increases downward and position 0 means no target.
-
-Fields divided by 10 retain only tens information. Multiply by 10 for an approximate value, capped at 90.
-
-Detection uses target colors 1–8. Objects are ordered largest first and positions are centroids. Code = color ID×10+shape; 0 means no object. Shapes 0–9 mean other, circle, oval, triangle, square, rectangle, pentagon, hexagon, star, and trapezoid.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `reflection()`<br>[Image pending: Pybricks reflected-light block] | Object 1 X and Object 1 Y | `-3199 ~ 3199`<br>• Object 1 X range: `0, 1 ~ 40`{.code-green}.<br>• Object 1 X = reading ÷ 100.<br>• Object 1 Y range: `0, 1 ~ 30`{.code-green}.<br>• Object 1 Y = reading mod 100. |
+| `ambient()`<br>[Image pending: Pybricks ambient-light block] | Object 1 code and Object 1 area (tens precision) | `0 ~ 89.9`<br>• Object 1 code range: `0, 10 ~ 89`{.code-green}.<br>• Object 1 color ID = (floor(reading)) // 10.<br>• Object 1 shape code = (floor(reading)) % 10.<br>• Object 1 area (tens precision) range: `0 ~ 90`{.code-green}.<br>• Object 1 area = (round(reading × 10) % 10) × 10. |
 
 </CamModeSection>
 
@@ -260,15 +286,17 @@ Select camera mode 13 (Color Tracking - ③ Standard) and teach target colors 1 
 | 5 | If X1 or X2 is 0, display “No target” for that color. Otherwise display its X and Y. |
 | 6 | Wait 0.1 seconds before the next iteration. |
 
-For example, reflected = 2015 and ambient = 4.3 decode to target 1 grid position (20,15) and target 2 grid position (4,3). The grids have different resolutions: 40×30 for target 1 and 8×6 for target 2.
+For example, reflected = 2015 and ambient = 4.3 decode to target 1 grid position (20,15) and target 2 grid position (4,3). The grids have different resolutions: 40 × 30 for target 1 and 8 × 6 for target 2.
 
 ### ✔ Decode line-following readings
 
-For camera modes 41, 42, and 43: near offset = floor(reflected / 10) − 100; junction = reflected modulo 10; far offset = floor(ambient) − 100; flags = round(ambient × 10) modulo 10. For example, 802 and 115.5 mean near offset −20, a T junction, far offset +15, and a line detected in the near and far rows.
+For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junction = reflected modulo 10; far offset = floor(ambient) - 100; flags = round(ambient × 10) modulo 10. For example, 802 and 115.5 mean near offset -20, a T junction, far offset +15, and a line detected in the near and far rows.
 
 ### ✔ Further reading
 
 For more targets, pixel positions, areas, or raw data, see the [Pybricks Python lesson](./spike-python.md), which includes the transport mode 9 field map and a complete program.
+
+*[Image pending: complete SPIKE Pybricks Blocks block program or project file; the steps above describe the reads and calculations.]*
 
 ## 04 / 【Lego】 Lau Xiao demonstration videos
 

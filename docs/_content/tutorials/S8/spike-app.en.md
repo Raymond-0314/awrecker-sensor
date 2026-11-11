@@ -38,7 +38,7 @@ In the official SPIKE App, the S8 Line-Following Sensor operates in “SPIKE Col
   label="Download Example Program"
 />
 
-![Example Program](/images/tutorials/S8/spike-app/ex_program.png){style="border-radius: 10px;"}
+![Example Program](/images/tutorials/S8/spike-app/ex_program.png){style = "border-radius: 10px;"}
 
 ## 04 / 【Lego】 Lau Xiao Demonstration Videos
 

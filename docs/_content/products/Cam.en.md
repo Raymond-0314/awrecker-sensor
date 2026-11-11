@@ -60,12 +60,6 @@ Preview the image and detection results directly on the camera screen. Use the b
 
 SPIKE, EV3, MATRIX, and general I²C each use their own firmware. Check the camera version before connecting it and follow the wiring instructions for the corresponding tutorial.
 
-::: warning ⚠️ Note
-- The new MBC UniCam combines the functions of earlier models in one module for more complete and convenient vision recognition. Sales of the previous version ended in October 2026.
-- Updates for earlier versions have ended. Future development will focus on the new-generation UniCam.
-- The new version provides the functions described in the tutorials on this website.
-- Owners of earlier versions can have the firmware upgraded to the new version free of charge, with round-trip shipping paid by the owner.
-:::
 
 ### ✔ Five vision functions
 
@@ -86,7 +80,7 @@ SPIKE, EV3, MATRIX, and general I²C each use their own firmware. Check the came
       imageAlt: 'Sample point positions S1 to S20',
       items: [
         'Fixed points return <strong>hue H</strong>, with saturation S and value V added by submode.',
-        'Set positions on the camera or with I2C command E1. Each sample averages <strong>3×3 pixels</strong>.'
+        'Set positions on the camera or with I2C command E1. Each sample averages <strong>3 × 3 pixels</strong>.'
       ]
     },
     {
@@ -199,7 +193,7 @@ These illustrations follow the firmware interface. The interface is in English a
 | Upper right | Selected target number, starting at 1 and matching the color ID sent to the host. Yellow `MENU` indicates the menu entry. |
 | Bottom | Position, color or detection data for the current mode, as listed below. |
 
-Left/right cycles through “Target 1 … Target N → MENU”. N is the last taught target plus one empty slot, up to 16. Spot mode cycles through “S1 … Sn → MENU”, also including one empty slot after the last configured point.
+Left/right cycles through “Target 1 ~ Target N → MENU”. N is the last taught target plus one empty slot, up to 16. Spot mode cycles through “S1 ~ Sn → MENU”, also including one empty slot after the last configured point.
 
 <CamScreenGallery>
 
@@ -273,7 +267,7 @@ SPIKE identifies the Education App, home app, Pybricks blocks or Pybricks librar
 
 ### ✔ Teaching targets and positioning sample points
 
-Press OK on a target to teach its color. Select AxisX, then AxisY, and confirm to sample the color. Holding OK for about 0.8 seconds completes teaching directly. Hue, Sta, Size and Locked/MaxArea can then be adjusted. Pressing the side button on a target clears both its color and assigned shape. In object mode, teaching targets 1–8 opens `Target N shape`; Any leaves the shape unrestricted.
+Press OK on a target to teach its color. Select AxisX, then AxisY, and confirm to sample the color. Holding OK for about 0.8 seconds completes teaching directly. Hue, Sta, Size and Locked/MaxArea can then be adjusted. Pressing the side button on a target clears both its color and assigned shape. In object mode, teaching targets 1 ~ 8 opens `Target N shape`; Any leaves the shape unrestricted.
 
 <CamScreenGallery>
 
@@ -295,7 +289,7 @@ Press OK on a target to teach its color. Select AxisX, then AxisY, and confirm t
 
 ![Assign a shape](/images/tutorials/Cam/ui/13-teach-shape.webp)
 
-<figcaption><strong>Assign a shape</strong><br>Targets 1–8 support a shape constraint. Any accepts all shapes.</figcaption>
+<figcaption><strong>Assign a shape</strong><br>Targets 1 ~ 8 support a shape constraint. Any accepts all shapes.</figcaption>
 </figure>
 
 </CamScreenGallery>

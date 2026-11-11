@@ -38,7 +38,7 @@
   label="範例程式下載"
 />
 
-![範例程式](/images/tutorials/S16/spike-inventor/ex_program.webp){style="border-radius: 10px;"}
+![範例程式](/images/tutorials/S16/spike-inventor/ex_program.webp){style = "border-radius: 10px;"}
 
 ## 04 / 【Lego】 Lau Xiao 示範影片
 

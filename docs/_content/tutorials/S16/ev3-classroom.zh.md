@@ -29,7 +29,7 @@
 
 | 官方圖形指令 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| ![線位置](/images/tutorials/S16/ev3-classroom/proximity.png) | 線位置 | `-16 ~ +16`<br>• 0 代表線在正中央，負數偏左，正數偏右。<br>• +16 與 -16 表示線在感應器最邊緣。 |
+| ![線位置](/images/tutorials/S16/ev3-classroom/proximity.png) | 線位置 | `-16 ~ +16`<br>• 0 代表線在正中央，負數偏左，正數偏右。<br>• + 16 與 -16 表示線在感應器最邊緣。 |
 | ![光電 0 與 1 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | 光電 0 與 1 號數值 | `11 ~ 99`<br>• 十位數為通道 0 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 1 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
 | ![光電 2 與 3 號數值](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | 光電 2 與 3 號數值 | `11 ~ 99`<br>• 十位數為通道 2 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 3 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
 | ![光電 4 與 5 號數值](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | 光電 4 與 5 號數值 | `11 ~ 99`<br>• 十位數為通道 4 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• 個位數為通道 5 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
@@ -51,7 +51,7 @@
   label="範例程式下載"
 />
 
-![範例程式](/images/tutorials/S16/ev3-classroom/ex_program.png){style="border-radius: 10px;"}
+![範例程式](/images/tutorials/S16/ev3-classroom/ex_program.png){style = "border-radius: 10px;"}
 
 ### ✔ EV3 專屬自訂積木 (My Blocks) 說明
 MBC 16 路循線感應器提供了三個「自訂積木 (My Blocks) 」。開發時不需要額外安裝擴充包，只需在主程式中呼叫對應函數，並將最新感應器數據存入變數，便可供馬達控制直接使用。以下為三個核心函數的功能與使用時機介紹：
@@ -59,7 +59,7 @@ MBC 16 路循線感應器提供了三個「自訂積木 (My Blocks) 」。開發
 | 用途 | 函數 | 功能 |
 | --- | --- | --- |
 | 基礎循線函數 | `LinePos16_dataUpdate` | `-16 ~ +16`<br>• 快速讀取最基礎的 16 段循線位置，適合新手入門教學與基礎左右轉向判斷。<br>• 執行此函數後，系統會自動更新變數 `0_LinePos16`。<br>• 0 代表線在正中央，負數偏左，正數偏右。 |
-| 競技高精度函數 | `LinePos100_dataUpdate` | • 取得高解析度次像素級插值位置。<br>• 專為高階 PID 循線控制演算法設計，能提供極致平滑的修正動力。<br>• 需完成感應器校準。<br>• 執行此函數後，系統會自動更新變數：<br>&emsp;1. `0_LinePos100`：高精度位置，範圍 -100 到 +100 (負值偏左、正值偏右) 。 <br>&emsp;2. `0_LineWidth16`：偵測到線的感測器數量 (範圍 0 ~ 16)。可用於判斷路口類型。<br>&emsp;3. `最左/最右邊界數值`：讀取最左/右邊感應器的實體光值，用於防掉線或路口偵測。 |
+| 競技高精度函數 | `LinePos100_dataUpdate` | • 取得高解析度次像素級插值位置。<br>• 專為高階 PID 循線控制演算法設計，能提供極致平滑的修正動力。<br>• 需完成感應器校準。<br>• 執行此函數後，系統會自動更新變數：<br>&emsp;1. `0_LinePos100`：高精度位置，範圍 -100 到 + 100 (負值偏左、正值偏右) 。 <br>&emsp;2. `0_LineWidth16`：偵測到線的感測器數量 (範圍 0 ~ 16)。可用於判斷路口類型。<br>&emsp;3. `最左/最右邊界數值`：讀取最左/右邊感應器的實體光值，用於防掉線或路口偵測。 |
 | 全陣列展開函數 | `LineCh16_dataUpdate` | • 將 16 顆感應器解碼為獨立狀態。<br>• 可根據 16 顆不同光電的數值自訂進階演算法。<br>• 執行此函數後，會一氣呵成地更新 `s1`{.code-green-text} 到 `s16`{.code-green-text} 共 16 個獨立變數，完美對應感應器由左至右每一顆的即時讀數。 |
 
 ::: info ℹ️ 補充資訊

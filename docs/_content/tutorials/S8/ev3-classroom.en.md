@@ -28,7 +28,7 @@ Due to hardware communication limitations of the EV3 controller, switching betwe
 
 | Programming Block | Function | Returned Values |
 | --- | --- | --- |
-| ![Line Position](/images/tutorials/S8/ev3-classroom/proximity.png) | Line Position | `-8 ~ +8`<br>• 0 indicates that the line is centered. Negative values indicate left, and positive values indicate right.<br>• +8 and -8 indicate that the line is at the outermost edge of the sensor array. |
+| ![Line Position](/images/tutorials/S8/ev3-classroom/proximity.png) | Line Position | `-8 ~ +8`<br>• 0 indicates that the line is centered. Negative values indicate left, and positive values indicate right.<br>• + 8 and -8 indicate that the line is at the outermost edge of the sensor array. |
 | ![Optical Values for Channels 0 and 1](/images/tutorials/S8/ev3-classroom/heading_beacon_1.png) | Optical Values for Channels 0 and 1 | `11 ~ 99`<br>• The tens digit represents the optical value of channel 0, ranging from 1 to 9.<br>• The ones digit represents the optical value of channel 1, ranging from 1 to 9. |
 | ![Optical Values for Channels 2 and 3](/images/tutorials/S8/ev3-classroom/heading_beacon_2.png) | Optical Values for Channels 2 and 3 | `11 ~ 99`<br>• The tens digit represents the optical value of channel 2, ranging from 1 to 9.<br>• The ones digit represents the optical value of channel 3, ranging from 1 to 9. |
 | ![Optical Values for Channels 4 and 5](/images/tutorials/S8/ev3-classroom/heading_beacon_3.png) | Optical Values for Channels 4 and 5 | `11 ~ 99`<br>• The tens digit represents the optical value of channel 4, ranging from 1 to 9.<br>• The ones digit represents the optical value of channel 5, ranging from 1 to 9. |
@@ -46,7 +46,7 @@ Due to hardware communication limitations of the EV3 controller, switching betwe
   label="Download Example Program"
 />
 
-![Example Program](/images/tutorials/S8/ev3-classroom/ex_program.png){style="border-radius: 10px;"}
+![Example Program](/images/tutorials/S8/ev3-classroom/ex_program.png){style = "border-radius: 10px;"}
 
 ### ✔ EV3 My Blocks Reference
 
@@ -55,7 +55,7 @@ The MBC 8-Channel Line-Following Sensor provides three custom blocks (My Blocks)
 | Purpose | Function | Description |
 | --- | --- | --- |
 | Basic Line Following | `LinePos8_dataUpdate` | `-8 ~ +8`<br>• Quickly reads the basic 8-step line-position value. Suitable for introductory lessons and basic left/right steering decisions.<br>• Calling this function automatically updates the variable `0_LinePos8`.<br>• 0 indicates that the line is centered. Negative values indicate left, and positive values indicate right. |
-| High-Precision Competition Line Following | `LinePos100_dataUpdate` | `-8 ~ +8`<br>• Retrieves a high-resolution line position using subpixel interpolation.<br>• Designed for advanced PID line-following algorithms to provide smooth steering corrections.<br>• Sensor calibration is required.<br>• Calling this function automatically updates the following variables:<br>&emsp;1. `0_LinePos100`: High-precision position, ranging from -100 to +100. Negative values indicate left, and positive values indicate right.<br>&emsp;2. `0_LineWidth8`: The number of sensing elements detecting the line, ranging from 0 to 8. Can be used to identify junction types.<br>&emsp;3. `Leftmost / Rightmost Boundary Values`: Reflectance values of the leftmost and rightmost sensing elements, used for line-loss prevention or junction detection. |
+| High-Precision Competition Line Following | `LinePos100_dataUpdate` | `-8 ~ +8`<br>• Retrieves a high-resolution line position using subpixel interpolation.<br>• Designed for advanced PID line-following algorithms to provide smooth steering corrections.<br>• Sensor calibration is required.<br>• Calling this function automatically updates the following variables:<br>&emsp;1. `0_LinePos100`: High-precision position, ranging from -100 to + 100. Negative values indicate left, and positive values indicate right.<br>&emsp;2. `0_LineWidth8`: The number of sensing elements detecting the line, ranging from 0 to 8. Can be used to identify junction types.<br>&emsp;3. `Leftmost / Rightmost Boundary Values`: Reflectance values of the leftmost and rightmost sensing elements, used for line-loss prevention or junction detection. |
 | Full Sensor Array Decoding | `LineCh8_dataUpdate` | • Decodes the 8 sensing elements into individual readings.<br>• Allows you to develop custom advanced algorithms using the values from all 8 channels.<br>• Calling this function updates all 8 independent variables, s1 through s8, with the current readings of the sensing elements from left to right. |
 
 ::: info ℹ️ Additional Information

@@ -41,21 +41,21 @@ In Pybricks, the S8 Line-Following Sensor operates in “SPIKE Color Sensor” m
 
 1. Open your Pybricks program and place the color sensor setup block under the `set up`{.code-blue} block, as shown below. Place the remaining drivetrain, motor, and sensor initialization blocks after it under the `set up`{.code-blue} block.
 
-![Color Sensor Setup](/images/tutorials/S8/spike-block/basic_setup.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px auto;"}
+![Color Sensor Setup](/images/tutorials/S8/spike-block/basic_setup.png){style = "display: block; width: 250px; max-width: 100%; height: auto; margin: 10px auto;"}
 
 2. Next, configure the decoding functions. Drag out a `my task`{.code-blue} block and select the mode with the `briefcase`{.code-blue} icon, as shown below.
 
-![My Task Setup](/images/tutorials/S8/spike-block/basic_setup_mytask.png){style="display: block; width: 200px; max-width: 100%; height: auto; margin: 10px auto;"}
+![My Task Setup](/images/tutorials/S8/spike-block/basic_setup_mytask.png){style = "display: block; width: 200px; max-width: 100%; height: auto; margin: 10px auto;"}
 
 3. Basic Control provides four functions. Follow the programs shown in the images below to configure each decoding function.
 
-![pos8 Setup](/images/tutorials/S8/spike-block/basic_setup_pos8.png){style="display: block; width: 400px; max-width: 100%; height: auto;"}
+![pos8 Setup](/images/tutorials/S8/spike-block/basic_setup_pos8.png){style = "display: block; width: 400px; max-width: 100%; height: auto;"}
 
-![width8 Setup](/images/tutorials/S8/spike-block/basic_setup_width8.png){style="display: block; width: 350px; max-width: 100%; height: auto;"}
+![width8 Setup](/images/tutorials/S8/spike-block/basic_setup_width8.png){style = "display: block; width: 350px; max-width: 100%; height: auto;"}
 
-![pos100 Setup](/images/tutorials/S8/spike-block/basic_setup_pos100.png){style="display: block; width: 480px; max-width: 100%; height: auto;"}
+![pos100 Setup](/images/tutorials/S8/spike-block/basic_setup_pos100.png){style = "display: block; width: 480px; max-width: 100%; height: auto;"}
 
-![width100 Setup](/images/tutorials/S8/spike-block/basic_setup_width100.png){style="display: block; width: 480px; max-width: 100%; height: auto;"}
+![width100 Setup](/images/tutorials/S8/spike-block/basic_setup_width100.png){style = "display: block; width: 480px; max-width: 100%; height: auto;"}
 
 ### ✔ Function Reference
 
@@ -79,12 +79,12 @@ Use `Line Position`{.code-blue} and `Line Width`{.code-blue} functions with matc
 
 1. Click the <code class="code-blue"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: inline-block; vertical-align: -0.125em; margin-right: 4px;"><path d="M12 3v12m-5-5 5 5 5-5"></path><path d="M5 16v5h14v-5"></path></svg>v4.1 Library</code> button above to download the `MBC 8-Channel Line-Following Sensor Pybricks - SPIKE Library`{.code-blue}.
 2. Confirm that the library filename is `MBC_line8_obj_Lib.py`{.code-blue}.
-3. Return to Pybricks and click the `import a file`{.code-blue} button ![Import](/images/tutorials/S8/spike-block/pybricks-import.svg){style="width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"} in the `file explorer`{.code-blue} workspace.
+3. Return to Pybricks and click the `import a file`{.code-blue} button ![Import](/images/tutorials/S8/spike-block/pybricks-import.svg){style = "width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"} in the `file explorer`{.code-blue} workspace.
 4. Select and import the `MBC_line8_obj_Lib.py`{.code-blue} library.
 5. Confirm that `MBC_line8_obj_Lib.py`{.code-blue} appears in the `file explorer`{.code-blue} workspace. The library and your main program must be in the same project.
 6. Open your Pybricks program and place the library import and configuration blocks under the `set up`{.code-blue} block, as shown below. Place the remaining drivetrain, motor, and sensor initialization blocks after them under the `set up`{.code-blue} block.
 
-![Library Setup](/images/tutorials/S8/spike-block/setup.png){style="display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+![Library Setup](/images/tutorials/S8/spike-block/setup.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
 
 ### ✔ Function Reference
 
@@ -100,8 +100,8 @@ Use `Line Position`{.code-blue} and `Line Width`{.code-blue} functions with matc
 
 | Programming Block | Mode | Description |
 | --- | --- | --- |
-| ![Library Configuration](/images/tutorials/S8/spike-block/adv_setting.png) | Asynchronous mode: set to `true`{.code-green} | • Use `await`{.code-green} when reading values.![await](/images/tutorials/S8/spike-block/adv_pos8.png){style="display: block; width: 300px; max-width: 100%; height: auto; margin: 10px;"}• Can be used with the `multitask`{.code-green} block.![multitask](/images/tutorials/S8/spike-block/multitask.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"} |
-| ![Library Configuration](/images/tutorials/S8/spike-block/adv_setting_false.png) | Synchronous mode: set to `false`{.code-green} | • Use `call`{.code-green} when reading values.![call](/images/tutorials/S8/spike-block/adv_pos8_call.png){style="display: block; width: 300px; max-width: 100%; height: auto; margin: 10px;"}• Cannot be used with the `multitask`{.code-green} block. |
+| ![Library Configuration](/images/tutorials/S8/spike-block/adv_setting.png) | Asynchronous mode: set to `true`{.code-green} | • Use `await`{.code-green} when reading values.![await](/images/tutorials/S8/spike-block/adv_pos8.png){style = "display: block; width: 300px; max-width: 100%; height: auto; margin: 10px;"}• Can be used with the `multitask`{.code-green} block.![multitask](/images/tutorials/S8/spike-block/multitask.png){style = "display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"} |
+| ![Library Configuration](/images/tutorials/S8/spike-block/adv_setting_false.png) | Synchronous mode: set to `false`{.code-green} | • Use `call`{.code-green} when reading values.![call](/images/tutorials/S8/spike-block/adv_pos8_call.png){style = "display: block; width: 300px; max-width: 100%; height: auto; margin: 10px;"}• Cannot be used with the `multitask`{.code-green} block. |
 :::
 
 #### Reading Values
@@ -131,7 +131,7 @@ Use `Line Position`{.code-blue} and `Line Width`{.code-blue} functions with matc
   label="Download Example Program (Basic Control)"
 />
 
-![Example Program](/images/tutorials/S8/spike-block/ex_program_basic.png){style="border-radius: 10px;"}
+![Example Program](/images/tutorials/S8/spike-block/ex_program_basic.png){style = "border-radius: 10px;"}
 
 ### ✔ Advanced Control
 
@@ -141,7 +141,7 @@ Use `Line Position`{.code-blue} and `Line Width`{.code-blue} functions with matc
   label="Download Example Program (Advanced Control)"
 />
 
-![Example Program](/images/tutorials/S8/spike-block/ex_program_adv.png){style="border-radius: 10px;"}
+![Example Program](/images/tutorials/S8/spike-block/ex_program_adv.png){style = "border-radius: 10px;"}
 
 ## 05 / 【Lego】 Lau Xiao Demonstration Videos
 

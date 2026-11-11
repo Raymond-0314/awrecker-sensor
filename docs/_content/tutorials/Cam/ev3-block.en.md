@@ -22,8 +22,15 @@ Check that your Pybricks EV3 blocks expose numeric beacon readings. The tables s
 
 ## 02 / Functions and data
 
-::: info ℹ️ Note
-UniCam appears as an Infrared Sensor. Proximity (0) reports camera Mode ID; Beacon (1) has eight slots and Remote (2) has four. Select the camera mode on the camera. The EV3 connection reads data only.
+::: info ℹ️ Reading notes
+- UniCam appears as an Infrared Sensor. Proximity (0) reports camera Mode ID; Beacon (1) has eight slots and Remote (2) has four. Select the camera mode on the camera. The EV3 connection reads data only.
+- Here ÷ means integer division and mod means remainder. Camera Mode ID differs from the infrared read mode: camera mode 13 still returns its data through beacon read mode 1.
+- Area, saturation, value, line width and junction distance are percentages. Their range labels omit the percent sign.
+:::
+
+::: warning ⚠️ Note
+- Only one camera submode is active at a time. Make sure its Mode ID matches the program.
+- Modes reuse the same read expressions; decode their results using the table for the selected mode.
 :::
 
 <CamModeAccordion>
@@ -40,99 +47,94 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="11" title="Color tracking - ① Most colors">
 
-Read positions for up to 12 targets.
+`EV3 Pybricks blocks provides: 12 color positions`
 
-| Read position | Reading |
-| --- | --- |
-| Proximity (0) value | Mode ID |
-| Beacon (1) channel 1 heading | P1 |
-| Beacon (1) channel 1 distance | P2 |
-| Beacon (1) channel 2 heading | P3 |
-| Beacon (1) channel 2 distance | P4 |
-| Beacon (1) channel 3 heading | P5 |
-| Beacon (1) channel 3 distance | P6 |
-| Beacon (1) channel 4 heading | P7 |
-| Beacon (1) channel 4 distance | P8 |
-| Remote (2) channel 1 | P9 |
-| Remote (2) channel 2 | P10 |
-| Remote (2) channel 3 | P11 |
-| Remote (2) channel 4 | P12 |
+::: info ℹ️ Reading notes
+- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+:::
 
-P = X×10+Y. Positions and sizes use an 8×6 grid. EV3 Y increases upward, and position 0 means no target.
-
-This mode uses both Beacon and Remote data. Switching EV3 read modes takes about 1.1 seconds. Choose the fields needed by your control loop.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Proximity (port 1)<br>[Image pending: Pybricks EV3 proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Beacon channel 1 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading // 10.<br>• Color 1 Y = reading % 10. |
+| Beacon channel 1 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 2 position | `0, 11 ~ 86`<br>• Color 2 X = reading // 10.<br>• Color 2 Y = reading % 10. |
+| Beacon channel 2 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 3 position | `0, 11 ~ 86`<br>• Color 3 X = reading // 10.<br>• Color 3 Y = reading % 10. |
+| Beacon channel 2 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 4 position | `0, 11 ~ 86`<br>• Color 4 X = reading // 10.<br>• Color 4 Y = reading % 10. |
+| Beacon channel 3 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 5 position | `0, 11 ~ 86`<br>• Color 5 X = reading // 10.<br>• Color 5 Y = reading % 10. |
+| Beacon channel 3 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 6 position | `0, 11 ~ 86`<br>• Color 6 X = reading // 10.<br>• Color 6 Y = reading % 10. |
+| Beacon channel 4 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 7 position | `0, 11 ~ 86`<br>• Color 7 X = reading // 10.<br>• Color 7 Y = reading % 10. |
+| Beacon channel 4 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 8 position | `0, 11 ~ 86`<br>• Color 8 X = reading // 10.<br>• Color 8 Y = reading % 10. |
+| Remote channel 1<br>[Image pending: Pybricks EV3 remote block] | Color 9 position | `0, 11 ~ 86`<br>• Color 9 X = reading // 10.<br>• Color 9 Y = reading % 10. |
+| Remote channel 2<br>[Image pending: Pybricks EV3 remote block] | Color 10 position | `0, 11 ~ 86`<br>• Color 10 X = reading // 10.<br>• Color 10 Y = reading % 10. |
+| Remote channel 3<br>[Image pending: Pybricks EV3 remote block] | Color 11 position | `0, 11 ~ 86`<br>• Color 11 X = reading // 10.<br>• Color 11 Y = reading % 10. |
+| Remote channel 4<br>[Image pending: Pybricks EV3 remote block] | Color 12 position | `0, 11 ~ 86`<br>• Color 12 X = reading // 10.<br>• Color 12 Y = reading % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="12" title="Color tracking - ② Multiple colors">
 
-Read positions for up to 8 targets.
+`EV3 Pybricks blocks provides: 8 color positions`
 
-| Read position | Reading |
-| --- | --- |
-| Proximity (0) value | Mode ID |
-| Beacon (1) channel 1 heading | P1 |
-| Beacon (1) channel 1 distance | P2 |
-| Beacon (1) channel 2 heading | P3 |
-| Beacon (1) channel 2 distance | P4 |
-| Beacon (1) channel 3 heading | P5 |
-| Beacon (1) channel 3 distance | P6 |
-| Beacon (1) channel 4 heading | P7 |
-| Beacon (1) channel 4 distance | P8 |
-| Remote (2) channel 1 | 0 |
-| Remote (2) channel 2 | 0 |
-| Remote (2) channel 3 | 0 |
-| Remote (2) channel 4 | 0 |
+::: info ℹ️ Reading notes
+- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+:::
 
-P = X×10+Y. Positions and sizes use an 8×6 grid. EV3 Y increases upward, and position 0 means no target.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Proximity (port 1)<br>[Image pending: Pybricks EV3 proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Beacon channel 1 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading // 10.<br>• Color 1 Y = reading % 10. |
+| Beacon channel 1 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 2 position | `0, 11 ~ 86`<br>• Color 2 X = reading // 10.<br>• Color 2 Y = reading % 10. |
+| Beacon channel 2 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 3 position | `0, 11 ~ 86`<br>• Color 3 X = reading // 10.<br>• Color 3 Y = reading % 10. |
+| Beacon channel 2 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 4 position | `0, 11 ~ 86`<br>• Color 4 X = reading // 10.<br>• Color 4 Y = reading % 10. |
+| Beacon channel 3 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 5 position | `0, 11 ~ 86`<br>• Color 5 X = reading // 10.<br>• Color 5 Y = reading % 10. |
+| Beacon channel 3 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 6 position | `0, 11 ~ 86`<br>• Color 6 X = reading // 10.<br>• Color 6 Y = reading % 10. |
+| Beacon channel 4 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 7 position | `0, 11 ~ 86`<br>• Color 7 X = reading // 10.<br>• Color 7 Y = reading % 10. |
+| Beacon channel 4 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 8 position | `0, 11 ~ 86`<br>• Color 8 X = reading // 10.<br>• Color 8 Y = reading % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="13" title="Color tracking - ③ Standard">
 
-Read positions for up to 4 targets and areas.
+`EV3 Pybricks blocks provides: 4 color positions and area`
 
-| Read position | Reading |
-| --- | --- |
-| Proximity (0) value | Mode ID |
-| Beacon (1) channel 1 heading | P1 |
-| Beacon (1) channel 1 distance | Area1 |
-| Beacon (1) channel 2 heading | P2 |
-| Beacon (1) channel 2 distance | Area2 |
-| Beacon (1) channel 3 heading | P3 |
-| Beacon (1) channel 3 distance | Area3 |
-| Beacon (1) channel 4 heading | P4 |
-| Beacon (1) channel 4 distance | Area4 |
-| Remote (2) channel 1 | 0 |
-| Remote (2) channel 2 | 0 |
-| Remote (2) channel 3 | 0 |
-| Remote (2) channel 4 | 0 |
+::: info ℹ️ Reading notes
+- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+:::
 
-P = X×10+Y. Positions and sizes use an 8×6 grid. EV3 Y increases upward, and position 0 means no target.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Proximity (port 1)<br>[Image pending: Pybricks EV3 proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Beacon channel 1 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading // 10.<br>• Color 1 Y = reading % 10. |
+| Beacon channel 1 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 1 area | `0 ~ 100`<br>• Color 1 area = reading. |
+| Beacon channel 2 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 2 position | `0, 11 ~ 86`<br>• Color 2 X = reading // 10.<br>• Color 2 Y = reading % 10. |
+| Beacon channel 2 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 2 area | `0 ~ 100`<br>• Color 2 area = reading. |
+| Beacon channel 3 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 3 position | `0, 11 ~ 86`<br>• Color 3 X = reading // 10.<br>• Color 3 Y = reading % 10. |
+| Beacon channel 3 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 3 area | `0 ~ 100`<br>• Color 3 area = reading. |
+| Beacon channel 4 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 4 position | `0, 11 ~ 86`<br>• Color 4 X = reading // 10.<br>• Color 4 Y = reading % 10. |
+| Beacon channel 4 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 4 area | `0 ~ 100`<br>• Color 4 area = reading. |
 
 </CamModeSection>
 
 <CamModeSection mode="14" title="Color tracking - ④ Fine">
 
-Read positions and sizes for up to 2 targets, with counts available and areas.
+`EV3 Pybricks blocks provides: 2 color positions and sizes`
 
-| Read position | Reading |
-| --- | --- |
-| Proximity (0) value | Mode ID |
-| Beacon (1) channel 1 heading | P1 |
-| Beacon (1) channel 1 distance | W1×10+H1 |
-| Beacon (1) channel 2 heading | Count1 |
-| Beacon (1) channel 2 distance | Area1 |
-| Beacon (1) channel 3 heading | P2 |
-| Beacon (1) channel 3 distance | W2×10+H2 |
-| Beacon (1) channel 4 heading | Count2 |
-| Beacon (1) channel 4 distance | Area2 |
-| Remote (2) channel 1 | 0 |
-| Remote (2) channel 2 | 0 |
-| Remote (2) channel 3 | 0 |
-| Remote (2) channel 4 | 0 |
+::: info ℹ️ Reading notes
+- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+:::
 
-P = X×10+Y. Positions and sizes use an 8×6 grid. EV3 Y increases upward, and position 0 means no target.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Proximity (port 1)<br>[Image pending: Pybricks EV3 proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Beacon channel 1 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading // 10.<br>• Color 1 Y = reading % 10. |
+| Beacon channel 1 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 1 size | `0, 11 ~ 86`<br>• Color 1 W = reading // 10.<br>• Color 1 H = reading % 10. |
+| Beacon channel 2 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 1 count | `0 ~ 15`<br>• Color 1 count = reading. |
+| Beacon channel 2 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 1 area | `0 ~ 100`<br>• Color 1 area = reading. |
+| Beacon channel 3 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 2 position | `0, 11 ~ 86`<br>• Color 2 X = reading // 10.<br>• Color 2 Y = reading % 10. |
+| Beacon channel 3 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 2 size | `0, 11 ~ 86`<br>• Color 2 W = reading // 10.<br>• Color 2 H = reading % 10. |
+| Beacon channel 4 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 2 count | `0 ~ 15`<br>• Color 2 count = reading. |
+| Beacon channel 4 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Color 2 area | `0 ~ 100`<br>• Color 2 area = reading. |
 
 </CamModeSection>
 
@@ -140,75 +142,79 @@ P = X×10+Y. Positions and sizes use an 8×6 grid. EV3 Y increases upward, and p
 
 <CamModeSection mode="21" title="Coordinate sampling - ① Hue">
 
-Read hue for up to 12 sample points, at the precision described below.
+`EV3 Pybricks blocks provides: 12 points: hue`
 
-| Read position | Reading |
-| --- | --- |
-| Proximity (0) value | Mode ID |
-| Beacon (1) channel 1 heading | Hue1 (EV3) |
-| Beacon (1) channel 1 distance | Hue2 (EV3) |
-| Beacon (1) channel 2 heading | Hue3 (EV3) |
-| Beacon (1) channel 2 distance | Hue4 (EV3) |
-| Beacon (1) channel 3 heading | Hue5 (EV3) |
-| Beacon (1) channel 3 distance | Hue6 (EV3) |
-| Beacon (1) channel 4 heading | Hue7 (EV3) |
-| Beacon (1) channel 4 distance | Hue8 (EV3) |
-| Remote (2) channel 1 | Hue9 (EV3) |
-| Remote (2) channel 2 | Hue10 (EV3) |
-| Remote (2) channel 3 | Hue11 (EV3) |
-| Remote (2) channel 4 | Hue12 (EV3) |
+::: info ℹ️ Reading notes
+- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
+- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+- -1 ~ -8 represents white through gray; -9 ~ -15 represents black. Do not convert negative values to hue.
+- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+:::
 
-Nonnegative Hue (EV3) values are 0–100; approximately recover hue as reading×240/100. −1 to −8 mean white to gray, and −9 to −15 mean black.
-
-This mode uses both Beacon and Remote data. Switching EV3 read modes takes about 1.1 seconds. Choose the fields needed by your control loop.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Proximity (port 1)<br>[Image pending: Pybricks EV3 proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Beacon channel 1 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S1 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 1 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S2 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 2 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S3 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 2 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S4 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 3 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S5 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 3 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S6 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 4 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S7 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 4 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S8 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Remote channel 1<br>[Image pending: Pybricks EV3 remote block] | S9 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Remote channel 2<br>[Image pending: Pybricks EV3 remote block] | S10 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Remote channel 3<br>[Image pending: Pybricks EV3 remote block] | S11 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Remote channel 4<br>[Image pending: Pybricks EV3 remote block] | S12 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
 
 </CamModeSection>
 
 <CamModeSection mode="22" title="Coordinate sampling - ② Hue and saturation">
 
-Read hue and saturation for up to 4 sample points, at the precision described below.
+`EV3 Pybricks blocks provides: 4 points: hue and saturation`
 
-| Read position | Reading |
-| --- | --- |
-| Proximity (0) value | Mode ID |
-| Beacon (1) channel 1 heading | Hue1 (EV3) |
-| Beacon (1) channel 1 distance | floor(Sat1÷10)×10+floor(Val1÷10) |
-| Beacon (1) channel 2 heading | Hue2 (EV3) |
-| Beacon (1) channel 2 distance | floor(Sat2÷10)×10+floor(Val2÷10) |
-| Beacon (1) channel 3 heading | Hue3 (EV3) |
-| Beacon (1) channel 3 distance | floor(Sat3÷10)×10+floor(Val3÷10) |
-| Beacon (1) channel 4 heading | Hue4 (EV3) |
-| Beacon (1) channel 4 distance | floor(Sat4÷10)×10+floor(Val4÷10) |
-| Remote (2) channel 1 | 0 |
-| Remote (2) channel 2 | 0 |
-| Remote (2) channel 3 | 0 |
-| Remote (2) channel 4 | 0 |
+::: info ℹ️ Reading notes
+- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
+- -1 ~ -8 represents white through gray; -9 ~ -15 represents black. Do not convert negative values to hue.
+- Both retain tens only; digit 9 means about 90 or higher.
+- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+:::
 
-Saturation and brightness are packed as their tens digits. Split the reading by 10, then multiply each part by 10 for approximate values.
-
-Nonnegative Hue (EV3) values are 0–100; approximately recover hue as reading×240/100. −1 to −8 mean white to gray, and −9 to −15 mean black.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Proximity (port 1)<br>[Image pending: Pybricks EV3 proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Beacon channel 1 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S1 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 1 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S1 saturation and value | `0 ~ 99`<br>• S1 saturation range: `0 ~ 90`{.code-green}.<br>• S1 saturation = (reading // 10) × 10.<br>• S1 value range: `0 ~ 90`{.code-green}.<br>• S1 value = (reading % 10) × 10. |
+| Beacon channel 2 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S2 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 2 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S2 saturation and value | `0 ~ 99`<br>• S2 saturation range: `0 ~ 90`{.code-green}.<br>• S2 saturation = (reading // 10) × 10.<br>• S2 value range: `0 ~ 90`{.code-green}.<br>• S2 value = (reading % 10) × 10. |
+| Beacon channel 3 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S3 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 3 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S3 saturation and value | `0 ~ 99`<br>• S3 saturation range: `0 ~ 90`{.code-green}.<br>• S3 saturation = (reading // 10) × 10.<br>• S3 value range: `0 ~ 90`{.code-green}.<br>• S3 value = (reading % 10) × 10. |
+| Beacon channel 4 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S4 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 4 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S4 saturation and value | `0 ~ 99`<br>• S4 saturation range: `0 ~ 90`{.code-green}.<br>• S4 saturation = (reading // 10) × 10.<br>• S4 value range: `0 ~ 90`{.code-green}.<br>• S4 value = (reading % 10) × 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="23" title="Coordinate sampling - ③ HSV">
 
-Read hue, saturation, and brightness for up to 2 sample points, at the precision described below.
+`EV3 Pybricks blocks provides: 2 points: hue, saturation and value`
 
-| Read position | Reading |
-| --- | --- |
-| Proximity (0) value | Mode ID |
-| Beacon (1) channel 1 heading | floor(Hue1÷100) |
-| Beacon (1) channel 1 distance | Hue1 % 100 |
-| Beacon (1) channel 2 heading | Sat1 |
-| Beacon (1) channel 2 distance | Val1 |
-| Beacon (1) channel 3 heading | floor(Hue2÷100) |
-| Beacon (1) channel 3 distance | Hue2 % 100 |
-| Beacon (1) channel 4 heading | Sat2 |
-| Beacon (1) channel 4 distance | Val2 |
-| Remote (2) channel 1 | 0 |
-| Remote (2) channel 2 | 0 |
-| Remote (2) channel 3 | 0 |
-| Remote (2) channel 4 | 0 |
+::: info ℹ️ Reading notes
+- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
+- Recombine the same point: hue = hundreds × 100 + remainder.
+- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Proximity (port 1)<br>[Image pending: Pybricks EV3 proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Beacon channel 1 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S1 hue hundreds | `0 ~ 2`<br>• S1 hue hundreds = reading. |
+| Beacon channel 1 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S1 hue remainder | `0 ~ 99`<br>• S1 hue remainder = reading. |
+| Beacon channel 2 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S1 saturation | `0 ~ 100`<br>• S1 saturation = reading. |
+| Beacon channel 2 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S1 value | `0 ~ 100`<br>• S1 value = reading. |
+| Beacon channel 3 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S2 hue hundreds | `0 ~ 2`<br>• S2 hue hundreds = reading. |
+| Beacon channel 3 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S2 hue remainder | `0 ~ 99`<br>• S2 hue remainder = reading. |
+| Beacon channel 4 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S2 saturation | `0 ~ 100`<br>• S2 saturation = reading. |
+| Beacon channel 4 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | S2 value | `0 ~ 100`<br>• S2 value = reading. |
 
 </CamModeSection>
 
@@ -216,29 +222,29 @@ Read hue, saturation, and brightness for up to 2 sample points, at the precision
 
 <CamModeSection mode="30" title="Color order">
 
-Read the first 11 hues from left to right and the total block count.
+`EV3 Pybricks blocks provides: the first 11 block hues and total count`
 
-| Read position | Reading |
-| --- | --- |
-| Proximity (0) value | Mode ID |
-| Beacon (1) channel 1 heading | Hue1 (EV3) |
-| Beacon (1) channel 1 distance | Hue2 (EV3) |
-| Beacon (1) channel 2 heading | Hue3 (EV3) |
-| Beacon (1) channel 2 distance | Hue4 (EV3) |
-| Beacon (1) channel 3 heading | Hue5 (EV3) |
-| Beacon (1) channel 3 distance | Hue6 (EV3) |
-| Beacon (1) channel 4 heading | Hue7 (EV3) |
-| Beacon (1) channel 4 distance | Hue8 (EV3) |
-| Remote (2) channel 1 | Hue9 (EV3) |
-| Remote (2) channel 2 | Hue10 (EV3) |
-| Remote (2) channel 3 | Hue11 (EV3) |
-| Remote (2) channel 4 | Total |
+::: info ℹ️ Reading notes
+- Blocks are ordered left to right. Read the total count before using hue entries; hue 0 can be red.
+- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+- -1 ~ -8 represents white through gray; -9 ~ -15 represents black. Do not convert negative values to hue.
+:::
 
-Nonnegative Hue (EV3) values are 0–100; approximately recover hue as reading×240/100. −1 to −8 mean white to gray, and −9 to −15 mean black.
-
-This mode uses both Beacon and Remote data. Switching EV3 read modes takes about 1.1 seconds. Choose the fields needed by your control loop.
-
-Hue 0 can represent red. Use the total block count to identify valid entries.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Proximity (port 1)<br>[Image pending: Pybricks EV3 proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Beacon channel 1 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Block 1 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 1 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Block 2 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 2 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Block 3 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 2 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Block 4 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 3 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Block 5 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 3 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Block 6 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 4 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Block 7 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Beacon channel 4 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Block 8 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Remote channel 1<br>[Image pending: Pybricks EV3 remote block] | Block 9 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Remote channel 2<br>[Image pending: Pybricks EV3 remote block] | Block 10 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Remote channel 3<br>[Image pending: Pybricks EV3 remote block] | Block 11 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Remote channel 4<br>[Image pending: Pybricks EV3 remote block] | Total color blocks | `0 ~ 18`<br>• Total color blocks = reading. |
 
 </CamModeSection>
 
@@ -246,79 +252,88 @@ Hue 0 can represent red. Use the total block count to identify valid entries.
 
 <CamModeSection mode="41" title="Line following - ① Black">
 
-Beacon and Remote together provide 12 line-following values.
+`EV3 Pybricks blocks provides: 12 line-following readings`
 
-| Read position | Reading |
-| --- | --- |
-| Proximity (0) value | Mode ID |
-| Beacon (1) channel 1 heading | Near offset |
-| Beacon (1) channel 1 distance | Middle offset |
-| Beacon (1) channel 2 heading | Far offset |
-| Beacon (1) channel 2 distance | Angle |
-| Beacon (1) channel 3 heading | Near width % |
-| Beacon (1) channel 3 distance | Junction×10+Flags |
-| Beacon (1) channel 4 heading | Junction distance % |
-| Beacon (1) channel 4 distance | Marker color |
-| Remote (2) channel 1 | Left edge |
-| Remote (2) channel 2 | Right edge |
-| Remote (2) channel 3 | Far width % |
-| Remote (2) channel 4 | Marker count |
+::: info ℹ️ Reading notes
+- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
+- This submode detects a black line on a light surface.
+- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+- Negative offsets place the line on the left; positive offsets place it on the right.
+:::
 
-This mode uses both Beacon and Remote data. Switching EV3 read modes takes about 1.1 seconds. Choose the fields needed by your control loop.
-
-Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Proximity (port 1)<br>[Image pending: Pybricks EV3 proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Beacon channel 1 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Near offset | `-100 ~ 100`<br>• Near offset = reading; preserve the sign. |
+| Beacon channel 1 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Middle offset | `-100 ~ 100`<br>• Middle offset = reading; preserve the sign. |
+| Beacon channel 2 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Far offset | `-100 ~ 100`<br>• Far offset = reading; preserve the sign. |
+| Beacon channel 2 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Line angle | `-90 ~ 90°`<br>• Line angle = reading; preserve the sign. |
+| Beacon channel 3 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Near line width | `0 ~ 100`<br>• Near line width = reading. |
+| Beacon channel 3 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Junction type and line-found flags | `0 ~ 57`<br>• Junction type = reading // 10.<br>• Line-found flags = reading % 10. |
+| Beacon channel 4 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
+| Beacon channel 4 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Marker color ID | `0 ~ 16`<br>• Marker color ID = reading. |
+| Remote channel 1<br>[Image pending: Pybricks EV3 remote block] | Near left edge | `-100 ~ 100`<br>• Near left edge = reading; preserve the sign. |
+| Remote channel 2<br>[Image pending: Pybricks EV3 remote block] | Near right edge | `-100 ~ 100`<br>• Near right edge = reading; preserve the sign. |
+| Remote channel 3<br>[Image pending: Pybricks EV3 remote block] | Far line width | `0 ~ 100`<br>• Far line width = reading. |
+| Remote channel 4<br>[Image pending: Pybricks EV3 remote block] | Marker count | `0 ~ 99`<br>• Marker count = reading. |
 
 </CamModeSection>
 
 <CamModeSection mode="42" title="Line following - ② White">
 
-Beacon and Remote together provide 12 line-following values.
+`EV3 Pybricks blocks provides: 12 line-following readings`
 
-| Read position | Reading |
-| --- | --- |
-| Proximity (0) value | Mode ID |
-| Beacon (1) channel 1 heading | Near offset |
-| Beacon (1) channel 1 distance | Middle offset |
-| Beacon (1) channel 2 heading | Far offset |
-| Beacon (1) channel 2 distance | Angle |
-| Beacon (1) channel 3 heading | Near width % |
-| Beacon (1) channel 3 distance | Junction×10+Flags |
-| Beacon (1) channel 4 heading | Junction distance % |
-| Beacon (1) channel 4 distance | Marker color |
-| Remote (2) channel 1 | Left edge |
-| Remote (2) channel 2 | Right edge |
-| Remote (2) channel 3 | Far width % |
-| Remote (2) channel 4 | Marker count |
+::: info ℹ️ Reading notes
+- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
+- This submode detects a white line on a dark surface.
+- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+- Negative offsets place the line on the left; positive offsets place it on the right.
+:::
 
-This mode uses both Beacon and Remote data. Switching EV3 read modes takes about 1.1 seconds. Choose the fields needed by your control loop.
-
-Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Proximity (port 1)<br>[Image pending: Pybricks EV3 proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Beacon channel 1 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Near offset | `-100 ~ 100`<br>• Near offset = reading; preserve the sign. |
+| Beacon channel 1 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Middle offset | `-100 ~ 100`<br>• Middle offset = reading; preserve the sign. |
+| Beacon channel 2 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Far offset | `-100 ~ 100`<br>• Far offset = reading; preserve the sign. |
+| Beacon channel 2 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Line angle | `-90 ~ 90°`<br>• Line angle = reading; preserve the sign. |
+| Beacon channel 3 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Near line width | `0 ~ 100`<br>• Near line width = reading. |
+| Beacon channel 3 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Junction type and line-found flags | `0 ~ 57`<br>• Junction type = reading // 10.<br>• Line-found flags = reading % 10. |
+| Beacon channel 4 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
+| Beacon channel 4 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Marker color ID | `0 ~ 16`<br>• Marker color ID = reading. |
+| Remote channel 1<br>[Image pending: Pybricks EV3 remote block] | Near left edge | `-100 ~ 100`<br>• Near left edge = reading; preserve the sign. |
+| Remote channel 2<br>[Image pending: Pybricks EV3 remote block] | Near right edge | `-100 ~ 100`<br>• Near right edge = reading; preserve the sign. |
+| Remote channel 3<br>[Image pending: Pybricks EV3 remote block] | Far line width | `0 ~ 100`<br>• Far line width = reading. |
+| Remote channel 4<br>[Image pending: Pybricks EV3 remote block] | Marker count | `0 ~ 99`<br>• Marker count = reading. |
 
 </CamModeSection>
 
 <CamModeSection mode="43" title="Line following - ③ Colored">
 
-Beacon and Remote together provide 12 line-following values.
+`EV3 Pybricks blocks provides: 12 line-following readings`
 
-| Read position | Reading |
-| --- | --- |
-| Proximity (0) value | Mode ID |
-| Beacon (1) channel 1 heading | Near offset |
-| Beacon (1) channel 1 distance | Middle offset |
-| Beacon (1) channel 2 heading | Far offset |
-| Beacon (1) channel 2 distance | Angle |
-| Beacon (1) channel 3 heading | Near width % |
-| Beacon (1) channel 3 distance | Junction×10+Flags |
-| Beacon (1) channel 4 heading | Junction distance % |
-| Beacon (1) channel 4 distance | Marker color |
-| Remote (2) channel 1 | Left edge |
-| Remote (2) channel 2 | Right edge |
-| Remote (2) channel 3 | Far width % |
-| Remote (2) channel 4 | Marker count |
+::: info ℹ️ Reading notes
+- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
+- Before using colored-line mode, teach the line color as target 1.
+- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+- Negative offsets place the line on the left; positive offsets place it on the right.
+:::
 
-This mode uses both Beacon and Remote data. Switching EV3 read modes takes about 1.1 seconds. Choose the fields needed by your control loop.
-
-Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Proximity (port 1)<br>[Image pending: Pybricks EV3 proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Beacon channel 1 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Near offset | `-100 ~ 100`<br>• Near offset = reading; preserve the sign. |
+| Beacon channel 1 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Middle offset | `-100 ~ 100`<br>• Middle offset = reading; preserve the sign. |
+| Beacon channel 2 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Far offset | `-100 ~ 100`<br>• Far offset = reading; preserve the sign. |
+| Beacon channel 2 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Line angle | `-90 ~ 90°`<br>• Line angle = reading; preserve the sign. |
+| Beacon channel 3 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Near line width | `0 ~ 100`<br>• Near line width = reading. |
+| Beacon channel 3 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Junction type and line-found flags | `0 ~ 57`<br>• Junction type = reading // 10.<br>• Line-found flags = reading % 10. |
+| Beacon channel 4 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
+| Beacon channel 4 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Marker color ID | `0 ~ 16`<br>• Marker color ID = reading. |
+| Remote channel 1<br>[Image pending: Pybricks EV3 remote block] | Near left edge | `-100 ~ 100`<br>• Near left edge = reading; preserve the sign. |
+| Remote channel 2<br>[Image pending: Pybricks EV3 remote block] | Near right edge | `-100 ~ 100`<br>• Near right edge = reading; preserve the sign. |
+| Remote channel 3<br>[Image pending: Pybricks EV3 remote block] | Far line width | `0 ~ 100`<br>• Far line width = reading. |
+| Remote channel 4<br>[Image pending: Pybricks EV3 remote block] | Marker count | `0 ~ 99`<br>• Marker count = reading. |
 
 </CamModeSection>
 
@@ -326,57 +341,54 @@ Offsets run from −100 to 100, negative to the left; angles run from −90 to 9
 
 <CamModeSection mode="51" title="Object detection - ① Object list">
 
-Read codes and positions for the first 5 objects, plus the total count.
+`EV3 Pybricks blocks provides: codes and positions of the first 5 objects, plus total count`
 
-| Read position | Reading |
-| --- | --- |
-| Proximity (0) value | Mode ID |
-| Beacon (1) channel 1 heading | Code1 |
-| Beacon (1) channel 1 distance | P1 |
-| Beacon (1) channel 2 heading | Code2 |
-| Beacon (1) channel 2 distance | P2 |
-| Beacon (1) channel 3 heading | Code3 |
-| Beacon (1) channel 3 distance | P3 |
-| Beacon (1) channel 4 heading | Code4 |
-| Beacon (1) channel 4 distance | P4 |
-| Remote (2) channel 1 | Code5 |
-| Remote (2) channel 2 | P5 |
-| Remote (2) channel 3 | 0 |
-| Remote (2) channel 4 | Total |
+::: info ℹ️ Reading notes
+- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+- Only target colors 1 ~ 8 are used. Objects are ordered largest first, and X/Y is the centroid. Shape codes 0 ~ 9 mean other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star and trapezoid.
+- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+- For example, 13 means color 1 triangle; 0 means no object.
+:::
 
-P = X×10+Y. Positions and sizes use an 8×6 grid. EV3 Y increases upward, and position 0 means no target.
-
-This mode uses both Beacon and Remote data. Switching EV3 read modes takes about 1.1 seconds. Choose the fields needed by your control loop.
-
-Detection uses target colors 1–8. Objects are ordered largest first and positions are centroids. Code = color ID×10+shape; 0 means no object. Shapes 0–9 mean other, circle, oval, triangle, square, rectangle, pentagon, hexagon, star, and trapezoid.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Proximity (port 1)<br>[Image pending: Pybricks EV3 proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Beacon channel 1 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading // 10.<br>• Object 1 shape code = reading % 10. |
+| Beacon channel 1 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 1 position | `0, 11 ~ 86`<br>• Object 1 X = reading // 10.<br>• Object 1 Y = reading % 10. |
+| Beacon channel 2 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 2 code | `0, 10 ~ 89`<br>• Object 2 color ID = reading // 10.<br>• Object 2 shape code = reading % 10. |
+| Beacon channel 2 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 2 position | `0, 11 ~ 86`<br>• Object 2 X = reading // 10.<br>• Object 2 Y = reading % 10. |
+| Beacon channel 3 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 3 code | `0, 10 ~ 89`<br>• Object 3 color ID = reading // 10.<br>• Object 3 shape code = reading % 10. |
+| Beacon channel 3 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 3 position | `0, 11 ~ 86`<br>• Object 3 X = reading // 10.<br>• Object 3 Y = reading % 10. |
+| Beacon channel 4 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 4 code | `0, 10 ~ 89`<br>• Object 4 color ID = reading // 10.<br>• Object 4 shape code = reading % 10. |
+| Beacon channel 4 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 4 position | `0, 11 ~ 86`<br>• Object 4 X = reading // 10.<br>• Object 4 Y = reading % 10. |
+| Remote channel 1<br>[Image pending: Pybricks EV3 remote block] | Object 5 code | `0, 10 ~ 89`<br>• Object 5 color ID = reading // 10.<br>• Object 5 shape code = reading % 10. |
+| Remote channel 2<br>[Image pending: Pybricks EV3 remote block] | Object 5 position | `0, 11 ~ 86`<br>• Object 5 X = reading // 10.<br>• Object 5 Y = reading % 10. |
+| Remote channel 4<br>[Image pending: Pybricks EV3 remote block] | Object count | `0 ~ 8`<br>• Object count = reading. |
 
 </CamModeSection>
 
 <CamModeSection mode="52" title="Object detection - ② Object details">
 
-Read detailed data for the first 2 objects using the fields below.
+`EV3 Pybricks blocks provides: details of the first 2 objects`
 
-| Read position | Reading |
-| --- | --- |
-| Proximity (0) value | Mode ID |
-| Beacon (1) channel 1 heading | Code1 |
-| Beacon (1) channel 1 distance | P1 |
-| Beacon (1) channel 2 heading | Area1 |
-| Beacon (1) channel 2 distance | floor((Angle1+1)÷2) |
-| Beacon (1) channel 3 heading | Code2 |
-| Beacon (1) channel 3 distance | P2 |
-| Beacon (1) channel 4 heading | Area2 |
-| Beacon (1) channel 4 distance | floor((Angle2+1)÷2) |
-| Remote (2) channel 1 | 0 |
-| Remote (2) channel 2 | 0 |
-| Remote (2) channel 3 | 0 |
-| Remote (2) channel 4 | 0 |
+::: info ℹ️ Reading notes
+- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+- Only target colors 1 ~ 8 are used. Objects are ordered largest first, and X/Y is the centroid. Shape codes 0 ~ 9 mean other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star and trapezoid.
+- For example, 13 means color 1 triangle; 0 means no object.
+- This reduced field can differ by one unit after conversion.
+:::
 
-P = X×10+Y. Positions and sizes use an 8×6 grid. EV3 Y increases upward, and position 0 means no target.
-
-Double the angle field and cap it at 179°, with an error of about 1°.
-
-Detection uses target colors 1–8. Objects are ordered largest first and positions are centroids. Code = color ID×10+shape; 0 means no object. Shapes 0–9 mean other, circle, oval, triangle, square, rectangle, pentagon, hexagon, star, and trapezoid.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Proximity (port 1)<br>[Image pending: Pybricks EV3 proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Beacon channel 1 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading // 10.<br>• Object 1 shape code = reading % 10. |
+| Beacon channel 1 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 1 position | `0, 11 ~ 86`<br>• Object 1 X = reading // 10.<br>• Object 1 Y = reading % 10. |
+| Beacon channel 2 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 1 area | `0 ~ 100`<br>• Object 1 area = reading. |
+| Beacon channel 2 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 1 angle | `0 ~ 90`<br>• Object 1 angle = reading × 2, capped at 179°. |
+| Beacon channel 3 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 2 code | `0, 10 ~ 89`<br>• Object 2 color ID = reading // 10.<br>• Object 2 shape code = reading % 10. |
+| Beacon channel 3 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 2 position | `0, 11 ~ 86`<br>• Object 2 X = reading // 10.<br>• Object 2 Y = reading % 10. |
+| Beacon channel 4 heading<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 2 area | `0 ~ 100`<br>• Object 2 area = reading. |
+| Beacon channel 4 distance<br>[Image pending: Pybricks EV3 beacon heading/distance block] | Object 2 angle | `0 ~ 90`<br>• Object 2 angle = reading × 2, capped at 179°. |
 
 </CamModeSection>
 
@@ -390,7 +402,9 @@ Teach target color 1 and set the camera to mode 13 (Color Tracking - ③ Standar
 
 1. Read proximity once at startup and check for 13.
 2. In the loop, read Beacon channel 1. Store heading as position and distance as area.
-3. If position is 0, display “No target”. Otherwise, split it with integer division and remainder, then display X, Y, and area. For example, 43 and 18 mean X=4, Y=3, area 18%.
+3. If position is 0, display “No target”. Otherwise, split it with integer division and remainder, then display X, Y, and area. For example, 43 and 18 mean X = 4, Y = 3, area 18%.
+
+*[Image pending: complete EV3 Pybricks Blocks block program or project file; the steps above describe the reads and calculations.]*
 
 ## 04 / 【Lego】 Lau Xiao demonstration videos
 

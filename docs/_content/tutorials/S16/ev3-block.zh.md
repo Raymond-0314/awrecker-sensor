@@ -35,28 +35,28 @@ MBC 16 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階
 ### ✔ 函數設定
 1.  點選上方 <code class="code-blue"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: inline-block; vertical-align: -0.125em; margin-right: 4px;"><path d="M12 3v12m-5-5 5 5 5-5"></path><path d="M5 16v5h14v-5"></path></svg>EV3 - Pybricks 函式庫</code> 按鈕下載 `MBC 16 路循跡板 Pybricks - EV3 函式庫`{.code-blue}。
 2. 確認函式庫檔名為 `MBC_line16_EV3_Lib.py`{.code-blue}。
-3. 回到 Pybricks，在 `file explorer`{.code-blue} 工作區中點選 `import a file`{.code-blue} 按鈕 ![匯入](/images/tutorials/S8/spike-block/pybricks-import.svg){style="width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"}。
+3. 回到 Pybricks，在 `file explorer`{.code-blue} 工作區中點選 `import a file`{.code-blue} 按鈕 ![匯入](/images/tutorials/S8/spike-block/pybricks-import.svg){style = "width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"}。
 4. 選擇 `MBC_line16_EV3_Lib.py`{.code-blue} 函式庫並匯入。
 5. 確認 `file explorer`{.code-blue} 工作區中出現 `MBC_line16_EV3_Lib.py`{.code-blue}。`MBC_line16_EV3_Lib.py`{.code-blue} 與你的主程式必須放在同一個專案列表下。
 6. 開啟你的 Pybricks 程式，在 `set up`{.code-blue} 積木下放入匯入函式庫的程式積木，如下圖。其餘底盤與馬達感應器初始化則接續放置於`set up`{.code-blue} 積木下。
-![函式庫匯入](/images/tutorials/S16/ev3-block/import.png){style="display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+![函式庫匯入](/images/tutorials/S16/ev3-block/import.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
 7. 在 `program`{.code-blue} 積木下放入設定函式庫的程式積木，如下圖。
-![函式庫設定](/images/tutorials/S16/ev3-block/setting.png){style="display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+![函式庫設定](/images/tutorials/S16/ev3-block/setting.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
 
 ### ✔ 函數功能說明
 #### set up
 | 官方圖形指令 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| ![導入函式庫](/images/tutorials/S16/ev3-block/setup.png){style="display: block; width: 400px; height: auto;"} | 導入函式庫 | • 從檔案 `MBC_line16_EV3_Lib.py`{.code-green} 中匯入以下函式： `line_init_port_multitask()`{.code-green}、`line_pos16()`{.code-green}、`line_ir_ch()`{.code-green}、`line_pos100()`{.code-green}、`line_width()`{.code-green}、`line_edge_l()`{.code-green}、`line_edge_r()`{.code-green}。<br>• 名稱需要完全相同。 |
-| ![函式庫設定](/images/tutorials/S16/ev3-block/setting.png){style="display: block; width: 400px; height: auto;"} | 函式庫設定 | • `call`{.code-green} 與 `false`{.code-green} 為同步模式設定，`await/true`{.code-green} 啟動非同步模式，`call/false`{.code-green} 則保持同步模式。<br>• `line16`{.code-green} 為後續使用數值讀取功能時使用的名稱。<br>• `4`{.code-green} 為 MBC 16 路循跡板的連接埠 (port)，`1 ~ 4`{.code-green} 依序為 `A ~ D`{.code-green}。 |
+| ![導入函式庫](/images/tutorials/S16/ev3-block/setup.png){style = "display: block; width: 400px; height: auto;"} | 導入函式庫 | • 從檔案 `MBC_line16_EV3_Lib.py`{.code-green} 中匯入以下函式： `line_init_port_multitask()`{.code-green}、`line_pos16()`{.code-green}、`line_ir_ch()`{.code-green}、`line_pos100()`{.code-green}、`line_width()`{.code-green}、`line_edge_l()`{.code-green}、`line_edge_r()`{.code-green}。<br>• 名稱需要完全相同。 |
+| ![函式庫設定](/images/tutorials/S16/ev3-block/setting.png){style = "display: block; width: 400px; height: auto;"} | 函式庫設定 | • `call`{.code-green} 與 `false`{.code-green} 為同步模式設定，`await/true`{.code-green} 啟動非同步模式，`call/false`{.code-green} 則保持同步模式。<br>• `line16`{.code-green} 為後續使用數值讀取功能時使用的名稱。<br>• `4`{.code-green} 為 MBC 16 路循跡板的連接埠 (port)，`1 ~ 4`{.code-green} 依序為 `A ~ D`{.code-green}。 |
 
 ::: info ℹ️ 補充資訊
 - 同步模式設定說明：
 
 | 官方圖形指令 | 模式 | 說明 |
 | --- | --- | --- |
-| ![函式庫設定](/images/tutorials/S16/ev3-block/setting_await.png) | 非同步模式，設定為 `await`{.code-green} 與 `true`{.code-green} | • 數值讀取時須搭配 `await`{.code-green} 做使用。![await](/images/tutorials/S16/ev3-block/pos16_await.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"}• 可以搭配 `multitask`{.code-green} 積木使用。![multitask](/images/tutorials/S8/spike-block/multitask.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"} |
-| ![函式庫設定](/images/tutorials/S16/ev3-block/setting_call.png) | 同步模式，設定為 `call`{.code-green} 與 `false`{.code-green} | • 數值讀取時須搭配 `call`{.code-green} 做使用。![await](/images/tutorials/S16/ev3-block/pos16.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"}• 不可搭配 `multitask`{.code-green} 積木使用。 |
+| ![函式庫設定](/images/tutorials/S16/ev3-block/setting_await.png) | 非同步模式，設定為 `await`{.code-green} 與 `true`{.code-green} | • 數值讀取時須搭配 `await`{.code-green} 做使用。![await](/images/tutorials/S16/ev3-block/pos16_await.png){style = "display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"}• 可以搭配 `multitask`{.code-green} 積木使用。![multitask](/images/tutorials/S8/spike-block/multitask.png){style = "display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"} |
+| ![函式庫設定](/images/tutorials/S16/ev3-block/setting_call.png) | 同步模式，設定為 `call`{.code-green} 與 `false`{.code-green} | • 數值讀取時須搭配 `call`{.code-green} 做使用。![await](/images/tutorials/S16/ev3-block/pos16.png){style = "display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"}• 不可搭配 `multitask`{.code-green} 積木使用。 |
 :::
 
 #### 數值讀取
@@ -86,7 +86,7 @@ MBC 函式庫提供 3 種模式共 6 種功能，由於 EV3 主機的硬體通�
   label="範例程式下載"
 />
 
-![範例程式](/images/tutorials/S16/ev3-block/ex_program.png){style="border-radius: 10px;"}
+![範例程式](/images/tutorials/S16/ev3-block/ex_program.png){style = "border-radius: 10px;"}
 
 ## 04 / 【Lego】 Lau Xiao 示範影片
 

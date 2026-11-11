@@ -40,16 +40,16 @@ Download the library if required for your application:
 
 1. Click the <code class="code-blue"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: inline-block; vertical-align: -0.125em; margin-right: 4px;"><path d="M12 3v12m-5-5 5 5 5-5"></path><path d="M5 16v5h14v-5"></path></svg>EV3 - Pybricks Library</code> button above to download the `MBC 8-Channel Line-Following Sensor Pybricks - EV3 Library`{.code-blue}.
 2. Confirm that the library filename is `MBC_line8_EV3_Lib.py`{.code-blue}.
-3. Return to Pybricks and click the `import a file`{.code-blue} button ![Import](/images/tutorials/S8/spike-block/pybricks-import.svg){style="width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"} in the `file explorer`{.code-blue} panel.
+3. Return to Pybricks and click the `import a file`{.code-blue} button ![Import](/images/tutorials/S8/spike-block/pybricks-import.svg){style = "width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"} in the `file explorer`{.code-blue} panel.
 4. Select and import the `MBC_line8_EV3_Lib.py`{.code-blue} library.
 5. Confirm that `MBC_line8_EV3_Lib.py`{.code-blue} appears in the `file explorer`{.code-blue} panel. The library and your main program must be listed under the same project.
 6. Open your Pybricks program and place the library import block under the `set up`{.code-blue} block, as shown below. Place any remaining drive base, motor, and sensor initialization blocks after it under the same `set up`{.code-blue} block.
 
-![Library Import](/images/tutorials/S8/ev3-block/setup.png){style="display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+![Library Import](/images/tutorials/S8/ev3-block/setup.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
 
 7. Place the library configuration block under the `program`{.code-blue} block, as shown below.
 
-![Library Configuration](/images/tutorials/S8/ev3-block/setting.png){style="display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+![Library Configuration](/images/tutorials/S8/ev3-block/setting.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
 
 ### ✔ Functions and Features
 
@@ -57,16 +57,16 @@ Download the library if required for your application:
 
 | Programming Block | Function | Description |
 | --- | --- | --- |
-| ![Import Library](/images/tutorials/S8/ev3-block/setup.png){style="display: block; width: 400px; height: auto;"} | Import Library | • Imports the following functions from `MBC_line8_EV3_Lib.py`{.code-green}: `line_init_port_multitask()`{.code-green}, `line_pos8()`{.code-green}, `line_ir_ch()`{.code-green}, `line_pos100()`{.code-green}, `line_width()`{.code-green}, `line_edge_l()`{.code-green}, and `line_edge_r()`{.code-green}.<br>• The names must match exactly. |
-| ![Library Configuration](/images/tutorials/S8/ev3-block/setting.png){style="display: block; width: 400px; height: auto;"} | Library Configuration | • `call`{.code-green} and `false`{.code-green} select synchronous mode. Use `await/true`{.code-green} to enable asynchronous mode, or `call/false`{.code-green} to keep synchronous mode.<br>• `line8`{.code-green} is the name used for subsequent data-reading operations.<br>• `4`{.code-green} specifies the port connected to the MBC 8-Channel Line-Following Sensor. Values `1 ~ 4`{.code-green} correspond to ports `A ~ D`{.code-green}, respectively. |
+| ![Import Library](/images/tutorials/S8/ev3-block/setup.png){style = "display: block; width: 400px; height: auto;"} | Import Library | • Imports the following functions from `MBC_line8_EV3_Lib.py`{.code-green}: `line_init_port_multitask()`{.code-green}, `line_pos8()`{.code-green}, `line_ir_ch()`{.code-green}, `line_pos100()`{.code-green}, `line_width()`{.code-green}, `line_edge_l()`{.code-green}, and `line_edge_r()`{.code-green}.<br>• The names must match exactly. |
+| ![Library Configuration](/images/tutorials/S8/ev3-block/setting.png){style = "display: block; width: 400px; height: auto;"} | Library Configuration | • `call`{.code-green} and `false`{.code-green} select synchronous mode. Use `await/true`{.code-green} to enable asynchronous mode, or `call/false`{.code-green} to keep synchronous mode.<br>• `line8`{.code-green} is the name used for subsequent data-reading operations.<br>• `4`{.code-green} specifies the port connected to the MBC 8-Channel Line-Following Sensor. Values `1 ~ 4`{.code-green} correspond to ports `A ~ D`{.code-green}, respectively. |
 
 ::: info ℹ️ Additional Information
 - Synchronization mode settings:
 
 | Programming Block | Mode | Description |
 | --- | --- | --- |
-| ![Library Configuration](/images/tutorials/S8/ev3-block/setting_await.png) | Asynchronous Mode: `await`{.code-green} and `true`{.code-green} | • Use `await`{.code-green} when reading values.![Await](/images/tutorials/S8/ev3-block/pos8_await.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"}• Can be used with the `multitask`{.code-green} block.![Multitask](/images/tutorials/S8/spike-block/multitask.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"} |
-| ![Library Configuration](/images/tutorials/S8/ev3-block/setting_call.png) | Synchronous Mode: `call`{.code-green} and `false`{.code-green} | • Use `call`{.code-green} when reading values.![Call](/images/tutorials/S8/ev3-block/pos8.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"}• Cannot be used with the `multitask`{.code-green} block. |
+| ![Library Configuration](/images/tutorials/S8/ev3-block/setting_await.png) | Asynchronous Mode: `await`{.code-green} and `true`{.code-green} | • Use `await`{.code-green} when reading values.![Await](/images/tutorials/S8/ev3-block/pos8_await.png){style = "display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"}• Can be used with the `multitask`{.code-green} block.![Multitask](/images/tutorials/S8/spike-block/multitask.png){style = "display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"} |
+| ![Library Configuration](/images/tutorials/S8/ev3-block/setting_call.png) | Synchronous Mode: `call`{.code-green} and `false`{.code-green} | • Use `call`{.code-green} when reading values.![Call](/images/tutorials/S8/ev3-block/pos8.png){style = "display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"}• Cannot be used with the `multitask`{.code-green} block. |
 
 :::
 
@@ -105,7 +105,7 @@ The MBC library provides six functions across three modes. Due to hardware commu
   label="Download Example Program"
 />
 
-![Example Program](/images/tutorials/S8/ev3-block/ex_program.png){style="border-radius: 10px;"}
+![Example Program](/images/tutorials/S8/ev3-block/ex_program.png){style = "border-radius: 10px;"}
 
 ## 04 / 【Lego】 Lau Xiao Demonstration Videos
 

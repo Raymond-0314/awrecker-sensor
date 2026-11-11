@@ -1,3 +1,4 @@
+import ControllerProductImage from './components/ControllerProductImage.vue'
 import CamScreenGallery from './components/CamScreenGallery.vue'
 import { h, onMounted, nextTick, watch } from 'vue'
 import { useRoute } from 'vitepress'
@@ -28,6 +29,7 @@ export default {
     }),
 
   enhanceApp({ app }) {
+    app.component('ControllerProductImage', ControllerProductImage)
     app.component('CamScreenGallery', CamScreenGallery)
     app.component('SensorHome', Home)
     app.component('TutorialPicker', TutorialPicker)

@@ -76,7 +76,7 @@ Register rules for each group:
 | `0x07` | Read | 8 bytes | • Model string (ASCII, padded with zeros). |
 | `0x30` | Write | 1 byte | • System command.<br>• `0x01` restarts the module. |
 | `0x31` | Read | 9 bytes | • Reads the data from `0x32` ~ `0x07` in a single operation. |
-| `0x32` | Read | 1 byte | • Status flags.<br>• `bit 0`{.code-green-text} indicates readiness. `bits 1–7`{.code-green-text} have product-specific definitions. |
+| `0x32` | Read | 1 byte | • Status flags.<br>• `bit 0`{.code-green-text} indicates readiness. `bits 1 ~ 7`{.code-green-text} have product-specific definitions. |
 | `0x33` | Read | 1 byte | • Update sequence number.<br>• Increments by 1 whenever the data is updated. An unchanged value indicates that the module is busy. |
 | `0x34` ~ `0x36` | Read | 1 byte | • Product-specific definitions. |
 | `0x37` | Read | 4 bytes | • Time since startup (ms).<br>• A decrease in this value indicates that the module has restarted. |

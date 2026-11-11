@@ -29,7 +29,7 @@
 
 | 程式碼 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `Sensor.SetMode(port, 0)`<br>`value = Sensor.ReadRawValue(port, 0)` | 線位置 | `-8 ~ +8`<br>• 0 代表線在正中央，負數偏左，正數偏右。<br>• +8 與 -8 表示線在感應器最邊緣。 |
+| `Sensor.SetMode(port, 0)`<br>`value = Sensor.ReadRawValue(port, 0)` | 線位置 | `-8 ~ +8`<br>• 0 代表線在正中央，負數偏左，正數偏右。<br>• + 8 與 -8 表示線在感應器最邊緣。 |
 | `Sensor.SetMode(port, 1)`<br>`value = Sensor.ReadRawValue(port, 8)[0]` | 光電 0 與 1 號數值 | `11 ~ 99`<br>• 十位數為通道 0 的光電光值，數值從 1 至 9。<br>• 個位數為通道 1 的光電光值，數值從 1 至 9。 |
 | `Sensor.SetMode(port, 1)`<br>`value = Sensor.ReadRawValue(port, 8)[2]` | 光電 2 與 3 號數值 | `11 ~ 99`<br>• 十位數為通道 2 的光電光值，數值從 1 至 9。<br>• 個位數為通道 3 的光電光值，數值從 1 至 9。 |
 | `Sensor.SetMode(port, 1)`<br>`value = Sensor.ReadRawValue(port, 8)[4]` | 光電 4 與 5 號數值 | `11 ~ 99`<br>• 十位數為通道 4 的光電光值，數值從 1 至 9。<br>• 個位數為通道 5 的光電光值，數值從 1 至 9。 |
@@ -46,7 +46,7 @@
   label="範例程式下載"
 />
 
-![範例程式](/images/tutorials/S8/ev3-clev3r/ex_program.png){style="border-radius: 10px;"}
+![範例程式](/images/tutorials/S8/ev3-clev3r/ex_program.png){style = "border-radius: 10px;"}
 
 ### ✔ EV3 專屬自訂積木 (My Blocks) 說明
 MBC 8 路循線感應器提供了三個「副程式 (Subroutines)」。開發時不需要額外安裝擴充包，只需在主程式中呼叫對應函數，並將最新感應器數據存入變數，便可供馬達控制直接使用。以下為三個核心函數的功能與使用時機介紹：
@@ -54,7 +54,7 @@ MBC 8 路循線感應器提供了三個「副程式 (Subroutines)」。開發時
 | 用途 | 函數 | 功能 |
 | --- | --- | --- |
 | 基礎循線函數 | `LinePos8_dataUpdate` | `-8 ~ +8`<br>• 快速讀取最基礎的 8 段循線位置，適合新手入門教學與基礎左右轉向判斷。<br>• 輸入感應器連接埠 (port)，回傳變數 `pos8`。<br>• 0 代表線在正中央，負數偏左，正數偏右。 |
-| 競技高精度函數 | `LinePos100_dataUpdate` | `-8 ~ +8`<br>• 取得高解析度次像素級插值位置。<br>• 專為高階 PID 循線控制演算法設計，能提供極致平滑的修正動力。<br>• 需完成感應器校準。<br>• 輸入感應器連接埠 (port)，會同步回傳：<br>&emsp;1. `pos100`：高精度位置，範圍 -100 到 +100 (負值偏左、正值偏右) 。 <br>&emsp;2. `width`：偵測到線的感測器數量 (範圍 0 ~ 8)。可用於判斷路口類型。<br>&emsp;3. `ch1/ch8`：讀取最左/右邊感應器的實體光值，用於防掉線或路口偵測。 |
+| 競技高精度函數 | `LinePos100_dataUpdate` | `-8 ~ +8`<br>• 取得高解析度次像素級插值位置。<br>• 專為高階 PID 循線控制演算法設計，能提供極致平滑的修正動力。<br>• 需完成感應器校準。<br>• 輸入感應器連接埠 (port)，會同步回傳：<br>&emsp;1. `pos100`：高精度位置，範圍 -100 到 + 100 (負值偏左、正值偏右) 。 <br>&emsp;2. `width`：偵測到線的感測器數量 (範圍 0 ~ 8)。可用於判斷路口類型。<br>&emsp;3. `ch1/ch8`：讀取最左/右邊感應器的實體光值，用於防掉線或路口偵測。 |
 | 全陣列展開函數 | `LineCh8_dataUpdate` | `1 ~ 9`<br>• 將 8 顆感應器解碼為獨立狀態。<br>• 可根據 8 顆不同光電的數值自訂進階演算法。<br>• 輸入感應器連接埠 (port)，會回傳陣列 light8。<br>• 可透過索引值 (light8[0] ~ light8[7]) 取得各光電光值。 |
 
 ::: info ℹ️ 補充資訊

@@ -51,7 +51,7 @@
   label="範例程式下載"
 />
 
-![範例程式](/images/tutorials/S16/ev3-clev3r/ex_program.png){style="border-radius: 10px;"}
+![範例程式](/images/tutorials/S16/ev3-clev3r/ex_program.png){style = "border-radius: 10px;"}
 
 ### ✔ EV3 專屬自訂積木 (My Blocks) 說明
 MBC 16 路循線感應器提供了三個「副程式 (Subroutines)」。開發時不需要額外安裝擴充包，只需在主程式中呼叫對應函數，並將最新感應器數據存入變數，便可供馬達控制直接使用。以下為三個核心函數的功能與使用時機介紹：

@@ -31,7 +31,7 @@
 
 | 官方圖形指令 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| ![線位置](/images/tutorials/S16/ev3-ev3g/proximity.png) | 線位置 | `-16 ~ +16`<br>• 0 代表線在正中央，負數偏左，正數偏右。<br>• +16 與 -16 表示線在感應器最邊緣。 |
+| ![線位置](/images/tutorials/S16/ev3-ev3g/proximity.png) | 線位置 | `-16 ~ +16`<br>• 0 代表線在正中央，負數偏左，正數偏右。<br>• + 16 與 -16 表示線在感應器最邊緣。 |
 | ![光電 0 至 3 號數值](/images/tutorials/S16/ev3-ev3g/heading_beacon_1.png) | 光電 0 ~ 3 號數值 | `11 ~ 99`<br>• `heading`{.code-green}<br>&emsp;- 十位數為通道 0 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>&emsp;- 個位數為通道 1 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• `proximity`{.code-green}<br>&emsp;- 十位數為通道 2 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>&emsp;- 個位數為通道 3 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
 | ![光電 4 至 7 號數值](/images/tutorials/S16/ev3-ev3g/heading_beacon_2.png) | 光電 4 ~ 7 號數值 | `11 ~ 99`<br>• `heading`{.code-green}<br>&emsp;- 十位數為通道 4 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>&emsp;- 個位數為通道 5 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• `proximity`{.code-green}<br>&emsp;- 十位數為通道 6 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>&emsp;- 個位數為通道 7 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
 | ![光電 8 至 11 號數值](/images/tutorials/S16/ev3-ev3g/heading_beacon_3.png) | 光電 8 ~ 11 號數值 | `11 ~ 99`<br>• `heading`{.code-green}<br>&emsp;- 十位數為通道 8 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>&emsp;- 個位數為通道 9 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>• `proximity`{.code-green}<br>&emsp;- 十位數為通道 10 的光電光值，數值從 `1 ~ 9`{.code-green-text}。<br>&emsp;- 個位數為通道 11 的光電光值，數值從 `1 ~ 9`{.code-green-text}。 |
@@ -51,7 +51,7 @@
   label="範例程式下載"
 />
 
-![範例程式](/images/tutorials/S16/ev3-ev3g/ex_program.png){style="border-radius: 10px;"}
+![範例程式](/images/tutorials/S16/ev3-ev3g/ex_program.png){style = "border-radius: 10px;"}
 
 ### ✔ EV3 專屬自訂積木 (My Blocks) 說明
 MBC 16 路循線感應器提供了三個「自訂積木 (My Blocks) 」。開發時不需要額外安裝擴充包，只需在主程式中呼叫對應函數，並將最新感應器數據存入變數，便可供馬達控制直接使用。以下為三個核心函數的功能與使用時機介紹：

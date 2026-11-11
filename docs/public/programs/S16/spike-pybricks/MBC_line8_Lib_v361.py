@@ -4,7 +4,7 @@
 #
 # !! Import this file MBC_line8_Lib.py into your Pybricks editor !!
 #
-# Port mapping (port= argument):
+# Port mapping (port = argument):
 #   1 → Port.A,  2 → Port.B,  3 → Port.C,
 #   4 → Port.D,  5 → Port.E,  6 → Port.F
 
@@ -13,7 +13,7 @@ from pybricks.parameters import Port
 from pybricks.tools import StopWatch as _StopWatch
 
 # ════════════════════════════════════════════════════════════════
-#  Port number → Port object mapping (SPIKE Prime: 1~6 = A~F)
+#  Port number → Port object mapping (SPIKE Prime: 1 ~ 6 = A~F)
 # ════════════════════════════════════════════════════════════════
 
 _PORT_MAP = {
@@ -30,16 +30,16 @@ _PORT_LETTER = {1: 'A', 2: 'B', 3: 'C', 4: 'D', 5: 'E', 6: 'F'}
 # ════════════════════════════════════════════════════════════════
 #  Packet layout (mode 9, 16 bytes raw → 8 int16 from Pybricks)
 #
-#  word[0] : buf[0]=IR_calib(ch1),  buf[1]=IR_calib(ch2)    → 0~100 each
-#  word[1] : buf[2]=IR_calib(ch3),  buf[3]=IR_calib(ch4)
-#  word[2] : buf[4]=IR_calib(ch5),  buf[5]=IR_calib(ch6)
-#  word[3] : buf[6]=IR_calib(ch7),  buf[7]=IR_calib(ch8)
-#  word[4] : buf[8]=linePos8+8,     buf[9]=lineWidth
-#  word[5] : buf[10]=linePos100+100, buf[11]=binGroupCount
-#  word[6] : buf[12]=binRaw(8-bit), buf[13]=0(unused)
-#  word[7] : buf[14]=0(unused),     buf[15]=0(unused)
+#  word[0] : buf[0] = IR_calib(ch1),  buf[1] = IR_calib(ch2)    → 0 ~ 100 each
+#  word[1] : buf[2] = IR_calib(ch3),  buf[3] = IR_calib(ch4)
+#  word[2] : buf[4] = IR_calib(ch5),  buf[5] = IR_calib(ch6)
+#  word[3] : buf[6] = IR_calib(ch7),  buf[7] = IR_calib(ch8)
+#  word[4] : buf[8] = linePos8 + 8,     buf[9] = lineWidth
+#  word[5] : buf[10] = linePos100 + 100, buf[11] = binGroupCount
+#  word[6] : buf[12] = binRaw(8-bit), buf[13] = 0(unused)
+#  word[7] : buf[14] = 0(unused),     buf[15] = 0(unused)
 #
-#  Note: Unlike the 16ch version, IR calibration values are raw 0~100
+#  Note: Unlike the 16ch version, IR calibration values are raw 0 ~ 100
 #  (1 byte per channel, NOT 4-bit packed). Values never exceed 127,
 #  so Pybricks int16 sign conversion is not needed for ch data.
 # ════════════════════════════════════════════════════════════════

@@ -18,8 +18,15 @@
 
 ## 02 / Functions and data
 
-::: info ℹ️ Note
-The Home app treats UniCam as a Color Sensor. The tables below describe its Color, Reflection, and Raw RGB blocks, mainly using an 8×6 position grid. Home Python switches to the Education layout and requires different decoding.
+::: info ℹ️ Reading notes
+- The Home app treats UniCam as a Color Sensor. The tables below describe its Color, Reflection, and Raw RGB blocks, mainly using an 8 × 6 position grid. Home Python switches to the Education layout and requires different decoding.
+- Here ÷ means integer division and mod means remainder. Store readings before decoding. These are home-app block layouts; do not apply Education App 256-based packing.
+- Area, saturation, value, line width and junction distance are percentages. Their range labels omit the percent sign.
+:::
+
+::: warning ⚠️ Note
+- Only one camera submode is active at a time. Make sure its Mode ID matches the program.
+- Modes reuse the same read expressions; decode their results using the table for the selected mode.
 :::
 
 <CamModeAccordion>
@@ -36,65 +43,77 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="11" title="Color tracking - ① Most colors">
 
-Read positions for up to 4 targets.
+`Home app blocks provides: 4 color positions`
 
-| Block field | Reading |
-| --- | --- |
-| Color | X1 |
-| Reflection | Y1 |
-| Raw red | X2×10+Y2 |
-| Raw green | X3×10+Y3 |
-| Raw blue | X4×10+Y4 |
+::: info ℹ️ Reading notes
+- Coordinates use a `8 × 6` grid. X increases rightward and Y downward. Values are grid cells rather than pixels. Position 0 means not found.
+- Positions/sizes use an `8 × 6` grid; X increases rightward and Y downward. 0 means not found.
+:::
 
-Positions and sizes use an 8×6 grid. P = X×10+Y, with Y increasing downward. Zero means no target.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| ![Color value](/images/tutorials/S8/spike-app/color.png) | Color 1 X | `0, 1 ~ 8`<br>• Color 1 X = reading. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Color 1 Y | `0, 1 ~ 6`<br>• Color 1 Y = reading. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Color 2 X and Color 2 Y | `0 ~ 86`<br>• Color 2 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 2 X = reading ÷ 10.<br>• Color 2 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 2 Y = reading mod 10. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Color 3 X and Color 3 Y | `0 ~ 86`<br>• Color 3 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 3 X = reading ÷ 10.<br>• Color 3 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 3 Y = reading mod 10. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Color 4 X and Color 4 Y | `0 ~ 86`<br>• Color 4 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 4 X = reading ÷ 10.<br>• Color 4 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 4 Y = reading mod 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="12" title="Color tracking - ② Multiple colors">
 
-Read positions for up to 4 targets.
+`Home app blocks provides: 4 color positions`
 
-| Block field | Reading |
-| --- | --- |
-| Color | X1 |
-| Reflection | Y1 |
-| Raw red | X2×10+Y2 |
-| Raw green | X3×10+Y3 |
-| Raw blue | X4×10+Y4 |
+::: info ℹ️ Reading notes
+- Coordinates use a `8 × 6` grid. X increases rightward and Y downward. Values are grid cells rather than pixels. Position 0 means not found.
+- Positions/sizes use an `8 × 6` grid; X increases rightward and Y downward. 0 means not found.
+:::
 
-Positions and sizes use an 8×6 grid. P = X×10+Y, with Y increasing downward. Zero means no target.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| ![Color value](/images/tutorials/S8/spike-app/color.png) | Color 1 X | `0, 1 ~ 8`<br>• Color 1 X = reading. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Color 1 Y | `0, 1 ~ 6`<br>• Color 1 Y = reading. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Color 2 X and Color 2 Y | `0 ~ 86`<br>• Color 2 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 2 X = reading ÷ 10.<br>• Color 2 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 2 Y = reading mod 10. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Color 3 X and Color 3 Y | `0 ~ 86`<br>• Color 3 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 3 X = reading ÷ 10.<br>• Color 3 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 3 Y = reading mod 10. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Color 4 X and Color 4 Y | `0 ~ 86`<br>• Color 4 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 4 X = reading ÷ 10.<br>• Color 4 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 4 Y = reading mod 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="13" title="Color tracking - ③ Standard">
 
-Read positions for up to 4 targets.
+`Home app blocks provides: 4 color positions`
 
-| Block field | Reading |
-| --- | --- |
-| Color | X1 |
-| Reflection | Y1 |
-| Raw red | X2×10+Y2 |
-| Raw green | X3×10+Y3 |
-| Raw blue | X4×10+Y4 |
+::: info ℹ️ Reading notes
+- Coordinates use a `8 × 6` grid. X increases rightward and Y downward. Values are grid cells rather than pixels. Position 0 means not found.
+- Positions/sizes use an `8 × 6` grid; X increases rightward and Y downward. 0 means not found.
+:::
 
-Positions and sizes use an 8×6 grid. P = X×10+Y, with Y increasing downward. Zero means no target.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| ![Color value](/images/tutorials/S8/spike-app/color.png) | Color 1 X | `0, 1 ~ 8`<br>• Color 1 X = reading. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Color 1 Y | `0, 1 ~ 6`<br>• Color 1 Y = reading. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Color 2 X and Color 2 Y | `0 ~ 86`<br>• Color 2 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 2 X = reading ÷ 10.<br>• Color 2 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 2 Y = reading mod 10. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Color 3 X and Color 3 Y | `0 ~ 86`<br>• Color 3 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 3 X = reading ÷ 10.<br>• Color 3 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 3 Y = reading mod 10. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Color 4 X and Color 4 Y | `0 ~ 86`<br>• Color 4 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 4 X = reading ÷ 10.<br>• Color 4 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 4 Y = reading mod 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="14" title="Color tracking - ④ Fine">
 
-Read positions and sizes for up to 2 targets.
+`Home app blocks provides: 2 color positions and sizes`
 
-| Block field | Reading |
-| --- | --- |
-| Color | X1 |
-| Reflection | Y1 |
-| Raw red | X2×10+Y2 |
-| Raw green | W1×10+H1 |
-| Raw blue | W2×10+H2 |
+::: info ℹ️ Reading notes
+- Coordinates use a `8 × 6` grid. X increases rightward and Y downward. Values are grid cells rather than pixels. Position 0 means not found.
+- Positions/sizes use an `8 × 6` grid; X increases rightward and Y downward. 0 means not found.
+:::
 
-Positions and sizes use an 8×6 grid. P = X×10+Y, with Y increasing downward. Zero means no target.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| ![Color value](/images/tutorials/S8/spike-app/color.png) | Color 1 X | `0, 1 ~ 8`<br>• Color 1 X = reading. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Color 1 Y | `0, 1 ~ 6`<br>• Color 1 Y = reading. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Color 2 X and Color 2 Y | `0 ~ 86`<br>• Color 2 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 2 X = reading ÷ 10.<br>• Color 2 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 2 Y = reading mod 10. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Color 1 W and Color 1 H | `0 ~ 86`<br>• Color 1 W range: `0, 1 ~ 8`{.code-green}.<br>• Color 1 W = reading ÷ 10.<br>• Color 1 H range: `0, 1 ~ 6`{.code-green}.<br>• Color 1 H = reading mod 10. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Color 2 W and Color 2 H | `0 ~ 86`<br>• Color 2 W range: `0, 1 ~ 8`{.code-green}.<br>• Color 2 W = reading ÷ 10.<br>• Color 2 H range: `0, 1 ~ 6`{.code-green}.<br>• Color 2 H = reading mod 10. |
 
 </CamModeSection>
 
@@ -102,47 +121,57 @@ Positions and sizes use an 8×6 grid. P = X×10+Y, with Y increasing downward. Z
 
 <CamModeSection mode="21" title="Coordinate sampling - ① Hue">
 
-Read hue for up to 4 sample points, at the precision described below.
+`Home app blocks provides: 4 points: hue`
 
-| Block field | Reading |
-| --- | --- |
-| Color | 0 |
-| Reflection | floor((Hue4+1)÷2) |
-| Raw red | Hue1 |
-| Raw green | Hue2 |
-| Raw blue | Hue3 |
+::: info ℹ️ Reading notes
+- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
+- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+- This reduced field can differ by one unit after conversion.
+:::
 
-The fourth hue is transmitted divided by 2. Multiply the reading by 2 for an approximate hue.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | S4 hue | `0 ~ 127`<br>• S4 hue = reading × 2. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | S2 hue | `0 ~ 255`<br>• S2 hue = reading. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | S3 hue | `0 ~ 255`<br>• S3 hue = reading. |
 
 </CamModeSection>
 
 <CamModeSection mode="22" title="Coordinate sampling - ② Hue and saturation">
 
-Read hue and saturation for up to 2 sample points, at the precision described below.
+`Home app blocks provides: 2 points: hue and saturation`
 
-| Block field | Reading |
-| --- | --- |
-| Color | 0 |
-| Reflection | Sat2 |
-| Raw red | Hue1 |
-| Raw green | Sat1 |
-| Raw blue | Hue2 |
+::: info ℹ️ Reading notes
+- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
+- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | S2 saturation | `0 ~ 100`<br>• S2 saturation = reading. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | S1 saturation | `0 ~ 100`<br>• S1 saturation = reading. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | S2 hue | `0 ~ 255`<br>• S2 hue = reading. |
 
 </CamModeSection>
 
 <CamModeSection mode="23" title="Coordinate sampling - ③ HSV">
 
-Read hue, saturation, and brightness for up to 2 sample points, at the precision described below.
+`Home app blocks provides: 2 points: hue, saturation and value`
 
-| Block field | Reading |
-| --- | --- |
-| Color | 0 |
-| Reflection | floor(Sat2÷10)×10+floor(Val2÷10) |
-| Raw red | Hue1 |
-| Raw green | floor(Sat1÷10)×10+floor(Val1÷10) |
-| Raw blue | Hue2 |
+::: info ℹ️ Reading notes
+- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
+- Both retain tens only; digit 9 means about 90 or higher.
+- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+:::
 
-Saturation and brightness are packed as their tens digits. Split the reading by 10, then multiply each part by 10 for approximate values.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | S2 saturation and value | `0 ~ 99`<br>• S2 saturation range: `0 ~ 90`{.code-green}.<br>• S2 saturation = (reading // 10) × 10.<br>• S2 value range: `0 ~ 90`{.code-green}.<br>• S2 value = (reading % 10) × 10. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | S1 saturation and value | `0 ~ 99`<br>• S1 saturation range: `0 ~ 90`{.code-green}.<br>• S1 saturation = (reading // 10) × 10.<br>• S1 value range: `0 ~ 90`{.code-green}.<br>• S1 value = (reading % 10) × 10. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | S2 hue | `0 ~ 255`<br>• S2 hue = reading. |
 
 </CamModeSection>
 
@@ -150,17 +179,18 @@ Saturation and brightness are packed as their tens digits. Split the reading by 
 
 <CamModeSection mode="30" title="Color order">
 
-Read the first 3 hues from left to right and the total block count.
+`Home app blocks provides: the first 3 block hues and total count`
 
-| Block field | Reading |
-| --- | --- |
-| Color | 0 |
-| Reflection | Total |
-| Raw red | Hue1 |
-| Raw green | Hue2 |
-| Raw blue | Hue3 |
+::: info ℹ️ Reading notes
+- Blocks are ordered left to right. Read the total count before using hue entries; hue 0 can be red.
+:::
 
-Hue 0 can represent red. Use the total block count to identify valid entries.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Total color blocks | `0 ~ 18`<br>• Total color blocks = reading. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Block 1 hue from the left | `0 ~ 255`<br>• Block 1 hue from the left = reading. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Block 2 hue from the left | `0 ~ 255`<br>• Block 2 hue from the left = reading. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Block 3 hue from the left | `0 ~ 255`<br>• Block 3 hue from the left = reading. |
 
 </CamModeSection>
 
@@ -168,55 +198,61 @@ Hue 0 can represent red. Use the total block count to identify valid entries.
 
 <CamModeSection mode="41" title="Line following - ① Black">
 
-Blocks provide junction, near width, near offset, far offset, and angle: five values.
+`Home app blocks provides: 14 line-following readings`
 
-| Block field | Reading |
-| --- | --- |
-| Color | Junction |
-| Reflection | Near width % |
-| Raw red | Near offset+100 |
-| Raw green | Far offset+100 |
-| Raw blue | Angle+100 |
+::: info ℹ️ Reading notes
+- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
+- This submode detects a black line on a light surface.
+- For example, a reading of 80 decodes to - 20.
+:::
 
-Subtract 100 from the near offset, far offset, and angle readings to restore signed values.
-
-Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| ![Color value](/images/tutorials/S8/spike-app/color.png) | Junction type | `0 ~ 5`<br>• Junction type = reading. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Near line width | `0 ~ 100`<br>• Near line width = reading. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Near offset | `0 ~ 200`<br>• Near offset = reading - 100. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Far offset | `0 ~ 200`<br>• Far offset = reading - 100. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Line angle | `10 ~ 190`<br>• Line angle = reading - 100. |
 
 </CamModeSection>
 
 <CamModeSection mode="42" title="Line following - ② White">
 
-Blocks provide junction, near width, near offset, far offset, and angle: five values.
+`Home app blocks provides: 14 line-following readings`
 
-| Block field | Reading |
-| --- | --- |
-| Color | Junction |
-| Reflection | Near width % |
-| Raw red | Near offset+100 |
-| Raw green | Far offset+100 |
-| Raw blue | Angle+100 |
+::: info ℹ️ Reading notes
+- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
+- This submode detects a white line on a dark surface.
+- For example, a reading of 80 decodes to - 20.
+:::
 
-Subtract 100 from the near offset, far offset, and angle readings to restore signed values.
-
-Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| ![Color value](/images/tutorials/S8/spike-app/color.png) | Junction type | `0 ~ 5`<br>• Junction type = reading. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Near line width | `0 ~ 100`<br>• Near line width = reading. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Near offset | `0 ~ 200`<br>• Near offset = reading - 100. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Far offset | `0 ~ 200`<br>• Far offset = reading - 100. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Line angle | `10 ~ 190`<br>• Line angle = reading - 100. |
 
 </CamModeSection>
 
 <CamModeSection mode="43" title="Line following - ③ Colored">
 
-Blocks provide junction, near width, near offset, far offset, and angle: five values.
+`Home app blocks provides: 14 line-following readings`
 
-| Block field | Reading |
-| --- | --- |
-| Color | Junction |
-| Reflection | Near width % |
-| Raw red | Near offset+100 |
-| Raw green | Far offset+100 |
-| Raw blue | Angle+100 |
+::: info ℹ️ Reading notes
+- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
+- Before using colored-line mode, teach the line color as target 1.
+- For example, a reading of 80 decodes to - 20.
+:::
 
-Subtract 100 from the near offset, far offset, and angle readings to restore signed values.
-
-Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| ![Color value](/images/tutorials/S8/spike-app/color.png) | Junction type | `0 ~ 5`<br>• Junction type = reading. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Near line width | `0 ~ 100`<br>• Near line width = reading. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Near offset | `0 ~ 200`<br>• Near offset = reading - 100. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Far offset | `0 ~ 200`<br>• Far offset = reading - 100. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Line angle | `10 ~ 190`<br>• Line angle = reading - 100. |
 
 </CamModeSection>
 
@@ -224,33 +260,42 @@ Offsets run from −100 to 100, negative to the left; angles run from −90 to 9
 
 <CamModeSection mode="51" title="Object detection - ① Object list">
 
-Read codes and positions for the first 2 objects, plus the total count.
+`Home app blocks provides: codes and positions of the first 2 objects, plus total count`
 
-| Block field | Reading |
-| --- | --- |
-| Color | Total |
-| Reflection | Code1 |
-| Raw red | P1 |
-| Raw green | Code2 |
-| Raw blue | P2 |
+::: info ℹ️ Reading notes
+- Coordinates use a `8 × 6` grid. X increases rightward and Y downward. Values are grid cells rather than pixels. Position 0 means not found.
+- Positions/sizes use an `8 × 6` grid; X increases rightward and Y downward. 0 means not found.
+- Only target colors 1 ~ 8 are used. Objects are ordered largest first, and X/Y is the centroid. Shape codes 0 ~ 9 mean other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star and trapezoid.
+- For example, 13 means color 1 triangle; 0 means no object.
+:::
 
-Detection uses target colors 1–8. Objects are ordered largest first and positions are centroids. Code = color ID×10+shape; 0 means no object. Shapes 0–9 mean other, circle, oval, triangle, square, rectangle, pentagon, hexagon, star, and trapezoid.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| ![Color value](/images/tutorials/S8/spike-app/color.png) | Object count | `0 ~ 8`<br>• Object count = reading. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading // 10.<br>• Object 1 shape code = reading % 10. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Object 1 position | `0, 11 ~ 86`<br>• Object 1 X = reading // 10.<br>• Object 1 Y = reading % 10. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Object 2 code | `0, 10 ~ 89`<br>• Object 2 color ID = reading // 10.<br>• Object 2 shape code = reading % 10. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Object 2 position | `0, 11 ~ 86`<br>• Object 2 X = reading // 10.<br>• Object 2 Y = reading % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="52" title="Object detection - ② Object details">
 
-Read detailed data for the first 1 objects using the fields below.
+`Home app blocks provides: details of the first 1 objects`
 
-| Block field | Reading |
-| --- | --- |
-| Color | Total |
-| Reflection | Code1 |
-| Raw red | X1 |
-| Raw green | Y1 |
-| Raw blue | Area1 |
+::: info ℹ️ Reading notes
+- Coordinates use `160 × 120` pixels. X increases rightward and Y downward. X = 0 means not found.
+- Only target colors 1 ~ 8 are used. Objects are ordered largest first, and X/Y is the centroid. Shape codes 0 ~ 9 mean other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star and trapezoid.
+- For example, 13 means color 1 triangle; 0 means no object.
+:::
 
-Detection uses target colors 1–8. Objects are ordered largest first and positions are centroids. Code = color ID×10+shape; 0 means no object. Shapes 0–9 mean other, circle, oval, triangle, square, rectangle, pentagon, hexagon, star, and trapezoid.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| ![Color value](/images/tutorials/S8/spike-app/color.png) | Object count | `0 ~ 8`<br>• Object count = reading. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading // 10.<br>• Object 1 shape code = reading % 10. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Object 1 X | `0 ~ 159`<br>• Object 1 X = reading. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Object 1 Y | `0 ~ 119`<br>• Object 1 Y = reading. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Object 1 area | `0 ~ 100`<br>• Object 1 area = reading. |
 
 </CamModeSection>
 
@@ -268,6 +313,8 @@ Use the Robot Inventor hub and Home app, with the camera on port C. Teach target
 4. Wait 0.1 seconds and repeat. Move the target to check that X increases rightward and Y downward. The reading should return to 0 when the target leaves the image.
 
 Split Home block Raw red positions in base 10. If you switch to Home Python device.get(), use the Education field layout in the [SPIKE App lesson](./spike-app.md).
+
+*[Image pending: complete Robot Inventor block program or project file; the steps above describe the reads and calculations.]*
 
 ## 04 / 【Lego】 Lau Xiao demonstration videos
 

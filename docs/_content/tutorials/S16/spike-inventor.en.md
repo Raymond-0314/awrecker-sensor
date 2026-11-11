@@ -38,7 +38,7 @@ In the official LEGO MINDSTORMS Inventor App, the S16 Line-Following Sensor oper
   label="Download Example Program"
 />
 
-![Example Program](/images/tutorials/S16/spike-inventor/ex_program.webp){style="border-radius: 10px;"}
+![Example Program](/images/tutorials/S16/spike-inventor/ex_program.webp){style = "border-radius: 10px;"}
 
 ## 04 / 【Lego】 Lau Xiao Demonstration Video
 

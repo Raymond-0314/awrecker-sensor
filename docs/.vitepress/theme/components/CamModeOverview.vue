@@ -52,8 +52,8 @@ const groups = [
     zh: '模式二：指定座標取色', en: 'Mode 2 — Coordinate sampling',
     modes: [
       [21, '① 色相', '① Hue'],
-      [22, '② 色相＋飽和', '② Hue and saturation'],
-      [23, '③ 色相＋飽和＋明度', '③ HSV']
+      [22, "② 色相 + 飽和", '② Hue and saturation'],
+      [23, "③ 色相 + 飽和 + 明度", '③ HSV']
     ]
   },
   {

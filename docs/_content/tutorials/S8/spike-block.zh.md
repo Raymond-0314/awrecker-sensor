@@ -39,14 +39,14 @@ MBC 8 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階�
 
 ### ✔ 數值解碼函數設定
 1. 開啟你的 Pybricks 程式，在 `set up`{.code-blue} 積木下放入顏色感應器設定積木，如下圖。其餘底盤與馬達感應器初始化則接續放置於`set up`{.code-blue} 積木下。
-![顏色感應器設定](/images/tutorials/S8/spike-block/basic_setup.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px auto;"}
+![顏色感應器設定](/images/tutorials/S8/spike-block/basic_setup.png){style = "display: block; width: 250px; max-width: 100%; height: auto; margin: 10px auto;"}
 2. 接下來設定數值解碼函數，拉出 `my task`{.code-blue} 積木，並選擇 `公事包`{.code-blue} 圖案的模式，如下圖。
-![mytask設定](/images/tutorials/S8/spike-block/basic_setup_mytask.png){style="display: block; width: 200px; max-width: 100%; height: auto; margin: 10px auto;"}
+![mytask設定](/images/tutorials/S8/spike-block/basic_setup_mytask.png){style = "display: block; width: 200px; max-width: 100%; height: auto; margin: 10px auto;"}
 3. 基礎控制提供四種功能，請依照以下圖片的程式依序完成數值解碼函數的設定。
-![pos8設定](/images/tutorials/S8/spike-block/basic_setup_pos8.png){style="display: block; width: 400px; max-width: 100%; height: auto;"}
-![width8設定](/images/tutorials/S8/spike-block/basic_setup_width8.png){style="display: block; width: 350px; max-width: 100%; height: auto;"}
-![pos100設定](/images/tutorials/S8/spike-block/basic_setup_pos100.png){style="display: block; width: 480px; max-width: 100%; height: auto;"}
-![width100設定](/images/tutorials/S8/spike-block/basic_setup_width100.png){style="display: block; width: 480px; max-width: 100%; height: auto;"}
+![pos8設定](/images/tutorials/S8/spike-block/basic_setup_pos8.png){style = "display: block; width: 400px; max-width: 100%; height: auto;"}
+![width8設定](/images/tutorials/S8/spike-block/basic_setup_width8.png){style = "display: block; width: 350px; max-width: 100%; height: auto;"}
+![pos100設定](/images/tutorials/S8/spike-block/basic_setup_pos100.png){style = "display: block; width: 480px; max-width: 100%; height: auto;"}
+![width100設定](/images/tutorials/S8/spike-block/basic_setup_width100.png){style = "display: block; width: 480px; max-width: 100%; height: auto;"}
 
 ### ✔ 函數功能說明
 | 官方圖形指令 | 功能 | 數值意義說明 |
@@ -66,11 +66,11 @@ MBC 8 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階�
 ### ✔ 函數設定
 1.  點選上方 <code class="code-blue"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: inline-block; vertical-align: -0.125em; margin-right: 4px;"><path d="M12 3v12m-5-5 5 5 5-5"></path><path d="M5 16v5h14v-5"></path></svg>v4.1 函式庫</code> 按鈕下載 `MBC 8 路循跡板 Pybricks - SPIKE 函式庫`{.code-blue}。
 2. 確認函式庫檔名為 `MBC_line8_obj_Lib.py`{.code-blue}。
-3. 回到 Pybricks，在 `file explorer`{.code-blue} 工作區中點選 `import a file`{.code-blue} 按鈕 ![匯入](/images/tutorials/S8/spike-block/pybricks-import.svg){style="width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"}。
+3. 回到 Pybricks，在 `file explorer`{.code-blue} 工作區中點選 `import a file`{.code-blue} 按鈕 ![匯入](/images/tutorials/S8/spike-block/pybricks-import.svg){style = "width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"}。
 4. 選擇 `MBC_line8_obj_Lib.py`{.code-blue} 函式庫並匯入。
 5. 確認 `file explorer`{.code-blue} 工作區中出現 `MBC_line8_obj_Lib.py`{.code-blue}。`MBC_line8_obj_Lib.py`{.code-blue} 與你的主程式必須放在同一個專案列表下。
 6. 開啟你的 Pybricks 程式，在 `set up`{.code-blue} 積木下放入匯入與設定函式庫的程式積木，如下圖。其餘底盤與馬達感應器初始化則接續放置於`set up`{.code-blue} 積木下。
-![函式庫設定](/images/tutorials/S8/spike-block/setup.png){style="display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+![函式庫設定](/images/tutorials/S8/spike-block/setup.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
 
 ### ✔ 函數功能說明
 
@@ -85,8 +85,8 @@ MBC 8 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階�
 
 | 官方圖形指令 | 模式 | 說明 |
 | --- | --- | --- |
-| ![函式庫設定](/images/tutorials/S8/spike-block/adv_setting.png) | 非同步模式，設定為 `true`{.code-green} | • 數值讀取時須搭配 `await`{.code-green} 做使用。![await](/images/tutorials/S8/spike-block/adv_pos8.png){style="display: block; width: 300px; max-width: 100%; height: auto; margin: 10px;"}• 可以搭配 `multitask`{.code-green} 積木使用。![multitask](/images/tutorials/S8/spike-block/multitask.png){style="display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"} |
-| ![函式庫設定](/images/tutorials/S8/spike-block/adv_setting_false.png) | 同步模式，設定為 `false`{.code-green} | • 數值讀取時須搭配 `call`{.code-green} 做使用。![await](/images/tutorials/S8/spike-block/adv_pos8_call.png){style="display: block; width: 300px; max-width: 100%; height: auto; margin: 10px;"}• 不可搭配 `multitask`{.code-green} 積木使用。 |
+| ![函式庫設定](/images/tutorials/S8/spike-block/adv_setting.png) | 非同步模式，設定為 `true`{.code-green} | • 數值讀取時須搭配 `await`{.code-green} 做使用。![await](/images/tutorials/S8/spike-block/adv_pos8.png){style = "display: block; width: 300px; max-width: 100%; height: auto; margin: 10px;"}• 可以搭配 `multitask`{.code-green} 積木使用。![multitask](/images/tutorials/S8/spike-block/multitask.png){style = "display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"} |
+| ![函式庫設定](/images/tutorials/S8/spike-block/adv_setting_false.png) | 同步模式，設定為 `false`{.code-green} | • 數值讀取時須搭配 `call`{.code-green} 做使用。![await](/images/tutorials/S8/spike-block/adv_pos8_call.png){style = "display: block; width: 300px; max-width: 100%; height: auto; margin: 10px;"}• 不可搭配 `multitask`{.code-green} 積木使用。 |
 :::
 
 #### 數值讀取
@@ -114,7 +114,7 @@ MBC 8 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階�
   label="範例程式下載（基礎控制）"
 />
 
-![範例程式](/images/tutorials/S8/spike-block/ex_program_basic.png){style="border-radius: 10px;"}
+![範例程式](/images/tutorials/S8/spike-block/ex_program_basic.png){style = "border-radius: 10px;"}
 
 ### ✔ 進階控制
 <DownloadButton
@@ -123,7 +123,7 @@ MBC 8 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階�
   label="範例程式下載 (進階控制)"
 />
 
-![範例程式](/images/tutorials/S8/spike-block/ex_program_adv.png){style="border-radius: 10px;"}
+![範例程式](/images/tutorials/S8/spike-block/ex_program_adv.png){style = "border-radius: 10px;"}
 
 ## 05 / 【Lego】 Lau Xiao 示範影片
 

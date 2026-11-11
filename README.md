@@ -22,7 +22,7 @@ npm run docs:preview
 
 ## GitHub Pages
 
-1. 把完整專案（含 `.github`、`scripts`）提交至 repository 的 `main`。
+1. 把完整專案 (含 `.github`、`scripts`)提交至 repository 的 `main`。
 2. Settings → Pages → Source 選擇 **GitHub Actions**。
 3. 查看 Actions 的 Deploy documentation to GitHub Pages。
 

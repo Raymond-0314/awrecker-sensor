@@ -50,7 +50,7 @@ Due to hardware communication limitations of the EV3 controller, switching betwe
   label="Download Example Program"
 />
 
-![Example Program](/images/tutorials/S16/ev3-clev3r/ex_program.png){style="border-radius: 10px;"}
+![Example Program](/images/tutorials/S16/ev3-clev3r/ex_program.png){style = "border-radius: 10px;"}
 
 ### ✔ EV3 My Blocks Reference
 

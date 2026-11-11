@@ -42,7 +42,7 @@ MBC 8 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階�
 ### ✔ 函數設定
 1.  點選上方 <code class="code-blue"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: inline-block; vertical-align: -0.125em; margin-right: 4px;"><path d="M12 3v12m-5-5 5 5 5-5"></path><path d="M5 16v5h14v-5"></path></svg>EV3 - Pybricks 函式庫</code> 按鈕下載 `MBC 8 路循跡板 Pybricks - EV3 函式庫`{.code-blue}。
 2. 確認函式庫檔名為 `MBC_line8_EV3_Lib.py`{.code-blue}。
-3. 回到 Pybricks，在 `file explorer`{.code-blue} 工作區中點選 `import a file`{.code-blue} 按鈕 ![匯入](/images/tutorials/S8/spike-block/pybricks-import.svg){style="width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"}。
+3. 回到 Pybricks，在 `file explorer`{.code-blue} 工作區中點選 `import a file`{.code-blue} 按鈕 ![匯入](/images/tutorials/S8/spike-block/pybricks-import.svg){style = "width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"}。
 4. 選擇 `MBC_line8_EV3_Lib.py`{.code-blue} 函式庫並匯入。
 5. 確認 `file explorer`{.code-blue} 工作區中出現 `MBC_line8_EV3_Lib.py`{.code-blue}。`MBC_line8_EV3_Lib.py`{.code-blue} 與你的主程式必須放在同一個專案列表下。
 6. 開啟你的 Pybricks 程式，輸入函式庫匯入與設定程式碼，如下圖。其餘底盤與馬達感應器初始化程式碼則接續放置。
@@ -102,7 +102,7 @@ MBC 函式庫提供 3 種模式共 6 種功能，由於 EV3 主機的硬體通�
   label="範例程式下載"
 />
 
-![範例程式](/images/tutorials/S8/ev3-python/ex_program.png){style="border-radius: 10px;"}
+![範例程式](/images/tutorials/S8/ev3-python/ex_program.png){style = "border-radius: 10px;"}
 
 ## 06 / 【Lego】 Lau Xiao 示範影片
 

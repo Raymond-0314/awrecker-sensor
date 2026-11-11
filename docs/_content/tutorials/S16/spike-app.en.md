@@ -38,7 +38,7 @@ In the official SPIKE App, the S16 Line-Following Sensor operates in “SPIKE Co
   label="Download Example Program"
 />
 
-![Example Program](/images/tutorials/S16/spike-app/ex_program.png){style="border-radius: 10px;"}
+![Example Program](/images/tutorials/S16/spike-app/ex_program.png){style = "border-radius: 10px;"}
 
 ## 04 / 【Lego】 Lau Xiao Demonstration Video
 

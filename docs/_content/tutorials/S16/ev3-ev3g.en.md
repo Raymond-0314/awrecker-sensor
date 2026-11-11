@@ -30,7 +30,7 @@ Due to hardware communication limitations of the EV3 controller, switching betwe
 
 | Programming Block | Function | Returned Values |
 | --- | --- | --- |
-| ![Line Position](/images/tutorials/S16/ev3-ev3g/proximity.png) | Line Position | `-16 ~ +16`<br>• 0 indicates that the line is centered. Negative values indicate left, and positive values indicate right.<br>• +16 and -16 indicate that the line is at the outermost edge of the sensor array. |
+| ![Line Position](/images/tutorials/S16/ev3-ev3g/proximity.png) | Line Position | `-16 ~ +16`<br>• 0 indicates that the line is centered. Negative values indicate left, and positive values indicate right.<br>• + 16 and -16 indicate that the line is at the outermost edge of the sensor array. |
 | ![Optical Values for Channels 0 through 3](/images/tutorials/S16/ev3-ev3g/heading_beacon_1.png) | Optical Values for Channels 0 ~ 3 | `11 ~ 99`<br>• `heading`{.code-green}<br>&emsp;- The tens digit represents the optical value of channel 0, ranging from `1 ~ 9`{.code-green-text}.<br>&emsp;- The ones digit represents the optical value of channel 1, ranging from `1 ~ 9`{.code-green-text}.<br>• `proximity`{.code-green}<br>&emsp;- The tens digit represents the optical value of channel 2, ranging from `1 ~ 9`{.code-green-text}.<br>&emsp;- The ones digit represents the optical value of channel 3, ranging from `1 ~ 9`{.code-green-text}. |
 | ![Optical Values for Channels 4 through 7](/images/tutorials/S16/ev3-ev3g/heading_beacon_2.png) | Optical Values for Channels 4 ~ 7 | `11 ~ 99`<br>• `heading`{.code-green}<br>&emsp;- The tens digit represents the optical value of channel 4, ranging from `1 ~ 9`{.code-green-text}.<br>&emsp;- The ones digit represents the optical value of channel 5, ranging from `1 ~ 9`{.code-green-text}.<br>• `proximity`{.code-green}<br>&emsp;- The tens digit represents the optical value of channel 6, ranging from `1 ~ 9`{.code-green-text}.<br>&emsp;- The ones digit represents the optical value of channel 7, ranging from `1 ~ 9`{.code-green-text}. |
 | ![Optical Values for Channels 8 through 11](/images/tutorials/S16/ev3-ev3g/heading_beacon_3.png) | Optical Values for Channels 8 ~ 11 | `11 ~ 99`<br>• `heading`{.code-green}<br>&emsp;- The tens digit represents the optical value of channel 8, ranging from `1 ~ 9`{.code-green-text}.<br>&emsp;- The ones digit represents the optical value of channel 9, ranging from `1 ~ 9`{.code-green-text}.<br>• `proximity`{.code-green}<br>&emsp;- The tens digit represents the optical value of channel 10, ranging from `1 ~ 9`{.code-green-text}.<br>&emsp;- The ones digit represents the optical value of channel 11, ranging from `1 ~ 9`{.code-green-text}. |
@@ -50,7 +50,7 @@ Due to hardware communication limitations of the EV3 controller, switching betwe
   label="Download Example Program"
 />
 
-![Example Program](/images/tutorials/S16/ev3-ev3g/ex_program.png){style="border-radius: 10px;"}
+![Example Program](/images/tutorials/S16/ev3-ev3g/ex_program.png){style = "border-radius: 10px;"}
 
 ### ✔ EV3 My Blocks Reference
 

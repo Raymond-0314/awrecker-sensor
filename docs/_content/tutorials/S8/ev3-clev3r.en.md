@@ -28,7 +28,7 @@ Due to hardware communication limitations of the EV3 controller, switching betwe
 
 | Code | Function | Returned Values |
 | --- | --- | --- |
-| `Sensor.SetMode(port, 0)`<br>`value = Sensor.ReadRawValue(port, 0)` | Line Position | `-8 ~ +8`<br>• 0 indicates that the line is centered. Negative values indicate left, and positive values indicate right.<br>• +8 and -8 indicate that the line is at the outermost edge of the sensor array. |
+| `Sensor.SetMode(port, 0)`<br>`value = Sensor.ReadRawValue(port, 0)` | Line Position | `-8 ~ +8`<br>• 0 indicates that the line is centered. Negative values indicate left, and positive values indicate right.<br>• + 8 and -8 indicate that the line is at the outermost edge of the sensor array. |
 | `Sensor.SetMode(port, 1)`<br>`value = Sensor.ReadRawValue(port, 8)[0]` | Optical Values for Channels 0 and 1 | `11 ~ 99`<br>• The tens digit represents the optical value of channel 0, ranging from 1 to 9.<br>• The ones digit represents the optical value of channel 1, ranging from 1 to 9. |
 | `Sensor.SetMode(port, 1)`<br>`value = Sensor.ReadRawValue(port, 8)[2]` | Optical Values for Channels 2 and 3 | `11 ~ 99`<br>• The tens digit represents the optical value of channel 2, ranging from 1 to 9.<br>• The ones digit represents the optical value of channel 3, ranging from 1 to 9. |
 | `Sensor.SetMode(port, 1)`<br>`value = Sensor.ReadRawValue(port, 8)[4]` | Optical Values for Channels 4 and 5 | `11 ~ 99`<br>• The tens digit represents the optical value of channel 4, ranging from 1 to 9.<br>• The ones digit represents the optical value of channel 5, ranging from 1 to 9. |
@@ -46,7 +46,7 @@ Due to hardware communication limitations of the EV3 controller, switching betwe
   label="Download Example Program"
 />
 
-![Example Program](/images/tutorials/S8/ev3-clev3r/ex_program.png){style="border-radius: 10px;"}
+![Example Program](/images/tutorials/S8/ev3-clev3r/ex_program.png){style = "border-radius: 10px;"}
 
 ### ✔ EV3 My Blocks Reference
 
@@ -55,7 +55,7 @@ The MBC 8-Channel Line-Following Sensor provides three subroutines. No additiona
 | Purpose | Function | Description |
 | --- | --- | --- |
 | Basic Line Following | `LinePos8_dataUpdate` | `-8 ~ +8`<br>• Quickly reads the basic 8-step line-position value. Suitable for introductory lessons and basic left/right steering decisions.<br>• Takes the sensor port (`port`) as input and returns `pos8`.<br>• 0 indicates that the line is centered. Negative values indicate left, and positive values indicate right. |
-| High-Precision Competition Line Following | `LinePos100_dataUpdate` | `-8 ~ +8`<br>• Retrieves a high-resolution line position using subpixel interpolation.<br>• Designed for advanced PID line-following algorithms to provide smooth steering corrections.<br>• Sensor calibration is required.<br>• Takes the sensor port as input and returns the following values together:<br>&emsp;1. `pos100`: High-precision position, ranging from -100 to +100. Negative values indicate left, and positive values indicate right.<br>&emsp;2. `width`: The number of sensing elements detecting the line, ranging from 0 to 8. Can be used to identify junction types.<br>&emsp;3. `ch1/ch8`: Reflectance values of the leftmost and rightmost sensing elements, used for line-loss prevention or junction detection. |
+| High-Precision Competition Line Following | `LinePos100_dataUpdate` | `-8 ~ +8`<br>• Retrieves a high-resolution line position using subpixel interpolation.<br>• Designed for advanced PID line-following algorithms to provide smooth steering corrections.<br>• Sensor calibration is required.<br>• Takes the sensor port as input and returns the following values together:<br>&emsp;1. `pos100`: High-precision position, ranging from -100 to + 100. Negative values indicate left, and positive values indicate right.<br>&emsp;2. `width`: The number of sensing elements detecting the line, ranging from 0 to 8. Can be used to identify junction types.<br>&emsp;3. `ch1/ch8`: Reflectance values of the leftmost and rightmost sensing elements, used for line-loss prevention or junction detection. |
 | Full Sensor Array Decoding | `LineCh8_dataUpdate` | `1 ~ 9`<br>• Decodes the 8 sensing elements into individual readings.<br>• Allows you to develop custom advanced algorithms using the values from all 8 channels.<br>• Takes the sensor port as input and returns the array light8.<br>• Use the indices (light8[0] ~ light8[7]) to access the optical value of each sensing element. |
 
 ::: info ℹ️ Additional Information

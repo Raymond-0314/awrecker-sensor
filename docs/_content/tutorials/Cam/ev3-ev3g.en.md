@@ -18,8 +18,15 @@
 
 ## 02 / Functions and data
 
-::: info ℹ️ Note
-In EV3-G, add an Infrared Sensor block on sensor port 1. Measure → Proximity reports camera Mode ID. Measure → Beacon provides Heading and Proximity outputs for the selected channel. Measure → Remote reads the selected channel. The tables use these EV3-G options.
+::: info ℹ️ Reading notes
+- In EV3-G, add an Infrared Sensor block on sensor port 1. Measure → Proximity reports camera Mode ID. Measure → Beacon provides Heading and Proximity outputs for the selected channel. Measure → Remote reads the selected channel. The tables use these EV3-G options.
+- Here ÷ means integer division and mod means remainder. Camera Mode ID differs from the infrared read mode: camera mode 13 still returns its data through beacon read mode 1.
+- Area, saturation, value, line width and junction distance are percentages. Their range labels omit the percent sign.
+:::
+
+::: warning ⚠️ Note
+- Only one camera submode is active at a time. Make sure its Mode ID matches the program.
+- Modes reuse the same read expressions; decode their results using the table for the selected mode.
 :::
 
 <CamModeAccordion>
@@ -36,87 +43,94 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="11" title="Color tracking - ① Most colors">
 
-Read positions for up to 12 targets.
+`EV3-G provides: 12 color positions`
 
-| EV3-G block option | Reading |
-| --- | --- |
-| Measure → Proximity (port 1) | Mode ID |
-| Measure → Beacon (channel 1) → Heading | P1 |
-| Measure → Beacon (channel 1) → Proximity | P2 |
-| Measure → Beacon (channel 2) → Heading | P3 |
-| Measure → Beacon (channel 2) → Proximity | P4 |
-| Measure → Beacon (channel 3) → Heading | P5 |
-| Measure → Beacon (channel 3) → Proximity | P6 |
-| Measure → Beacon (channel 4) → Heading | P7 |
-| Measure → Beacon (channel 4) → Proximity | P8 |
-| Measure → Remote (channel 1) | P9 |
-| Measure → Remote (channel 2) | P10 |
-| Measure → Remote (channel 3) | P11 |
-| Measure → Remote (channel 4) | P12 |
+::: info ℹ️ Reading notes
+- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+:::
 
-P = X×10+Y. Positions and sizes use an 8×6 grid. EV3 Y increases upward, and position 0 means no target.
-
-This mode uses both Beacon and Remote data. Switching EV3 read modes takes about 1.1 seconds. Choose the fields needed by your control loop.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Measure → Proximity (port 1)<br>[Image pending: EV3-G proximity measurement block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Measure → Beacon (channel 1) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading // 10.<br>• Color 1 Y = reading % 10. |
+| Measure → Beacon (channel 1) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 2 position | `0, 11 ~ 86`<br>• Color 2 X = reading // 10.<br>• Color 2 Y = reading % 10. |
+| Measure → Beacon (channel 2) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 3 position | `0, 11 ~ 86`<br>• Color 3 X = reading // 10.<br>• Color 3 Y = reading % 10. |
+| Measure → Beacon (channel 2) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 4 position | `0, 11 ~ 86`<br>• Color 4 X = reading // 10.<br>• Color 4 Y = reading % 10. |
+| Measure → Beacon (channel 3) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 5 position | `0, 11 ~ 86`<br>• Color 5 X = reading // 10.<br>• Color 5 Y = reading % 10. |
+| Measure → Beacon (channel 3) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 6 position | `0, 11 ~ 86`<br>• Color 6 X = reading // 10.<br>• Color 6 Y = reading % 10. |
+| Measure → Beacon (channel 4) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 7 position | `0, 11 ~ 86`<br>• Color 7 X = reading // 10.<br>• Color 7 Y = reading % 10. |
+| Measure → Beacon (channel 4) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 8 position | `0, 11 ~ 86`<br>• Color 8 X = reading // 10.<br>• Color 8 Y = reading % 10. |
+| Measure → Remote channel 1<br>[Image pending: EV3-G remote measurement block] | Color 9 position | `0, 11 ~ 86`<br>• Color 9 X = reading // 10.<br>• Color 9 Y = reading % 10. |
+| Measure → Remote channel 2<br>[Image pending: EV3-G remote measurement block] | Color 10 position | `0, 11 ~ 86`<br>• Color 10 X = reading // 10.<br>• Color 10 Y = reading % 10. |
+| Measure → Remote channel 3<br>[Image pending: EV3-G remote measurement block] | Color 11 position | `0, 11 ~ 86`<br>• Color 11 X = reading // 10.<br>• Color 11 Y = reading % 10. |
+| Measure → Remote channel 4<br>[Image pending: EV3-G remote measurement block] | Color 12 position | `0, 11 ~ 86`<br>• Color 12 X = reading // 10.<br>• Color 12 Y = reading % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="12" title="Color tracking - ② Multiple colors">
 
-Read positions for up to 8 targets.
+`EV3-G provides: 8 color positions`
 
-| EV3-G block option | Reading |
-| --- | --- |
-| Measure → Proximity (port 1) | Mode ID |
-| Measure → Beacon (channel 1) → Heading | P1 |
-| Measure → Beacon (channel 1) → Proximity | P2 |
-| Measure → Beacon (channel 2) → Heading | P3 |
-| Measure → Beacon (channel 2) → Proximity | P4 |
-| Measure → Beacon (channel 3) → Heading | P5 |
-| Measure → Beacon (channel 3) → Proximity | P6 |
-| Measure → Beacon (channel 4) → Heading | P7 |
-| Measure → Beacon (channel 4) → Proximity | P8 |
+::: info ℹ️ Reading notes
+- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+:::
 
-P = X×10+Y. Positions and sizes use an 8×6 grid. EV3 Y increases upward, and position 0 means no target.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Measure → Proximity (port 1)<br>[Image pending: EV3-G proximity measurement block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Measure → Beacon (channel 1) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading // 10.<br>• Color 1 Y = reading % 10. |
+| Measure → Beacon (channel 1) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 2 position | `0, 11 ~ 86`<br>• Color 2 X = reading // 10.<br>• Color 2 Y = reading % 10. |
+| Measure → Beacon (channel 2) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 3 position | `0, 11 ~ 86`<br>• Color 3 X = reading // 10.<br>• Color 3 Y = reading % 10. |
+| Measure → Beacon (channel 2) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 4 position | `0, 11 ~ 86`<br>• Color 4 X = reading // 10.<br>• Color 4 Y = reading % 10. |
+| Measure → Beacon (channel 3) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 5 position | `0, 11 ~ 86`<br>• Color 5 X = reading // 10.<br>• Color 5 Y = reading % 10. |
+| Measure → Beacon (channel 3) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 6 position | `0, 11 ~ 86`<br>• Color 6 X = reading // 10.<br>• Color 6 Y = reading % 10. |
+| Measure → Beacon (channel 4) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 7 position | `0, 11 ~ 86`<br>• Color 7 X = reading // 10.<br>• Color 7 Y = reading % 10. |
+| Measure → Beacon (channel 4) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 8 position | `0, 11 ~ 86`<br>• Color 8 X = reading // 10.<br>• Color 8 Y = reading % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="13" title="Color tracking - ③ Standard">
 
-Read positions for up to 4 targets and areas.
+`EV3-G provides: 4 color positions and area`
 
-| EV3-G block option | Reading |
-| --- | --- |
-| Measure → Proximity (port 1) | Mode ID |
-| Measure → Beacon (channel 1) → Heading | P1 |
-| Measure → Beacon (channel 1) → Proximity | Area1 |
-| Measure → Beacon (channel 2) → Heading | P2 |
-| Measure → Beacon (channel 2) → Proximity | Area2 |
-| Measure → Beacon (channel 3) → Heading | P3 |
-| Measure → Beacon (channel 3) → Proximity | Area3 |
-| Measure → Beacon (channel 4) → Heading | P4 |
-| Measure → Beacon (channel 4) → Proximity | Area4 |
+::: info ℹ️ Reading notes
+- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+:::
 
-P = X×10+Y. Positions and sizes use an 8×6 grid. EV3 Y increases upward, and position 0 means no target.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Measure → Proximity (port 1)<br>[Image pending: EV3-G proximity measurement block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Measure → Beacon (channel 1) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading // 10.<br>• Color 1 Y = reading % 10. |
+| Measure → Beacon (channel 1) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 1 area | `0 ~ 100`<br>• Color 1 area = reading. |
+| Measure → Beacon (channel 2) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 2 position | `0, 11 ~ 86`<br>• Color 2 X = reading // 10.<br>• Color 2 Y = reading % 10. |
+| Measure → Beacon (channel 2) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 2 area | `0 ~ 100`<br>• Color 2 area = reading. |
+| Measure → Beacon (channel 3) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 3 position | `0, 11 ~ 86`<br>• Color 3 X = reading // 10.<br>• Color 3 Y = reading % 10. |
+| Measure → Beacon (channel 3) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 3 area | `0 ~ 100`<br>• Color 3 area = reading. |
+| Measure → Beacon (channel 4) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 4 position | `0, 11 ~ 86`<br>• Color 4 X = reading // 10.<br>• Color 4 Y = reading % 10. |
+| Measure → Beacon (channel 4) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 4 area | `0 ~ 100`<br>• Color 4 area = reading. |
 
 </CamModeSection>
 
 <CamModeSection mode="14" title="Color tracking - ④ Fine">
 
-Read positions and sizes for up to 2 targets, with counts available and areas.
+`EV3-G provides: 2 color positions and sizes`
 
-| EV3-G block option | Reading |
-| --- | --- |
-| Measure → Proximity (port 1) | Mode ID |
-| Measure → Beacon (channel 1) → Heading | P1 |
-| Measure → Beacon (channel 1) → Proximity | W1×10+H1 |
-| Measure → Beacon (channel 2) → Heading | Count1 |
-| Measure → Beacon (channel 2) → Proximity | Area1 |
-| Measure → Beacon (channel 3) → Heading | P2 |
-| Measure → Beacon (channel 3) → Proximity | W2×10+H2 |
-| Measure → Beacon (channel 4) → Heading | Count2 |
-| Measure → Beacon (channel 4) → Proximity | Area2 |
+::: info ℹ️ Reading notes
+- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+:::
 
-P = X×10+Y. Positions and sizes use an 8×6 grid. EV3 Y increases upward, and position 0 means no target.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Measure → Proximity (port 1)<br>[Image pending: EV3-G proximity measurement block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Measure → Beacon (channel 1) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading // 10.<br>• Color 1 Y = reading % 10. |
+| Measure → Beacon (channel 1) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 1 size | `0, 11 ~ 86`<br>• Color 1 W = reading // 10.<br>• Color 1 H = reading % 10. |
+| Measure → Beacon (channel 2) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 1 count | `0 ~ 15`<br>• Color 1 count = reading. |
+| Measure → Beacon (channel 2) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 1 area | `0 ~ 100`<br>• Color 1 area = reading. |
+| Measure → Beacon (channel 3) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 2 position | `0, 11 ~ 86`<br>• Color 2 X = reading // 10.<br>• Color 2 Y = reading % 10. |
+| Measure → Beacon (channel 3) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 2 size | `0, 11 ~ 86`<br>• Color 2 W = reading // 10.<br>• Color 2 H = reading % 10. |
+| Measure → Beacon (channel 4) → Heading<br>[Image pending: EV3-G beacon measurement block] | Color 2 count | `0 ~ 15`<br>• Color 2 count = reading. |
+| Measure → Beacon (channel 4) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Color 2 area | `0 ~ 100`<br>• Color 2 area = reading. |
 
 </CamModeSection>
 
@@ -124,67 +138,79 @@ P = X×10+Y. Positions and sizes use an 8×6 grid. EV3 Y increases upward, and p
 
 <CamModeSection mode="21" title="Coordinate sampling - ① Hue">
 
-Read hue for up to 12 sample points, at the precision described below.
+`EV3-G provides: 12 points: hue`
 
-| EV3-G block option | Reading |
-| --- | --- |
-| Measure → Proximity (port 1) | Mode ID |
-| Measure → Beacon (channel 1) → Heading | Hue1 (EV3) |
-| Measure → Beacon (channel 1) → Proximity | Hue2 (EV3) |
-| Measure → Beacon (channel 2) → Heading | Hue3 (EV3) |
-| Measure → Beacon (channel 2) → Proximity | Hue4 (EV3) |
-| Measure → Beacon (channel 3) → Heading | Hue5 (EV3) |
-| Measure → Beacon (channel 3) → Proximity | Hue6 (EV3) |
-| Measure → Beacon (channel 4) → Heading | Hue7 (EV3) |
-| Measure → Beacon (channel 4) → Proximity | Hue8 (EV3) |
-| Measure → Remote (channel 1) | Hue9 (EV3) |
-| Measure → Remote (channel 2) | Hue10 (EV3) |
-| Measure → Remote (channel 3) | Hue11 (EV3) |
-| Measure → Remote (channel 4) | Hue12 (EV3) |
+::: info ℹ️ Reading notes
+- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
+- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+- -1 ~ -8 represents white through gray; -9 ~ -15 represents black. Do not convert negative values to hue.
+- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+:::
 
-Nonnegative Hue (EV3) values are 0–100; approximately recover hue as reading×240/100. −1 to −8 mean white to gray, and −9 to −15 mean black.
-
-This mode uses both Beacon and Remote data. Switching EV3 read modes takes about 1.1 seconds. Choose the fields needed by your control loop.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Measure → Proximity (port 1)<br>[Image pending: EV3-G proximity measurement block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Measure → Beacon (channel 1) → Heading<br>[Image pending: EV3-G beacon measurement block] | S1 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 1) → Proximity<br>[Image pending: EV3-G beacon measurement block] | S2 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 2) → Heading<br>[Image pending: EV3-G beacon measurement block] | S3 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 2) → Proximity<br>[Image pending: EV3-G beacon measurement block] | S4 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 3) → Heading<br>[Image pending: EV3-G beacon measurement block] | S5 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 3) → Proximity<br>[Image pending: EV3-G beacon measurement block] | S6 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 4) → Heading<br>[Image pending: EV3-G beacon measurement block] | S7 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 4) → Proximity<br>[Image pending: EV3-G beacon measurement block] | S8 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Remote channel 1<br>[Image pending: EV3-G remote measurement block] | S9 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Remote channel 2<br>[Image pending: EV3-G remote measurement block] | S10 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Remote channel 3<br>[Image pending: EV3-G remote measurement block] | S11 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Remote channel 4<br>[Image pending: EV3-G remote measurement block] | S12 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
 
 </CamModeSection>
 
 <CamModeSection mode="22" title="Coordinate sampling - ② Hue and saturation">
 
-Read hue and saturation for up to 4 sample points, at the precision described below.
+`EV3-G provides: 4 points: hue and saturation`
 
-| EV3-G block option | Reading |
-| --- | --- |
-| Measure → Proximity (port 1) | Mode ID |
-| Measure → Beacon (channel 1) → Heading | Hue1 (EV3) |
-| Measure → Beacon (channel 1) → Proximity | floor(Sat1÷10)×10+floor(Val1÷10) |
-| Measure → Beacon (channel 2) → Heading | Hue2 (EV3) |
-| Measure → Beacon (channel 2) → Proximity | floor(Sat2÷10)×10+floor(Val2÷10) |
-| Measure → Beacon (channel 3) → Heading | Hue3 (EV3) |
-| Measure → Beacon (channel 3) → Proximity | floor(Sat3÷10)×10+floor(Val3÷10) |
-| Measure → Beacon (channel 4) → Heading | Hue4 (EV3) |
-| Measure → Beacon (channel 4) → Proximity | floor(Sat4÷10)×10+floor(Val4÷10) |
+::: info ℹ️ Reading notes
+- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
+- -1 ~ -8 represents white through gray; -9 ~ -15 represents black. Do not convert negative values to hue.
+- Both retain tens only; digit 9 means about 90 or higher.
+- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+:::
 
-Saturation and brightness are packed as their tens digits. Split the reading by 10, then multiply each part by 10 for approximate values.
-
-Nonnegative Hue (EV3) values are 0–100; approximately recover hue as reading×240/100. −1 to −8 mean white to gray, and −9 to −15 mean black.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Measure → Proximity (port 1)<br>[Image pending: EV3-G proximity measurement block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Measure → Beacon (channel 1) → Heading<br>[Image pending: EV3-G beacon measurement block] | S1 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 1) → Proximity<br>[Image pending: EV3-G beacon measurement block] | S1 saturation and value | `0 ~ 99`<br>• S1 saturation range: `0 ~ 90`{.code-green}.<br>• S1 saturation = (reading // 10) × 10.<br>• S1 value range: `0 ~ 90`{.code-green}.<br>• S1 value = (reading % 10) × 10. |
+| Measure → Beacon (channel 2) → Heading<br>[Image pending: EV3-G beacon measurement block] | S2 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 2) → Proximity<br>[Image pending: EV3-G beacon measurement block] | S2 saturation and value | `0 ~ 99`<br>• S2 saturation range: `0 ~ 90`{.code-green}.<br>• S2 saturation = (reading // 10) × 10.<br>• S2 value range: `0 ~ 90`{.code-green}.<br>• S2 value = (reading % 10) × 10. |
+| Measure → Beacon (channel 3) → Heading<br>[Image pending: EV3-G beacon measurement block] | S3 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 3) → Proximity<br>[Image pending: EV3-G beacon measurement block] | S3 saturation and value | `0 ~ 99`<br>• S3 saturation range: `0 ~ 90`{.code-green}.<br>• S3 saturation = (reading // 10) × 10.<br>• S3 value range: `0 ~ 90`{.code-green}.<br>• S3 value = (reading % 10) × 10. |
+| Measure → Beacon (channel 4) → Heading<br>[Image pending: EV3-G beacon measurement block] | S4 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 4) → Proximity<br>[Image pending: EV3-G beacon measurement block] | S4 saturation and value | `0 ~ 99`<br>• S4 saturation range: `0 ~ 90`{.code-green}.<br>• S4 saturation = (reading // 10) × 10.<br>• S4 value range: `0 ~ 90`{.code-green}.<br>• S4 value = (reading % 10) × 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="23" title="Coordinate sampling - ③ HSV">
 
-Read hue, saturation, and brightness for up to 2 sample points, at the precision described below.
+`EV3-G provides: 2 points: hue, saturation and value`
 
-| EV3-G block option | Reading |
-| --- | --- |
-| Measure → Proximity (port 1) | Mode ID |
-| Measure → Beacon (channel 1) → Heading | floor(Hue1÷100) |
-| Measure → Beacon (channel 1) → Proximity | Hue1 % 100 |
-| Measure → Beacon (channel 2) → Heading | Sat1 |
-| Measure → Beacon (channel 2) → Proximity | Val1 |
-| Measure → Beacon (channel 3) → Heading | floor(Hue2÷100) |
-| Measure → Beacon (channel 3) → Proximity | Hue2 % 100 |
-| Measure → Beacon (channel 4) → Heading | Sat2 |
-| Measure → Beacon (channel 4) → Proximity | Val2 |
+::: info ℹ️ Reading notes
+- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
+- Recombine the same point: hue = hundreds × 100 + remainder.
+- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Measure → Proximity (port 1)<br>[Image pending: EV3-G proximity measurement block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Measure → Beacon (channel 1) → Heading<br>[Image pending: EV3-G beacon measurement block] | S1 hue hundreds | `0 ~ 2`<br>• S1 hue hundreds = reading. |
+| Measure → Beacon (channel 1) → Proximity<br>[Image pending: EV3-G beacon measurement block] | S1 hue remainder | `0 ~ 99`<br>• S1 hue remainder = reading. |
+| Measure → Beacon (channel 2) → Heading<br>[Image pending: EV3-G beacon measurement block] | S1 saturation | `0 ~ 100`<br>• S1 saturation = reading. |
+| Measure → Beacon (channel 2) → Proximity<br>[Image pending: EV3-G beacon measurement block] | S1 value | `0 ~ 100`<br>• S1 value = reading. |
+| Measure → Beacon (channel 3) → Heading<br>[Image pending: EV3-G beacon measurement block] | S2 hue hundreds | `0 ~ 2`<br>• S2 hue hundreds = reading. |
+| Measure → Beacon (channel 3) → Proximity<br>[Image pending: EV3-G beacon measurement block] | S2 hue remainder | `0 ~ 99`<br>• S2 hue remainder = reading. |
+| Measure → Beacon (channel 4) → Heading<br>[Image pending: EV3-G beacon measurement block] | S2 saturation | `0 ~ 100`<br>• S2 saturation = reading. |
+| Measure → Beacon (channel 4) → Proximity<br>[Image pending: EV3-G beacon measurement block] | S2 value | `0 ~ 100`<br>• S2 value = reading. |
 
 </CamModeSection>
 
@@ -192,29 +218,29 @@ Read hue, saturation, and brightness for up to 2 sample points, at the precision
 
 <CamModeSection mode="30" title="Color order">
 
-Read the first 11 hues from left to right and the total block count.
+`EV3-G provides: the first 11 block hues and total count`
 
-| EV3-G block option | Reading |
-| --- | --- |
-| Measure → Proximity (port 1) | Mode ID |
-| Measure → Beacon (channel 1) → Heading | Hue1 (EV3) |
-| Measure → Beacon (channel 1) → Proximity | Hue2 (EV3) |
-| Measure → Beacon (channel 2) → Heading | Hue3 (EV3) |
-| Measure → Beacon (channel 2) → Proximity | Hue4 (EV3) |
-| Measure → Beacon (channel 3) → Heading | Hue5 (EV3) |
-| Measure → Beacon (channel 3) → Proximity | Hue6 (EV3) |
-| Measure → Beacon (channel 4) → Heading | Hue7 (EV3) |
-| Measure → Beacon (channel 4) → Proximity | Hue8 (EV3) |
-| Measure → Remote (channel 1) | Hue9 (EV3) |
-| Measure → Remote (channel 2) | Hue10 (EV3) |
-| Measure → Remote (channel 3) | Hue11 (EV3) |
-| Measure → Remote (channel 4) | Total |
+::: info ℹ️ Reading notes
+- Blocks are ordered left to right. Read the total count before using hue entries; hue 0 can be red.
+- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+- -1 ~ -8 represents white through gray; -9 ~ -15 represents black. Do not convert negative values to hue.
+:::
 
-Nonnegative Hue (EV3) values are 0–100; approximately recover hue as reading×240/100. −1 to −8 mean white to gray, and −9 to −15 mean black.
-
-This mode uses both Beacon and Remote data. Switching EV3 read modes takes about 1.1 seconds. Choose the fields needed by your control loop.
-
-Hue 0 can represent red. Use the total block count to identify valid entries.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Measure → Proximity (port 1)<br>[Image pending: EV3-G proximity measurement block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Measure → Beacon (channel 1) → Heading<br>[Image pending: EV3-G beacon measurement block] | Block 1 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 1) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Block 2 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 2) → Heading<br>[Image pending: EV3-G beacon measurement block] | Block 3 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 2) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Block 4 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 3) → Heading<br>[Image pending: EV3-G beacon measurement block] | Block 5 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 3) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Block 6 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 4) → Heading<br>[Image pending: EV3-G beacon measurement block] | Block 7 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Beacon (channel 4) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Block 8 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Remote channel 1<br>[Image pending: EV3-G remote measurement block] | Block 9 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Remote channel 2<br>[Image pending: EV3-G remote measurement block] | Block 10 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Remote channel 3<br>[Image pending: EV3-G remote measurement block] | Block 11 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| Measure → Remote channel 4<br>[Image pending: EV3-G remote measurement block] | Total color blocks | `0 ~ 18`<br>• Total color blocks = reading. |
 
 </CamModeSection>
 
@@ -222,79 +248,88 @@ Hue 0 can represent red. Use the total block count to identify valid entries.
 
 <CamModeSection mode="41" title="Line following - ① Black">
 
-Beacon and Remote together provide 12 line-following values.
+`EV3-G provides: 12 line-following readings`
 
-| EV3-G block option | Reading |
-| --- | --- |
-| Measure → Proximity (port 1) | Mode ID |
-| Measure → Beacon (channel 1) → Heading | Near offset |
-| Measure → Beacon (channel 1) → Proximity | Middle offset |
-| Measure → Beacon (channel 2) → Heading | Far offset |
-| Measure → Beacon (channel 2) → Proximity | Angle |
-| Measure → Beacon (channel 3) → Heading | Near width % |
-| Measure → Beacon (channel 3) → Proximity | Junction×10+Flags |
-| Measure → Beacon (channel 4) → Heading | Junction distance % |
-| Measure → Beacon (channel 4) → Proximity | Marker color |
-| Measure → Remote (channel 1) | Left edge |
-| Measure → Remote (channel 2) | Right edge |
-| Measure → Remote (channel 3) | Far width % |
-| Measure → Remote (channel 4) | Marker count |
+::: info ℹ️ Reading notes
+- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
+- This submode detects a black line on a light surface.
+- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+- Negative offsets place the line on the left; positive offsets place it on the right.
+:::
 
-This mode uses both Beacon and Remote data. Switching EV3 read modes takes about 1.1 seconds. Choose the fields needed by your control loop.
-
-Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Measure → Proximity (port 1)<br>[Image pending: EV3-G proximity measurement block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Measure → Beacon (channel 1) → Heading<br>[Image pending: EV3-G beacon measurement block] | Near offset | `-100 ~ 100`<br>• Near offset = reading; preserve the sign. |
+| Measure → Beacon (channel 1) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Middle offset | `-100 ~ 100`<br>• Middle offset = reading; preserve the sign. |
+| Measure → Beacon (channel 2) → Heading<br>[Image pending: EV3-G beacon measurement block] | Far offset | `-100 ~ 100`<br>• Far offset = reading; preserve the sign. |
+| Measure → Beacon (channel 2) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Line angle | `-90 ~ 90°`<br>• Line angle = reading; preserve the sign. |
+| Measure → Beacon (channel 3) → Heading<br>[Image pending: EV3-G beacon measurement block] | Near line width | `0 ~ 100`<br>• Near line width = reading. |
+| Measure → Beacon (channel 3) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Junction type and line-found flags | `0 ~ 57`<br>• Junction type = reading // 10.<br>• Line-found flags = reading % 10. |
+| Measure → Beacon (channel 4) → Heading<br>[Image pending: EV3-G beacon measurement block] | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
+| Measure → Beacon (channel 4) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Marker color ID | `0 ~ 16`<br>• Marker color ID = reading. |
+| Measure → Remote channel 1<br>[Image pending: EV3-G remote measurement block] | Near left edge | `-100 ~ 100`<br>• Near left edge = reading; preserve the sign. |
+| Measure → Remote channel 2<br>[Image pending: EV3-G remote measurement block] | Near right edge | `-100 ~ 100`<br>• Near right edge = reading; preserve the sign. |
+| Measure → Remote channel 3<br>[Image pending: EV3-G remote measurement block] | Far line width | `0 ~ 100`<br>• Far line width = reading. |
+| Measure → Remote channel 4<br>[Image pending: EV3-G remote measurement block] | Marker count | `0 ~ 99`<br>• Marker count = reading. |
 
 </CamModeSection>
 
 <CamModeSection mode="42" title="Line following - ② White">
 
-Beacon and Remote together provide 12 line-following values.
+`EV3-G provides: 12 line-following readings`
 
-| EV3-G block option | Reading |
-| --- | --- |
-| Measure → Proximity (port 1) | Mode ID |
-| Measure → Beacon (channel 1) → Heading | Near offset |
-| Measure → Beacon (channel 1) → Proximity | Middle offset |
-| Measure → Beacon (channel 2) → Heading | Far offset |
-| Measure → Beacon (channel 2) → Proximity | Angle |
-| Measure → Beacon (channel 3) → Heading | Near width % |
-| Measure → Beacon (channel 3) → Proximity | Junction×10+Flags |
-| Measure → Beacon (channel 4) → Heading | Junction distance % |
-| Measure → Beacon (channel 4) → Proximity | Marker color |
-| Measure → Remote (channel 1) | Left edge |
-| Measure → Remote (channel 2) | Right edge |
-| Measure → Remote (channel 3) | Far width % |
-| Measure → Remote (channel 4) | Marker count |
+::: info ℹ️ Reading notes
+- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
+- This submode detects a white line on a dark surface.
+- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+- Negative offsets place the line on the left; positive offsets place it on the right.
+:::
 
-This mode uses both Beacon and Remote data. Switching EV3 read modes takes about 1.1 seconds. Choose the fields needed by your control loop.
-
-Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Measure → Proximity (port 1)<br>[Image pending: EV3-G proximity measurement block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Measure → Beacon (channel 1) → Heading<br>[Image pending: EV3-G beacon measurement block] | Near offset | `-100 ~ 100`<br>• Near offset = reading; preserve the sign. |
+| Measure → Beacon (channel 1) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Middle offset | `-100 ~ 100`<br>• Middle offset = reading; preserve the sign. |
+| Measure → Beacon (channel 2) → Heading<br>[Image pending: EV3-G beacon measurement block] | Far offset | `-100 ~ 100`<br>• Far offset = reading; preserve the sign. |
+| Measure → Beacon (channel 2) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Line angle | `-90 ~ 90°`<br>• Line angle = reading; preserve the sign. |
+| Measure → Beacon (channel 3) → Heading<br>[Image pending: EV3-G beacon measurement block] | Near line width | `0 ~ 100`<br>• Near line width = reading. |
+| Measure → Beacon (channel 3) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Junction type and line-found flags | `0 ~ 57`<br>• Junction type = reading // 10.<br>• Line-found flags = reading % 10. |
+| Measure → Beacon (channel 4) → Heading<br>[Image pending: EV3-G beacon measurement block] | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
+| Measure → Beacon (channel 4) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Marker color ID | `0 ~ 16`<br>• Marker color ID = reading. |
+| Measure → Remote channel 1<br>[Image pending: EV3-G remote measurement block] | Near left edge | `-100 ~ 100`<br>• Near left edge = reading; preserve the sign. |
+| Measure → Remote channel 2<br>[Image pending: EV3-G remote measurement block] | Near right edge | `-100 ~ 100`<br>• Near right edge = reading; preserve the sign. |
+| Measure → Remote channel 3<br>[Image pending: EV3-G remote measurement block] | Far line width | `0 ~ 100`<br>• Far line width = reading. |
+| Measure → Remote channel 4<br>[Image pending: EV3-G remote measurement block] | Marker count | `0 ~ 99`<br>• Marker count = reading. |
 
 </CamModeSection>
 
 <CamModeSection mode="43" title="Line following - ③ Colored">
 
-Beacon and Remote together provide 12 line-following values.
+`EV3-G provides: 12 line-following readings`
 
-| EV3-G block option | Reading |
-| --- | --- |
-| Measure → Proximity (port 1) | Mode ID |
-| Measure → Beacon (channel 1) → Heading | Near offset |
-| Measure → Beacon (channel 1) → Proximity | Middle offset |
-| Measure → Beacon (channel 2) → Heading | Far offset |
-| Measure → Beacon (channel 2) → Proximity | Angle |
-| Measure → Beacon (channel 3) → Heading | Near width % |
-| Measure → Beacon (channel 3) → Proximity | Junction×10+Flags |
-| Measure → Beacon (channel 4) → Heading | Junction distance % |
-| Measure → Beacon (channel 4) → Proximity | Marker color |
-| Measure → Remote (channel 1) | Left edge |
-| Measure → Remote (channel 2) | Right edge |
-| Measure → Remote (channel 3) | Far width % |
-| Measure → Remote (channel 4) | Marker count |
+::: info ℹ️ Reading notes
+- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
+- Before using colored-line mode, teach the line color as target 1.
+- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+- Negative offsets place the line on the left; positive offsets place it on the right.
+:::
 
-This mode uses both Beacon and Remote data. Switching EV3 read modes takes about 1.1 seconds. Choose the fields needed by your control loop.
-
-Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Measure → Proximity (port 1)<br>[Image pending: EV3-G proximity measurement block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Measure → Beacon (channel 1) → Heading<br>[Image pending: EV3-G beacon measurement block] | Near offset | `-100 ~ 100`<br>• Near offset = reading; preserve the sign. |
+| Measure → Beacon (channel 1) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Middle offset | `-100 ~ 100`<br>• Middle offset = reading; preserve the sign. |
+| Measure → Beacon (channel 2) → Heading<br>[Image pending: EV3-G beacon measurement block] | Far offset | `-100 ~ 100`<br>• Far offset = reading; preserve the sign. |
+| Measure → Beacon (channel 2) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Line angle | `-90 ~ 90°`<br>• Line angle = reading; preserve the sign. |
+| Measure → Beacon (channel 3) → Heading<br>[Image pending: EV3-G beacon measurement block] | Near line width | `0 ~ 100`<br>• Near line width = reading. |
+| Measure → Beacon (channel 3) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Junction type and line-found flags | `0 ~ 57`<br>• Junction type = reading // 10.<br>• Line-found flags = reading % 10. |
+| Measure → Beacon (channel 4) → Heading<br>[Image pending: EV3-G beacon measurement block] | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
+| Measure → Beacon (channel 4) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Marker color ID | `0 ~ 16`<br>• Marker color ID = reading. |
+| Measure → Remote channel 1<br>[Image pending: EV3-G remote measurement block] | Near left edge | `-100 ~ 100`<br>• Near left edge = reading; preserve the sign. |
+| Measure → Remote channel 2<br>[Image pending: EV3-G remote measurement block] | Near right edge | `-100 ~ 100`<br>• Near right edge = reading; preserve the sign. |
+| Measure → Remote channel 3<br>[Image pending: EV3-G remote measurement block] | Far line width | `0 ~ 100`<br>• Far line width = reading. |
+| Measure → Remote channel 4<br>[Image pending: EV3-G remote measurement block] | Marker count | `0 ~ 99`<br>• Marker count = reading. |
 
 </CamModeSection>
 
@@ -302,52 +337,54 @@ Offsets run from −100 to 100, negative to the left; angles run from −90 to 9
 
 <CamModeSection mode="51" title="Object detection - ① Object list">
 
-Read codes and positions for the first 5 objects, plus the total count.
+`EV3-G provides: codes and positions of the first 5 objects, plus total count`
 
-| EV3-G block option | Reading |
-| --- | --- |
-| Measure → Proximity (port 1) | Mode ID |
-| Measure → Beacon (channel 1) → Heading | Code1 |
-| Measure → Beacon (channel 1) → Proximity | P1 |
-| Measure → Beacon (channel 2) → Heading | Code2 |
-| Measure → Beacon (channel 2) → Proximity | P2 |
-| Measure → Beacon (channel 3) → Heading | Code3 |
-| Measure → Beacon (channel 3) → Proximity | P3 |
-| Measure → Beacon (channel 4) → Heading | Code4 |
-| Measure → Beacon (channel 4) → Proximity | P4 |
-| Measure → Remote (channel 1) | Code5 |
-| Measure → Remote (channel 2) | P5 |
-| Measure → Remote (channel 4) | Total |
+::: info ℹ️ Reading notes
+- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+- Only target colors 1 ~ 8 are used. Objects are ordered largest first, and X/Y is the centroid. Shape codes 0 ~ 9 mean other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star and trapezoid.
+- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+- For example, 13 means color 1 triangle; 0 means no object.
+:::
 
-P = X×10+Y. Positions and sizes use an 8×6 grid. EV3 Y increases upward, and position 0 means no target.
-
-This mode uses both Beacon and Remote data. Switching EV3 read modes takes about 1.1 seconds. Choose the fields needed by your control loop.
-
-Detection uses target colors 1–8. Objects are ordered largest first and positions are centroids. Code = color ID×10+shape; 0 means no object. Shapes 0–9 mean other, circle, oval, triangle, square, rectangle, pentagon, hexagon, star, and trapezoid.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Measure → Proximity (port 1)<br>[Image pending: EV3-G proximity measurement block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Measure → Beacon (channel 1) → Heading<br>[Image pending: EV3-G beacon measurement block] | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading // 10.<br>• Object 1 shape code = reading % 10. |
+| Measure → Beacon (channel 1) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Object 1 position | `0, 11 ~ 86`<br>• Object 1 X = reading // 10.<br>• Object 1 Y = reading % 10. |
+| Measure → Beacon (channel 2) → Heading<br>[Image pending: EV3-G beacon measurement block] | Object 2 code | `0, 10 ~ 89`<br>• Object 2 color ID = reading // 10.<br>• Object 2 shape code = reading % 10. |
+| Measure → Beacon (channel 2) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Object 2 position | `0, 11 ~ 86`<br>• Object 2 X = reading // 10.<br>• Object 2 Y = reading % 10. |
+| Measure → Beacon (channel 3) → Heading<br>[Image pending: EV3-G beacon measurement block] | Object 3 code | `0, 10 ~ 89`<br>• Object 3 color ID = reading // 10.<br>• Object 3 shape code = reading % 10. |
+| Measure → Beacon (channel 3) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Object 3 position | `0, 11 ~ 86`<br>• Object 3 X = reading // 10.<br>• Object 3 Y = reading % 10. |
+| Measure → Beacon (channel 4) → Heading<br>[Image pending: EV3-G beacon measurement block] | Object 4 code | `0, 10 ~ 89`<br>• Object 4 color ID = reading // 10.<br>• Object 4 shape code = reading % 10. |
+| Measure → Beacon (channel 4) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Object 4 position | `0, 11 ~ 86`<br>• Object 4 X = reading // 10.<br>• Object 4 Y = reading % 10. |
+| Measure → Remote channel 1<br>[Image pending: EV3-G remote measurement block] | Object 5 code | `0, 10 ~ 89`<br>• Object 5 color ID = reading // 10.<br>• Object 5 shape code = reading % 10. |
+| Measure → Remote channel 2<br>[Image pending: EV3-G remote measurement block] | Object 5 position | `0, 11 ~ 86`<br>• Object 5 X = reading // 10.<br>• Object 5 Y = reading % 10. |
+| Measure → Remote channel 4<br>[Image pending: EV3-G remote measurement block] | Object count | `0 ~ 8`<br>• Object count = reading. |
 
 </CamModeSection>
 
 <CamModeSection mode="52" title="Object detection - ② Object details">
 
-Read detailed data for the first 2 objects using the fields below.
+`EV3-G provides: details of the first 2 objects`
 
-| EV3-G block option | Reading |
-| --- | --- |
-| Measure → Proximity (port 1) | Mode ID |
-| Measure → Beacon (channel 1) → Heading | Code1 |
-| Measure → Beacon (channel 1) → Proximity | P1 |
-| Measure → Beacon (channel 2) → Heading | Area1 |
-| Measure → Beacon (channel 2) → Proximity | floor((Angle1+1)÷2) |
-| Measure → Beacon (channel 3) → Heading | Code2 |
-| Measure → Beacon (channel 3) → Proximity | P2 |
-| Measure → Beacon (channel 4) → Heading | Area2 |
-| Measure → Beacon (channel 4) → Proximity | floor((Angle2+1)÷2) |
+::: info ℹ️ Reading notes
+- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+- Only target colors 1 ~ 8 are used. Objects are ordered largest first, and X/Y is the centroid. Shape codes 0 ~ 9 mean other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star and trapezoid.
+- For example, 13 means color 1 triangle; 0 means no object.
+- This reduced field can differ by one unit after conversion.
+:::
 
-P = X×10+Y. Positions and sizes use an 8×6 grid. EV3 Y increases upward, and position 0 means no target.
-
-Double the angle field and cap it at 179°, with an error of about 1°.
-
-Detection uses target colors 1–8. Objects are ordered largest first and positions are centroids. Code = color ID×10+shape; 0 means no object. Shapes 0–9 mean other, circle, oval, triangle, square, rectangle, pentagon, hexagon, star, and trapezoid.
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| Measure → Proximity (port 1)<br>[Image pending: EV3-G proximity measurement block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
+| Measure → Beacon (channel 1) → Heading<br>[Image pending: EV3-G beacon measurement block] | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading // 10.<br>• Object 1 shape code = reading % 10. |
+| Measure → Beacon (channel 1) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Object 1 position | `0, 11 ~ 86`<br>• Object 1 X = reading // 10.<br>• Object 1 Y = reading % 10. |
+| Measure → Beacon (channel 2) → Heading<br>[Image pending: EV3-G beacon measurement block] | Object 1 area | `0 ~ 100`<br>• Object 1 area = reading. |
+| Measure → Beacon (channel 2) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Object 1 angle | `0 ~ 90`<br>• Object 1 angle = reading × 2, capped at 179°. |
+| Measure → Beacon (channel 3) → Heading<br>[Image pending: EV3-G beacon measurement block] | Object 2 code | `0, 10 ~ 89`<br>• Object 2 color ID = reading // 10.<br>• Object 2 shape code = reading % 10. |
+| Measure → Beacon (channel 3) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Object 2 position | `0, 11 ~ 86`<br>• Object 2 X = reading // 10.<br>• Object 2 Y = reading % 10. |
+| Measure → Beacon (channel 4) → Heading<br>[Image pending: EV3-G beacon measurement block] | Object 2 area | `0 ~ 100`<br>• Object 2 area = reading. |
+| Measure → Beacon (channel 4) → Proximity<br>[Image pending: EV3-G beacon measurement block] | Object 2 angle | `0 ~ 90`<br>• Object 2 angle = reading × 2, capped at 179°. |
 
 </CamModeSection>
 
@@ -366,6 +403,8 @@ Connect the camera to sensor port 1, teach target color 1, and select Mode ID 13
 5. Display X, Y, and area, wait 0.1 seconds, and repeat. For example, position = 43 and area = 18 mean column 4, row 3, and 18% area. EV3 Y = 1 is at the bottom.
 
 Keep the loop on Beacon readings. Check Mode ID with Proximity once at startup to avoid switching infrared modes every iteration and adding about 1.1 seconds of delay.
+
+*[Image pending: complete EV3-G block program or project file; the steps above describe the reads and calculations.]*
 
 ## 04 / 【Lego】 Lau Xiao demonstration videos
 

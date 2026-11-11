@@ -1210,6 +1210,35 @@ body:has(.sensor-home) {
   .product-dialog .picker-footer {
     flex-direction: column;
     align-items: stretch;
+    flex-shrink: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .product-dialog[open] {
+    display: flex;
+    flex-direction: column;
+    height: calc(100dvh - 28px);
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .product-dialog .dialog-header {
+    flex-shrink: 0;
+  }
+
+  .product-dialog .tutorial-picker {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .product-dialog .picker-options {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 }
 
@@ -1827,7 +1856,7 @@ body:has(.sensor-home) {
 }
 
 /* ==================================================
- * 08 舊版版型相容樣式（尚未確認無引用，保留）
+ * 08 舊版版型相容樣式 (尚未確認無引用，保留)
  * ================================================== */
 
 .hero {

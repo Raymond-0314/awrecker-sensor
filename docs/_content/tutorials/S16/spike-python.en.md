@@ -89,7 +89,7 @@ Use `Line Position`{.code-blue} and `Line Width`{.code-blue} functions with matc
 
 1. Click the <code class="code-blue"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: inline-block; vertical-align: -0.125em; margin-right: 4px;"><path d="M12 3v12m-5-5 5 5 5-5"></path><path d="M5 16v5h14v-5"></path></svg>Download Library</code> button above to download the `MBC 16-Channel Line-Following Sensor Pybricks - SPIKE Library`{.code-blue}.
 2. Confirm that the library filename is `MBC_line16_obj_Lib.py`{.code-blue}.
-3. Return to Pybricks and click the `import a file`{.code-blue} button ![Import](/images/tutorials/S8/spike-block/pybricks-import.svg){style="width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"} in the `file explorer`{.code-blue} workspace.
+3. Return to Pybricks and click the `import a file`{.code-blue} button ![Import](/images/tutorials/S8/spike-block/pybricks-import.svg){style = "width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"} in the `file explorer`{.code-blue} workspace.
 4. Select and import the `MBC_line16_obj_Lib.py`{.code-blue} library.
 5. Confirm that `MBC_line16_obj_Lib.py`{.code-blue} appears in the `file explorer`{.code-blue} workspace. The library and your main program must be in the same project.
 6. Open your Pybricks program and enter the library import and configuration code below. Place the remaining drivetrain, motor, and sensor initialization code after it.
@@ -144,7 +144,7 @@ line16 = MBC_LINE16(3, True)
   label="Download Example Program (Basic Control)"
 />
 
-![Example Program](/images/tutorials/S16/spike-python/ex_program_basic.png){style="border-radius: 10px;"}
+![Example Program](/images/tutorials/S16/spike-python/ex_program_basic.png){style = "border-radius: 10px;"}
 
 ### ✔ Advanced Control
 
@@ -154,7 +154,7 @@ line16 = MBC_LINE16(3, True)
   label="Download Example Program (Advanced Control)"
 />
 
-![Example Program](/images/tutorials/S16/spike-python/ex_program_adv.png){style="border-radius: 10px;"}
+![Example Program](/images/tutorials/S16/spike-python/ex_program_adv.png){style = "border-radius: 10px;"}
 
 ## 05 / 【Lego】 Lau Xiao Demonstration Video
 

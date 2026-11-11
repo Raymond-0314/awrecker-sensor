@@ -28,7 +28,7 @@
 }
 ```
 
-這代表這款產品只提供 SPIKE＋Pybricks Python 的路徑。EV3 會停用；選擇 SPIKE 後，SPIKE App 與 Pybricks Block 會停用。其他產品不受影響。可以刪除未支援的控制器鍵，也可以保留空陣列。
+這代表這款產品只提供 SPIKE + Pybricks Python 的路徑。EV3 會停用；選擇 SPIKE 後，SPIKE App 與 Pybricks Block 會停用。其他產品不受影響。可以刪除未支援的控制器鍵，也可以保留空陣列。
 
 | 代號 | 顯示名稱 |
 | --- | --- |
@@ -38,7 +38,7 @@
 | `block` | Pybricks Block |
 | `python` | Pybricks Python |
 
-以上範例是操作方式，並非硬體相容性聲明。現有三款產品各自持有預覽用的 `support` 設定，須依實測結果逐款更新。`compatibilityNote.zh`／`.en` 可以逐款修改視窗提示。
+以上範例是操作方式，並非硬體相容性聲明。現有三款產品各自持有預覽用的 `support` 設定，須依實測結果逐款更新。`compatibilityNote.zh` / `.en` 可以逐款修改視窗提示。
 
 如果新增一個支援組合，先提供該產品、該組合的中英兩份教學檔，再把組合加進 `support`。缺少教學檔時建置會指出完整路徑，避免使用者跳到空白頁。
 
@@ -46,9 +46,9 @@
 
 1. 把圖片放到 `docs/public/images/products/`，建議用無空格的英文檔名。
 2. 修改該產品 JSON 的 `image`，例如：`"image": "/images/products/S8.webp"`。
-3. 修改 `imageAlt.zh`／`.en` 的圖片替代文字。
+3. 修改 `imageAlt.zh` / `.en` 的圖片替代文字。
 
-圖片建議正方形、至少 800×800。網站會用 `object-fit: contain` 保留全圖，不強行裁切。現有 SVG 是灰階示意圖形，可直接換成 PNG、JPG 或 WebP。
+圖片建議正方形、至少 800 × 800。網站會用 `object-fit: contain` 保留全圖，不強行裁切。現有 SVG 是灰階示意圖形，可直接換成 PNG、JPG 或 WebP。
 
 介紹或教學內插入圖片：
 
@@ -76,7 +76,7 @@ VitePress 會處理 GitHub Pages 子路徑。每個產品介紹只需改一份�
 
 ## 新增第四款產品
 
-1. 複製一份 `docs/_data/products/` 裡的 JSON，設定不重複的 `slug`（例如 `S8`，可用大小寫英文、數字與連字號，不可含空格） 與 `order`。
+1. 複製一份 `docs/_data/products/` 裡的 JSON，設定不重複的 `slug` (例如 `S8`，可用大小寫英文、數字與連字號，不可含空格) 與 `order`。
 2. 設定 `routeBase` 為 `products/新代號`。
 3. 提供 `_content/products/新代號.zh.md` 與 `.en.md`。
 4. 提供 `support` 列出的每個組合對應的中英教學檔。

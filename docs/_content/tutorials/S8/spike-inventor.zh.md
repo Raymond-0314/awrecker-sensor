@@ -27,8 +27,8 @@
 | ![特徵線寬](/images/tutorials/S8/spike-app/color.png) | 特徵線寬 | `0 ~ 8`<br>• 表示在線上的感應器數量。 |
 | ![線偏移](/images/tutorials/S8/spike-app/reflect.png) | 線偏移 | `0 ~ 16`<br>• 8 代表正中央，0 代表最左，16 代表最右。<br>• 數值讀取後 -8 即為循線位置 (數值為負代表線在左邊，數值為正代表線在右邊)，數值明確，適合 PID 循線。 |
 | ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 高解析線偏移 | `0 ~ 200`<br>• 100 代表正中央，0 代表極左，200 代表極右。<br>• 數值讀取後 -100 即為高精度循線位置 (數值為負代表線在左邊，數值為正代表線在右邊)，使用智能演算法提供更高精度的誤差範圍，使用此模式須確保感應器校準確實。 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 前 4 顆光電數值 | `0 ~ 255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0~3。 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 後 4 顆光電數值 | `0 ~ 255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0~3。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 前 4 顆光電數值 | `0 ~ 255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0 ~ 3。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 後 4 顆光電數值 | `0 ~ 255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0 ~ 3。 |
 
 ## 03 / 範例程式
 
@@ -38,7 +38,7 @@
   label="範例程式下載"
 />
 
-![範例程式](/images/tutorials/S8/spike-inventor/ex_program.webp){style="border-radius: 10px;"}
+![範例程式](/images/tutorials/S8/spike-inventor/ex_program.webp){style = "border-radius: 10px;"}
 
 ## 04 / 【Lego】 Lau Xiao 示範影片
 

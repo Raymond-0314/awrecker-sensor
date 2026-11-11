@@ -19,7 +19,9 @@
 ## 02 / 函數與功能說明
 
 ::: info ℹ️ 補充資訊
-官方 App 會將神攝手顯示為「顏色感應器」，可直接透過原生顏色感應器做數值讀取。
+- 官方 App 會將神攝手顯示為「顏色感應器」，可直接透過原生顏色感應器做數值讀取。
+- 表中的「 ÷ 」表示整數除法，需捨去小數；「mod」表示取餘數。先把積木讀值存成變數，再解碼，避免同一筆資料讀到不同影格。
+- 面積、飽和度、明度、線寬與路口距離以百分比表示，數值範圍不另外加百分號。
 :::
 ::: warning ⚠️ 注意
 - 一次只能使用一種子模式，請確實將感應器模式進行正確設定。
@@ -40,73 +42,75 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 <CamModeSection mode="11" title="顏色追蹤 - ① 最多色">
 
-`最多回傳 7 色數據`
+`官方積木可讀：7 色位置`
+
 ::: info ℹ️ 補充資訊
-顏色位置回傳座標說明：
- - 7 種顏色的座標需再額外解碼，請查看下方數值意義說明。
- - 螢幕會被劃分為 `8 × 6` 區塊，`X 軸`被分為 `8` 區，`Y 軸`被分為 `6` 區，回傳座標是指這個區域，而非實際相素點。
- - 每個區域最多 `2` 色。
+- 座標使用 `8 × 6` 格，X 向右、Y 向下增加。回傳的是分格位置，非實際像素。若位置回傳 0 表示未找到。
+- 每個打包讀值欄位最多放兩色位置，不代表每個畫面分格只能偵測兩色。
 :::
 
-| 官方圖形指令 | 功能 | 數值意義說明 |
+| 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| ![特徵線寬](/images/tutorials/S8/spike-app/color.png) | 找到顏色的色數 | `0 ~ 7`<br>• 回傳鏡頭視野內追蹤到的顏色數量。 |
-| ![線偏移](/images/tutorials/S8/spike-app/reflect.png) | 顏色 1 位置 | `0, 11 ~ 86`<br>• 回傳追蹤到的顏色 1 座標。<br>•  |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 顏色 2 與 3 位置 | --- |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 顏色 4 與 5 位置 | --- |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 顏色 6 與  位置 | --- |
+| ![顏色數值](/images/tutorials/S8/spike-app/color.png) | 找到顏色的色數 | `0 ~ 16`<br>• 找到顏色的色數 = 讀取數值。<br>• 這是找到的總色數；本模式可讀到幾色位置，請看上方數量說明。 |
+| ![反射光數值](/images/tutorials/S8/spike-app/reflect.png) | 顏色 1 位置 | `0, 11 ~ 86`<br>• 顏色 1 的 X = 讀取數值 ÷ 10。<br>• 顏色 1 的 Y = 讀取數值 mod 10。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 顏色 2 位置 與 顏色 3 位置 | `0 ~ 8686`<br>• 顏色 2 位置範圍：`0, 11 ~ 86`{.code-green}。<br>• 顏色 2 的 X = (讀取數值 ÷ 100) ÷ 10。<br>• 顏色 2 的 Y = (讀取數值 ÷ 100) mod 10。<br>• 顏色 3 位置範圍：`0, 11 ~ 86`{.code-green}。<br>• 顏色 3 的 X = (讀取數值 mod 100) ÷ 10。<br>• 顏色 3 的 Y = (讀取數值 mod 100) mod 10。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 顏色 4 位置 與 顏色 5 位置 | `0 ~ 8686`<br>• 顏色 4 位置範圍：`0, 11 ~ 86`{.code-green}。<br>• 顏色 4 的 X = (讀取數值 ÷ 100) ÷ 10。<br>• 顏色 4 的 Y = (讀取數值 ÷ 100) mod 10。<br>• 顏色 5 位置範圍：`0, 11 ~ 86`{.code-green}。<br>• 顏色 5 的 X = (讀取數值 mod 100) ÷ 10。<br>• 顏色 5 的 Y = (讀取數值 mod 100) mod 10。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 顏色 6 位置 與 顏色 7 位置 | `0 ~ 8686`<br>• 顏色 6 位置範圍：`0, 11 ~ 86`{.code-green}。<br>• 顏色 6 的 X = (讀取數值 ÷ 100) ÷ 10。<br>• 顏色 6 的 Y = (讀取數值 ÷ 100) mod 10。<br>• 顏色 7 位置範圍：`0, 11 ~ 86`{.code-green}。<br>• 顏色 7 的 X = (讀取數值 mod 100) ÷ 10。<br>• 顏色 7 的 Y = (讀取數值 mod 100) mod 10。 |
 
 </CamModeSection>
 
 <CamModeSection mode="12" title="顏色追蹤 - ② 多色">
 
-`最多回傳 7 色數據`
+`官方積木可讀：7 色位置`
 
-| 積木欄位 | 回傳值 |
-| --- | --- |
-| ![特徵線寬](/images/tutorials/S8/spike-app/color.png) | 找到色數 |
-| ![線偏移](/images/tutorials/S8/spike-app/reflect.png) | P1 |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | P2×100+P3 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | P4×100+P5 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | P6×100+P7 |
+::: info ℹ️ 補充資訊
+- 座標使用 `8 × 6` 格，X 向右、Y 向下增加。回傳的是分格位置，非實際像素。若位置回傳 0 表示未找到。
+- 每個打包讀值欄位最多放兩色位置，不代表每個畫面分格只能偵測兩色。
+:::
+
+| 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
+| --- | --- | --- |
+| ![顏色數值](/images/tutorials/S8/spike-app/color.png) | 找到顏色的色數 | `0 ~ 16`<br>• 回傳找到顏色的色數 = 讀取數值。<br>• 這是找到的總色數；本模式可讀到幾色位置，請看上方數量說明。 |
+| ![反射光數值](/images/tutorials/S8/spike-app/reflect.png) | 顏色 1 位置 | `0, 11 ~ 86`<br>• 顏色 1 的 X = 讀取數值 ÷ 10。<br>• 顏色 1 的 Y = 讀取數值 mod 10。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 顏色 2 位置 與 顏色 3 位置 | `0 ~ 8686`<br>• 顏色 2 位置範圍：`0, 11 ~ 86`{.code-green}。<br>• 顏色 2 的 X = (讀取數值 ÷ 100) ÷ 10。<br>• 顏色 2 的 Y = (讀取數值 ÷ 100) mod 10。<br>• 顏色 3 位置範圍：`0, 11 ~ 86`{.code-green}。<br>• 顏色 3 的 X = (讀取數值 mod 100) ÷ 10。<br>• 顏色 3 的 Y = (讀取數值 mod 100) mod 10。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 顏色 4 位置 與 顏色 5 位置 | `0 ~ 8686`<br>• 顏色 4 位置範圍：`0, 11 ~ 86`{.code-green}。<br>• 顏色 4 的 X = (讀取數值 ÷ 100) ÷ 10。<br>• 顏色 4 的 Y = (讀取數值 ÷ 100) mod 10。<br>• 顏色 5 位置範圍：`0, 11 ~ 86`{.code-green}。<br>• 顏色 5 的 X = (讀取數值 mod 100) ÷ 10。<br>• 顏色 5 的 Y = (讀取數值 mod 100) mod 10。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 顏色 6 位置 與 顏色 7 位置 | `0 ~ 8686`<br>• 顏色 6 位置範圍：`0, 11 ~ 86`{.code-green}。<br>• 顏色 6 的 X = (讀取數值 ÷ 100) ÷ 10。<br>• 顏色 6 的 Y = (讀取數值 ÷ 100) mod 10。<br>• 顏色 7 位置範圍：`0, 11 ~ 86`{.code-green}。<br>• 顏色 7 的 X = (讀取數值 mod 100) ÷ 10。<br>• 顏色 7 的 Y = (讀取數值 mod 100) mod 10。 |
 
 </CamModeSection>
 
 <CamModeSection mode="13" title="顏色追蹤 - ③ 標準">
 
-`最多回傳 4 色數據`
+`官方積木可讀：4 色位置`
 
-| 積木欄位 | 回傳值 |
-| --- | --- |
-| ![特徵線寬](/images/tutorials/S8/spike-app/color.png) | X1 |
-| ![線偏移](/images/tutorials/S8/spike-app/reflect.png) | Y1 |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | X2+Y2×256 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | X3+Y3×256 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | X4+Y4×256 |
-
-本模式教育版位置／大小以 16×12 格表示，家用版以 8×6 格表示，Y 向下增加。
-
-::: warning ⚠️ 注意
-教育版的「顏色」積木會把相機送出的 `5` 轉成 `6`，因此這個欄位無法區分兩者。若使用教育版 Python，可用 `device.data(port.C)[0]` 讀原始值。
+::: info ℹ️ 補充資訊
+- 座標使用 `16 × 12` 格，X 向右、Y 向下增加。回傳的是分格位置，非實際像素。若位置回傳 0 表示未找到。
 :::
+
+| 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
+| --- | --- | --- |
+| ![顏色數值](/images/tutorials/S8/spike-app/color.png) | 顏色 1 的 X | `0, 1 ~ 16`<br>• 顏色 1 的 X = 讀取數值。 |
+| ![反射光數值](/images/tutorials/S8/spike-app/reflect.png) | 顏色 1 的 Y | `0, 1 ~ 12`<br>• 顏色 1 的 Y = 讀取數值。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 顏色 2 的 X 與 顏色 2 的 Y | `0 ~ 3088`<br>• 顏色 2 的 X 範圍：`0, 1 ~ 16`{.code-green}。<br>• 顏色 2 的 X = 讀取數值 mod 256。<br>• 顏色 2 的 Y 範圍：`0, 1 ~ 12`{.code-green}。<br>• 顏色 2 的 Y = 讀取數值 ÷ 256。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 顏色 3 的 X 與 顏色 3 的 Y | `0 ~ 3088`<br>• 顏色 3 的 X 範圍：`0, 1 ~ 16`{.code-green}。<br>• 顏色 3 的 X = 讀取數值 mod 256。<br>• 顏色 3 的 Y 範圍：`0, 1 ~ 12`{.code-green}。<br>• 顏色 3 的 Y = 讀取數值 ÷ 256。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 顏色 4 的 X 與 顏色 4 的 Y | `0 ~ 3088`<br>• 顏色 4 的 X 範圍：`0, 1 ~ 16`{.code-green}。<br>• 顏色 4 的 X = 讀取數值 mod 256。<br>• 顏色 4 的 Y 範圍：`0, 1 ~ 12`{.code-green}。<br>• 顏色 4 的 Y = 讀取數值 ÷ 256。 |
 
 </CamModeSection>
 
 <CamModeSection mode="14" title="顏色追蹤 - ④ 精細">
 
-`最多回傳 2 色位置與寬高`
+`官方積木可讀：2 色位置與寬高`
 
-2 色位置和寬高，原始綠／藍為色 1／2 寬高
+::: info ℹ️ 補充資訊
+- 座標使用 `16 × 12` 格，X 向右、Y 向下增加。回傳的是分格位置，非實際像素。若位置回傳 0 表示未找到。
+:::
 
-| 積木欄位 | 回傳值 |
-| --- | --- |
-| ![特徵線寬](/images/tutorials/S8/spike-app/color.png) | X1 |
-| ![線偏移](/images/tutorials/S8/spike-app/reflect.png) | Y1 |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | X2+Y2×256 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | W1+H1×256 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | W2+H2×256 |
-
-本模式教育版位置／大小以 16×12 格表示，家用版以 8×6 格表示，Y 向下增加。
+| 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
+| --- | --- | --- |
+| ![顏色數值](/images/tutorials/S8/spike-app/color.png) | 顏色 1 的 X | `0, 1 ~ 16`<br>• 顏色 1 的 X = 讀取數值。 |
+| ![反射光數值](/images/tutorials/S8/spike-app/reflect.png) | 顏色 1 的 Y | `0, 1 ~ 12`<br>• 顏色 1 的 Y = 讀取數值。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 顏色 2 的 X 與 顏色 2 的 Y | `0 ~ 3088`<br>• 顏色 2 的 X 範圍：`0, 1 ~ 16`{.code-green}。<br>• 顏色 2 的 X = 讀取數值 mod 256。<br>• 顏色 2 的 Y 範圍：`0, 1 ~ 12`{.code-green}。<br>• 顏色 2 的 Y = 讀取數值 ÷ 256。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 顏色 1 的 W 與 顏色 1 的 H | `0 ~ 3088`<br>• 顏色 1 的 W 範圍：`0, 1 ~ 16`{.code-green}。<br>• 顏色 1 的 W = 讀取數值 mod 256。<br>• 顏色 1 的 H 範圍：`0, 1 ~ 12`{.code-green}。<br>• 顏色 1 的 H = 讀取數值 ÷ 256。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 顏色 2 的 W 與 顏色 2 的 H | `0 ~ 3088`<br>• 顏色 2 的 W 範圍：`0, 1 ~ 16`{.code-green}。<br>• 顏色 2 的 W = 讀取數值 mod 256。<br>• 顏色 2 的 H 範圍：`0, 1 ~ 12`{.code-green}。<br>• 顏色 2 的 H = 讀取數值 ÷ 256。 |
 
 </CamModeSection>
 
@@ -114,45 +118,54 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 <CamModeSection mode="21" title="座標取色 - ① 色相">
 
-`最多回傳 6 點色相`
+`官方積木可讀：6 點色相`
 
-原始紅／綠／藍各裝兩點色相，共 6 點
+::: info ℹ️ 補充資訊
+- 取樣點須先設定位置。未設定的取樣點不畫在畫面上，傳給主機的 H、S、V 為 0。H = 色相、S = 飽和度、V = 明度。
+- 色相 0 可以是紅色，須先確認該取樣點已設定，不能單靠色相 0 判斷未偵測。
+:::
 
-| 積木欄位 | 回傳值 |
-| --- | --- |
-| ![特徵線寬](/images/tutorials/S8/spike-app/color.png) | 0 |
-| ![線偏移](/images/tutorials/S8/spike-app/reflect.png) | 0 |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | Hue1+Hue2×256 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | Hue3+Hue4×256 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | Hue5+Hue6×256 |
-
-</CamModeSection>
-
-<CamModeSection mode="22" title="座標取色 - ② 色相＋飽和">
-
-原始 RGB 依序為 S1–S3 的色相＋飽和×256
-
-| 積木欄位 | 回傳值 |
-| --- | --- |
-| ![特徵線寬](/images/tutorials/S8/spike-app/color.png) | 0 |
-| ![線偏移](/images/tutorials/S8/spike-app/reflect.png) | Sat4 |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | Hue1+Sat1×256 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | Hue2+Sat2×256 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | Hue3+Sat3×256 |
+| 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
+| --- | --- | --- |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | S1 色相 與 S2 色相 | `0 ~ 65535`<br>• S1 色相 範圍：`0 ~ 255`{.code-green}。<br>• S1 色相 = 讀取數值 mod 256。<br>• S2 色相 範圍：`0 ~ 255`{.code-green}。<br>• S2 色相 = 讀取數值 ÷ 256。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | S3 色相 與 S4 色相 | `0 ~ 65535`<br>• S3 色相 範圍：`0 ~ 255`{.code-green}。<br>• S3 色相 = 讀取數值 mod 256。<br>• S4 色相 範圍：`0 ~ 255`{.code-green}。<br>• S4 色相 = 讀取數值 ÷ 256。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | S5 色相 與 S6 色相 | `0 ~ 65535`<br>• S5 色相 範圍：`0 ~ 255`{.code-green}。<br>• S5 色相 = 讀取數值 mod 256。<br>• S6 色相 範圍：`0 ~ 255`{.code-green}。<br>• S6 色相 = 讀取數值 ÷ 256。 |
 
 </CamModeSection>
 
-<CamModeSection mode="23" title="座標取色 - ③ 色相＋飽和＋明度">
+<CamModeSection mode="22" title="座標取色 - ② 色相 + 飽和">
 
-原始 RGB 同上，反射光為 S1 明度
+`官方積木可讀：3 點完整色相與飽和度，另有 S4 飽和度`
 
-| 積木欄位 | 回傳值 |
-| --- | --- |
-| ![特徵線寬](/images/tutorials/S8/spike-app/color.png) | 0 |
-| ![線偏移](/images/tutorials/S8/spike-app/reflect.png) | Val1 |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | Hue1+Sat1×256 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | Hue2+Sat2×256 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | Hue3+Sat3×256 |
+::: info ℹ️ 補充資訊
+- 取樣點須先設定位置。未設定的取樣點不畫在畫面上，傳給主機的 H、S、V 為 0。H = 色相、S = 飽和度、V = 明度。
+- 色相 0 可以是紅色，須先確認該取樣點已設定，不能單靠色相 0 判斷未偵測。
+:::
+
+| 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
+| --- | --- | --- |
+| ![反射光數值](/images/tutorials/S8/spike-app/reflect.png) | S4 飽和度 | `0 ~ 100`<br>• S4 飽和度 = 讀取數值。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | S1 色相 與 S1 飽和度 | `0 ~ 25855`<br>• S1 色相 範圍：`0 ~ 255`{.code-green}。<br>• S1 色相 = 讀取數值 mod 256。<br>• S1 飽和度 範圍：`0 ~ 100`{.code-green}。<br>• S1 飽和度 = 讀取數值 ÷ 256。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | S2 色相 與 S2 飽和度 | `0 ~ 25855`<br>• S2 色相 範圍：`0 ~ 255`{.code-green}。<br>• S2 色相 = 讀取數值 mod 256。<br>• S2 飽和度 範圍：`0 ~ 100`{.code-green}。<br>• S2 飽和度 = 讀取數值 ÷ 256。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | S3 色相 與 S3 飽和度 | `0 ~ 25855`<br>• S3 色相 範圍：`0 ~ 255`{.code-green}。<br>• S3 色相 = 讀取數值 mod 256。<br>• S3 飽和度 範圍：`0 ~ 100`{.code-green}。<br>• S3 飽和度 = 讀取數值 ÷ 256。 |
+
+</CamModeSection>
+
+<CamModeSection mode="23" title="座標取色 - ③ 色相 + 飽和 + 明度">
+
+`官方積木可讀：3 點色相與飽和度，另有 S1 明度`
+
+::: info ℹ️ 補充資訊
+- 取樣點須先設定位置。未設定的取樣點不畫在畫面上，傳給主機的 H、S、V 為 0。H = 色相、S = 飽和度、V = 明度。
+- 色相 0 可以是紅色，須先確認該取樣點已設定，不能單靠色相 0 判斷未偵測。
+:::
+
+| 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
+| --- | --- | --- |
+| ![反射光數值](/images/tutorials/S8/spike-app/reflect.png) | S1 明度 | `0 ~ 100`<br>• S1 明度 = 讀取數值。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | S1 色相 與 S1 飽和度 | `0 ~ 25855`<br>• S1 色相 範圍：`0 ~ 255`{.code-green}。<br>• S1 色相 = 讀取數值 mod 256。<br>• S1 飽和度 範圍：`0 ~ 100`{.code-green}。<br>• S1 飽和度 = 讀取數值 ÷ 256。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | S2 色相 與 S2 飽和度 | `0 ~ 25855`<br>• S2 色相 範圍：`0 ~ 255`{.code-green}。<br>• S2 色相 = 讀取數值 mod 256。<br>• S2 飽和度 範圍：`0 ~ 100`{.code-green}。<br>• S2 飽和度 = 讀取數值 ÷ 256。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | S3 色相 與 S3 飽和度 | `0 ~ 25855`<br>• S3 色相 範圍：`0 ~ 255`{.code-green}。<br>• S3 色相 = 讀取數值 mod 256。<br>• S3 飽和度 範圍：`0 ~ 100`{.code-green}。<br>• S3 飽和度 = 讀取數值 ÷ 256。 |
 
 </CamModeSection>
 
@@ -160,15 +173,18 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 <CamModeSection mode="30" title="依序取色號">
 
-顏色＝總塊數，原始 RGB 每格裝兩塊色相
+`官方積木可讀：前 6 塊色相與總塊數`
 
-| 積木欄位 | 回傳值 |
-| --- | --- |
-| ![特徵線寬](/images/tutorials/S8/spike-app/color.png) | Total |
-| ![線偏移](/images/tutorials/S8/spike-app/reflect.png) | 0 |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | Hue1+Hue2×256 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | Hue3+Hue4×256 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | Hue5+Hue6×256 |
+::: info ℹ️ 補充資訊
+- 色塊由左至右排列。請先讀總塊數，再使用前幾筆色相；色相 0 可以是紅色。
+:::
+
+| 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
+| --- | --- | --- |
+| ![顏色數值](/images/tutorials/S8/spike-app/color.png) | 色塊總數 | `0 ~ 18`<br>• 色塊總數 = 讀取數值。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 左起第 1 塊色相 與 左起第 2 塊色相 | `0 ~ 65535`<br>• 左起第 1 塊色相 範圍：`0 ~ 255`{.code-green}。<br>• 左起第 1 塊色相 = 讀取數值 mod 256。<br>• 左起第 2 塊色相 範圍：`0 ~ 255`{.code-green}。<br>• 左起第 2 塊色相 = 讀取數值 ÷ 256。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 左起第 3 塊色相 與 左起第 4 塊色相 | `0 ~ 65535`<br>• 左起第 3 塊色相 範圍：`0 ~ 255`{.code-green}。<br>• 左起第 3 塊色相 = 讀取數值 mod 256。<br>• 左起第 4 塊色相 範圍：`0 ~ 255`{.code-green}。<br>• 左起第 4 塊色相 = 讀取數值 ÷ 256。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 左起第 5 塊色相 與 左起第 6 塊色相 | `0 ~ 65535`<br>• 左起第 5 塊色相 範圍：`0 ~ 255`{.code-green}。<br>• 左起第 5 塊色相 = 讀取數值 mod 256。<br>• 左起第 6 塊色相 範圍：`0 ~ 255`{.code-green}。<br>• 左起第 6 塊色相 = 讀取數值 ÷ 256。 |
 
 </CamModeSection>
 
@@ -176,49 +192,61 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 <CamModeSection mode="41" title="循線 - ① 黑線">
 
-顏色＝路口，反射光＝近線寬，原始 RGB＝近偏移、遠偏移、角度各＋100
+`官方積木可讀：5 個循線欄位`
 
-| 積木欄位 | 回傳值 |
-| --- | --- |
-| ![特徵線寬](/images/tutorials/S8/spike-app/color.png) | Junction |
-| ![線偏移](/images/tutorials/S8/spike-app/reflect.png) | Near width % |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | Near offset+100 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | Far offset+100 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | Angle+100 |
+::: info ℹ️ 補充資訊
+- 路口類型：0 = 無、1 = 十字、2 = T、3 = 左、4 = 右、5 = 盡頭。有線旗標以近、中、遠的 1、2、4 相加。
+- 本子模式辨識亮色地面上的黑線。
+- 例如讀到 80，還原後為 -20。
+:::
 
-偏移 −100 ~ 100，負值表示線在左；角度 −90 ~ 90°。旗標以近、中、遠分別為 1、2、4 相加。路口 0 ~ 5 分別為無、十字、T、左、右、盡頭。色線模式先教目標色 1。
+| 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
+| --- | --- | --- |
+| ![顏色數值](/images/tutorials/S8/spike-app/color.png) | 路口類型 | `0 ~ 5`<br>• 路口類型 = 讀取數值。 |
+| ![反射光數值](/images/tutorials/S8/spike-app/reflect.png) | 近處線寬 | `0 ~ 100`<br>• 近處線寬 = 讀取數值。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 近處偏移 | `0 ~ 200`<br>• 近處偏移 = 讀取數值 - 100。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 遠處偏移 | `0 ~ 200`<br>• 遠處偏移 = 讀取數值 - 100。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 線角度 | `10 ~ 190`<br>• 線角度 = 讀取數值 - 100。 |
 
 </CamModeSection>
 
 <CamModeSection mode="42" title="循線 - ② 白線">
 
-顏色＝路口，反射光＝近線寬，原始 RGB＝近偏移、遠偏移、角度各＋100
+`官方積木可讀：5 個循線欄位`
 
-| 積木欄位 | 回傳值 |
-| --- | --- |
-| ![特徵線寬](/images/tutorials/S8/spike-app/color.png) | Junction |
-| ![線偏移](/images/tutorials/S8/spike-app/reflect.png) | Near width % |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | Near offset+100 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | Far offset+100 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | Angle+100 |
+::: info ℹ️ 補充資訊
+- 路口類型：0 = 無、1 = 十字、2 = T、3 = 左、4 = 右、5 = 盡頭。有線旗標以近、中、遠的 1、2、4 相加。
+- 本子模式辨識深色地面上的白線。
+- 例如讀到 80，還原後為 -20。
+:::
 
-偏移 −100 ~ 100，負值表示線在左；角度 −90 ~ 90°。旗標以近、中、遠分別為 1、2、4 相加。路口 0 ~ 5 分別為無、十字、T、左、右、盡頭。色線模式先教目標色 1。
+| 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
+| --- | --- | --- |
+| ![顏色數值](/images/tutorials/S8/spike-app/color.png) | 路口類型 | `0 ~ 5`<br>• 路口類型 = 讀取數值。 |
+| ![反射光數值](/images/tutorials/S8/spike-app/reflect.png) | 近處線寬 | `0 ~ 100`<br>• 近處線寬 = 讀取數值。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 近處偏移 | `0 ~ 200`<br>• 近處偏移 = 讀取數值 - 100。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 遠處偏移 | `0 ~ 200`<br>• 遠處偏移 = 讀取數值 - 100。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 線角度 | `10 ~ 190`<br>• 線角度 = 讀取數值 - 100。 |
 
 </CamModeSection>
 
 <CamModeSection mode="43" title="循線 - ③ 色線">
 
-顏色＝路口，反射光＝近線寬，原始 RGB＝近偏移、遠偏移、角度各＋100
+`官方積木可讀：5 個循線欄位`
 
-| 積木欄位 | 回傳值 |
-| --- | --- |
-| ![特徵線寬](/images/tutorials/S8/spike-app/color.png) | Junction |
-| ![線偏移](/images/tutorials/S8/spike-app/reflect.png) | Near width % |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | Near offset+100 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | Far offset+100 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | Angle+100 |
+::: info ℹ️ 補充資訊
+- 路口類型：0 = 無、1 = 十字、2 = T、3 = 左、4 = 右、5 = 盡頭。有線旗標以近、中、遠的 1、2、4 相加。
+- 使用色線前，先把線的顏色教成目標色 1。
+- 例如讀到 80，還原後為 -20。
+:::
 
-偏移 −100 ~ 100，負值表示線在左；角度 −90 ~ 90°。旗標以近、中、遠分別為 1、2、4 相加。路口 0 ~ 5 分別為無、十字、T、左、右、盡頭。色線模式先教目標色 1。
+| 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
+| --- | --- | --- |
+| ![顏色數值](/images/tutorials/S8/spike-app/color.png) | 路口類型 | `0 ~ 5`<br>• 路口類型 = 讀取數值。 |
+| ![反射光數值](/images/tutorials/S8/spike-app/reflect.png) | 近處線寬 | `0 ~ 100`<br>• 近處線寬 = 讀取數值。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 近處偏移 | `0 ~ 200`<br>• 近處偏移 = 讀取數值 - 100。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 遠處偏移 | `0 ~ 200`<br>• 遠處偏移 = 讀取數值 - 100。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 線角度 | `10 ~ 190`<br>• 線角度 = 讀取數值 - 100。 |
 
 </CamModeSection>
 
@@ -226,33 +254,41 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 <CamModeSection mode="51" title="物體偵測 - ① 物體清單">
 
-積木讀前 3 個，Python 有後續欄位
+`官方積木可讀：前 3 個物體的代碼與位置`
 
-| 積木欄位 | 回傳值 |
-| --- | --- |
-| ![特徵線寬](/images/tutorials/S8/spike-app/color.png) | Total |
-| ![線偏移](/images/tutorials/S8/spike-app/reflect.png) | Code1 |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | P1 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | Code2×100+P2 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | Code3×100+P3 |
+::: info ℹ️ 補充資訊
+- 座標使用 `8 × 6` 格，X 向右、Y 向下增加。回傳的是分格位置，非實際像素。若位置回傳 0 表示未找到。
+- 只辨識目標色 1 ~ 8，物體依面積由大到小排序，物體 1 最大。X、Y 是物體質心。形狀碼 0 ~ 9 依序為其他、圓、橢圓、三角、正方、長方、五邊、六邊、星、梯形。
+- 例如 13 = 色 1 的三角形；0 表示沒有物體。
+:::
 
-只偵測目標色 1–8，物體依面積由大到小排列，位置是質心。形狀碼 0 ~ 9 依序為其他、圓、橢圓、三角、正方、長方、五邊、六邊、星、梯形。代碼 0 表示沒有物體。
+| 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
+| --- | --- | --- |
+| ![顏色數值](/images/tutorials/S8/spike-app/color.png) | 物體總數 | `0 ~ 8`<br>• 物體總數 = 讀取數值。 |
+| ![反射光數值](/images/tutorials/S8/spike-app/reflect.png) | 物體 1 代碼 | `0, 10 ~ 89`<br>• 物體 1 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 1 色號 = 讀取數值 ÷ 10。<br>• 物體 1 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 1 形狀碼 = 讀取數值 mod 10。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 物體 1 位置 | `0, 11 ~ 86`<br>• 物體 1 的 X = 讀取數值 ÷ 10。<br>• 物體 1 的 Y = 讀取數值 mod 10。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 物體 2 代碼 與 物體 2 位置 | `0 ~ 8986`<br>• 物體 2 代碼 範圍：`0, 10 ~ 89`{.code-green}。<br>• 物體 2 位置範圍：`0, 11 ~ 86`{.code-green}。<br>• 物體 2 色號 = (讀取數值 ÷ 100) ÷ 10。<br>• 物體 2 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 2 形狀碼 = (讀取數值 ÷ 100) mod 10。<br>• 物體 2 的 X = (讀取數值 mod 100) ÷ 10。<br>• 物體 2 的 Y = (讀取數值 mod 100) mod 10。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 物體 3 代碼 與 物體 3 位置 | `0 ~ 8986`<br>• 物體 3 代碼 範圍：`0, 10 ~ 89`{.code-green}。<br>• 物體 3 位置範圍：`0, 11 ~ 86`{.code-green}。<br>• 物體 3 色號 = (讀取數值 ÷ 100) ÷ 10。<br>• 物體 3 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 3 形狀碼 = (讀取數值 ÷ 100) mod 10。<br>• 物體 3 的 X = (讀取數值 mod 100) ÷ 10。<br>• 物體 3 的 Y = (讀取數值 mod 100) mod 10。 |
 
 </CamModeSection>
 
 <CamModeSection mode="52" title="物體偵測 - ② 物體詳細">
 
-積木讀物體 1 的位置／寬高，另有物體 2 的代碼與面積
+`官方積木可讀：物體 1 位置、寬高與面積，另有物體 2 代碼與面積`
 
-| 積木欄位 | 回傳值 |
-| --- | --- |
-| ![特徵線寬](/images/tutorials/S8/spike-app/color.png) | Code1 |
-| ![線偏移](/images/tutorials/S8/spike-app/reflect.png) | Area1 % |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | X1+Y1×256 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | W1+H1×256 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | Code2+Area2×256 |
+::: info ℹ️ 補充資訊
+- 座標使用 `160 × 120` 像素，X 向右、Y 向下增加。若 X 回傳 0 表示未找到。
+- 只辨識目標色 1 ~ 8，物體依面積由大到小排序，物體 1 最大。X、Y 是物體質心。形狀碼 0 ~ 9 依序為其他、圓、橢圓、三角、正方、長方、五邊、六邊、星、梯形。
+- 例如 13 = 色 1 的三角形；0 表示沒有物體。
+:::
 
-只偵測目標色 1–8，物體依面積由大到小排列，位置是質心。形狀碼 0 ~ 9 依序為其他、圓、橢圓、三角、正方、長方、五邊、六邊、星、梯形。代碼 0 表示沒有物體。
+| 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
+| --- | --- | --- |
+| ![顏色數值](/images/tutorials/S8/spike-app/color.png) | 物體 1 代碼 | `0, 10 ~ 89`<br>• 物體 1 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 1 色號 = 讀取數值 ÷ 10。<br>• 物體 1 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 1 形狀碼 = 讀取數值 mod 10。 |
+| ![反射光數值](/images/tutorials/S8/spike-app/reflect.png) | 物體 1 面積 | `0 ~ 100`<br>• 物體 1 面積 = 讀取數值。 |
+| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 物體 1 的 X 與 物體 1 的 Y | `0 ~ 30623`<br>• 物體 1 的 X 範圍：`0 ~ 159`{.code-green}。<br>• 物體 1 的 X = 讀取數值 mod 256。<br>• 物體 1 的 Y 範圍：`0 ~ 119`{.code-green}。<br>• 物體 1 的 Y = 讀取數值 ÷ 256。 |
+| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 物體 1 的 W 與 物體 1 的 H | `0 ~ 30880`<br>• 物體 1 的 W 範圍：`0 ~ 160`{.code-green}。<br>• 物體 1 的 W = 讀取數值 mod 256。<br>• 物體 1 的 H 範圍：`0 ~ 120`{.code-green}。<br>• 物體 1 的 H = 讀取數值 ÷ 256。 |
+| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 物體 2 代碼 與 物體 2 面積 | `0 ~ 25689`<br>• 物體 2 代碼 範圍：`0, 10 ~ 89`{.code-green}。<br>• 物體 2 色號 = (讀取數值 mod 256) ÷ 10。<br>• 物體 2 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 2 形狀碼 = (讀取數值 mod 256) mod 10。<br>• 物體 2 面積 範圍：`0 ~ 100`{.code-green}。<br>• 物體 2 面積 = 讀取數值 ÷ 256。 |
 
 </CamModeSection>
 
