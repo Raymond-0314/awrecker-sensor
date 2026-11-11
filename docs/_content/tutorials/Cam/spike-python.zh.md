@@ -7,95 +7,401 @@
 | 要求 | 符合本教學頁面的種類 |
 | --- | --- |
 | 控制器 | LEGO® Education SPIKE™ Prime Set<br>LEGO® MINDSTORMS® Robot Inventor |
-| 感應器 | MBC 神攝手視覺感應器（SPIKE 版） |
+| 感應器 | MBC 神攝手視覺感應器 (SPIKE 版) |
 | 程式語言 | Pybricks Python |
 
 ### ✔ 事前準備
 
-1. 確認主機已安裝 Pybricks 韌體，並在 Pybricks 建立對應的程式專案。
-2. 將相機接到 C 埠，確認相機螢幕左上角的主機名稱顯示綠色。可改用 A～F 任一埠，程式需一起修改。
-3. 將目標置於畫面中央，按 `OK` 教色，再看即時畫面是否框出目標。
+1. 啟動你的機器人與 Pybricks Python。
+2. 確認主機已安裝 Pybricks 韌體，且相機與主機連線正常。
+3. 設定感應器模式，確認與程式設定模式相同。
+
+## 02 / 函數與功能說明
 
 ::: info ℹ️ 補充資訊
-基礎控制使用內建顏色感應器。進階控制在 Python 專案直接讀取相機原始資料。
+本教學使用 PUPDevice 直接讀取原始資料。先在相機設定模式，再以通訊模式 9 讀主要資料；模式 11、12 的數量另讀通訊模式 6。
 :::
 
-## 02 / 基礎控制-前置作業與函數功能說明
+<CamModeAccordion>
 
-### ✔ 數值解碼設定
+### ✔ 相機模式概覽
 
-在相機 `MODE` 選單選擇「顏色追蹤 ③ 標準」，再設定 C 埠為顏色感應器。Y 越小越靠近畫面上緣，X 為 0 表示未偵測到該色。
+MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分多個子模式，請參考下表說明與 modeID 編號，查找程式說明。
 
-`cam = ColorSensor(Port.C)`{.code-green}
+<CamModeOverview />
 
-### ✔ 函數功能說明
+### ✔ 各模式讀值與解碼
 
-| 程式碼 | 功能 | 數值意義說明 |
-| --- | --- | --- |
-| `cam.reflection()` | 色 1 座標 | 40×30 格。先取整數，若原值小於 0，先加 6399。修正後整除 100 得 X，除以 100 的餘數得 Y。 |
-| `cam.ambient()` | 色 2 座標 | 8×6 格。整數部分是 X，小數第一位是 Y。例如 `4.3` 代表 `(4, 3)`。 |
+#### 模式一：指定顏色追蹤
 
-每次迴圈各讀取一次反射光和環境光，將讀值存入變數再拆解。這兩個欄位也可用來讀取座標取色、色序、循線與物體資料，換算方式會隨相機模式改變。
+<CamModeSection mode="11" title="顏色追蹤 - ① 最多色">
 
-### ✔ 各模式的內建積木讀值
+最多讀取 14 色的位置，另可讀取數量。
 
-| 相機模式 | 可讀資料 |
+| 讀值位置 | 回傳值 |
 | --- | --- |
-| 11 追蹤① 最多色 | 色 1、2 位置 |
-| 12 追蹤② 多色 | 色 1、2 位置 |
-| 13 追蹤③ 標準 | 色 1、2 位置 |
-| 14 追蹤④ 精細 | 反射光＝色 1 位置，環境光＝色 1 寬.高（8×6 格） |
-| 21 取色① 色相 | 反射光以十進位合併 S1 色相、飽和十位；環境光以整數和小數第一位傳送 S2 對應值 |
-| 22 取色② 色相＋飽和 | 同 21，飽和只到十位 |
-| 23 取色③ 色相＋飽和＋明度 | 反射光＝S1 色相；環境光整數＝飽和，小數第一位＝明度十位 |
-| 30 依序取色號 | 反射光＝第 1 塊色相；環境光＝第 2 塊色相.總數（最多顯示 9） |
-| 41–43 黑線／白線／色線 | 反射光以十進位打包近偏移＋100、路口；環境光以整數、小數第一位傳送遠偏移＋100、有線旗標 |
-| 51 物體清單 | 反射光＝物體 1 座標；環境光＝代碼.總數 |
-| 52 物體詳細 | 反射光＝物體 1 座標；環境光＝代碼.面積十位 |
+| byte 0 | GridID1 |
+| byte 1 | GridID2 |
+| byte 2 | GridID3 |
+| byte 3 | GridID4 |
+| byte 4 | GridID5 |
+| byte 5 | GridID6 |
+| byte 6 | GridID7 |
+| byte 7 | GridID8 |
+| byte 8 | GridID9 |
+| byte 9 | GridID10 |
+| byte 10 | GridID11 |
+| byte 11 | GridID12 |
+| byte 12 | GridID13 |
+| byte 13 | GridID14 |
 
-循線例：反射光 802 拆成 80 和 2，近處偏移為 −20，路口類型為 T 字。小數第一位用四捨五入後取餘數，避免浮點誤差。
+通訊模式 9 一次回傳 7 個 int16。每個 int16 拆成低位、高位兩個 byte，再依表格取值。
 
-## 03 / 進階控制：讀取原始資料
+GridID 使用 16×12 格。0 代表未找到；其餘先減 1，再以 16 的餘數加 1 得 X、商加 1 得 Y。數量另讀通訊模式 6，小端位元串每色 3 bits，14 色後接 4 bits 找到色數；數量 7 表示 7 塊以上。
 
-在 Pybricks Python 專案使用 PUPDevice。相機的通訊模式 9 會回傳 7 個 int16。每個數值拆成低位和高位兩個 byte，組成 14 byte 的資料。相機模式請先在機身設定，例如 13 是顏色追蹤 ③ 標準。
+</CamModeSection>
 
-### ✔ 原始資料怎麼拆
+<CamModeSection mode="12" title="顏色追蹤 - ② 多色">
 
-以下 byte 編號從 0 開始。像素 X、Y 從左上角計算，X=0 表示未找到。循線偏移、角度及左右緣是有號 byte：原始值 ≥128 時減 256。
+最多讀取 7 色的位置，另可讀取數量。
 
-| 相機模式 | 模式 9 的排列 |
+| 讀值位置 | 回傳值 |
 | --- | --- |
-| 11 | byte 0–13 各為一色的 16×12 格號（1–192）。先減 1，再除以 16，餘數、商各加 1 得 X、Y。格號 0 代表未找到。 |
-| 12／13／14 | 每色依序為 X、Y（12）；X、Y、面積（13）；X、Y、寬、高、數量、面積（14）。13 的 byte 12、13 各放兩個色塊數量，以 16 拆開。14 的 byte 12 為找到的色數。 |
-| 21／22／23 | 每個取樣點依序為 H；H、S；H、S、V。 |
-| 30 | byte 0–12 為左起色相，byte 13 為總數。 |
-| 41–43 | 近、中、遠偏移，角度，近線寬，旗標，路口，路口距離，左緣，右緣，遠線寬，標記色號，標記累計，離線方向。 |
-| 51 | byte 0 是總數。接著每個物體為代碼、X、Y。 |
-| 52 | 每個物體依序為色號、形狀、X、Y、寬、高、面積。 |
+| byte 0 | X1 |
+| byte 1 | Y1 |
+| byte 2 | X2 |
+| byte 3 | Y2 |
+| byte 4 | X3 |
+| byte 5 | Y3 |
+| byte 6 | X4 |
+| byte 7 | Y4 |
+| byte 8 | X5 |
+| byte 9 | Y5 |
+| byte 10 | X6 |
+| byte 11 | Y6 |
+| byte 12 | X7 |
+| byte 13 | Y7 |
 
-模式 11／12 要查數量時另讀通訊模式 6。11 用小端位元串，14 個色各占 3 bits，後接 4 bits 的找到色數。12 的前四個 byte 每個以高、低半位元組裝兩個數，依序是色 1–7 的數量與找到色數。
+通訊模式 9 一次回傳 7 個 int16。每個 int16 拆成低位、高位兩個 byte，再依表格取值。
 
-### ✔ 進階讀值範圍
+數量另讀通訊模式 6。前四個 byte 的高、低半位元組依序為色 1–7 數量與找到色數。
 
-| 相機模式 | 可讀資料 |
+座標為 160×120 像素，X 向右、Y 向下增加；X＝0 表示未找到。
+
+</CamModeSection>
+
+<CamModeSection mode="13" title="顏色追蹤 - ③ 標準">
+
+最多讀取 4 色的位置，另可讀取數量與面積。
+
+| 讀值位置 | 回傳值 |
 | --- | --- |
-| 11 追蹤① 最多色 | 14 色格號，模式 6 另讀數量 |
-| 12 追蹤② 多色 | 7 色像素位置，模式 6 另讀數量 |
-| 13 追蹤③ 標準 | 4 色像素位置、面積、數量 |
-| 14 追蹤④ 精細 | 2 色位置、寬高、數量與面積 |
-| 21 取色① 色相 | 14 點色相 |
-| 22 取色② 色相＋飽和 | 7 點色相、飽和 |
-| 23 取色③ 色相＋飽和＋明度 | 4 點 H、S、V |
-| 30 依序取色號 | 13 塊色相與總數 |
-| 41–43 黑線／白線／色線 | 14 欄，含三段偏移、路口、標記線與離線方向 |
-| 51 物體清單 | 4 個物體代碼與質心，另有總數 |
-| 52 物體詳細 | 2 個物體色號、形狀、質心、寬高、面積 |
+| byte 0 | X1 |
+| byte 1 | Y1 |
+| byte 2 | Area1 |
+| byte 3 | X2 |
+| byte 4 | Y2 |
+| byte 5 | Area2 |
+| byte 6 | X3 |
+| byte 7 | Y3 |
+| byte 8 | Area3 |
+| byte 9 | X4 |
+| byte 10 | Y4 |
+| byte 11 | Area4 |
+| byte 12 | Count1×16+Count2 |
+| byte 13 | Count3×16+Count4 |
 
-## 04 / 範例程式
+通訊模式 9 一次回傳 7 個 int16。每個 int16 拆成低位、高位兩個 byte，再依表格取值。
+
+座標為 160×120 像素，X 向右、Y 向下增加；X＝0 表示未找到。
+
+</CamModeSection>
+
+<CamModeSection mode="14" title="顏色追蹤 - ④ 精細">
+
+最多讀取 2 色的位置與寬高，另可讀取數量與面積。
+
+| 讀值位置 | 回傳值 |
+| --- | --- |
+| byte 0 | X1 |
+| byte 1 | Y1 |
+| byte 2 | W1 |
+| byte 3 | H1 |
+| byte 4 | Count1 |
+| byte 5 | Area1 |
+| byte 6 | X2 |
+| byte 7 | Y2 |
+| byte 8 | W2 |
+| byte 9 | H2 |
+| byte 10 | Count2 |
+| byte 11 | Area2 |
+| byte 12 | 找到色數 |
+
+通訊模式 9 一次回傳 7 個 int16。每個 int16 拆成低位、高位兩個 byte，再依表格取值。
+
+座標為 160×120 像素，X 向右、Y 向下增加；X＝0 表示未找到。
+
+</CamModeSection>
+
+#### 模式二：指定座標取色
+
+<CamModeSection mode="21" title="座標取色 - ① 色相">
+
+最多讀取 14 個取樣點的色相，精度依下方欄位格式。
+
+| 讀值位置 | 回傳值 |
+| --- | --- |
+| byte 0 | Hue1 |
+| byte 1 | Hue2 |
+| byte 2 | Hue3 |
+| byte 3 | Hue4 |
+| byte 4 | Hue5 |
+| byte 5 | Hue6 |
+| byte 6 | Hue7 |
+| byte 7 | Hue8 |
+| byte 8 | Hue9 |
+| byte 9 | Hue10 |
+| byte 10 | Hue11 |
+| byte 11 | Hue12 |
+| byte 12 | Hue13 |
+| byte 13 | Hue14 |
+
+通訊模式 9 一次回傳 7 個 int16。每個 int16 拆成低位、高位兩個 byte，再依表格取值。
+
+</CamModeSection>
+
+<CamModeSection mode="22" title="座標取色 - ② 色相＋飽和">
+
+最多讀取 7 個取樣點的色相與飽和，精度依下方欄位格式。
+
+| 讀值位置 | 回傳值 |
+| --- | --- |
+| byte 0 | Hue1 |
+| byte 1 | Sat1 |
+| byte 2 | Hue2 |
+| byte 3 | Sat2 |
+| byte 4 | Hue3 |
+| byte 5 | Sat3 |
+| byte 6 | Hue4 |
+| byte 7 | Sat4 |
+| byte 8 | Hue5 |
+| byte 9 | Sat5 |
+| byte 10 | Hue6 |
+| byte 11 | Sat6 |
+| byte 12 | Hue7 |
+| byte 13 | Sat7 |
+
+通訊模式 9 一次回傳 7 個 int16。每個 int16 拆成低位、高位兩個 byte，再依表格取值。
+
+</CamModeSection>
+
+<CamModeSection mode="23" title="座標取色 - ③ 色相＋飽和＋明度">
+
+最多讀取 4 個取樣點的色相、飽和與明度，精度依下方欄位格式。
+
+| 讀值位置 | 回傳值 |
+| --- | --- |
+| byte 0 | Hue1 |
+| byte 1 | Sat1 |
+| byte 2 | Val1 |
+| byte 3 | Hue2 |
+| byte 4 | Sat2 |
+| byte 5 | Val2 |
+| byte 6 | Hue3 |
+| byte 7 | Sat3 |
+| byte 8 | Val3 |
+| byte 9 | Hue4 |
+| byte 10 | Sat4 |
+| byte 11 | Val4 |
+
+通訊模式 9 一次回傳 7 個 int16。每個 int16 拆成低位、高位兩個 byte，再依表格取值。
+
+</CamModeSection>
+
+#### 模式三：依序取色號
+
+<CamModeSection mode="30" title="依序取色號">
+
+讀取由左至右前 13 塊色相與總塊數。
+
+| 讀值位置 | 回傳值 |
+| --- | --- |
+| byte 0 | Hue1 |
+| byte 1 | Hue2 |
+| byte 2 | Hue3 |
+| byte 3 | Hue4 |
+| byte 4 | Hue5 |
+| byte 5 | Hue6 |
+| byte 6 | Hue7 |
+| byte 7 | Hue8 |
+| byte 8 | Hue9 |
+| byte 9 | Hue10 |
+| byte 10 | Hue11 |
+| byte 11 | Hue12 |
+| byte 12 | Hue13 |
+| byte 13 | Total |
+
+通訊模式 9 一次回傳 7 個 int16。每個 int16 拆成低位、高位兩個 byte，再依表格取值。
+
+色相 0 可以代表紅色，請以總塊數判斷前幾格有效。
+
+</CamModeSection>
+
+#### 模式四：循線
+
+<CamModeSection mode="41" title="循線 - ① 黑線">
+
+提供近、中、遠偏移、路口、標記線等 14 個循線值。
+
+| 讀值位置 | 回傳值 |
+| --- | --- |
+| byte 0 | Near offset |
+| byte 1 | Middle offset |
+| byte 2 | Far offset |
+| byte 3 | Angle |
+| byte 4 | Near width % |
+| byte 5 | Flags |
+| byte 6 | Junction |
+| byte 7 | Junction distance % |
+| byte 8 | Left edge |
+| byte 9 | Right edge |
+| byte 10 | Far width % |
+| byte 11 | Marker color |
+| byte 12 | Marker count |
+| byte 13 | Lost direction |
+
+通訊模式 9 一次回傳 7 個 int16。每個 int16 拆成低位、高位兩個 byte，再依表格取值。
+
+偏移、角度及左右緣為有號 byte，原始值 ≥128 時減 256。
+
+偏移 −100～100，負值表示線在左；角度 −90～90°。Flags 以近、中、遠分別為 1、2、4 相加。Junction 0～5 為無、十字、T、左、右、盡頭。色線先教目標色 1。
+
+</CamModeSection>
+
+<CamModeSection mode="42" title="循線 - ② 白線">
+
+提供近、中、遠偏移、路口、標記線等 14 個循線值。
+
+| 讀值位置 | 回傳值 |
+| --- | --- |
+| byte 0 | Near offset |
+| byte 1 | Middle offset |
+| byte 2 | Far offset |
+| byte 3 | Angle |
+| byte 4 | Near width % |
+| byte 5 | Flags |
+| byte 6 | Junction |
+| byte 7 | Junction distance % |
+| byte 8 | Left edge |
+| byte 9 | Right edge |
+| byte 10 | Far width % |
+| byte 11 | Marker color |
+| byte 12 | Marker count |
+| byte 13 | Lost direction |
+
+通訊模式 9 一次回傳 7 個 int16。每個 int16 拆成低位、高位兩個 byte，再依表格取值。
+
+偏移、角度及左右緣為有號 byte，原始值 ≥128 時減 256。
+
+偏移 −100～100，負值表示線在左；角度 −90～90°。Flags 以近、中、遠分別為 1、2、4 相加。Junction 0～5 為無、十字、T、左、右、盡頭。色線先教目標色 1。
+
+</CamModeSection>
+
+<CamModeSection mode="43" title="循線 - ③ 色線">
+
+提供近、中、遠偏移、路口、標記線等 14 個循線值。
+
+| 讀值位置 | 回傳值 |
+| --- | --- |
+| byte 0 | Near offset |
+| byte 1 | Middle offset |
+| byte 2 | Far offset |
+| byte 3 | Angle |
+| byte 4 | Near width % |
+| byte 5 | Flags |
+| byte 6 | Junction |
+| byte 7 | Junction distance % |
+| byte 8 | Left edge |
+| byte 9 | Right edge |
+| byte 10 | Far width % |
+| byte 11 | Marker color |
+| byte 12 | Marker count |
+| byte 13 | Lost direction |
+
+通訊模式 9 一次回傳 7 個 int16。每個 int16 拆成低位、高位兩個 byte，再依表格取值。
+
+偏移、角度及左右緣為有號 byte，原始值 ≥128 時減 256。
+
+偏移 −100～100，負值表示線在左；角度 −90～90°。Flags 以近、中、遠分別為 1、2、4 相加。Junction 0～5 為無、十字、T、左、右、盡頭。色線先教目標色 1。
+
+</CamModeSection>
+
+#### 模式五：物體偵測
+
+<CamModeSection mode="51" title="物體偵測 - ① 物體清單">
+
+讀取前 4 個物體的代碼與位置，另可讀物體總數。
+
+| 讀值位置 | 回傳值 |
+| --- | --- |
+| byte 0 | Total |
+| byte 1 | Code1 |
+| byte 2 | X1 |
+| byte 3 | Y1 |
+| byte 4 | Code2 |
+| byte 5 | X2 |
+| byte 6 | Y2 |
+| byte 7 | Code3 |
+| byte 8 | X3 |
+| byte 9 | Y3 |
+| byte 10 | Code4 |
+| byte 11 | X4 |
+| byte 12 | Y4 |
+
+通訊模式 9 一次回傳 7 個 int16。每個 int16 拆成低位、高位兩個 byte，再依表格取值。
+
+座標為 160×120 像素，X 向右、Y 向下增加；X＝0 表示未找到。
+
+只偵測目標色 1–8，物體按面積由大到小排列，位置是質心。Code＝色號×10＋形狀，0 代表無物體。形狀 0～9 為其他、圓、橢圓、三角、正方、長方、五邊、六邊、星、梯形。
+
+</CamModeSection>
+
+<CamModeSection mode="52" title="物體偵測 - ② 物體詳細">
+
+讀取前 2 個物體的詳細資料，欄位如下。
+
+| 讀值位置 | 回傳值 |
+| --- | --- |
+| byte 0 | Color1 |
+| byte 1 | Shape1 |
+| byte 2 | X1 |
+| byte 3 | Y1 |
+| byte 4 | W1 |
+| byte 5 | H1 |
+| byte 6 | Area1 |
+| byte 7 | Color2 |
+| byte 8 | Shape2 |
+| byte 9 | X2 |
+| byte 10 | Y2 |
+| byte 11 | W2 |
+| byte 12 | H2 |
+| byte 13 | Area2 |
+
+通訊模式 9 一次回傳 7 個 int16。每個 int16 拆成低位、高位兩個 byte，再依表格取值。
+
+座標為 160×120 像素，X 向右、Y 向下增加；X＝0 表示未找到。
+
+只偵測目標色 1–8，物體按面積由大到小排列，位置是質心。Code＝色號×10＋形狀，0 代表無物體。形狀 0～9 為其他、圓、橢圓、三角、正方、長方、五邊、六邊、星、梯形。
+
+</CamModeSection>
+
+</CamModeAccordion>
+
+## 03 / 範例程式
 
 ### ✔ 基礎控制
 
-將相機切到顏色追蹤 ③ 標準，讀取並顯示色 1、色 2 的格座標。
+將相機切到顏色追蹤 - ③ 標準，讀取並顯示色 1、色 2 的格座標。
 
 ```python
 from pybricks.parameters import Port
@@ -144,7 +450,7 @@ while True:
     wait(100)
 ```
 
-## 05 / 【Lego】 Lau Xiao 示範影片
+## 04 / 【Lego】 Lau Xiao 示範影片
 
 <CamDemoVideos />
 

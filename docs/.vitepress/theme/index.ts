@@ -14,6 +14,9 @@ import Sensor8 from './components/Sensor8.vue'
 import Sensor16 from './components/Sensor16.vue'
 import FeatureSection from './components/FeatureSection.vue'
 import CamDemoVideos from './components/CamDemoVideos.vue'
+import CamModeAccordion from './components/CamModeAccordion.vue'
+import CamModeOverview from './components/CamModeOverview.vue'
+import CamModeSection from './components/CamModeSection.vue'
 
 export default {
   extends: DefaultTheme,
@@ -31,6 +34,9 @@ export default {
     app.component('Sensor16', Sensor16)
     app.component('FeatureSection', FeatureSection)
     app.component('CamDemoVideos', CamDemoVideos)
+    app.component('CamModeAccordion', CamModeAccordion)
+    app.component('CamModeOverview', CamModeOverview)
+    app.component('CamModeSection', CamModeSection)
   },
 
   setup() {
@@ -48,5 +54,6 @@ export default {
         initTableScroll()
       }
     )
+
   }
 }

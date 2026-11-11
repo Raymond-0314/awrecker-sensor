@@ -1,5 +1,5 @@
 export function initTableScroll() {
-  document.querySelectorAll('.vp-doc table').forEach((table) => {
+  document.querySelectorAll('.vp-doc table:not([data-static-table])').forEach((table) => {
     if (table.closest('.table-scroll-container')) return
 
     // 建立固定箭頭的外層

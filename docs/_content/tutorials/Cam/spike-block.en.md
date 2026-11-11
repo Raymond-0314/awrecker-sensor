@@ -2,133 +2,275 @@
 
 ## 01 / Environment setup
 
-### ✔ Check your hub, sensor, and programming environment
+### ✔ Check your controller, sensor, and programming environment
 
 | Requirement | Supported in this tutorial |
 | --- | --- |
-| Hub | LEGO® Education SPIKE™ Prime Set<br>LEGO® MINDSTORMS® Robot Inventor |
-| Sensor | MBC UniCam Vision Camera Sensor (SPIKE version) |
+| Controller | LEGO® Education SPIKE™ Prime Set<br>LEGO® MINDSTORMS® Robot Inventor |
+| Sensor | MBC UniCam Vision Camera Sensor (SPIKE edition) |
 | Programming environment | Pybricks Blocks |
 
 ### ✔ Before you begin
 
-1. Check that the hub runs Pybricks firmware and create a project in Pybricks.
-2. Connect the camera to port C and confirm the hub name on its display turns green. You can use any port A–F if you update the program to match.
-3. Center the target, press `OK` to teach its color, and check for an outline around it in the preview.
+1. Start your robot and open Pybricks Blocks.
+2. Check that the hub runs Pybricks firmware and that the camera is connected.
+3. Set the camera mode and make sure it matches the mode used by the program.
+
+## 02 / Functions and data
 
 ::: info ℹ️ Note
-Basic control uses the built-in Color Sensor. Advanced control reads the raw camera payload in a Python project.
+Use the built-in Color Sensor blocks. Store reflection and ambient readings in variables and decode them for the selected camera mode. Select that mode on the camera.
 :::
 
-## 02 / Basic control setup and functions
+<CamModeAccordion>
 
-### ✔ Set up value decoding
+### ✔ Camera mode overview
 
-In the camera’s `MODE` menu, choose Color Tracking ③ Standard, then configure a Color Sensor on port C. Smaller Y values are higher in the image. X = 0 means the target was not detected.
+MBC UniCam provides five main modes, each with its own submodes. Use the tables and modeID numbers below to find the corresponding programming instructions.
 
-*[Image placeholder — Color Sensor setup on port C]*
+<CamModeOverview />
 
-### ✔ Functions and data
+### ✔ Mode fields and decoding
 
-| Block | Function | How to read the value |
-| --- | --- | --- |
-| *[Image placeholder — Reflected light block and negative-value correction]* | Target 1 position | 40×30 grid. Convert the reading to an integer and add 6399 if it is negative. Divide the corrected value by 100 for X (quotient) and Y (remainder). |
-| *[Image placeholder — Ambient light block and decimal decoding]* | Target 2 position | 8×6 grid. The integer part is X and the first decimal digit is Y. For example, `4.3` means `(4, 3)`. |
+#### Mode 1 — Color tracking
 
-Read reflected light and ambient light once per loop, storing each reading before decoding it. These fields also carry point sampling, color order, line, and object data. The decoding depends on the selected camera mode.
+<CamModeSection mode="11" title="Color tracking - ① Most colors">
 
-### ✔ Built-in sensor readings by mode
+Read positions for up to 2 targets.
 
-| Camera mode | Available data |
+| Block field | Reading |
 | --- | --- |
-| 11 Tracking ① Most colors | Positions for targets 1 and 2 |
-| 12 Tracking ② Multiple colors | Positions for targets 1 and 2 |
-| 13 Tracking ③ Standard | Positions for targets 1 and 2 |
-| 14 Tracking ④ Fine | Reflection gives target 1 position. Ambient gives width.height on an 8×6 grid. |
-| 21 Sampling ① Hue | Reflection packs S1 hue and saturation tens in base 10. Ambient packs the same S2 fields as integer and tenths. |
-| 22 Sampling ② Hue and saturation | Same layout as 21, with saturation in tens |
-| 23 Sampling ③ HSV | Reflection is S1 hue. Ambient integer is saturation and its tenths digit is brightness in tens. |
-| 30 Color order | Reflection is the first hue. Ambient gives the second hue and total, capped at 9. |
-| 41–43 Black, white, or colored line | Reflection packs near offset +100 and junction in base 10. Ambient gives far offset +100 and line flags as integer and tenths. |
-| 51 Object list | Reflection gives object 1 position. Ambient gives code and count. |
-| 52 Object details | Reflection gives object 1 position. Ambient gives code and area in tens. |
+| Reflection | X1×100+Y1 |
+| Ambient light | X2 . Y2 |
 
-Line example: reflection 802 splits into 80 and 2, so the near offset is −20 and the junction is a T. Round the scaled ambient value before taking the remainder to avoid floating-point rounding artifacts.
+reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
 
-## 03 / Advanced control: read raw data
+The reflection position uses a 40×30 grid. Add 6399 to a negative reading before splitting X and Y by 100. Ambient positions or sizes use an 8×6 grid. Y increases downward and position 0 means no target.
 
-Use PUPDevice in a Pybricks Python project. Transport mode 9 returns seven int16 values. Split each into its low and high bytes to recover the 14-byte payload. Select the camera mode on the camera first. For example, mode 13 is Color Tracking ③ Standard.
+</CamModeSection>
 
-### ✔ Decode the raw payload
+<CamModeSection mode="12" title="Color tracking - ② Multiple colors">
 
-Byte offsets below start at 0. Pixel coordinates start at the upper left, and X=0 means no target. For signed line offsets, angle, and edges, subtract 256 from byte values of 128 or more.
+Read positions for up to 2 targets.
 
-| Camera mode | Mode 9 payload |
+| Block field | Reading |
 | --- | --- |
-| 11 | Bytes 0–13 give one 16×12 grid ID per color (1–192). Subtract 1, divide by 16, and add 1 to the remainder and quotient for X and Y. Grid ID 0 means no target. |
-| 12/13/14 | Per target: X, Y (12); X, Y, area (13); X, Y, width, height, count, area (14). In 13, bytes 12 and 13 each pack two counts in base 16. In 14, byte 12 is the number of colors found. |
-| 21/22/23 | Per sample: H; H, S; or H, S, V, respectively. |
-| 30 | Bytes 0–12 hold hues from the left, and byte 13 gives the total. |
-| 41–43 | Near, middle, and far offsets, angle, near width, flags, junction, junction distance, left edge, right edge, far width, marker hue, marker count, line-loss direction. |
-| 51 | Byte 0 is the total. Each object then uses code, X, Y. |
-| 52 | Each object uses color ID, shape, X, Y, width, height, area. |
+| Reflection | X1×100+Y1 |
+| Ambient light | X2 . Y2 |
 
-In modes 11 and 12, use transport mode 6 for counts. Mode 11 packs fourteen 3-bit counts followed by a 4-bit detected-color count in a little-endian bit stream. Mode 12 packs counts for colors 1–7 and the detected-color count into the high and low nibbles of the first four bytes.
+reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
 
-### ✔ Raw output by mode
+The reflection position uses a 40×30 grid. Add 6399 to a negative reading before splitting X and Y by 100. Ambient positions or sizes use an 8×6 grid. Y increases downward and position 0 means no target.
 
-| Camera mode | Available data |
+</CamModeSection>
+
+<CamModeSection mode="13" title="Color tracking - ③ Standard">
+
+Read positions for up to 2 targets.
+
+| Block field | Reading |
 | --- | --- |
-| 11 Tracking ① Most colors | 14 grid positions, with counts in transport mode 6 |
-| 12 Tracking ② Multiple colors | 7 pixel positions, with counts in transport mode 6 |
-| 13 Tracking ③ Standard | 4 pixel positions, areas, and counts |
-| 14 Tracking ④ Fine | 2 positions, sizes, counts, and areas |
-| 21 Sampling ① Hue | 14 hues |
-| 22 Sampling ② Hue and saturation | 7 hue/saturation pairs |
-| 23 Sampling ③ HSV | 4 HSV triples |
-| 30 Color order | 13 hues and a total |
-| 41–43 Black, white, or colored line | 14 fields including three offsets, junction, markers, and line-loss direction |
-| 51 Object list | 4 object codes and centroids, plus a total |
-| 52 Object details | 2 objects with color, shape, centroid, size, and area |
+| Reflection | X1×100+Y1 |
+| Ambient light | X2 . Y2 |
 
-## 04 / Example programs
+reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
 
-### ✔ Basic control
+The reflection position uses a 40×30 grid. Add 6399 to a negative reading before splitting X and Y by 100. Ambient positions or sizes use an 8×6 grid. Y increases downward and position 0 means no target.
 
-Select Color Tracking ③ Standard and display the grid coordinates for targets 1 and 2.
+</CamModeSection>
 
-In a loop, store the reflected and ambient readings, decode them using the table, and display the coordinates. Wait 100 ms before the next iteration.
+<CamModeSection mode="14" title="Color tracking - ④ Fine">
 
-*[Image placeholder — complete basic program with negative-value correction and coordinate display]*
+Read positions and sizes for up to 1 targets.
 
-### ✔ Advanced control
+| Block field | Reading |
+| --- | --- |
+| Reflection | X1×100+Y1 |
+| Ambient light | W1 . H1 |
 
-Select camera mode 13. This example prints target 1 X, Y, area, and blob count.
+reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
 
-```python
-from pybricks.iodevices import PUPDevice
-from pybricks.parameters import Port
-from pybricks.tools import wait
+The reflection position uses a 40×30 grid. Add 6399 to a negative reading before splitting X and Y by 100. Ambient positions or sizes use an 8×6 grid. Y increases downward and position 0 means no target.
 
-cam = PUPDevice(Port.C)
+</CamModeSection>
 
-def read_payload():
-    data = []
-    for word in cam.read(9):
-        data.extend((word & 255, (word >> 8) & 255))
-    return data
+#### Mode 2 — Coordinate sampling
 
-while True:
-    data = read_payload()
-    x, y, area = data[:3]
-    if x:
-        print(x, y, area, data[12] >> 4)
-    else:
-        print("No target")
-    wait(100)
-```
+<CamModeSection mode="21" title="Coordinate sampling - ① Hue">
 
-## 05 / 【Lego】 Lau Xiao demonstration videos
+Read hue for up to 2 sample points, at the precision described below.
+
+| Block field | Reading |
+| --- | --- |
+| Reflection | Hue1×10+floor(Sat1÷10) |
+| Ambient light | Hue2 . min(9,floor(Sat2÷10)) |
+
+reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
+
+Fields divided by 10 retain only tens information. Multiply by 10 for an approximate value, capped at 90.
+
+</CamModeSection>
+
+<CamModeSection mode="22" title="Coordinate sampling - ② Hue and saturation">
+
+Read hue and saturation for up to 2 sample points, at the precision described below.
+
+| Block field | Reading |
+| --- | --- |
+| Reflection | Hue1×10+floor(Sat1÷10) |
+| Ambient light | Hue2 . min(9,floor(Sat2÷10)) |
+
+reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
+
+Fields divided by 10 retain only tens information. Multiply by 10 for an approximate value, capped at 90.
+
+</CamModeSection>
+
+<CamModeSection mode="23" title="Coordinate sampling - ③ HSV">
+
+Read hue, saturation, and brightness for up to 1 sample points, at the precision described below.
+
+| Block field | Reading |
+| --- | --- |
+| Reflection | Hue1 |
+| Ambient light | Sat1 . min(9,floor(Val1÷10)) |
+
+reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
+
+Fields divided by 10 retain only tens information. Multiply by 10 for an approximate value, capped at 90.
+
+</CamModeSection>
+
+#### Mode 3 — Color order
+
+<CamModeSection mode="30" title="Color order">
+
+Read the first 2 hues from left to right and the total block count.
+
+| Block field | Reading |
+| --- | --- |
+| Reflection | Hue1 |
+| Ambient light | Hue2 . min(Total,9) |
+
+reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
+
+The count digit is capped at 9, meaning nine or more.
+
+Hue 0 can represent red. Use the total block count to identify valid entries.
+
+</CamModeSection>
+
+#### Mode 4 — Line following
+
+<CamModeSection mode="41" title="Line following - ① Black">
+
+Read near and far offsets, junction type, and line flags: four values.
+
+| Block field | Reading |
+| --- | --- |
+| Reflection | (Near offset+100)×10+Junction |
+| Ambient light | Far offset+100 . Flags |
+
+reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
+
+Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+
+</CamModeSection>
+
+<CamModeSection mode="42" title="Line following - ② White">
+
+Read near and far offsets, junction type, and line flags: four values.
+
+| Block field | Reading |
+| --- | --- |
+| Reflection | (Near offset+100)×10+Junction |
+| Ambient light | Far offset+100 . Flags |
+
+reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
+
+Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+
+</CamModeSection>
+
+<CamModeSection mode="43" title="Line following - ③ Colored">
+
+Read near and far offsets, junction type, and line flags: four values.
+
+| Block field | Reading |
+| --- | --- |
+| Reflection | (Near offset+100)×10+Junction |
+| Ambient light | Far offset+100 . Flags |
+
+reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
+
+Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+
+</CamModeSection>
+
+#### Mode 5 — Object detection
+
+<CamModeSection mode="51" title="Object detection - ① Object list">
+
+Read codes and positions for the first 1 objects, plus the total count.
+
+| Block field | Reading |
+| --- | --- |
+| Reflection | X1×100+Y1 |
+| Ambient light | Code1 . min(Total,9) |
+
+reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
+
+The reflection position uses a 40×30 grid. Add 6399 to a negative reading before splitting X and Y by 100. Ambient positions or sizes use an 8×6 grid. Y increases downward and position 0 means no target.
+
+Detection uses target colors 1–8. Objects are ordered largest first and positions are centroids. Code = color ID×10+shape; 0 means no object. Shapes 0–9 mean other, circle, oval, triangle, square, rectangle, pentagon, hexagon, star, and trapezoid.
+
+</CamModeSection>
+
+<CamModeSection mode="52" title="Object detection - ② Object details">
+
+Read detailed data for the first 1 objects using the fields below.
+
+| Block field | Reading |
+| --- | --- |
+| Reflection | X1×100+Y1 |
+| Ambient light | Code1 . min(9,floor(Area1÷10)) |
+
+reflection() is the reflected-light reporter and ambient() is ambient light. A . B denotes the integer part and first decimal digit. Decode A with floor(ambient) and B with round(ambient×10) % 10.
+
+The reflection position uses a 40×30 grid. Add 6399 to a negative reading before splitting X and Y by 100. Ambient positions or sizes use an 8×6 grid. Y increases downward and position 0 means no target.
+
+Fields divided by 10 retain only tens information. Multiply by 10 for an approximate value, capped at 90.
+
+Detection uses target colors 1–8. Objects are ordered largest first and positions are centroids. Code = color ID×10+shape; 0 means no object. Shapes 0–9 mean other, circle, oval, triangle, square, rectangle, pentagon, hexagon, star, and trapezoid.
+
+</CamModeSection>
+
+</CamModeAccordion>
+
+## 03 / Example programs
+
+Select camera mode 13 (Color Tracking - ③ Standard) and teach target colors 1 and 2. Create reflected, ambient, X1, Y1, X2, and Y2 variables. Add the following operations inside a forever loop.
+
+| Step | Block operation |
+| --- | --- |
+| 1 | Set reflected to the reflected light reading and ambient to the ambient light reading. Read each once per loop. |
+| 2 | If reflected < 0, increase reflected by 6399. |
+| 3 | X1 = floor(reflected / 100). Y1 = the remainder after dividing reflected by 100. |
+| 4 | X2 = floor(ambient). Y2 = round(ambient × 10) modulo 10. |
+| 5 | If X1 or X2 is 0, display “No target” for that color. Otherwise display its X and Y. |
+| 6 | Wait 0.1 seconds before the next iteration. |
+
+For example, reflected = 2015 and ambient = 4.3 decode to target 1 grid position (20,15) and target 2 grid position (4,3). The grids have different resolutions: 40×30 for target 1 and 8×6 for target 2.
+
+### ✔ Decode line-following readings
+
+For camera modes 41, 42, and 43: near offset = floor(reflected / 10) − 100; junction = reflected modulo 10; far offset = floor(ambient) − 100; flags = round(ambient × 10) modulo 10. For example, 802 and 115.5 mean near offset −20, a T junction, far offset +15, and a line detected in the near and far rows.
+
+### ✔ Further reading
+
+For more targets, pixel positions, areas, or raw data, see the [Pybricks Python lesson](./spike-python.md), which includes the transport mode 9 field map and a complete program.
+
+## 04 / 【Lego】 Lau Xiao demonstration videos
 
 <CamDemoVideos />
 

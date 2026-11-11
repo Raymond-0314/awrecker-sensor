@@ -2,100 +2,406 @@
 
 ## 01 / Environment setup
 
-### ✔ Check your hub, sensor, and programming environment
+### ✔ Check your controller, sensor, and programming environment
 
 | Requirement | Supported in this tutorial |
 | --- | --- |
-| Hub | LEGO® Education SPIKE™ Prime Set<br>LEGO® MINDSTORMS® Robot Inventor |
-| Sensor | MBC UniCam Vision Camera Sensor (SPIKE version) |
+| Controller | LEGO® Education SPIKE™ Prime Set<br>LEGO® MINDSTORMS® Robot Inventor |
+| Sensor | MBC UniCam Vision Camera Sensor (SPIKE edition) |
 | Programming environment | Pybricks Python |
 
 ### ✔ Before you begin
 
-1. Check that the hub runs Pybricks firmware and create a project in Pybricks.
-2. Connect the camera to port C and confirm the hub name on its display turns green. You can use any port A–F if you update the program to match.
-3. Center the target, press `OK` to teach its color, and check for an outline around it in the preview.
+1. Start your robot and open Pybricks Python.
+2. Check that the hub runs Pybricks firmware and that the camera is connected.
+3. Set the camera mode and make sure it matches the mode used by the program.
+
+## 02 / Functions and data
 
 ::: info ℹ️ Note
-Basic control uses the built-in Color Sensor. Advanced control reads the raw camera payload in a Python project.
+This lesson uses PUPDevice for raw readings. Select the camera mode on the camera, then use transport mode 9 for the main payload. Tracking modes 11 and 12 use transport mode 6 for counts.
 :::
 
-## 02 / Basic control setup and functions
+<CamModeAccordion>
 
-### ✔ Set up value decoding
+### ✔ Camera mode overview
 
-In the camera’s `MODE` menu, choose Color Tracking ③ Standard, then configure a Color Sensor on port C. Smaller Y values are higher in the image. X = 0 means the target was not detected.
+MBC UniCam provides five main modes, each with its own submodes. Use the tables and modeID numbers below to find the corresponding programming instructions.
 
-`cam = ColorSensor(Port.C)`{.code-green}
+<CamModeOverview />
 
-### ✔ Functions and data
+### ✔ Mode fields and decoding
 
-| Code | Function | How to read the value |
-| --- | --- | --- |
-| `cam.reflection()` | Target 1 position | 40×30 grid. Convert the reading to an integer and add 6399 if it is negative. Divide the corrected value by 100 for X (quotient) and Y (remainder). |
-| `cam.ambient()` | Target 2 position | 8×6 grid. The integer part is X and the first decimal digit is Y. For example, `4.3` means `(4, 3)`. |
+#### Mode 1 — Color tracking
 
-Read reflected light and ambient light once per loop, storing each reading before decoding it. These fields also carry point sampling, color order, line, and object data. The decoding depends on the selected camera mode.
+<CamModeSection mode="11" title="Color tracking - ① Most colors">
 
-### ✔ Built-in sensor readings by mode
+Read positions for up to 14 targets, with counts available.
 
-| Camera mode | Available data |
+| Read position | Reading |
 | --- | --- |
-| 11 Tracking ① Most colors | Positions for targets 1 and 2 |
-| 12 Tracking ② Multiple colors | Positions for targets 1 and 2 |
-| 13 Tracking ③ Standard | Positions for targets 1 and 2 |
-| 14 Tracking ④ Fine | Reflection gives target 1 position. Ambient gives width.height on an 8×6 grid. |
-| 21 Sampling ① Hue | Reflection packs S1 hue and saturation tens in base 10. Ambient packs the same S2 fields as integer and tenths. |
-| 22 Sampling ② Hue and saturation | Same layout as 21, with saturation in tens |
-| 23 Sampling ③ HSV | Reflection is S1 hue. Ambient integer is saturation and its tenths digit is brightness in tens. |
-| 30 Color order | Reflection is the first hue. Ambient gives the second hue and total, capped at 9. |
-| 41–43 Black, white, or colored line | Reflection packs near offset +100 and junction in base 10. Ambient gives far offset +100 and line flags as integer and tenths. |
-| 51 Object list | Reflection gives object 1 position. Ambient gives code and count. |
-| 52 Object details | Reflection gives object 1 position. Ambient gives code and area in tens. |
+| byte 0 | GridID1 |
+| byte 1 | GridID2 |
+| byte 2 | GridID3 |
+| byte 3 | GridID4 |
+| byte 4 | GridID5 |
+| byte 5 | GridID6 |
+| byte 6 | GridID7 |
+| byte 7 | GridID8 |
+| byte 8 | GridID9 |
+| byte 9 | GridID10 |
+| byte 10 | GridID11 |
+| byte 11 | GridID12 |
+| byte 12 | GridID13 |
+| byte 13 | GridID14 |
 
-Line example: reflection 802 splits into 80 and 2, so the near offset is −20 and the junction is a T. Round the scaled ambient value before taking the remainder to avoid floating-point rounding artifacts.
+Transport mode 9 returns seven int16 values. Split each into low and high bytes, then read the fields in the table.
 
-## 03 / Advanced control: read raw data
+GridID uses a 16×12 grid. Zero means no target. Otherwise subtract 1, then take remainder modulo 16 plus 1 for X and quotient plus 1 for Y. Counts use transport mode 6: fourteen 3-bit counts followed by a 4-bit detected-color count in little-endian order. A count of 7 means seven or more.
 
-Use PUPDevice in a Pybricks Python project. Transport mode 9 returns seven int16 values. Split each into its low and high bytes to recover the 14-byte payload. Select the camera mode on the camera first. For example, mode 13 is Color Tracking ③ Standard.
+</CamModeSection>
 
-### ✔ Decode the raw payload
+<CamModeSection mode="12" title="Color tracking - ② Multiple colors">
 
-Byte offsets below start at 0. Pixel coordinates start at the upper left, and X=0 means no target. For signed line offsets, angle, and edges, subtract 256 from byte values of 128 or more.
+Read positions for up to 7 targets, with counts available.
 
-| Camera mode | Mode 9 payload |
+| Read position | Reading |
 | --- | --- |
-| 11 | Bytes 0–13 give one 16×12 grid ID per color (1–192). Subtract 1, divide by 16, and add 1 to the remainder and quotient for X and Y. Grid ID 0 means no target. |
-| 12/13/14 | Per target: X, Y (12); X, Y, area (13); X, Y, width, height, count, area (14). In 13, bytes 12 and 13 each pack two counts in base 16. In 14, byte 12 is the number of colors found. |
-| 21/22/23 | Per sample: H; H, S; or H, S, V, respectively. |
-| 30 | Bytes 0–12 hold hues from the left, and byte 13 gives the total. |
-| 41–43 | Near, middle, and far offsets, angle, near width, flags, junction, junction distance, left edge, right edge, far width, marker hue, marker count, line-loss direction. |
-| 51 | Byte 0 is the total. Each object then uses code, X, Y. |
-| 52 | Each object uses color ID, shape, X, Y, width, height, area. |
+| byte 0 | X1 |
+| byte 1 | Y1 |
+| byte 2 | X2 |
+| byte 3 | Y2 |
+| byte 4 | X3 |
+| byte 5 | Y3 |
+| byte 6 | X4 |
+| byte 7 | Y4 |
+| byte 8 | X5 |
+| byte 9 | Y5 |
+| byte 10 | X6 |
+| byte 11 | Y6 |
+| byte 12 | X7 |
+| byte 13 | Y7 |
 
-In modes 11 and 12, use transport mode 6 for counts. Mode 11 packs fourteen 3-bit counts followed by a 4-bit detected-color count in a little-endian bit stream. Mode 12 packs counts for colors 1–7 and the detected-color count into the high and low nibbles of the first four bytes.
+Transport mode 9 returns seven int16 values. Split each into low and high bytes, then read the fields in the table.
 
-### ✔ Raw output by mode
+Read counts through transport mode 6. High and low nibbles of its first four bytes hold counts for targets 1–7 and the detected-color count, in order.
 
-| Camera mode | Available data |
+Coordinates use 160×120 pixels, with X increasing rightward and Y downward. X = 0 means no target.
+
+</CamModeSection>
+
+<CamModeSection mode="13" title="Color tracking - ③ Standard">
+
+Read positions for up to 4 targets, with counts available and areas.
+
+| Read position | Reading |
 | --- | --- |
-| 11 Tracking ① Most colors | 14 grid positions, with counts in transport mode 6 |
-| 12 Tracking ② Multiple colors | 7 pixel positions, with counts in transport mode 6 |
-| 13 Tracking ③ Standard | 4 pixel positions, areas, and counts |
-| 14 Tracking ④ Fine | 2 positions, sizes, counts, and areas |
-| 21 Sampling ① Hue | 14 hues |
-| 22 Sampling ② Hue and saturation | 7 hue/saturation pairs |
-| 23 Sampling ③ HSV | 4 HSV triples |
-| 30 Color order | 13 hues and a total |
-| 41–43 Black, white, or colored line | 14 fields including three offsets, junction, markers, and line-loss direction |
-| 51 Object list | 4 object codes and centroids, plus a total |
-| 52 Object details | 2 objects with color, shape, centroid, size, and area |
+| byte 0 | X1 |
+| byte 1 | Y1 |
+| byte 2 | Area1 |
+| byte 3 | X2 |
+| byte 4 | Y2 |
+| byte 5 | Area2 |
+| byte 6 | X3 |
+| byte 7 | Y3 |
+| byte 8 | Area3 |
+| byte 9 | X4 |
+| byte 10 | Y4 |
+| byte 11 | Area4 |
+| byte 12 | Count1×16+Count2 |
+| byte 13 | Count3×16+Count4 |
 
-## 04 / Example programs
+Transport mode 9 returns seven int16 values. Split each into low and high bytes, then read the fields in the table.
+
+Coordinates use 160×120 pixels, with X increasing rightward and Y downward. X = 0 means no target.
+
+</CamModeSection>
+
+<CamModeSection mode="14" title="Color tracking - ④ Fine">
+
+Read positions and sizes for up to 2 targets, with counts available and areas.
+
+| Read position | Reading |
+| --- | --- |
+| byte 0 | X1 |
+| byte 1 | Y1 |
+| byte 2 | W1 |
+| byte 3 | H1 |
+| byte 4 | Count1 |
+| byte 5 | Area1 |
+| byte 6 | X2 |
+| byte 7 | Y2 |
+| byte 8 | W2 |
+| byte 9 | H2 |
+| byte 10 | Count2 |
+| byte 11 | Area2 |
+| byte 12 | Found colors |
+
+Transport mode 9 returns seven int16 values. Split each into low and high bytes, then read the fields in the table.
+
+Coordinates use 160×120 pixels, with X increasing rightward and Y downward. X = 0 means no target.
+
+</CamModeSection>
+
+#### Mode 2 — Coordinate sampling
+
+<CamModeSection mode="21" title="Coordinate sampling - ① Hue">
+
+Read hue for up to 14 sample points, at the precision described below.
+
+| Read position | Reading |
+| --- | --- |
+| byte 0 | Hue1 |
+| byte 1 | Hue2 |
+| byte 2 | Hue3 |
+| byte 3 | Hue4 |
+| byte 4 | Hue5 |
+| byte 5 | Hue6 |
+| byte 6 | Hue7 |
+| byte 7 | Hue8 |
+| byte 8 | Hue9 |
+| byte 9 | Hue10 |
+| byte 10 | Hue11 |
+| byte 11 | Hue12 |
+| byte 12 | Hue13 |
+| byte 13 | Hue14 |
+
+Transport mode 9 returns seven int16 values. Split each into low and high bytes, then read the fields in the table.
+
+</CamModeSection>
+
+<CamModeSection mode="22" title="Coordinate sampling - ② Hue and saturation">
+
+Read hue and saturation for up to 7 sample points, at the precision described below.
+
+| Read position | Reading |
+| --- | --- |
+| byte 0 | Hue1 |
+| byte 1 | Sat1 |
+| byte 2 | Hue2 |
+| byte 3 | Sat2 |
+| byte 4 | Hue3 |
+| byte 5 | Sat3 |
+| byte 6 | Hue4 |
+| byte 7 | Sat4 |
+| byte 8 | Hue5 |
+| byte 9 | Sat5 |
+| byte 10 | Hue6 |
+| byte 11 | Sat6 |
+| byte 12 | Hue7 |
+| byte 13 | Sat7 |
+
+Transport mode 9 returns seven int16 values. Split each into low and high bytes, then read the fields in the table.
+
+</CamModeSection>
+
+<CamModeSection mode="23" title="Coordinate sampling - ③ HSV">
+
+Read hue, saturation, and brightness for up to 4 sample points, at the precision described below.
+
+| Read position | Reading |
+| --- | --- |
+| byte 0 | Hue1 |
+| byte 1 | Sat1 |
+| byte 2 | Val1 |
+| byte 3 | Hue2 |
+| byte 4 | Sat2 |
+| byte 5 | Val2 |
+| byte 6 | Hue3 |
+| byte 7 | Sat3 |
+| byte 8 | Val3 |
+| byte 9 | Hue4 |
+| byte 10 | Sat4 |
+| byte 11 | Val4 |
+
+Transport mode 9 returns seven int16 values. Split each into low and high bytes, then read the fields in the table.
+
+</CamModeSection>
+
+#### Mode 3 — Color order
+
+<CamModeSection mode="30" title="Color order">
+
+Read the first 13 hues from left to right and the total block count.
+
+| Read position | Reading |
+| --- | --- |
+| byte 0 | Hue1 |
+| byte 1 | Hue2 |
+| byte 2 | Hue3 |
+| byte 3 | Hue4 |
+| byte 4 | Hue5 |
+| byte 5 | Hue6 |
+| byte 6 | Hue7 |
+| byte 7 | Hue8 |
+| byte 8 | Hue9 |
+| byte 9 | Hue10 |
+| byte 10 | Hue11 |
+| byte 11 | Hue12 |
+| byte 12 | Hue13 |
+| byte 13 | Total |
+
+Transport mode 9 returns seven int16 values. Split each into low and high bytes, then read the fields in the table.
+
+Hue 0 can represent red. Use the total block count to identify valid entries.
+
+</CamModeSection>
+
+#### Mode 4 — Line following
+
+<CamModeSection mode="41" title="Line following - ① Black">
+
+Read 14 line-following values including three offsets, junctions, and markers.
+
+| Read position | Reading |
+| --- | --- |
+| byte 0 | Near offset |
+| byte 1 | Middle offset |
+| byte 2 | Far offset |
+| byte 3 | Angle |
+| byte 4 | Near width % |
+| byte 5 | Flags |
+| byte 6 | Junction |
+| byte 7 | Junction distance % |
+| byte 8 | Left edge |
+| byte 9 | Right edge |
+| byte 10 | Far width % |
+| byte 11 | Marker color |
+| byte 12 | Marker count |
+| byte 13 | Lost direction |
+
+Transport mode 9 returns seven int16 values. Split each into low and high bytes, then read the fields in the table.
+
+Offsets, angle, and edges are signed bytes. Subtract 256 from raw values ≥128.
+
+Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+
+</CamModeSection>
+
+<CamModeSection mode="42" title="Line following - ② White">
+
+Read 14 line-following values including three offsets, junctions, and markers.
+
+| Read position | Reading |
+| --- | --- |
+| byte 0 | Near offset |
+| byte 1 | Middle offset |
+| byte 2 | Far offset |
+| byte 3 | Angle |
+| byte 4 | Near width % |
+| byte 5 | Flags |
+| byte 6 | Junction |
+| byte 7 | Junction distance % |
+| byte 8 | Left edge |
+| byte 9 | Right edge |
+| byte 10 | Far width % |
+| byte 11 | Marker color |
+| byte 12 | Marker count |
+| byte 13 | Lost direction |
+
+Transport mode 9 returns seven int16 values. Split each into low and high bytes, then read the fields in the table.
+
+Offsets, angle, and edges are signed bytes. Subtract 256 from raw values ≥128.
+
+Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+
+</CamModeSection>
+
+<CamModeSection mode="43" title="Line following - ③ Colored">
+
+Read 14 line-following values including three offsets, junctions, and markers.
+
+| Read position | Reading |
+| --- | --- |
+| byte 0 | Near offset |
+| byte 1 | Middle offset |
+| byte 2 | Far offset |
+| byte 3 | Angle |
+| byte 4 | Near width % |
+| byte 5 | Flags |
+| byte 6 | Junction |
+| byte 7 | Junction distance % |
+| byte 8 | Left edge |
+| byte 9 | Right edge |
+| byte 10 | Far width % |
+| byte 11 | Marker color |
+| byte 12 | Marker count |
+| byte 13 | Lost direction |
+
+Transport mode 9 returns seven int16 values. Split each into low and high bytes, then read the fields in the table.
+
+Offsets, angle, and edges are signed bytes. Subtract 256 from raw values ≥128.
+
+Offsets run from −100 to 100, negative to the left; angles run from −90 to 90°. Flags add 1 for near, 2 for middle, and 4 for far. Junction values 0–5 mean none, cross, T, left, right, and end. Teach target color 1 for colored lines.
+
+</CamModeSection>
+
+#### Mode 5 — Object detection
+
+<CamModeSection mode="51" title="Object detection - ① Object list">
+
+Read codes and positions for the first 4 objects, plus the total count.
+
+| Read position | Reading |
+| --- | --- |
+| byte 0 | Total |
+| byte 1 | Code1 |
+| byte 2 | X1 |
+| byte 3 | Y1 |
+| byte 4 | Code2 |
+| byte 5 | X2 |
+| byte 6 | Y2 |
+| byte 7 | Code3 |
+| byte 8 | X3 |
+| byte 9 | Y3 |
+| byte 10 | Code4 |
+| byte 11 | X4 |
+| byte 12 | Y4 |
+
+Transport mode 9 returns seven int16 values. Split each into low and high bytes, then read the fields in the table.
+
+Coordinates use 160×120 pixels, with X increasing rightward and Y downward. X = 0 means no target.
+
+Detection uses target colors 1–8. Objects are ordered largest first and positions are centroids. Code = color ID×10+shape; 0 means no object. Shapes 0–9 mean other, circle, oval, triangle, square, rectangle, pentagon, hexagon, star, and trapezoid.
+
+</CamModeSection>
+
+<CamModeSection mode="52" title="Object detection - ② Object details">
+
+Read detailed data for the first 2 objects using the fields below.
+
+| Read position | Reading |
+| --- | --- |
+| byte 0 | Color1 |
+| byte 1 | Shape1 |
+| byte 2 | X1 |
+| byte 3 | Y1 |
+| byte 4 | W1 |
+| byte 5 | H1 |
+| byte 6 | Area1 |
+| byte 7 | Color2 |
+| byte 8 | Shape2 |
+| byte 9 | X2 |
+| byte 10 | Y2 |
+| byte 11 | W2 |
+| byte 12 | H2 |
+| byte 13 | Area2 |
+
+Transport mode 9 returns seven int16 values. Split each into low and high bytes, then read the fields in the table.
+
+Coordinates use 160×120 pixels, with X increasing rightward and Y downward. X = 0 means no target.
+
+Detection uses target colors 1–8. Objects are ordered largest first and positions are centroids. Code = color ID×10+shape; 0 means no object. Shapes 0–9 mean other, circle, oval, triangle, square, rectangle, pentagon, hexagon, star, and trapezoid.
+
+</CamModeSection>
+
+</CamModeAccordion>
+
+## 03 / Example programs
 
 ### ✔ Basic control
 
-Select Color Tracking ③ Standard and display the grid coordinates for targets 1 and 2.
+Select Color Tracking - ③ Standard and display the grid coordinates for targets 1 and 2.
 
 ```python
 from pybricks.parameters import Port
@@ -144,7 +450,7 @@ while True:
     wait(100)
 ```
 
-## 05 / 【Lego】 Lau Xiao demonstration videos
+## 04 / 【Lego】 Lau Xiao demonstration videos
 
 <CamDemoVideos />
 

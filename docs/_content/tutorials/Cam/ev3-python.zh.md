@@ -4,55 +4,360 @@
 
 ### ✔ 請確認控制器、感應器與程式環境
 
-| 要求 | 適用設備 |
+| 要求 | 符合本教學頁面的種類 |
 | --- | --- |
-| 控制器 | LEGO® MINDSTORMS® EV3 主機 |
-| 感應器 | MBC 神攝手視覺感應器（EV3 韌體） |
-| 程式環境 | Pybricks Python |
+| 控制器 | LEGO® MINDSTORMS® EV3 |
+| 感應器 | MBC 神攝手視覺感應器 (EV3 版) |
+| 程式語言 | Pybricks Python / EV3 MicroPython v2 |
 
-1. 用 EV3 線把相機接到 1 號感應器埠。可改接 2～4 號，程式的埠號也要一起改。
-2. 確認螢幕左上角的主機名稱是綠色。主機會把相機辨識成紅外線感應器。
-3. 在機身 MODE 選擇相機模式和子選項。EV3 僅讀值，教色和切換相機模式都在相機上操作。
+### ✔ 事前準備
 
-可使用 Pybricks v4 或 LEGO 官方 EV3 MicroPython v2。v4 在 Pybricks Code 建立專案；v2 使用 microSD 開機卡與 VS Code 的 LEGO MINDSTORMS EV3 MicroPython 擴充。
+1. 啟動 EV3 與 Pybricks Code (v4) 或 VS Code 的 EV3 MicroPython v2 專案。
+2. 確認主機、相機與程式環境運作正常。
+3. 設定感應器模式，確認與程式設定模式相同。
 
 ## 02 / 函數與功能說明
 
-### ✔ 紅外線讀值對照
+::: info ℹ️ 補充資訊
+使用 LUMPDevice(Port.S1) 讀取相機。cam.read(0)[0] 是相機 modeID；cam.read(1) 回傳八個信標值，cam.read(2) 回傳四個遙控值。表格列出實際索引，迴圈內先讀入變數再取欄位。相機模式由機身選單設定。
+:::
 
-用 LUMPDevice 讀原始資料。信標資料的順序是通道 1 方向、距離，接著通道 2，以此類推。
+<CamModeAccordion>
 
-| EV3 讀值模式 | 資料 |
+### ✔ 相機模式概覽
+
+MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分多個子模式，請參考下表說明與 modeID 編號，查找程式說明。
+
+<CamModeOverview />
+
+### ✔ 各模式讀值與解碼
+
+#### 模式一：指定顏色追蹤
+
+<CamModeSection mode="11" title="顏色追蹤 - ① 最多色">
+
+最多讀取 12 色的位置。
+
+| Pybricks Python | 回傳值 |
 | --- | --- |
-| 0 近接 | 相機模式編號，例如 13。 |
-| 1 信標 | 4 通道，每通道依序有方向與距離，共 8 格。 |
-| 2 遙控 | 4 通道各 1 格。 |
+| `cam.read(0)[0]` | modeID |
+| `cam.read(1)[0]` | P1 |
+| `cam.read(1)[1]` | P2 |
+| `cam.read(1)[2]` | P3 |
+| `cam.read(1)[3]` | P4 |
+| `cam.read(1)[4]` | P5 |
+| `cam.read(1)[5]` | P6 |
+| `cam.read(1)[6]` | P7 |
+| `cam.read(1)[7]` | P8 |
+| `cam.read(2)[0]` | P9 |
+| `cam.read(2)[1]` | P10 |
+| `cam.read(2)[2]` | P11 |
+| `cam.read(2)[3]` | P12 |
 
-相機位置是 8×6 格。原始值 X×10＋Y，拆成十位與個位。Y=1 是畫面底部，位置 0 表示沒有目標。切換 EV3 讀值模式約需半秒至一秒多，依環境而異。控制迴圈盡量固定讀同一模式。
+P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置 0 表示未找到。
 
-### ✔ 依相機模式查欄位
+此模式會用到信標與遙控資料，切換 EV3 讀值模式約需 1.1 秒。控制迴圈請選擇需要的欄位。
 
-| 相機模式 | 欄位順序 |
+</CamModeSection>
+
+<CamModeSection mode="12" title="顏色追蹤 - ② 多色">
+
+最多讀取 8 色的位置。
+
+| Pybricks Python | 回傳值 |
 | --- | --- |
-| 11 | 12 色位置。信標放色 1–8，遙控放色 9–12。 |
-| 12 | 信標的 8 格依序放 8 色位置。 |
-| 13 | 信標每通道一色，方向是位置，距離是面積 %。 |
-| 14 | 信標每色四格，依序為位置、W×10＋H、數量、面積 %，共 2 色。 |
-| 21 | 信標放 S1–S8 色相，遙控放 S9–S12。 |
-| 22 | 信標每通道一點，方向為色相，距離的十位和個位分別是飽和、明度的十位。共 4 點。 |
-| 23 | 信標每點四格：色相百位、色相餘數、飽和、明度。共 2 點。 |
-| 30 | 信標放左起前 8 塊色相，遙控通道 1–3 放第 9–11 塊，通道 4 放總數。 |
-| 41–43 | 黑／白／色線共用欄位。信標放近、中、遠偏移、角度、近線寬、路口×10＋旗標、路口距離、標記色號。遙控放左右緣、遠線寬、標記累計。 |
-| 51 | 信標四通道依序為物體 1–4 的代碼／位置，遙控通道 1、2 放物體 5 的代碼／位置，通道 4 放總數。 |
-| 52 | 信標每物體四格：代碼、位置、面積、半角度。共 2 個，半角度×2 後最多取 179°。 |
+| `cam.read(0)[0]` | modeID |
+| `cam.read(1)[0]` | P1 |
+| `cam.read(1)[1]` | P2 |
+| `cam.read(1)[2]` | P3 |
+| `cam.read(1)[3]` | P4 |
+| `cam.read(1)[4]` | P5 |
+| `cam.read(1)[5]` | P6 |
+| `cam.read(1)[6]` | P7 |
+| `cam.read(1)[7]` | P8 |
 
-模式 21、22、30 的非負色相按 0～100 縮放。負值表示黑白灰（−1～−8 由白到灰、−9～−15 黑）。色序中的 0 也可能是紅色，先看總數。模式 23 的原始色相碼要用「百位×100＋餘數」還原。
+P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置 0 表示未找到。
+
+</CamModeSection>
+
+<CamModeSection mode="13" title="顏色追蹤 - ③ 標準">
+
+最多讀取 4 色的位置與面積。
+
+| Pybricks Python | 回傳值 |
+| --- | --- |
+| `cam.read(0)[0]` | modeID |
+| `cam.read(1)[0]` | P1 |
+| `cam.read(1)[1]` | Area1 |
+| `cam.read(1)[2]` | P2 |
+| `cam.read(1)[3]` | Area2 |
+| `cam.read(1)[4]` | P3 |
+| `cam.read(1)[5]` | Area3 |
+| `cam.read(1)[6]` | P4 |
+| `cam.read(1)[7]` | Area4 |
+
+P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置 0 表示未找到。
+
+</CamModeSection>
+
+<CamModeSection mode="14" title="顏色追蹤 - ④ 精細">
+
+最多讀取 2 色的位置與寬高，另可讀取數量與面積。
+
+| Pybricks Python | 回傳值 |
+| --- | --- |
+| `cam.read(0)[0]` | modeID |
+| `cam.read(1)[0]` | P1 |
+| `cam.read(1)[1]` | W1×10+H1 |
+| `cam.read(1)[2]` | Count1 |
+| `cam.read(1)[3]` | Area1 |
+| `cam.read(1)[4]` | P2 |
+| `cam.read(1)[5]` | W2×10+H2 |
+| `cam.read(1)[6]` | Count2 |
+| `cam.read(1)[7]` | Area2 |
+
+P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置 0 表示未找到。
+
+</CamModeSection>
+
+#### 模式二：指定座標取色
+
+<CamModeSection mode="21" title="座標取色 - ① 色相">
+
+最多讀取 12 個取樣點的色相，精度依下方欄位格式。
+
+| Pybricks Python | 回傳值 |
+| --- | --- |
+| `cam.read(0)[0]` | modeID |
+| `cam.read(1)[0]` | Hue1 (EV3) |
+| `cam.read(1)[1]` | Hue2 (EV3) |
+| `cam.read(1)[2]` | Hue3 (EV3) |
+| `cam.read(1)[3]` | Hue4 (EV3) |
+| `cam.read(1)[4]` | Hue5 (EV3) |
+| `cam.read(1)[5]` | Hue6 (EV3) |
+| `cam.read(1)[6]` | Hue7 (EV3) |
+| `cam.read(1)[7]` | Hue8 (EV3) |
+| `cam.read(2)[0]` | Hue9 (EV3) |
+| `cam.read(2)[1]` | Hue10 (EV3) |
+| `cam.read(2)[2]` | Hue11 (EV3) |
+| `cam.read(2)[3]` | Hue12 (EV3) |
+
+Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1～−8 表示白到灰，−9～−15 為黑。
+
+此模式會用到信標與遙控資料，切換 EV3 讀值模式約需 1.1 秒。控制迴圈請選擇需要的欄位。
+
+</CamModeSection>
+
+<CamModeSection mode="22" title="座標取色 - ② 色相＋飽和">
+
+最多讀取 4 個取樣點的色相與飽和，精度依下方欄位格式。
+
+| Pybricks Python | 回傳值 |
+| --- | --- |
+| `cam.read(0)[0]` | modeID |
+| `cam.read(1)[0]` | Hue1 (EV3) |
+| `cam.read(1)[1]` | floor(Sat1÷10)×10+floor(Val1÷10) |
+| `cam.read(1)[2]` | Hue2 (EV3) |
+| `cam.read(1)[3]` | floor(Sat2÷10)×10+floor(Val2÷10) |
+| `cam.read(1)[4]` | Hue3 (EV3) |
+| `cam.read(1)[5]` | floor(Sat3÷10)×10+floor(Val3÷10) |
+| `cam.read(1)[6]` | Hue4 (EV3) |
+| `cam.read(1)[7]` | floor(Sat4÷10)×10+floor(Val4÷10) |
+
+飽和與明度以十位數合併。讀值整除 10 和取餘數後，各乘以 10 為近似值。
+
+Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1～−8 表示白到灰，−9～−15 為黑。
+
+</CamModeSection>
+
+<CamModeSection mode="23" title="座標取色 - ③ 色相＋飽和＋明度">
+
+最多讀取 2 個取樣點的色相、飽和與明度，精度依下方欄位格式。
+
+| Pybricks Python | 回傳值 |
+| --- | --- |
+| `cam.read(0)[0]` | modeID |
+| `cam.read(1)[0]` | floor(Hue1÷100) |
+| `cam.read(1)[1]` | Hue1 % 100 |
+| `cam.read(1)[2]` | Sat1 |
+| `cam.read(1)[3]` | Val1 |
+| `cam.read(1)[4]` | floor(Hue2÷100) |
+| `cam.read(1)[5]` | Hue2 % 100 |
+| `cam.read(1)[6]` | Sat2 |
+| `cam.read(1)[7]` | Val2 |
+
+</CamModeSection>
+
+#### 模式三：依序取色號
+
+<CamModeSection mode="30" title="依序取色號">
+
+讀取由左至右前 11 塊色相與總塊數。
+
+| Pybricks Python | 回傳值 |
+| --- | --- |
+| `cam.read(0)[0]` | modeID |
+| `cam.read(1)[0]` | Hue1 (EV3) |
+| `cam.read(1)[1]` | Hue2 (EV3) |
+| `cam.read(1)[2]` | Hue3 (EV3) |
+| `cam.read(1)[3]` | Hue4 (EV3) |
+| `cam.read(1)[4]` | Hue5 (EV3) |
+| `cam.read(1)[5]` | Hue6 (EV3) |
+| `cam.read(1)[6]` | Hue7 (EV3) |
+| `cam.read(1)[7]` | Hue8 (EV3) |
+| `cam.read(2)[0]` | Hue9 (EV3) |
+| `cam.read(2)[1]` | Hue10 (EV3) |
+| `cam.read(2)[2]` | Hue11 (EV3) |
+| `cam.read(2)[3]` | Total |
+
+Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1～−8 表示白到灰，−9～−15 為黑。
+
+此模式會用到信標與遙控資料，切換 EV3 讀值模式約需 1.1 秒。控制迴圈請選擇需要的欄位。
+
+色相 0 可以代表紅色，請以總塊數判斷前幾格有效。
+
+</CamModeSection>
+
+#### 模式四：循線
+
+<CamModeSection mode="41" title="循線 - ① 黑線">
+
+信標與遙控模式合計提供 12 個循線值。
+
+| Pybricks Python | 回傳值 |
+| --- | --- |
+| `cam.read(0)[0]` | modeID |
+| `cam.read(1)[0]` | Near offset |
+| `cam.read(1)[1]` | Middle offset |
+| `cam.read(1)[2]` | Far offset |
+| `cam.read(1)[3]` | Angle |
+| `cam.read(1)[4]` | Near width % |
+| `cam.read(1)[5]` | Junction×10+Flags |
+| `cam.read(1)[6]` | Junction distance % |
+| `cam.read(1)[7]` | Marker color |
+| `cam.read(2)[0]` | Left edge |
+| `cam.read(2)[1]` | Right edge |
+| `cam.read(2)[2]` | Far width % |
+| `cam.read(2)[3]` | Marker count |
+
+此模式會用到信標與遙控資料，切換 EV3 讀值模式約需 1.1 秒。控制迴圈請選擇需要的欄位。
+
+偏移 −100～100，負值表示線在左；角度 −90～90°。Flags 以近、中、遠分別為 1、2、4 相加。Junction 0～5 為無、十字、T、左、右、盡頭。色線先教目標色 1。
+
+</CamModeSection>
+
+<CamModeSection mode="42" title="循線 - ② 白線">
+
+信標與遙控模式合計提供 12 個循線值。
+
+| Pybricks Python | 回傳值 |
+| --- | --- |
+| `cam.read(0)[0]` | modeID |
+| `cam.read(1)[0]` | Near offset |
+| `cam.read(1)[1]` | Middle offset |
+| `cam.read(1)[2]` | Far offset |
+| `cam.read(1)[3]` | Angle |
+| `cam.read(1)[4]` | Near width % |
+| `cam.read(1)[5]` | Junction×10+Flags |
+| `cam.read(1)[6]` | Junction distance % |
+| `cam.read(1)[7]` | Marker color |
+| `cam.read(2)[0]` | Left edge |
+| `cam.read(2)[1]` | Right edge |
+| `cam.read(2)[2]` | Far width % |
+| `cam.read(2)[3]` | Marker count |
+
+此模式會用到信標與遙控資料，切換 EV3 讀值模式約需 1.1 秒。控制迴圈請選擇需要的欄位。
+
+偏移 −100～100，負值表示線在左；角度 −90～90°。Flags 以近、中、遠分別為 1、2、4 相加。Junction 0～5 為無、十字、T、左、右、盡頭。色線先教目標色 1。
+
+</CamModeSection>
+
+<CamModeSection mode="43" title="循線 - ③ 色線">
+
+信標與遙控模式合計提供 12 個循線值。
+
+| Pybricks Python | 回傳值 |
+| --- | --- |
+| `cam.read(0)[0]` | modeID |
+| `cam.read(1)[0]` | Near offset |
+| `cam.read(1)[1]` | Middle offset |
+| `cam.read(1)[2]` | Far offset |
+| `cam.read(1)[3]` | Angle |
+| `cam.read(1)[4]` | Near width % |
+| `cam.read(1)[5]` | Junction×10+Flags |
+| `cam.read(1)[6]` | Junction distance % |
+| `cam.read(1)[7]` | Marker color |
+| `cam.read(2)[0]` | Left edge |
+| `cam.read(2)[1]` | Right edge |
+| `cam.read(2)[2]` | Far width % |
+| `cam.read(2)[3]` | Marker count |
+
+此模式會用到信標與遙控資料，切換 EV3 讀值模式約需 1.1 秒。控制迴圈請選擇需要的欄位。
+
+偏移 −100～100，負值表示線在左；角度 −90～90°。Flags 以近、中、遠分別為 1、2、4 相加。Junction 0～5 為無、十字、T、左、右、盡頭。色線先教目標色 1。
+
+</CamModeSection>
+
+#### 模式五：物體偵測
+
+<CamModeSection mode="51" title="物體偵測 - ① 物體清單">
+
+讀取前 5 個物體的代碼與位置，另可讀物體總數。
+
+| Pybricks Python | 回傳值 |
+| --- | --- |
+| `cam.read(0)[0]` | modeID |
+| `cam.read(1)[0]` | Code1 |
+| `cam.read(1)[1]` | P1 |
+| `cam.read(1)[2]` | Code2 |
+| `cam.read(1)[3]` | P2 |
+| `cam.read(1)[4]` | Code3 |
+| `cam.read(1)[5]` | P3 |
+| `cam.read(1)[6]` | Code4 |
+| `cam.read(1)[7]` | P4 |
+| `cam.read(2)[0]` | Code5 |
+| `cam.read(2)[1]` | P5 |
+| `cam.read(2)[3]` | Total |
+
+P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置 0 表示未找到。
+
+此模式會用到信標與遙控資料，切換 EV3 讀值模式約需 1.1 秒。控制迴圈請選擇需要的欄位。
+
+只偵測目標色 1–8，物體按面積由大到小排列，位置是質心。Code＝色號×10＋形狀，0 代表無物體。形狀 0～9 為其他、圓、橢圓、三角、正方、長方、五邊、六邊、星、梯形。
+
+</CamModeSection>
+
+<CamModeSection mode="52" title="物體偵測 - ② 物體詳細">
+
+讀取前 2 個物體的詳細資料，欄位如下。
+
+| Pybricks Python | 回傳值 |
+| --- | --- |
+| `cam.read(0)[0]` | modeID |
+| `cam.read(1)[0]` | Code1 |
+| `cam.read(1)[1]` | P1 |
+| `cam.read(1)[2]` | Area1 |
+| `cam.read(1)[3]` | floor((Angle1+1)÷2) |
+| `cam.read(1)[4]` | Code2 |
+| `cam.read(1)[5]` | P2 |
+| `cam.read(1)[6]` | Area2 |
+| `cam.read(1)[7]` | floor((Angle2+1)÷2) |
+
+P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置 0 表示未找到。
+
+角度欄位讀值乘以 2 後最多取 179°，誤差約 1°。
+
+只偵測目標色 1–8，物體按面積由大到小排列，位置是質心。Code＝色號×10＋形狀，0 代表無物體。形狀 0～9 為其他、圓、橢圓、三角、正方、長方、五邊、六邊、星、梯形。
+
+</CamModeSection>
+
+</CamModeAccordion>
 
 ## 03 / 範例程式
 
 ### ✔ 讀取目標色 1 的位置與面積
 
-先教目標色 1，再把相機切到 13（顏色追蹤 ③ 標準）。
+先教目標色 1，再把相機切到 13 (顏色追蹤 - ③ 標準)。
 
 ```python
 #!/usr/bin/env pybricks-micropython
@@ -74,8 +379,39 @@ while True:
     wait(100)
 ```
 
-改讀物體詳細（52）時，將開頭的模式檢查改成 52。信標前四格依序為代碼、位置、面積、半角度。代碼非 0 時，用 divmod(code, 10) 取得色號與形狀，位置也用 divmod(position, 10) 拆開。
+改讀物體詳細 (52)時，將開頭的模式檢查改成 52。信標前四格依序為代碼、位置、面積、半角度。代碼非 0 時，用 divmod(code, 10) 取得色號與形狀，位置也用 divmod(position, 10) 拆開。
 
-## 【Lego】 Lau Xiao 示範影片
+### ✔ 物體詳細模式讀取兩個物體
+
+在相機選 modeID 52。此程式每輪只呼叫一次 cam.read(1)，兩個物體各占四格。
+
+```python
+#!/usr/bin/env pybricks-micropython
+from pybricks.iodevices import LUMPDevice
+from pybricks.parameters import Port
+from pybricks.tools import wait
+
+cam = LUMPDevice(Port.S1)
+if cam.read(0)[0] != 52:
+    raise RuntimeError("Select Object Details (52)")
+
+while True:
+    values = cam.read(1)
+    for index in range(2):
+        start = index * 4
+        code, position, area, half_angle = values[start:start + 4]
+        if code == 0:
+            print(index + 1, "No object")
+            continue
+        color, shape = divmod(code, 10)
+        x, y = divmod(position, 10)
+        angle = min(179, half_angle * 2)
+        print(index + 1, color, shape, x, y, area, angle)
+    wait(100)
+```
+
+## 04 / 【Lego】 Lau Xiao 示範影片
 
 <CamDemoVideos />
+
+[回首頁選擇其他教學](/)
