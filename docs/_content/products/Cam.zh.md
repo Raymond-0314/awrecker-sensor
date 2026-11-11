@@ -73,38 +73,47 @@ SPIKE、EV3、MATRIX 與通用 I²C 各有對應韌體。連接前先確認相�
   :cards="[
     {
       title: '指定顏色追蹤',
+      image: '/images/tutorials/Cam/color-track.svg',
+      imageAlt: '顏色追蹤的位置 X、Y 與色塊寬 W、高 H',
       items: [
-        '自動辨識畫面中的色塊，並取得 <strong>色塊位置</strong>、<strong>色塊數量</strong>、<strong>色塊寬高</strong> 及 <strong>色塊面積占比</strong> 等資訊。',
-        '可預先設定最多 16 種目標顏色，適合<strong>多色物件追蹤與辨識</strong>。'
+        '先在相機上教色，最多儲存 <strong>16 種目標色</strong>，再找出各色的色塊。',
+        '依子模式讀取 <strong>X、Y 位置</strong>、寬高、數量與面積占比。最多色模式適合多色定位，精細模式可用寬高估距離。'
       ]
     },
     {
       title: '指定座標取色',
+      image: '/images/tutorials/Cam/sample-points.svg',
+      imageAlt: '取樣點 S1 至 S20 的位置示意',
       items: [
-        '讀取畫面中 <strong>指定座標點的顏色</strong>。',
-        '取色位置可直接透過機身選單設定，搭配即時畫面確認偵測區域。',
-        '無須辨識整個物體即可快速判斷取樣點顏色。'
+        '設定固定取樣點，讀取該位置的 <strong>色相 H</strong>；依子模式增加飽和度 S 與明度 V。',
+        '可在相機上設定位置，或用 I2C 命令 E1 修改。每點取周圍 <strong>3×3 像素平均</strong>，適合判斷指定格子的顏色。'
       ]
     },
     {
       title: '依序取色號',
+      image: '/images/tutorials/Cam/color-order.svg',
+      imageAlt: '色塊由左至右排序及對應的色相碼',
       items: [
-        ' 自動辨識畫面中 <strong>由左至右排列的色塊</strong>。',
-        '依照排列順序輸出各色塊的 <strong>色相碼</strong> 與 <strong>總數量</strong>，讓機器人快速取得顏色排列資訊。'
+        '將畫面中的色塊 <strong>由左至右排序</strong>，輸出各塊色相碼與總數量，適合排列題。',
+        '此模式沒有子選項。紅色色相碼也是 <strong>0</strong>，請先讀總塊數，確認哪些欄位有效。'
       ]
     },
     {
       title: '循線',
+      image: '/images/tutorials/Cam/line-follow.svg',
+      imageAlt: '近、中、遠掃描列、線偏移與角度示意',
       items: [
-        '透過攝影機即時辨識 <strong>路線位置</strong>、<strong>方向</strong> 與 <strong>路口類型</strong>。',
-        '可協助機器人實現 <strong>精準循線</strong> 及 <strong>自主導航</strong>。'
+        '透過 <strong>近、中、遠三條掃描列</strong>找線，提供偏移、角度、線寬與路口資訊，實際可讀欄位依主機而異。',
+        '可選黑線、白線或色線；色線使用 <strong>目標色 1</strong>。近處偏移可用於 PID，遠處偏移與角度可提前判斷彎道。'
       ]
     },
     {
       title: '物體偵測',
+      image: '/images/tutorials/Cam/objects.svg',
+      imageAlt: '物體依面積排序，代碼由色號與形狀組成',
       items: [
-        '自動偵測物體的 <strong>幾何形狀</strong>、<strong>顏色</strong> 與 <strong>位置</strong>。',
-        '可協助機器人完成 <strong>物件辨識</strong> 及 <strong>分類任務</strong>。'
+        '結合 <strong>目標色 1 ~ 8 與外輪廓</strong>判斷形狀，每個畫面最多偵測 8 個物體，面積大的排在前面。',
+        '<strong>物體代碼＝色號×10＋形狀</strong>，例如 13 是色 1 的三角形，0 表示沒有物體。清單模式提供代碼與位置，詳細模式再增加可讀欄位。'
       ]
     }
   ]"

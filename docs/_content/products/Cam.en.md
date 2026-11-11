@@ -73,38 +73,47 @@ SPIKE, EV3, MATRIX, and general I²C each use their own firmware. Check the came
   :cards="[
     {
       title: 'Color tracking',
+      image: '/images/tutorials/Cam/color-track.svg',
+      imageAlt: 'Color tracking positions X and Y, width W and height H',
       items: [
-        'Detect color blocks in the image and read their <strong>position</strong>, <strong>count</strong>, <strong>width and height</strong>, and <strong>percentage of the image area</strong>.',
-        'Store up to 16 target colors for <strong>tracking and identifying objects of multiple colors</strong>.'
+        'Teach up to <strong>16 target colors</strong>, then locate their color blocks.',
+        'Submodes trade color count for <strong>position, size, count and area</strong> detail. Width and height can help estimate distance.'
       ]
     },
     {
       title: 'Coordinate color sampling',
+      image: '/images/tutorials/Cam/sample-points.svg',
+      imageAlt: 'Sample point positions S1 to S20',
       items: [
-        'Read the <strong>color at a selected coordinate</strong> in the image.',
-        'Set sampling positions from the camera menu and check the detection area in the live preview.',
-        'Identify the color at a sample point without recognizing an entire object.'
+        'Fixed points return <strong>hue H</strong>, with saturation S and value V added by submode.',
+        'Set positions on the camera or with I2C command E1. Each sample averages <strong>3×3 pixels</strong>.'
       ]
     },
     {
       title: 'Color order',
+      image: '/images/tutorials/Cam/color-order.svg',
+      imageAlt: 'Color blocks ordered left to right with hue codes',
       items: [
-        'Detect color blocks arranged <strong>from left to right</strong> in the image.',
-        'Read the <strong>hue codes</strong> in order and the <strong>total count</strong> so the robot can determine the color sequence.'
+        'Return hue codes <strong>from left to right</strong> and the total block count. There are no submodes.',
+        'Red also has hue code <strong>0</strong>. Read the count first to identify valid fields.'
       ]
     },
     {
       title: 'Line following',
+      image: '/images/tutorials/Cam/line-follow.svg',
+      imageAlt: 'Near, middle and far scan rows with offsets and angle',
       items: [
-        'Detect <strong>line position</strong>, <strong>direction</strong>, and <strong>junction type</strong> in real time.',
-        'Support <strong>precise line following</strong> and <strong>autonomous navigation</strong>.'
+        '<strong>Three scan rows</strong> detect offsets, angle, widths and junctions. Available fields depend on the host.',
+        'Choose black, white or colored line; colored line uses <strong>target 1</strong>. Near offset supports PID; far offset anticipates bends.'
       ]
     },
     {
       title: 'Object detection',
+      image: '/images/tutorials/Cam/objects.svg',
+      imageAlt: 'Objects ordered by area, with color and shape codes',
       items: [
-        'Detect the <strong>geometric shape</strong>, <strong>color</strong>, and <strong>position</strong> of objects.',
-        'Support <strong>object recognition</strong> and <strong>sorting tasks</strong>.'
+        'Combine <strong>target colors 1 ~ 8 and outlines</strong>; detect up to eight objects, largest first.',
+        '<strong>Code = color ID × 10 + shape</strong>; 13 means color 1 triangle, 0 means none. Details mode adds fields beyond codes and positions.'
       ]
     }
   ]"

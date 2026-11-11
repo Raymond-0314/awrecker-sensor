@@ -11,6 +11,8 @@ defineProps<{
   horizontal?: boolean
   cards: {
     title: string
+    image?: string
+    imageAlt?: string
     items: string[]
   }[]
 }>()
@@ -87,6 +89,16 @@ onBeforeUnmount(() => {
       >
         <strong>{{ card.title }}</strong>
 
+        <img
+          v-if="card.image"
+          class="feature-illustration"
+          :src="card.image"
+          :alt="card.imageAlt || card.title"
+          loading="lazy"
+          width="480"
+          height="400"
+        >
+
         <small>
           <ul>
             <li
@@ -124,6 +136,17 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+.feature-illustration {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 6 / 5;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
 .feature-scroll-wrapper {
   position: relative;
   width: 100%;
