@@ -20,7 +20,7 @@ const isOpen = computed(() => accordion.activeMode.value === props.mode)
         @click="accordion.toggle(mode)"
       >
         <span class="cam-mode-chevron" :class="{ expanded: isOpen }" aria-hidden="true">▸</span>
-        <span>modeID {{ mode }} · {{ title }}</span>
+        <span>Mode ID {{ mode }} · {{ title }}</span>
       </button>
     </h5>
     <div

@@ -1,3 +1,4 @@
+import CamScreenGallery from './components/CamScreenGallery.vue'
 import { h, onMounted, nextTick, watch } from 'vue'
 import { useRoute } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
@@ -27,6 +28,7 @@ export default {
     }),
 
   enhanceApp({ app }) {
+    app.component('CamScreenGallery', CamScreenGallery)
     app.component('SensorHome', Home)
     app.component('TutorialPicker', TutorialPicker)
     app.component('DownloadButton', DownloadButton)

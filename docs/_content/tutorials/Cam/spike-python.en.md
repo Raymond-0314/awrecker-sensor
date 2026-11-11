@@ -26,7 +26,7 @@ This lesson uses PUPDevice for raw readings. Select the camera mode on the camer
 
 ### ✔ Camera mode overview
 
-MBC UniCam provides five main modes, each with its own submodes. Use the tables and modeID numbers below to find the corresponding programming instructions.
+MBC UniCam provides five main modes, each with its own submodes. Use the tables and Mode ID numbers below to find the corresponding programming instructions.
 
 <CamModeOverview />
 

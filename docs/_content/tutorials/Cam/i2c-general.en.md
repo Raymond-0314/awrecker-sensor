@@ -37,7 +37,7 @@ Use the general I²C firmware at default address 0x4C. The values indexes below 
 
 ### ✔ Camera mode overview
 
-MBC UniCam provides five main modes, each with its own submodes. Use the tables and modeID numbers below to find the corresponding programming instructions.
+MBC UniCam provides five main modes, each with its own submodes. Use the tables and Mode ID numbers below to find the corresponding programming instructions.
 
 <CamModeOverview />
 
@@ -376,7 +376,7 @@ Use `readCamera(0x10, 10, values)` to read the record, then access its fields by
 
 ## 03 / Example programs
 
-Teach target color 1 on the camera. The program sends E0 [1, 3] once in setup() to select modeID 13 (Color tracking - ③ Standard). Set the serial monitor to 115200 baud. Output is X, Y, area %, and count, in that order.
+Teach target color 1 on the camera. The program sends E0 [1, 3] once in setup() to select Mode ID 13 (Color tracking - ③ Standard). Set the serial monitor to 115200 baud. Output is X, Y, area %, and count, in that order.
 
 ```cpp
 #include <Wire.h>

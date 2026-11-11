@@ -8,7 +8,7 @@
 | --- | --- |
 | Controller | • LEGO MINDSTORMS Education EV3 |
 | Sensor | • MBC 8-Channel Line-Following Sensor |
-| Programming Environment | • Pybricks - Python |
+| Programming Environment | • Pybricks - Python `v4.1`{.code-red} |
 
 ### ✔ Preparation
 

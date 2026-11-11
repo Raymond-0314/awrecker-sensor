@@ -8,7 +8,7 @@
 | --- | --- |
 | Controller | • LEGO® Education SPIKE™ Prime Set<br>• LEGO® MINDSTORMS® Robot Inventor |
 | Sensor | • MBC 8-Channel Line-Following Sensor |
-| Programming Environment | • Pybricks - Blocks `v4.0.0`{.code-red} |
+| Programming Environment | • Pybricks - Blocks `v4.1`{.code-red}. |
 
 ### ✔ Preparation
 
@@ -20,14 +20,14 @@ The MBC 8-Channel Line-Following Sensor supports two approaches in Pybricks: `Ba
 
 Download the library if needed:
 <DownloadButton
-  href="/programs/S8/spike-pybricks/MBC_line8_obj_Lib_v400.py"
-  download="MBC_line8_obj_Lib_v400.py"
-  label="v4.0.0 Library"
+  href="/programs/S8/spike-pybricks/MBC_line8_obj_Lib.py"
+  download="MBC_line8_obj_Lib.py"
+  label="v4.1 Library"
 />
 
 :::
 
-1. Turn on your robot and launch Pybricks. Confirm that the Pybricks version is `v4.0.0`{.code-red}.
+1. Turn on your robot and launch Pybricks. Confirm that the Pybricks version is `v4.1`{.code-red}.
 2. Confirm that everything is working properly.
 3. Calibrate the MBC 8-Channel Line-Following Sensor for your track.
 
@@ -77,11 +77,11 @@ Use `Line Position`{.code-blue} and `Line Width`{.code-blue} functions with matc
 
 ### ✔ Function Setup
 
-1. Click the <code class="code-blue"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: inline-block; vertical-align: -0.125em; margin-right: 4px;"><path d="M12 3v12m-5-5 5 5 5-5"></path><path d="M5 16v5h14v-5"></path></svg>v4.0.0 Library</code> button above to download the `MBC 8-Channel Line-Following Sensor Pybricks - SPIKE Library`{.code-blue}.
-2. Confirm that the library filename is `MBC_line8_obj_Lib_v400.py`{.code-blue}.
+1. Click the <code class="code-blue"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: inline-block; vertical-align: -0.125em; margin-right: 4px;"><path d="M12 3v12m-5-5 5 5 5-5"></path><path d="M5 16v5h14v-5"></path></svg>v4.1 Library</code> button above to download the `MBC 8-Channel Line-Following Sensor Pybricks - SPIKE Library`{.code-blue}.
+2. Confirm that the library filename is `MBC_line8_obj_Lib.py`{.code-blue}.
 3. Return to Pybricks and click the `import a file`{.code-blue} button ![Import](/images/tutorials/S8/spike-block/pybricks-import.svg){style="width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"} in the `file explorer`{.code-blue} workspace.
-4. Select and import the `MBC_line8_obj_Lib_v400.py`{.code-blue} library.
-5. Confirm that `MBC_line8_obj_Lib_v400.py`{.code-blue} appears in the `file explorer`{.code-blue} workspace. The library and your main program must be in the same project.
+4. Select and import the `MBC_line8_obj_Lib.py`{.code-blue} library.
+5. Confirm that `MBC_line8_obj_Lib.py`{.code-blue} appears in the `file explorer`{.code-blue} workspace. The library and your main program must be in the same project.
 6. Open your Pybricks program and place the library import and configuration blocks under the `set up`{.code-blue} block, as shown below. Place the remaining drivetrain, motor, and sensor initialization blocks after them under the `set up`{.code-blue} block.
 
 ![Library Setup](/images/tutorials/S8/spike-block/setup.png){style="display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
@@ -92,7 +92,7 @@ Use `Line Position`{.code-blue} and `Line Width`{.code-blue} functions with matc
 
 | Programming Block | Function | Description |
 | --- | --- | --- |
-| ![Import Library](/images/tutorials/S8/spike-block/adv_import.png) | Import Library | • Imports the `MBC_LINE8`{.code-green} class from `MBC_line8_obj_Lib_v400.py`{.code-green}.<br>• The names must match exactly.<br>• `MBC_LINE8`{.code-green} is the class name defined in the library. |
+| ![Import Library](/images/tutorials/S8/spike-block/adv_import.png) | Import Library | • Imports the `MBC_LINE8`{.code-green} class from `MBC_line8_obj_Lib.py`{.code-green}.<br>• The names must match exactly.<br>• `MBC_LINE8`{.code-green} is the class name defined in the library. |
 | ![Library Configuration](/images/tutorials/S8/spike-block/adv_setting.png) | Library Configuration | • `line8`{.code-green} is the name used for subsequent sensor readings.<br>• `MBC_LINE8`{.code-green} is the class name defined in the library.<br>• `3`{.code-green} specifies the connection port of the MBC 8-Channel Line-Following Sensor. `1 ~ 6`{.code-green} correspond to `A ~ F`{.code-green}, respectively.<br>• The `true`{.code-green} argument controls synchronization: `true`{.code-green} enables asynchronous mode, while `false`{.code-green} keeps synchronous mode. |
 
 ::: info ℹ️ Additional Information

@@ -8,8 +8,8 @@
 | 要求 | 符合本教學頁面的種類 |
 | --- | --- |
 | 控制器 | • LEGO® Education SPIKE™ Prime Set<br>• LEGO® MINDSTORMS® Robot Inventor |
-| 感應器 | • MBC 8 路巡跡板 |
-| 程式語言 | • Pybricks - Python `v4.0.0`{.code-red} |
+| 感應器 | • MBC 8 路循跡板 |
+| 程式語言 | • Pybricks - Python `v4.1`{.code-red} |
 
 ### ✔ 事前準備
 ::: warning ⚠️ 注意
@@ -19,19 +19,19 @@ MBC 8 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階�
 
 請根據你的需求決定是否下載函式庫：
 <DownloadButton
-  href="/programs/S8/spike-pybricks/MBC_line8_obj_Lib_v400.py"
-  download="MBC_line8_obj_Lib_v400.py"
-  label="v4.0.0 函式庫"
+  href="/programs/S8/spike-pybricks/MBC_line8_obj_Lib.py"
+  download="MBC_line8_obj_Lib.py"
+  label="v4.1 函式庫"
 />
 
 :::
 
-1. 啟動你的機器人與 Pybricks，確認 Pybricks 版本為 `v4.0.0`{.code-red}。
+1. 啟動你的機器人與 Pybricks，確認 Pybricks 版本為 `v4.1`{.code-red}。
 2. 確認一切運作正常。
-3. MBC 8 路巡跡板的場地光值校正。
+3. MBC 8 路循跡板的場地光值校正。
 
 ::: info ℹ️ 補充資訊
-在 Pybricks 中，S8 巡跡板將以「SPIKE 顏色感應器」模式運作。
+在 Pybricks 中，S8 循跡板將以「SPIKE 顏色感應器」模式運作。
 :::
 
 ## 02 / 基礎控制-前置作業與函數功能說明
@@ -72,14 +72,14 @@ def getLineWidth100():
 
 ## 03 / 進階控制-前置作業與函數功能說明
 ### ✔ 函數設定
-1. 點選上方 <code class="code-blue"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: inline-block; vertical-align: -0.125em; margin-right: 4px;"><path d="M12 3v12m-5-5 5 5 5-5"></path><path d="M5 16v5h14v-5"></path></svg>v4.0.0 函式庫</code> 按鈕下載 `MBC 8 路循跡板 Pybricks - SPIKE 函式庫`{.code-blue}。
-2. 確認函式庫檔名為 `MBC_line8_obj_Lib_v400.py`{.code-blue}。
+1. 點選上方 <code class="code-blue"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: inline-block; vertical-align: -0.125em; margin-right: 4px;"><path d="M12 3v12m-5-5 5 5 5-5"></path><path d="M5 16v5h14v-5"></path></svg>v4.1 函式庫</code> 按鈕下載 `MBC 8 路循跡板 Pybricks - SPIKE 函式庫`{.code-blue}。
+2. 確認函式庫檔名為 `MBC_line8_obj_Lib.py`{.code-blue}。
 3. 回到 Pybricks，在 `file explorer`{.code-blue} 工作區中點選 `import a file`{.code-blue} 按鈕 ![匯入](/images/tutorials/S8/spike-block/pybricks-import.svg){style="width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"}。
-4. 選擇 `MBC_line8_obj_Lib_v400.py`{.code-blue} 函式庫並匯入。
-5. 確認 `file explorer`{.code-blue} 工作區中出現 `MBC_line8_obj_Lib_v400.py`{.code-blue}。`MBC_line8_obj_Lib_v400.py`{.code-blue} 與你的主程式必須放在同一個專案列表下。
+4. 選擇 `MBC_line8_obj_Lib.py`{.code-blue} 函式庫並匯入。
+5. 確認 `file explorer`{.code-blue} 工作區中出現 `MBC_line8_obj_Lib.py`{.code-blue}。`MBC_line8_obj_Lib.py`{.code-blue} 與你的主程式必須放在同一個專案列表下。
 6. 開啟你的 Pybricks 程式，輸入函式庫匯入與設定程式碼，如下圖。其餘底盤與馬達感應器初始化程式碼則接續放置。
 ```python
-from MBC_line8_obj_Lib_v400 import MBC_LINE8
+from MBC_line8_obj_Lib import MBC_LINE8
 line8 = MBC_LINE8(3, True)
 ```
 
@@ -88,8 +88,8 @@ line8 = MBC_LINE8(3, True)
 #### set up
 | 程式碼 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `from MBC_line8_obj_Lib_v400 import MBC_LINE8`{.code-blue} | 導入函式庫 | • 從檔案`MBC_line8_obj_Lib_v400.py`{.code-green} 中匯入 `MBC_LINE8`{.code-green} 類別。<br>• 名稱需要完全相同。<br>• `MBC_LINE8`{.code-green} 為函式庫中設定的類別 (class) 名稱。 |
-| `line8 = MBC_LINE8(3, True)`{.code-blue} | 函式庫設定 | • `line8`{.code-green} 為後續使用數值讀取功能時使用的名稱。<br>• `MBC_LINE8`{.code-green} 為函式庫中設定的類別 (class) 名稱。<br>• `3`{.code-green} 為 MBC 8 路巡跡板的連接埠 (port)，`1 ~ 6`{.code-green} 依序為 `A ~ F`{.code-green}。<br>• `true`{.code-green} 為同步模式設定，`True`{.code-green} 啟動非同步模式，`False`{.code-green} 則保持同步模式。 |
+| `from MBC_line8_obj_Lib import MBC_LINE8`{.code-blue} | 導入函式庫 | • 從檔案`MBC_line8_obj_Lib.py`{.code-green} 中匯入 `MBC_LINE8`{.code-green} 類別。<br>• 名稱需要完全相同。<br>• `MBC_LINE8`{.code-green} 為函式庫中設定的類別 (class) 名稱。 |
+| `line8 = MBC_LINE8(3, True)`{.code-blue} | 函式庫設定 | • `line8`{.code-green} 為後續使用數值讀取功能時使用的名稱。<br>• `MBC_LINE8`{.code-green} 為函式庫中設定的類別 (class) 名稱。<br>• `3`{.code-green} 為 MBC 8 路循跡板的連接埠 (port)，`1 ~ 6`{.code-green} 依序為 `A ~ F`{.code-green}。<br>• `true`{.code-green} 為同步模式設定，`True`{.code-green} 啟動非同步模式，`False`{.code-green} 則保持同步模式。 |
 
 ::: info ℹ️ 補充資訊
 - 同步模式設定說明：

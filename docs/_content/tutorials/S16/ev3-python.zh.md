@@ -1,5 +1,3 @@
-##
-
 # 使用教學
 
 ## 01 / 環境準備
@@ -8,8 +6,8 @@
 | 要求 | 符合本教學頁面的種類 |
 | --- | --- |
 | 控制器 | • LEGO MINDSTORMS Education EV3 |
-| 感應器 | • MBC 16 路巡跡板 |
-| 程式語言 | • Pybricks - Blocks `v4.0.0`{.code-red} |
+| 感應器 | • MBC 16 路循跡板 |
+| 程式語言 | • Pybricks - Blocks `v4.1`{.code-red} |
 
 ### ✔ 事前準備
 ::: warning ⚠️ 注意
@@ -27,9 +25,9 @@ MBC 16 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階
 
 :::
 
-1. 啟動你的機器人與 Pybricks Blocks `v4.0.0`{.code-red}。
+1. 啟動你的機器人與 Pybricks Blocks `v4.1`{.code-red}。
 2. 確認一切運作正常。
-3. MBC 16 路巡跡板的場地光值校正。
+3. MBC 16 路循跡板的場地光值校正。
 
 ## 02 / 基礎控制-函數功能說明
 | 程式碼 | 功能 | 數值意義說明 |
@@ -64,7 +62,7 @@ line_init_port_multitask(4, False)
 | 程式碼 | 功能 | 數值意義說明 |
 | --- | --- | --- |
 | `from MBC_line16_EV3_Lib import(...)` | 導入函式庫 | • 從檔案 `MBC_line16_EV3_Lib.py`{.code-green} 中匯入以下函式： `line_init_port_multitask()`{.code-green}、`line_pos16()`{.code-green}、`line_ir_ch()`{.code-green}、`line_pos100()`{.code-green}、`line_width()`{.code-green}、`line_edge_l()`{.code-green}、`line_edge_r()`{.code-green}。<br>• 名稱需要完全相同。 |
-| `line_init_port_multitask(4, False)` | 函式庫設定 | • `call`{.code-green} 與 `false`{.code-green} 為同步模式設定，`await/true`{.code-green} 啟動非同步模式，`call/false`{.code-green} 則保持同步模式。<br>• `line16`{.code-green} 為後續使用數值讀取功能時使用的名稱。<br>• `4`{.code-green} 為 MBC 16 路巡跡板的連接埠 (port)，`1 ~ 4`{.code-green} 依序為 `A ~ D`{.code-green}。 |
+| `line_init_port_multitask(4, False)` | 函式庫設定 | • `call`{.code-green} 與 `false`{.code-green} 為同步模式設定，`await/true`{.code-green} 啟動非同步模式，`call/false`{.code-green} 則保持同步模式。<br>• `line16`{.code-green} 為後續使用數值讀取功能時使用的名稱。<br>• `4`{.code-green} 為 MBC 16 路循跡板的連接埠 (port)，`1 ~ 4`{.code-green} 依序為 `A ~ D`{.code-green}。 |
 
 ::: info ℹ️ 補充資訊
 - 同步模式設定說明：

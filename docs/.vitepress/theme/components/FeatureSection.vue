@@ -8,6 +8,7 @@ import {
 import { useData } from 'vitepress'
 
 defineProps<{
+  horizontal?: boolean
   cards: {
     title: string
     items: string[]
@@ -70,10 +71,13 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="feature-scroll-wrapper">
+  <div class="feature-scroll-wrapper" :class="{ horizontal }">
     <div
       ref="scrollArea"
       class="feature-grid"
+      :tabindex="horizontal ? 0 : undefined"
+      :role="horizontal ? 'region' : undefined"
+      :aria-label="horizontal ? (isEnglish ? 'Feature cards, scroll horizontally' : '功能卡片，可左右滑動') : undefined"
       @scroll.passive="updateArrows"
     >
       <div
@@ -128,8 +132,32 @@ onBeforeUnmount(() => {
 
 /* 桌面維持原本卡片排版，不顯示箭頭 */
 @media (min-width: 768px) {
-  .feature-scroll-wrapper > .table-scroll-btn {
+  .feature-scroll-wrapper:not(.horizontal) > .table-scroll-btn {
     display: none !important;
   }
+}
+
+.feature-scroll-wrapper.horizontal .feature-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  padding: 2px;
+}
+.feature-scroll-wrapper.horizontal .feature-grid::-webkit-scrollbar { display: none; }
+.feature-scroll-wrapper.horizontal .feature-box {
+  flex: 0 0 min(300px, 85%);
+  width: 300px;
+  min-width: 0;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+}
+.feature-scroll-wrapper.horizontal .feature-grid:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
 }
 </style>

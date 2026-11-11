@@ -90,7 +90,7 @@ const groups = [
         <table data-static-table>
           <thead>
             <tr>
-              <th scope="col">modeID</th>
+              <th scope="col">Mode ID</th>
               <th scope="col">{{ en ? 'Submode' : '子模式' }}</th>
               <th scope="col">{{ en ? 'View' : '檢視' }}</th>
             </tr>

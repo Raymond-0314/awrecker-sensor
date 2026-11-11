@@ -3,7 +3,7 @@ from pybricks.parameters import Direction, Port
 from pybricks.pupdevices import Motor
 from pybricks.tools import multitask, run_task, wait
 
-from MBC_line8_obj_Lib_v400 import MBC_LINE8
+from MBC_line8_obj_Lib import MBC_LINE8
 
 # Set up.
 line8 = MBC_LINE8(3, True)

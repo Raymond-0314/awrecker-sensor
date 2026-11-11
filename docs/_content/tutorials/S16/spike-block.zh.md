@@ -8,8 +8,8 @@
 | 要求 | 符合本教學頁面的種類 |
 | --- | --- |
 | 控制器 | • LEGO® Education SPIKE™ Prime Set<br>• LEGO® MINDSTORMS® Robot Inventor |
-| 感應器 | • MBC 16 路巡跡板 |
-| 程式語言 | • Pybricks - Blocks `v4.0.0`{.code-red} |
+| 感應器 | • MBC 16 路循跡板 |
+| 程式語言 | • Pybricks - Blocks `v4.1`{.code-red} |
 
 ### ✔ 事前準備
 ::: warning ⚠️ 注意
@@ -26,12 +26,12 @@ MBC 16 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階
 
 :::
 
-1. 啟動你的機器人與 Pybricks，確認 Pybricks 版本為 `v4.0.0`{.code-red}。
+1. 啟動你的機器人與 Pybricks，確認 Pybricks 版本為 `v4.1`{.code-red}。
 2. 確認一切運作正常。
-3. MBC 16 路巡跡板的場地光值校正。
+3. MBC 16 路循跡板的場地光值校正。
 
 ::: info ℹ️ 補充資訊
-在 Pybricks 中，S16 巡跡板將以「SPIKE 顏色感應器」模式運作。
+在 Pybricks 中，S16 循跡板將以「SPIKE 顏色感應器」模式運作。
 :::
 
 
@@ -78,7 +78,7 @@ MBC 16 路循跡板在 Pybricks 上分成 `基礎控制`{.code-blue} 與 `進階
 | 官方圖形指令 | 功能 | 數值意義說明 |
 | --- | --- | --- |
 | ![導入函式庫](/images/tutorials/S16/spike-block/adv_import.png) | 導入函式庫 | • 從檔案 `MBC_line16_obj_Lib.py`{.code-green} 中匯入 `MBC_LINE16`{.code-green} 類別。<br>• 名稱需要完全相同。<br>• `MBC_LINE16`{.code-green} 為函式庫中設定的類別 (class) 名稱。 |
-| ![函式庫設定](/images/tutorials/S16/spike-block/adv_setting.png) | 函式庫設定 | • `line16`{.code-green} 為後續使用數值讀取功能時使用的名稱。<br>• `MBC_LINE16`{.code-green} 為函式庫中設定的類別 (class) 名稱。<br>• `3`{.code-green} 為 MBC 16 路巡跡板的連接埠 (port)，`1 ~ 6`{.code-green} 依序為 `A ~ F`{.code-green}。<br>• `true`{.code-green} 為同步模式設定，`true`{.code-green} 啟動非同步模式，`false`{.code-green} 則保持同步模式。 |
+| ![函式庫設定](/images/tutorials/S16/spike-block/adv_setting.png) | 函式庫設定 | • `line16`{.code-green} 為後續使用數值讀取功能時使用的名稱。<br>• `MBC_LINE16`{.code-green} 為函式庫中設定的類別 (class) 名稱。<br>• `3`{.code-green} 為 MBC 16 路循跡板的連接埠 (port)，`1 ~ 6`{.code-green} 依序為 `A ~ F`{.code-green}。<br>• `true`{.code-green} 為同步模式設定，`true`{.code-green} 啟動非同步模式，`false`{.code-green} 則保持同步模式。 |
 
 ::: info ℹ️ 補充資訊
 - 同步模式設定說明：

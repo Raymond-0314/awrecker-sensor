@@ -1,9 +1,9 @@
 ---
-title: "MBC 16 路巡跡板 · SPIKE · Pybricks Block"
+title: "MBC 16 路循跡板 · SPIKE · Pybricks Block"
 ---
 <!-- Generated route. Edit docs/_content and docs/_data. -->
 
-# MBC 16 路巡跡板 · SPIKE · Pybricks Block
+# MBC 16 路循跡板 · SPIKE · Pybricks Block
 
 <!--@include: ../../_content/products/S16.zh.md-->
 

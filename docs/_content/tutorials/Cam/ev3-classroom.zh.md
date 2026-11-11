@@ -19,14 +19,14 @@
 ## 02 / 函數與功能說明
 
 ::: info ℹ️ 補充資訊
-在 EV3 Classroom 選擇 Infrared Sensor 數值積木，感應器埠設為 1。proximity 對應相機 modeID；beacon heading 與 beacon distance 要選通道 1–4；remote 對應遙控欄位。下表直接列出各積木與通道。
+在 EV3 Classroom 選擇 Infrared Sensor 數值積木，感應器埠設為 1。proximity 對應相機 Mode ID；beacon heading 與 beacon distance 要選通道 1–4；remote 對應遙控欄位。下表直接列出各積木與通道。
 :::
 
 <CamModeAccordion>
 
 ### ✔ 相機模式概覽
 
-MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分多個子模式，請參考下表說明與 modeID 編號，查找程式說明。
+MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分多個子模式，請參考下表說明與 Mode ID 編號，查找程式說明。
 
 <CamModeOverview />
 
@@ -40,7 +40,7 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 | EV3 Classroom 積木 | 回傳值 |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | P1 |
 | `beacon distance` (channel 1) | P2 |
 | `beacon heading` (channel 2) | P3 |
@@ -66,7 +66,7 @@ P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置
 
 | EV3 Classroom 積木 | 回傳值 |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | P1 |
 | `beacon distance` (channel 1) | P2 |
 | `beacon heading` (channel 2) | P3 |
@@ -86,7 +86,7 @@ P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置
 
 | EV3 Classroom 積木 | 回傳值 |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | P1 |
 | `beacon distance` (channel 1) | Area1 |
 | `beacon heading` (channel 2) | P2 |
@@ -106,7 +106,7 @@ P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置
 
 | EV3 Classroom 積木 | 回傳值 |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | P1 |
 | `beacon distance` (channel 1) | W1×10+H1 |
 | `beacon heading` (channel 2) | Count1 |
@@ -128,7 +128,7 @@ P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置
 
 | EV3 Classroom 積木 | 回傳值 |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Hue1 (EV3) |
 | `beacon distance` (channel 1) | Hue2 (EV3) |
 | `beacon heading` (channel 2) | Hue3 (EV3) |
@@ -142,7 +142,7 @@ P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置
 | `remote` (channel 3) | Hue11 (EV3) |
 | `remote` (channel 4) | Hue12 (EV3) |
 
-Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1～−8 表示白到灰，−9～−15 為黑。
+Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1 ~ −8 表示白到灰，−9 ~ −15 為黑。
 
 此模式會用到信標與遙控資料，切換 EV3 讀值模式約需 1.1 秒。控制迴圈請選擇需要的欄位。
 
@@ -154,7 +154,7 @@ Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1�
 
 | EV3 Classroom 積木 | 回傳值 |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Hue1 (EV3) |
 | `beacon distance` (channel 1) | floor(Sat1÷10)×10+floor(Val1÷10) |
 | `beacon heading` (channel 2) | Hue2 (EV3) |
@@ -166,7 +166,7 @@ Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1�
 
 飽和與明度以十位數合併。讀值整除 10 和取餘數後，各乘以 10 為近似值。
 
-Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1～−8 表示白到灰，−9～−15 為黑。
+Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1 ~ −8 表示白到灰，−9 ~ −15 為黑。
 
 </CamModeSection>
 
@@ -176,7 +176,7 @@ Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1�
 
 | EV3 Classroom 積木 | 回傳值 |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | floor(Hue1÷100) |
 | `beacon distance` (channel 1) | Hue1 % 100 |
 | `beacon heading` (channel 2) | Sat1 |
@@ -196,7 +196,7 @@ Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1�
 
 | EV3 Classroom 積木 | 回傳值 |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Hue1 (EV3) |
 | `beacon distance` (channel 1) | Hue2 (EV3) |
 | `beacon heading` (channel 2) | Hue3 (EV3) |
@@ -210,7 +210,7 @@ Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1�
 | `remote` (channel 3) | Hue11 (EV3) |
 | `remote` (channel 4) | Total |
 
-Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1～−8 表示白到灰，−9～−15 為黑。
+Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1 ~ −8 表示白到灰，−9 ~ −15 為黑。
 
 此模式會用到信標與遙控資料，切換 EV3 讀值模式約需 1.1 秒。控制迴圈請選擇需要的欄位。
 
@@ -226,7 +226,7 @@ Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1�
 
 | EV3 Classroom 積木 | 回傳值 |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Near offset |
 | `beacon distance` (channel 1) | Middle offset |
 | `beacon heading` (channel 2) | Far offset |
@@ -242,7 +242,7 @@ Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1�
 
 此模式會用到信標與遙控資料，切換 EV3 讀值模式約需 1.1 秒。控制迴圈請選擇需要的欄位。
 
-偏移 −100～100，負值表示線在左；角度 −90～90°。Flags 以近、中、遠分別為 1、2、4 相加。Junction 0～5 為無、十字、T、左、右、盡頭。色線先教目標色 1。
+偏移 −100 ~ 100，負值表示線在左；角度 −90 ~ 90°。Flags 以近、中、遠分別為 1、2、4 相加。Junction 0 ~ 5 為無、十字、T、左、右、盡頭。色線先教目標色 1。
 
 </CamModeSection>
 
@@ -252,7 +252,7 @@ Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1�
 
 | EV3 Classroom 積木 | 回傳值 |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Near offset |
 | `beacon distance` (channel 1) | Middle offset |
 | `beacon heading` (channel 2) | Far offset |
@@ -268,7 +268,7 @@ Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1�
 
 此模式會用到信標與遙控資料，切換 EV3 讀值模式約需 1.1 秒。控制迴圈請選擇需要的欄位。
 
-偏移 −100～100，負值表示線在左；角度 −90～90°。Flags 以近、中、遠分別為 1、2、4 相加。Junction 0～5 為無、十字、T、左、右、盡頭。色線先教目標色 1。
+偏移 −100 ~ 100，負值表示線在左；角度 −90 ~ 90°。Flags 以近、中、遠分別為 1、2、4 相加。Junction 0 ~ 5 為無、十字、T、左、右、盡頭。色線先教目標色 1。
 
 </CamModeSection>
 
@@ -278,7 +278,7 @@ Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1�
 
 | EV3 Classroom 積木 | 回傳值 |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Near offset |
 | `beacon distance` (channel 1) | Middle offset |
 | `beacon heading` (channel 2) | Far offset |
@@ -294,7 +294,7 @@ Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1�
 
 此模式會用到信標與遙控資料，切換 EV3 讀值模式約需 1.1 秒。控制迴圈請選擇需要的欄位。
 
-偏移 −100～100，負值表示線在左；角度 −90～90°。Flags 以近、中、遠分別為 1、2、4 相加。Junction 0～5 為無、十字、T、左、右、盡頭。色線先教目標色 1。
+偏移 −100 ~ 100，負值表示線在左；角度 −90 ~ 90°。Flags 以近、中、遠分別為 1、2、4 相加。Junction 0 ~ 5 為無、十字、T、左、右、盡頭。色線先教目標色 1。
 
 </CamModeSection>
 
@@ -306,7 +306,7 @@ Hue (EV3) 的非負值為 0–100，約以讀值×240÷100 還原色相。−1�
 
 | EV3 Classroom 積木 | 回傳值 |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Code1 |
 | `beacon distance` (channel 1) | P1 |
 | `beacon heading` (channel 2) | Code2 |
@@ -323,7 +323,7 @@ P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置
 
 此模式會用到信標與遙控資料，切換 EV3 讀值模式約需 1.1 秒。控制迴圈請選擇需要的欄位。
 
-只偵測目標色 1–8，物體按面積由大到小排列，位置是質心。Code＝色號×10＋形狀，0 代表無物體。形狀 0～9 為其他、圓、橢圓、三角、正方、長方、五邊、六邊、星、梯形。
+只偵測目標色 1–8，物體按面積由大到小排列，位置是質心。Code＝色號×10＋形狀，0 代表無物體。形狀 0 ~ 9 為其他、圓、橢圓、三角、正方、長方、五邊、六邊、星、梯形。
 
 </CamModeSection>
 
@@ -333,7 +333,7 @@ P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置
 
 | EV3 Classroom 積木 | 回傳值 |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Code1 |
 | `beacon distance` (channel 1) | P1 |
 | `beacon heading` (channel 2) | Area1 |
@@ -347,7 +347,7 @@ P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置
 
 角度欄位讀值乘以 2 後最多取 179°，誤差約 1°。
 
-只偵測目標色 1–8，物體按面積由大到小排列，位置是質心。Code＝色號×10＋形狀，0 代表無物體。形狀 0～9 為其他、圓、橢圓、三角、正方、長方、五邊、六邊、星、梯形。
+只偵測目標色 1–8，物體按面積由大到小排列，位置是質心。Code＝色號×10＋形狀，0 代表無物體。形狀 0 ~ 9 為其他、圓、橢圓、三角、正方、長方、五邊、六邊、星、梯形。
 
 </CamModeSection>
 
@@ -357,7 +357,7 @@ P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置
 
 ### ✔ 讀取目標色 1 的位置與面積
 
-相機接感應器埠 1，先教目標色 1，再於相機選單選 modeID 13 (顏色追蹤 - ③ 標準)。
+相機接感應器埠 1，先教目標色 1，再於相機選單選 Mode ID 13 (顏色追蹤 - ③ 標準)。
 
 1. 在程式啟動時讀 Infrared Sensor 的 proximity，確認數值為 13。
 2. 建立 position、area、X、Y 變數，新增重複執行迴圈。
@@ -365,7 +365,7 @@ P＝X×10＋Y，位置與寬高使用 8×6 格。EV3 的 Y 向上增加，位置
 4. position＝0 時顯示「未找到」。其餘以數學積木計算 X＝向下取整(position÷10)、Y＝position 除以 10 的餘數。
 5. 顯示 X、Y 和 area，等待 0.1 秒再重複。例：position＝43、area＝18，代表第 4 欄、第 3 列，面積 18%。EV3 的 Y＝1 在畫面底部。
 
-迴圈只使用信標值。近接的 modeID 檢查放在啟動時執行一次，避免每輪切換紅外線模式造成約 1.1 秒等待。
+迴圈只使用信標值。近接的 Mode ID 檢查放在啟動時執行一次，避免每輪切換紅外線模式造成約 1.1 秒等待。
 
 ## 04 / 【Lego】 Lau Xiao 示範影片
 

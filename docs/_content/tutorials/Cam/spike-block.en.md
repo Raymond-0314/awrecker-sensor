@@ -26,7 +26,7 @@ Use the built-in Color Sensor blocks. Store reflection and ambient readings in v
 
 ### ✔ Camera mode overview
 
-MBC UniCam provides five main modes, each with its own submodes. Use the tables and modeID numbers below to find the corresponding programming instructions.
+MBC UniCam provides five main modes, each with its own submodes. Use the tables and Mode ID numbers below to find the corresponding programming instructions.
 
 <CamModeOverview />
 

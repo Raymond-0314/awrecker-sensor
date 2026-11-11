@@ -1,9 +1,9 @@
 ---
-title: "MBC 16 路巡跡板 · EV3 · EV3 Classroom APP"
+title: "MBC 16 路循跡板 · EV3 · EV3 Classroom APP"
 ---
 <!-- Generated route. Edit docs/_content and docs/_data. -->
 
-# MBC 16 路巡跡板 · EV3 · EV3 Classroom APP
+# MBC 16 路循跡板 · EV3 · EV3 Classroom APP
 
 <!--@include: ../../_content/products/S16.zh.md-->
 

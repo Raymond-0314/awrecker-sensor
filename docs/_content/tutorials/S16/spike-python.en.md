@@ -8,7 +8,7 @@
 | --- | --- |
 | Controller | • LEGO® Education SPIKE™ Prime Set<br>• LEGO® MINDSTORMS® Robot Inventor |
 | Sensor | • MBC 16-Channel Line-Following Sensor |
-| Programming Environment | • Pybricks - Python `v4.0.0`{.code-red} |
+| Programming Environment | • Pybricks - Python `v4.1`{.code-red} |
 
 ### ✔ Preparation
 
@@ -27,7 +27,7 @@ Download the library if needed:
 
 :::
 
-1. Turn on your robot and launch Pybricks. Confirm that the Pybricks version is `v4.0.0`{.code-red}.
+1. Turn on your robot and launch Pybricks. Confirm that the Pybricks version is `v4.1`{.code-red}.
 2. Confirm that everything is working properly.
 3. Calibrate the MBC 16-Channel Line-Following Sensor for your track.
 

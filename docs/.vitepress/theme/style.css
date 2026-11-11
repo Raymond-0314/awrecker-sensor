@@ -2499,3 +2499,16 @@ body:has(.sensor-home) {
 .vp-doc .feature-grid::-webkit-scrollbar {
   display: none;
 }
+
+/* Cam firmware screen illustrations */
+.cam-screen-wrapper { position: relative; min-width: 0; margin: 24px 0; }
+.cam-screen-gallery { display: flex; flex-wrap: nowrap; justify-content: flex-start; gap: 20px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity; padding: 2px; }
+.cam-screen-gallery::-webkit-scrollbar { display: none; }
+.cam-screen-gallery:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 2px; }
+.cam-screen-gallery figure { flex: 0 0 min(260px, 85%); width: 260px; height: 380px; box-sizing: border-box; }
+.cam-screen-gallery figure > p { height: 174px; display: flex; align-items: center; }
+.cam-screen-gallery figure { margin: 0; padding: 12px; scroll-snap-align: start; border: 1px solid var(--vp-c-divider); border-radius: 12px; background: var(--vp-c-bg-soft); }
+.cam-screen-gallery figure p { margin: 0 0 12px; }
+.cam-screen-gallery img { display: block; width: 100%; max-width: 336px; height: auto; margin: 0 auto; image-rendering: auto; }
+.cam-screen-gallery figcaption { font-size: 14px; line-height: 1.7; color: var(--vp-c-text-2); }
+.cam-screen-gallery figcaption strong { color: var(--vp-c-text-1); }

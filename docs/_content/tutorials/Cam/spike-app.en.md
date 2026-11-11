@@ -26,7 +26,7 @@ The official app shows UniCam as a Color Sensor. Use numeric reporter blocks und
 
 ### ✔ Camera mode overview
 
-MBC UniCam provides five main modes, each with its own submodes. Use the tables and modeID numbers below to find the corresponding programming instructions.
+MBC UniCam provides five main modes, each with its own submodes. Use the tables and Mode ID numbers below to find the corresponding programming instructions.
 
 <CamModeOverview />
 

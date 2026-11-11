@@ -19,14 +19,14 @@
 ## 02 / Functions and data
 
 ::: info ℹ️ Note
-In EV3 Classroom, use the Infrared Sensor numeric reporter blocks on sensor port 1. proximity reports camera modeID; select channels 1–4 for beacon heading and beacon distance. remote provides the Remote fields. Each table identifies the block and channel.
+In EV3 Classroom, use the Infrared Sensor numeric reporter blocks on sensor port 1. proximity reports camera Mode ID; select channels 1–4 for beacon heading and beacon distance. remote provides the Remote fields. Each table identifies the block and channel.
 :::
 
 <CamModeAccordion>
 
 ### ✔ Camera mode overview
 
-MBC UniCam provides five main modes, each with its own submodes. Use the tables and modeID numbers below to find the corresponding programming instructions.
+MBC UniCam provides five main modes, each with its own submodes. Use the tables and Mode ID numbers below to find the corresponding programming instructions.
 
 <CamModeOverview />
 
@@ -40,7 +40,7 @@ Read positions for up to 12 targets.
 
 | EV3 Classroom block | Reading |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | P1 |
 | `beacon distance` (channel 1) | P2 |
 | `beacon heading` (channel 2) | P3 |
@@ -66,7 +66,7 @@ Read positions for up to 8 targets.
 
 | EV3 Classroom block | Reading |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | P1 |
 | `beacon distance` (channel 1) | P2 |
 | `beacon heading` (channel 2) | P3 |
@@ -86,7 +86,7 @@ Read positions for up to 4 targets and areas.
 
 | EV3 Classroom block | Reading |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | P1 |
 | `beacon distance` (channel 1) | Area1 |
 | `beacon heading` (channel 2) | P2 |
@@ -106,7 +106,7 @@ Read positions and sizes for up to 2 targets, with counts available and areas.
 
 | EV3 Classroom block | Reading |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | P1 |
 | `beacon distance` (channel 1) | W1×10+H1 |
 | `beacon heading` (channel 2) | Count1 |
@@ -128,7 +128,7 @@ Read hue for up to 12 sample points, at the precision described below.
 
 | EV3 Classroom block | Reading |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Hue1 (EV3) |
 | `beacon distance` (channel 1) | Hue2 (EV3) |
 | `beacon heading` (channel 2) | Hue3 (EV3) |
@@ -154,7 +154,7 @@ Read hue and saturation for up to 4 sample points, at the precision described be
 
 | EV3 Classroom block | Reading |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Hue1 (EV3) |
 | `beacon distance` (channel 1) | floor(Sat1÷10)×10+floor(Val1÷10) |
 | `beacon heading` (channel 2) | Hue2 (EV3) |
@@ -176,7 +176,7 @@ Read hue, saturation, and brightness for up to 2 sample points, at the precision
 
 | EV3 Classroom block | Reading |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | floor(Hue1÷100) |
 | `beacon distance` (channel 1) | Hue1 % 100 |
 | `beacon heading` (channel 2) | Sat1 |
@@ -196,7 +196,7 @@ Read the first 11 hues from left to right and the total block count.
 
 | EV3 Classroom block | Reading |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Hue1 (EV3) |
 | `beacon distance` (channel 1) | Hue2 (EV3) |
 | `beacon heading` (channel 2) | Hue3 (EV3) |
@@ -226,7 +226,7 @@ Beacon and Remote together provide 12 line-following values.
 
 | EV3 Classroom block | Reading |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Near offset |
 | `beacon distance` (channel 1) | Middle offset |
 | `beacon heading` (channel 2) | Far offset |
@@ -252,7 +252,7 @@ Beacon and Remote together provide 12 line-following values.
 
 | EV3 Classroom block | Reading |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Near offset |
 | `beacon distance` (channel 1) | Middle offset |
 | `beacon heading` (channel 2) | Far offset |
@@ -278,7 +278,7 @@ Beacon and Remote together provide 12 line-following values.
 
 | EV3 Classroom block | Reading |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Near offset |
 | `beacon distance` (channel 1) | Middle offset |
 | `beacon heading` (channel 2) | Far offset |
@@ -306,7 +306,7 @@ Read codes and positions for the first 5 objects, plus the total count.
 
 | EV3 Classroom block | Reading |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Code1 |
 | `beacon distance` (channel 1) | P1 |
 | `beacon heading` (channel 2) | Code2 |
@@ -333,7 +333,7 @@ Read detailed data for the first 2 objects using the fields below.
 
 | EV3 Classroom block | Reading |
 | --- | --- |
-| `proximity` (port 1) | modeID |
+| `proximity` (port 1) | Mode ID |
 | `beacon heading` (channel 1) | Code1 |
 | `beacon distance` (channel 1) | P1 |
 | `beacon heading` (channel 2) | Area1 |
@@ -357,7 +357,7 @@ Detection uses target colors 1–8. Objects are ordered largest first and positi
 
 ### ✔ Read target 1 position and area
 
-Connect the camera to sensor port 1, teach target color 1, and select modeID 13 (Color tracking - ③ Standard) on the camera.
+Connect the camera to sensor port 1, teach target color 1, and select Mode ID 13 (Color tracking - ③ Standard) on the camera.
 
 1. At program startup, read Infrared Sensor proximity and check that it is 13.
 2. Create position, area, X, and Y variables and add a forever loop.
@@ -365,7 +365,7 @@ Connect the camera to sensor port 1, teach target color 1, and select modeID 13 
 4. Display “No target” when position = 0. Otherwise use math blocks to calculate X = floor(position/10) and Y = position modulo 10.
 5. Display X, Y, and area, wait 0.1 seconds, and repeat. For example, position = 43 and area = 18 mean column 4, row 3, and 18% area. EV3 Y = 1 is at the bottom.
 
-Keep the loop on Beacon readings. Check modeID with Proximity once at startup to avoid switching infrared modes every iteration and adding about 1.1 seconds of delay.
+Keep the loop on Beacon readings. Check Mode ID with Proximity once at startup to avoid switching infrared modes every iteration and adding about 1.1 seconds of delay.
 
 ## 04 / 【Lego】 Lau Xiao demonstration videos
 

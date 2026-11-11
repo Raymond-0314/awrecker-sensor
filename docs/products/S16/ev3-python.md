@@ -1,9 +1,9 @@
 ---
-title: "MBC 16 路巡跡板 · EV3 · Pybricks Python"
+title: "MBC 16 路循跡板 · EV3 · Pybricks Python"
 ---
 <!-- Generated route. Edit docs/_content and docs/_data. -->
 
-# MBC 16 路巡跡板 · EV3 · Pybricks Python
+# MBC 16 路循跡板 · EV3 · Pybricks Python
 
 <!--@include: ../../_content/products/S16.zh.md-->
 

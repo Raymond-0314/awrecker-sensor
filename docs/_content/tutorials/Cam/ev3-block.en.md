@@ -23,14 +23,14 @@ Check that your Pybricks EV3 blocks expose numeric beacon readings. The tables s
 ## 02 / Functions and data
 
 ::: info ℹ️ Note
-UniCam appears as an Infrared Sensor. Proximity (0) reports camera modeID; Beacon (1) has eight slots and Remote (2) has four. Select the camera mode on the camera. The EV3 connection reads data only.
+UniCam appears as an Infrared Sensor. Proximity (0) reports camera Mode ID; Beacon (1) has eight slots and Remote (2) has four. Select the camera mode on the camera. The EV3 connection reads data only.
 :::
 
 <CamModeAccordion>
 
 ### ✔ Camera mode overview
 
-MBC UniCam provides five main modes, each with its own submodes. Use the tables and modeID numbers below to find the corresponding programming instructions.
+MBC UniCam provides five main modes, each with its own submodes. Use the tables and Mode ID numbers below to find the corresponding programming instructions.
 
 <CamModeOverview />
 
@@ -44,7 +44,7 @@ Read positions for up to 12 targets.
 
 | Read position | Reading |
 | --- | --- |
-| Proximity (0) value | modeID |
+| Proximity (0) value | Mode ID |
 | Beacon (1) channel 1 heading | P1 |
 | Beacon (1) channel 1 distance | P2 |
 | Beacon (1) channel 2 heading | P3 |
@@ -70,7 +70,7 @@ Read positions for up to 8 targets.
 
 | Read position | Reading |
 | --- | --- |
-| Proximity (0) value | modeID |
+| Proximity (0) value | Mode ID |
 | Beacon (1) channel 1 heading | P1 |
 | Beacon (1) channel 1 distance | P2 |
 | Beacon (1) channel 2 heading | P3 |
@@ -94,7 +94,7 @@ Read positions for up to 4 targets and areas.
 
 | Read position | Reading |
 | --- | --- |
-| Proximity (0) value | modeID |
+| Proximity (0) value | Mode ID |
 | Beacon (1) channel 1 heading | P1 |
 | Beacon (1) channel 1 distance | Area1 |
 | Beacon (1) channel 2 heading | P2 |
@@ -118,7 +118,7 @@ Read positions and sizes for up to 2 targets, with counts available and areas.
 
 | Read position | Reading |
 | --- | --- |
-| Proximity (0) value | modeID |
+| Proximity (0) value | Mode ID |
 | Beacon (1) channel 1 heading | P1 |
 | Beacon (1) channel 1 distance | W1×10+H1 |
 | Beacon (1) channel 2 heading | Count1 |
@@ -144,7 +144,7 @@ Read hue for up to 12 sample points, at the precision described below.
 
 | Read position | Reading |
 | --- | --- |
-| Proximity (0) value | modeID |
+| Proximity (0) value | Mode ID |
 | Beacon (1) channel 1 heading | Hue1 (EV3) |
 | Beacon (1) channel 1 distance | Hue2 (EV3) |
 | Beacon (1) channel 2 heading | Hue3 (EV3) |
@@ -170,7 +170,7 @@ Read hue and saturation for up to 4 sample points, at the precision described be
 
 | Read position | Reading |
 | --- | --- |
-| Proximity (0) value | modeID |
+| Proximity (0) value | Mode ID |
 | Beacon (1) channel 1 heading | Hue1 (EV3) |
 | Beacon (1) channel 1 distance | floor(Sat1÷10)×10+floor(Val1÷10) |
 | Beacon (1) channel 2 heading | Hue2 (EV3) |
@@ -196,7 +196,7 @@ Read hue, saturation, and brightness for up to 2 sample points, at the precision
 
 | Read position | Reading |
 | --- | --- |
-| Proximity (0) value | modeID |
+| Proximity (0) value | Mode ID |
 | Beacon (1) channel 1 heading | floor(Hue1÷100) |
 | Beacon (1) channel 1 distance | Hue1 % 100 |
 | Beacon (1) channel 2 heading | Sat1 |
@@ -220,7 +220,7 @@ Read the first 11 hues from left to right and the total block count.
 
 | Read position | Reading |
 | --- | --- |
-| Proximity (0) value | modeID |
+| Proximity (0) value | Mode ID |
 | Beacon (1) channel 1 heading | Hue1 (EV3) |
 | Beacon (1) channel 1 distance | Hue2 (EV3) |
 | Beacon (1) channel 2 heading | Hue3 (EV3) |
@@ -250,7 +250,7 @@ Beacon and Remote together provide 12 line-following values.
 
 | Read position | Reading |
 | --- | --- |
-| Proximity (0) value | modeID |
+| Proximity (0) value | Mode ID |
 | Beacon (1) channel 1 heading | Near offset |
 | Beacon (1) channel 1 distance | Middle offset |
 | Beacon (1) channel 2 heading | Far offset |
@@ -276,7 +276,7 @@ Beacon and Remote together provide 12 line-following values.
 
 | Read position | Reading |
 | --- | --- |
-| Proximity (0) value | modeID |
+| Proximity (0) value | Mode ID |
 | Beacon (1) channel 1 heading | Near offset |
 | Beacon (1) channel 1 distance | Middle offset |
 | Beacon (1) channel 2 heading | Far offset |
@@ -302,7 +302,7 @@ Beacon and Remote together provide 12 line-following values.
 
 | Read position | Reading |
 | --- | --- |
-| Proximity (0) value | modeID |
+| Proximity (0) value | Mode ID |
 | Beacon (1) channel 1 heading | Near offset |
 | Beacon (1) channel 1 distance | Middle offset |
 | Beacon (1) channel 2 heading | Far offset |
@@ -330,7 +330,7 @@ Read codes and positions for the first 5 objects, plus the total count.
 
 | Read position | Reading |
 | --- | --- |
-| Proximity (0) value | modeID |
+| Proximity (0) value | Mode ID |
 | Beacon (1) channel 1 heading | Code1 |
 | Beacon (1) channel 1 distance | P1 |
 | Beacon (1) channel 2 heading | Code2 |
@@ -358,7 +358,7 @@ Read detailed data for the first 2 objects using the fields below.
 
 | Read position | Reading |
 | --- | --- |
-| Proximity (0) value | modeID |
+| Proximity (0) value | Mode ID |
 | Beacon (1) channel 1 heading | Code1 |
 | Beacon (1) channel 1 distance | P1 |
 | Beacon (1) channel 2 heading | Area1 |

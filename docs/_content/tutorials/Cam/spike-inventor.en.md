@@ -26,7 +26,7 @@ The Home app treats UniCam as a Color Sensor. The tables below describe its Colo
 
 ### ✔ Camera mode overview
 
-MBC UniCam provides five main modes, each with its own submodes. Use the tables and modeID numbers below to find the corresponding programming instructions.
+MBC UniCam provides five main modes, each with its own submodes. Use the tables and Mode ID numbers below to find the corresponding programming instructions.
 
 <CamModeOverview />
 
@@ -260,7 +260,7 @@ Detection uses target colors 1–8. Objects are ordered largest first and positi
 
 ### ✔ Read target 2 with Home app blocks
 
-Use the Robot Inventor hub and Home app, with the camera on port C. Teach target colors 1 and 2 on the camera and select modeID 13 (Color tracking - ③ Standard).
+Use the Robot Inventor hub and Home app, with the camera on port C. Teach target colors 1 and 2 on the camera and select Mode ID 13 (Color tracking - ③ Standard).
 
 1. Add a forever loop. Read the Color Sensor Raw red value on port C and store it as position.
 2. Use math blocks to calculate X = floor(position/10) and Y = position modulo 10.

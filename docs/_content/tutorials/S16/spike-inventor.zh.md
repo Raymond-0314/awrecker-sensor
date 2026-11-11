@@ -8,18 +8,18 @@
 | 要求 | 符合本教學頁面的種類 |
 | --- | --- |
 | 控制器 | • LEGO® MINDSTORMS® Robot Inventor |
-| 感應器 | • MBC 16 路巡跡板 |
+| 感應器 | • MBC 16 路循跡板 |
 | 程式語言 | • LEGO MINDSTORMS Inventor App |
 
 ### ✔ 事前準備
 1. 啟動你的機器人與 LEGO MINDSTORMS Inventor App。
 2. 確認一切運作正常。
-3. MBC 16 路巡跡板的場地光值校正。
+3. MBC 16 路循跡板的場地光值校正。
 
 ## 02 / 函數與功能說明
 
 ::: info ℹ️ 補充資訊
-在官方 LEGO MINDSTORMS Inventor App 中，S16 巡跡板將以「SPIKE 顏色感應器」模式運作。
+在官方 LEGO MINDSTORMS Inventor App 中，S16 循跡板將以「SPIKE 顏色感應器」模式運作。
 :::
 
 | 官方圖形指令 | 功能 | 數值意義說明 |

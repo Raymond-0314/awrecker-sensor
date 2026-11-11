@@ -19,14 +19,14 @@
 ## 02 / Functions and data
 
 ::: info ℹ️ Note
-Read the camera with LUMPDevice(Port.S1). cam.read(0)[0] reports camera modeID, cam.read(1) returns eight Beacon values, and cam.read(2) returns four Remote values. The tables show the exact indexes. Read once into a variable before extracting fields in a loop. Select the camera mode on the camera.
+Read the camera with LUMPDevice(Port.S1). cam.read(0)[0] reports camera Mode ID, cam.read(1) returns eight Beacon values, and cam.read(2) returns four Remote values. The tables show the exact indexes. Read once into a variable before extracting fields in a loop. Select the camera mode on the camera.
 :::
 
 <CamModeAccordion>
 
 ### ✔ Camera mode overview
 
-MBC UniCam provides five main modes, each with its own submodes. Use the tables and modeID numbers below to find the corresponding programming instructions.
+MBC UniCam provides five main modes, each with its own submodes. Use the tables and Mode ID numbers below to find the corresponding programming instructions.
 
 <CamModeOverview />
 
@@ -40,7 +40,7 @@ Read positions for up to 12 targets.
 
 | Pybricks Python | Reading |
 | --- | --- |
-| `cam.read(0)[0]` | modeID |
+| `cam.read(0)[0]` | Mode ID |
 | `cam.read(1)[0]` | P1 |
 | `cam.read(1)[1]` | P2 |
 | `cam.read(1)[2]` | P3 |
@@ -66,7 +66,7 @@ Read positions for up to 8 targets.
 
 | Pybricks Python | Reading |
 | --- | --- |
-| `cam.read(0)[0]` | modeID |
+| `cam.read(0)[0]` | Mode ID |
 | `cam.read(1)[0]` | P1 |
 | `cam.read(1)[1]` | P2 |
 | `cam.read(1)[2]` | P3 |
@@ -86,7 +86,7 @@ Read positions for up to 4 targets and areas.
 
 | Pybricks Python | Reading |
 | --- | --- |
-| `cam.read(0)[0]` | modeID |
+| `cam.read(0)[0]` | Mode ID |
 | `cam.read(1)[0]` | P1 |
 | `cam.read(1)[1]` | Area1 |
 | `cam.read(1)[2]` | P2 |
@@ -106,7 +106,7 @@ Read positions and sizes for up to 2 targets, with counts available and areas.
 
 | Pybricks Python | Reading |
 | --- | --- |
-| `cam.read(0)[0]` | modeID |
+| `cam.read(0)[0]` | Mode ID |
 | `cam.read(1)[0]` | P1 |
 | `cam.read(1)[1]` | W1×10+H1 |
 | `cam.read(1)[2]` | Count1 |
@@ -128,7 +128,7 @@ Read hue for up to 12 sample points, at the precision described below.
 
 | Pybricks Python | Reading |
 | --- | --- |
-| `cam.read(0)[0]` | modeID |
+| `cam.read(0)[0]` | Mode ID |
 | `cam.read(1)[0]` | Hue1 (EV3) |
 | `cam.read(1)[1]` | Hue2 (EV3) |
 | `cam.read(1)[2]` | Hue3 (EV3) |
@@ -154,7 +154,7 @@ Read hue and saturation for up to 4 sample points, at the precision described be
 
 | Pybricks Python | Reading |
 | --- | --- |
-| `cam.read(0)[0]` | modeID |
+| `cam.read(0)[0]` | Mode ID |
 | `cam.read(1)[0]` | Hue1 (EV3) |
 | `cam.read(1)[1]` | floor(Sat1÷10)×10+floor(Val1÷10) |
 | `cam.read(1)[2]` | Hue2 (EV3) |
@@ -176,7 +176,7 @@ Read hue, saturation, and brightness for up to 2 sample points, at the precision
 
 | Pybricks Python | Reading |
 | --- | --- |
-| `cam.read(0)[0]` | modeID |
+| `cam.read(0)[0]` | Mode ID |
 | `cam.read(1)[0]` | floor(Hue1÷100) |
 | `cam.read(1)[1]` | Hue1 % 100 |
 | `cam.read(1)[2]` | Sat1 |
@@ -196,7 +196,7 @@ Read the first 11 hues from left to right and the total block count.
 
 | Pybricks Python | Reading |
 | --- | --- |
-| `cam.read(0)[0]` | modeID |
+| `cam.read(0)[0]` | Mode ID |
 | `cam.read(1)[0]` | Hue1 (EV3) |
 | `cam.read(1)[1]` | Hue2 (EV3) |
 | `cam.read(1)[2]` | Hue3 (EV3) |
@@ -226,7 +226,7 @@ Beacon and Remote together provide 12 line-following values.
 
 | Pybricks Python | Reading |
 | --- | --- |
-| `cam.read(0)[0]` | modeID |
+| `cam.read(0)[0]` | Mode ID |
 | `cam.read(1)[0]` | Near offset |
 | `cam.read(1)[1]` | Middle offset |
 | `cam.read(1)[2]` | Far offset |
@@ -252,7 +252,7 @@ Beacon and Remote together provide 12 line-following values.
 
 | Pybricks Python | Reading |
 | --- | --- |
-| `cam.read(0)[0]` | modeID |
+| `cam.read(0)[0]` | Mode ID |
 | `cam.read(1)[0]` | Near offset |
 | `cam.read(1)[1]` | Middle offset |
 | `cam.read(1)[2]` | Far offset |
@@ -278,7 +278,7 @@ Beacon and Remote together provide 12 line-following values.
 
 | Pybricks Python | Reading |
 | --- | --- |
-| `cam.read(0)[0]` | modeID |
+| `cam.read(0)[0]` | Mode ID |
 | `cam.read(1)[0]` | Near offset |
 | `cam.read(1)[1]` | Middle offset |
 | `cam.read(1)[2]` | Far offset |
@@ -306,7 +306,7 @@ Read codes and positions for the first 5 objects, plus the total count.
 
 | Pybricks Python | Reading |
 | --- | --- |
-| `cam.read(0)[0]` | modeID |
+| `cam.read(0)[0]` | Mode ID |
 | `cam.read(1)[0]` | Code1 |
 | `cam.read(1)[1]` | P1 |
 | `cam.read(1)[2]` | Code2 |
@@ -333,7 +333,7 @@ Read detailed data for the first 2 objects using the fields below.
 
 | Pybricks Python | Reading |
 | --- | --- |
-| `cam.read(0)[0]` | modeID |
+| `cam.read(0)[0]` | Mode ID |
 | `cam.read(1)[0]` | Code1 |
 | `cam.read(1)[1]` | P1 |
 | `cam.read(1)[2]` | Area1 |
@@ -383,7 +383,7 @@ For Object Details (52), change the startup mode check to 52. The first four Bea
 
 ### ✔ Read two objects in Object Details mode
 
-Select camera modeID 52. This program calls cam.read(1) once per loop, with four slots per object.
+Select camera Mode ID 52. This program calls cam.read(1) once per loop, with four slots per object.
 
 ```python
 #!/usr/bin/env pybricks-micropython
