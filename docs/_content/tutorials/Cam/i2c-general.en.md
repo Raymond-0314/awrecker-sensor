@@ -1,250 +1,118 @@
 # Tutorial
 
-## 01 / Getting Started
+## 01 / Environment setup
 
-### ✔ Confirm that your controller, sensor, and programming environment match this tutorial:
+Use UniCam with the general I²C firmware and the Arduino IDE. The default 7-bit address is 0x4C.
 
-| Requirement | Supported Types for This Tutorial |
-| --- | --- |
-| Controller | • Arduino<br>• ESP32<br>• Raspberry Pi<br>• Custom controller boards supporting a standard I2C interface |
-| Sensor | • MBC 8-Channel Line-Following Sensor |
-| Programming Environment | • The programming language supported by your controller board |
-
-### ✔ Preparation
-
-1. Turn on your robot.
-2. Confirm that everything is working properly.
-3. Calibrate the MBC 8-Channel Line-Following Sensor for the lighting conditions of your track.
-
-## 02 / MBC General I2C Protocol Guidelines
-
-### ✔ Wiring and Voltage
-
-- Connect SCL, SDA, VCC, and GND according to the sensor’s pin labels.
-- Supports 100 kHz and 400 kHz.
-- Can connect directly to 5 V controllers, such as the Arduino UNO, without an additional logic-level converter.
-
-### ✔ Reading Data (Module → Host)
-
-1. The host writes one byte to the module: the register address to read.
-2. The host calls `requestFrom(address, n)`, where n = 1–32.
-3. The module prepares a fixed 32-byte response.
-    - Valid data comes first, with the remaining bytes filled with zeros.
-    - The host can read the required number of bytes. Reading beyond the valid data returns zeros and does not stall the bus.
-    - All multibyte values use most-significant-byte-first order (MSB-first). Signed values use two’s complement.
-    - Undefined registers return zeros.
-
-### ✔ Writing Commands (Host → Module)
-
-- Only registers marked Write or Read/Write accept write commands.
-- Format: `[register address, value0, value1, ...]`.
-- All multibyte values use most-significant-byte-first order.
-- If the payload is too short, the entire command is ignored. Extra bytes are discarded.
-
-::: warning ⚠️ Caution
-For asynchronous operations, such as calibration or EEPROM writes, check the status flags or counters after sending the command to confirm completion. Do not assume that sending the command means the operation has completed successfully.
+::: warning Before wiring
+The v1 data layout is defined, with Arduino hardware validation pending. Camera-side SDA=IO3 and SCL=IO1 are provisional. Disconnect power before wiring, and verify the camera version, host logic levels, and pull-ups.
 :::
 
-### ✔ Register Groups
+| Camera | Arduino UNO/Nano | UNO R4, ESP32, and others |
+| --- | --- | --- |
+| 5V | 5V | Verify a suitable 5V supply |
+| GND | GND | GND |
+| SDA | A4 | Board SDA |
+| SCL | A5 | Board SCL |
 
-| Register Range | Description |
+## 02 / Functions and data
+
+### ✔ Read sequence
+
+1. Write a one-byte field ID to 0x4C and end the transmission.
+2. Wait 2 ms and read 2×k bytes, up to 16 values per transfer.
+3. Decode each pair as signed little-endian int16. −32768 means the field is undefined in the current mode.
+
+| Field | Meaning |
 | --- | --- |
-| `0x01` ~ `0x0F` | • Device information, common to all products. |
-| `0x10` ~ `0x1F` | • Group 1: Primary data. |
-| `0x20` ~ `0x2F` | • Group 2: Secondary data / calibration. |
-| `0x30` ~ `0x3F` | • Group 3: System and status. |
-| `0x40` and above | • Product-specific extensions: arrays, individual channels, and ports. |
+| 0x01–0x04 | Camera mode, submode, taught color count, output item count. |
+| 0xF0–0xF5 | Device ID (0x034C), protocol version (2), firmware version, status flags, update sequence, uptime in seconds. |
 
-::: info ℹ️ Additional Information
-Register conventions within each group:
+### ✔ Camera mode data starting at 0x10
 
-- `0xN0`: Command register for the group (write).
-- `0xN1`: Reads all data in the group starting from `0xN2` in one transaction.
-- `0xN2` onward: Individual data items.
-:::
-
-### ✔ Common Registers (Shared Across Products)
-
-| Register | Access | Length | Description |
-| --- | --- | --- | --- |
-| `0x01` | Read | 17 bytes | • Reads the data from `0x02` through `0x07` in one transaction. |
-| `0x02` | Read | 1 byte | • Device ID, corresponding to the product’s factory-default address.<br>• Can be used to identify the product. |
-| `0x03` | Read | 1 byte | • I2C protocol version. |
-| `0x04` | Read | 2 bytes | • Firmware version: major and minor. |
-| `0x05` | Read | 3 bytes | • Firmware build date: last two digits of the year, month, and day. |
-| `0x06` | Read | 2 bytes | • Hardware and variant information. |
-| `0x07` | Read | 8 bytes | • Model string in ASCII, padded with zeros if shorter than eight bytes. |
-| `0x30` | Write | 1 byte | • System command.<br>• `0x01` restarts the module. |
-| `0x31` | Read | 9 bytes | • Reads the data from `0x32` through `0x37` in one transaction. |
-| `0x32` | Read | 1 byte | • Status flags.<br>• Bit 0 indicates readiness. Bits 1–7 have product-specific definitions. |
-| `0x33` | Read | 1 byte | • Update sequence number.<br>• Increments by 1 whenever the data is updated. An unchanged value indicates that the module is busy. |
-| `0x34` ~ `0x36` | Read | 1 byte | • Product-specific definitions. |
-| `0x37` | Read | 4 bytes | • Elapsed time since startup, in milliseconds.<br>• A decrease in this value indicates that the module has restarted. |
-
-::: info ℹ️ Additional Information
-Recommended startup procedure:
-
-1. Read register `0x01` after startup to check the device information.
-2. Read `0x32` and wait until bit 0 equals 1, indicating that the module is ready.
-3. Begin reading the remaining data.
-:::
-
-## 03 / Features
-
-### ✔ Basic Information
-
-| Item | Description |
+| Mode | Field order |
 | --- | --- |
-| I2C Address | `0x16` |
-| Model String at `0x07` | `LINE8` |
-| Variant Information at `0x06` | `[8, PCB revision]` (the first byte indicates the number of sensor channels) |
-| Channel Order | CH0 through CH7, from right to left |
-| Line Position Direction | • 0 indicates that the line is centered.<br>• Negative values indicate that the line is to the right.<br>• Positive values indicate that the line is to the left. |
+| 11 | 16 colors: X, Y |
+| 12 | 16 colors: X, Y, count |
+| 13 | 16 colors: X, Y, area %, count |
+| 14 | 16 colors: X, Y, width, height, count, area % |
+| 21 | 16 points: H |
+| 22 | 16 points: H, S |
+| 23 | 16 points: H, S, V |
+| 30 | 0x10–0x1F: 16 hues from the left. 0x20: total. |
+| 41–43 | Near/middle/far offsets, angle, near width, flags, junction, junction distance, left edge, right edge, far width, marker hue, marker count, line-loss direction |
+| 51 | 8 objects: color ID, shape, X, Y. Total at 0x30. |
+| 52 | 8 objects: color ID, shape, X, Y, width, height, area %, angle, vertex count, tracking ID. Total at 0x60. |
 
-### ✔ Line-Following Results
+Record i starts at 0x10 + fields per record × (i−1). In mode 13, target 2 starts at 0x14. Positions are pixels with Y increasing downward. X=0 means no detection. Hue 0 can be red, so use the color-order total. Objects are sorted largest first and positions are centroids. Bit 1 of 0xF3 indicates an object is present in object modes.
 
-| Register | Access | Length | Description |
-| --- | --- | --- | --- |
-| `0x10` | Write | 1 byte | • Sets the target line color.<br>• 0 selects a black line; 1 selects a white line.<br>• After a restart, the module returns to the button-selected setting. |
-| `0x11` | Read | 7 bytes | • Reads the data from `0x12` through `0x17` in one transaction. |
-| `0x12` | Read | 1 byte | `int8` `-8 ~ +8`<br>• Line position. |
-| `0x13` | Read | 1 byte | `int8` `-100 ~ +100`<br>• High-resolution line position. |
-| `0x14` | Read | 1 byte | • Line width: the number of sensing elements simultaneously detecting the black line. |
-| `0x15` | Read | 1 byte | • Number of line groups.<br>• 0 indicates a lost line, 1 indicates a single line, and 2 or more indicates a junction or crossroads. |
-| `0x16` | Read | 2 bytes | `uint16`<br>• Binary classification of optical readings: each sensing element is classified as either “on the line” or “off the line” based on its raw value.<br>• Bit i indicates whether sensing element i is on the line. |
-| `0x17` | Read | 1 byte | `int8`<br>• Last direction in which the line was lost.<br>• Can be used to detect line loss and steer back toward the line. |
+### ✔ Write commands
 
-### ✔ Calibration
-
-| Register | Access | Length | Description |
-| --- | --- | --- | --- |
-| `0x20` | Write | 1 byte | • Sets the calibration mode.<br>• 1 starts a 5-second dynamic calibration; 2 records the current readings as white; 3 records the current readings as black.<br>• The results are stored in EEPROM. |
-| `0x21` | Read | 2 bytes | • Reads the data from `0x22` through `0x23` in one transaction. |
-| `0x22` | Read/Write | 1 byte | `1 ~ 99`<br>• Reads or sets the classification threshold used by `0x16`.<br>• The default is 50. Restarting the module restores the default.<br>• Example: With a threshold of 30, optical values below 30 are classified as “on the line,” while values above 30 are classified as “off the line.” |
-| `0x23` | Read | 1 byte | • Calibration completion counter, incremented by 1 after each completed calibration.<br>• Can be used to confirm that calibration has finished. |
-
-### ✔ Status Flags at `0x32`
-
-| Bit | Description |
+| Bytes to send | Purpose |
 | --- | --- |
-| bit 0 | • The sensor is ready. |
-| bit 1 | • 0 indicates black-line mode; 1 indicates white-line mode. |
-| bit 2 | • Calibration is in progress.<br>• During the 5-second calibration, the update sequence number at `0x33` stops changing. This is normal. |
-| bit 3 | • The line is lost. |
-| bit 4 | • A junction has been detected, with two or more line groups. |
+| 0xE0, mode, submode | Select and save a mode. For Object Details, send 0xE0, 5, 2. |
+| 0xE1, point, X, Y | Save a sample location. Accepts points 1–20, X=0–159, Y=0–119. Readout provides 16 points. |
+| 0xF8, new address, bitwise complement | Change the I²C address. |
+| 0xEF, 0xA5 | Reboot. |
 
-### ✔ Individual Channel Values
+Teach target colors on the camera.
 
-| Register | Access | Length | Description |
-| --- | --- | --- | --- |
-| `0x40` | Read | 1 byte | `0 ~ 100`<br>• Calibrated optical value for channel 1. |
-| `0x41` | Read | 1 byte | `0 ~ 100`<br>• Calibrated optical value for channel 2. |
-| `0x42` | Read | 1 byte | `0 ~ 100`<br>• Calibrated optical value for channel 3. |
-| `0x43` | Read | 1 byte | `0 ~ 100`<br>• Calibrated optical value for channel 4. |
-| `0x44` | Read | 1 byte | `0 ~ 100`<br>• Calibrated optical value for channel 5. |
-| `0x45` | Read | 1 byte | `0 ~ 100`<br>• Calibrated optical value for channel 6. |
-| `0x46` | Read | 1 byte | `0 ~ 100`<br>• Calibrated optical value for channel 7. |
-| `0x47` | Read | 1 byte | `0 ~ 100`<br>• Calibrated optical value for channel 8. |
-| `0x50` | Read | 8 bytes | • Reads the data from `0x40` through `0x47` in one transaction. |
-| `0x51` | Read | 8 bytes | • White reference values stored in EEPROM. |
-| `0x52` | Read | 8 bytes | • Black reference values stored in EEPROM. |
-| `0x53` | Read | 8 bytes | `8-bit`<br>• Raw ADC values. |
+## 03 / Example program
 
-## 04 / Arduino Example Programs
+Select mode 13 (Color Tracking ③ Standard) and teach target 1. Set the serial monitor to 115200 baud. Output is X, Y, area %, count. For Object Details, select mode 52, read the count at 0x60, then read groups of 10 values starting at 0x10.
 
-### ✔ Reading Module Data
-
-```c++
+```cpp
 #include <Wire.h>
+const uint8_t CAMERA = 0x4C;
 
-const uint8_t LINE_ADDR = 0x16;
-
-bool iicRead(uint8_t addr, uint8_t reg, uint8_t *buf, uint8_t n) {
-  Wire.beginTransmission(addr);
-  Wire.write(reg);
+bool readCamera(uint8_t first, uint8_t count, int16_t *values) {
+  if (count == 0 || count > 16) return false;
+  Wire.beginTransmission(CAMERA);
+  Wire.write(first);
   if (Wire.endTransmission() != 0) return false;
-  if (Wire.requestFrom(addr, n) != n) return false;
-  for (uint8_t i = 0; i < n; i++) buf[i] = Wire.read();
+  delay(2);
+  uint8_t bytes = 2 * count;
+  if (Wire.requestFrom(CAMERA, bytes) != bytes) return false;
+  for (uint8_t i = 0; i < count; ++i) {
+    uint16_t low = Wire.read();
+    uint16_t high = Wire.read();
+    uint16_t raw = low | (high << 8);
+    values[i] = raw < 0x8000 ? raw : static_cast<int32_t>(raw) - 65536;
+  }
   return true;
-}
-
-void iicWrite(uint8_t addr, uint8_t reg, uint8_t v) {
-  Wire.beginTransmission(addr);
-  Wire.write(reg);
-  Wire.write(v);
-  Wire.endTransmission();
 }
 
 void setup() {
   Serial.begin(115200);
   Wire.begin();
-  iicWrite(LINE_ADDR, 0x10, 0);     // 0 = follow a black line; 1 = follow a white line
 }
 
 void loop() {
-  uint8_t d[7];
-  if (iicRead(LINE_ADDR, 0x11, d, 7)) {
-    int8_t   pos    = (int8_t)d[0];        // -8 to +8
-    int8_t   posHi  = (int8_t)d[1];        // -100 to +100; use this for PID
-    uint8_t  width  = d[2];                // Line width
-    uint8_t  groups = d[3];                // 0 = lost / 1 = single line / 2+ = junction
-    uint16_t bin    = (d[4] << 8) | d[5];  // One bit per channel
-
-    Serial.print("Position ");        Serial.print(pos);
-    Serial.print("  High-resolution "); Serial.print(posHi);
-    Serial.print("  Width ");          Serial.print(width);
-    Serial.print("  Groups ");         Serial.print(groups);
-    Serial.print("  Binary ");         Serial.println(bin, BIN);
+  int16_t mode, target[4];
+  if (!readCamera(0x01, 1, &mode)) {
+    Serial.println("Check camera wiring and address");
+  } else if (mode != 13) {
+    Serial.println("Select camera mode 13");
+  } else if (!readCamera(0x10, 4, target) || target[0] == -32768) {
+    Serial.println("Target data unavailable");
+  } else if (target[0] == 0) {
+    Serial.println("No target");
+  } else {
+    for (uint8_t i = 0; i < 4; ++i) {
+      Serial.print(target[i]);
+      Serial.print(' ');
+    }
+    Serial.println();
   }
-  delay(10);
+  delay(100);
 }
 ```
 
-### ✔ A Starting Point for PID Line Following
+## 04 / Troubleshooting
 
-```c++
-// posHi: negative = line on the right; positive = line on the left.
-// To turn right, increase the left wheel speed and decrease the right wheel speed.
-float Kp = 0.6;
-int base = 120;                        // Base speed; adjust for your motor driver
-int turn = Kp * posHi;
-int leftSpeed  = base - turn;
-int rightSpeed = base + turn;
-```
+- No response: check firmware, shared ground, SDA/SCL, and address.
+- Reading −32768: check the mode at 0x01 before looking up the field.
 
-### ✔ Triggering Calibration Programmatically
+## 【Lego】 Lau Xiao demonstration videos
 
-```c++
-uint8_t before[2], after[2];
-iicRead(LINE_ADDR, 0x21, before, 2);   // [Threshold, calibration completion counter]
-iicWrite(LINE_ADDR, 0x20, 1);          // Start 5-second dynamic calibration:
-                                     // move the robot left and right across the black line
-do {
-  delay(200);
-  iicRead(LINE_ADDR, 0x21, after, 2);
-} while (after[1] == before[1]);       // Counter increments by 1 when calibration finishes
-```
-
-## 05 / 【Lego】 Lau Xiao Demonstration Videos
-
-<div style="display: flex; justify-content: center; align-items: center; gap: 24px; flex-wrap: wrap; margin: 24px auto;">
-
-  <iframe
-    src="https://www.youtube.com/embed/WgacdWLatbk"
-    title="MBC S8 Demonstration Video 1"
-    style="width: 315px; max-width: 100%; aspect-ratio: 9 / 16; border: none; border-radius: 12px; display: block;"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-
-  <iframe
-    src="https://www.youtube.com/embed/Y2evkfTkOO4"
-    title="MBC S8 Demonstration Video 2"
-    style="width: 315px; max-width: 100%; aspect-ratio: 9 / 16; border: none; border-radius: 12px; display: block;"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-
-</div>
-
-[Return to the homepage to choose another tutorial](/en/)
+<CamDemoVideos />

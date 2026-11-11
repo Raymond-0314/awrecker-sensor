@@ -68,24 +68,6 @@ MBC 8 路循線感應器提供了三個「副程式 (Subroutines)」。開發時
 
 ## 04 / 【Lego】 Lau Xiao 示範影片
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 24px; flex-wrap: wrap; margin: 24px auto;">
-
-  <iframe
-    src="https://www.youtube.com/embed/WgacdWLatbk"
-    title="MBC S8 示範影片 1"
-    style="width: 315px; max-width: 100%; aspect-ratio: 9 / 16; border: none; border-radius: 12px; display: block;"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-
-  <iframe
-    src="https://www.youtube.com/embed/Y2evkfTkOO4"
-    title="MBC S8 示範影片 2"
-    style="width: 315px; max-width: 100%; aspect-ratio: 9 / 16; border: none; border-radius: 12px; display: block;"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-
-</div>
+<CamDemoVideos />
 
 [回首頁選擇其他教學](/)

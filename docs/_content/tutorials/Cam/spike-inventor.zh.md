@@ -1,95 +1,85 @@
-##
-
 # 使用教學
 
 ## 01 / 環境準備
 
-### ✔ 請確認你所使用的控制器、感應器與程式語言和本教學頁面相同：
+### ✔ 請確認控制器、感應器與程式環境
+
 | 要求 | 符合本教學頁面的種類 |
 | --- | --- |
-| 控制器 | • LEGO® MINDSTORMS® Robot Inventor |
-| 感應器 | • MBC 8 路巡跡板 |
-| 程式語言 | • LEGO MINDSTORMS Inventor App |
+| 控制器 | LEGO® MINDSTORMS® Robot Inventor |
+| 感應器 | MBC 神攝手視覺感應器（SPIKE 版） |
+| 程式語言 | LEGO MINDSTORMS Inventor App / SPIKE App (Home) |
 
 ### ✔ 事前準備
-1. 啟動你的機器人與 LEGO MINDSTORMS Inventor App。
-2. 確認一切運作正常。
-3. MBC 8 路巡跡板的場地光值校正。
+
+1. 將神攝手接到主機 A～F 任一連接埠。下方範例使用 C 埠，由主機供電。
+2. 連線後確認相機螢幕左上角的主機名稱顯示綠色。若為紅色，請檢查接線或換一個埠。
+3. 在相機 `MODE` 選單選擇「顏色追蹤 ③ 標準」，將目標放在畫面中央，按 `OK` 教色，並確認即時畫面已框出目標。
 
 ## 02 / 函數與功能說明
 
 ::: info ℹ️ 補充資訊
-在官方 LEGO MINDSTORMS Inventor App 中，S8 巡跡板將以「SPIKE 顏色感應器」模式運作。
+官方 App 會將神攝手顯示為「顏色感應器」。在「更多感應器」使用數值型積木讀值。 相機模式由機身切換。
 :::
+
+### ✔ 顏色追蹤 ③ 標準
+
+最多讀取 4 色，位置以 8×6 格表示。Y 越小越靠近畫面上緣，X 為 0 表示未偵測到目標。
 
 | 官方圖形指令 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| ![黑線線寬](/images/tutorials/S8/spike-app/color.png) | 黑線線寬 | `0-8`<br>• 表示在黑線上的感應器數量。 |
-| ![黑線偏移](/images/tutorials/S8/spike-app/reflect.png) | 黑線偏移 | `0-16`<br>• 8 代表正中央，0 代表最左，16 代表最右。<br>• 數值讀取後 -8 即為循線位置 (數值為負代表黑線在左邊，數值為正代表黑線在右邊)，數值明確，適合 PID 循線。 |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 高解析黑線偏移 | `0-200`<br>• 100 代表正中央，0 代表極左，200 代表極右。<br>• 數值讀取後 -100 即為高精度循線位置 (數值為負代表黑線在左邊，數值為正代表黑線在右邊)，使用智能演算法提供更高精度的誤差範圍，使用此模式須確保感應器校準確實。 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 前 4 顆光電數值 | `0-255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0~3。 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 後 4 顆光電數值 | `0-255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0~3。 |
+| *［圖片待補｜顏色積木］* | 色 1 X | 直接讀取 `1–8` |
+| *［圖片待補｜反射光積木］* | 色 1 Y | 直接讀取 `1–6` |
+| *［圖片待補｜原始紅積木］* | 色 2 X / Y | 整除 10 得 X，除以 10 的餘數得 Y。 |
+| *［圖片待補｜原始綠積木］* | 色 3 X / Y | 整除 10 得 X，除以 10 的餘數得 Y。 |
+| *［圖片待補｜原始藍積木］* | 色 4 X / Y | 整除 10 得 X，除以 10 的餘數得 Y。 |
+
+家用版積木在顏色追蹤 ①／②／③ 均最多讀 4 色。若使用家用版 Python，請用 `hub.port.C.device.get()` 讀取 6 個值，並按教育版欄位解碼。
+
+### ✔ 物體偵測
+
+相機依物體大小排序。代碼整除 10 得目標色號，除以 10 的餘數得形狀。例如 `13` 代表目標色 1 的三角形，`0` 表示沒有物體。表中以 X×10＋Y 儲存的位置是 8×6 格。
+
+| 積木 | ① 物體清單（51） | ② 物體詳細（52） |
+| --- | --- | --- |
+| 顏色 | 物體數 | 物體數 |
+| 反射光 | 物體 1 代碼 | 物體 1 代碼 |
+| 原始紅 | 物體 1 位置（X×10＋Y） | 物體 1 X 像素 |
+| 原始綠 | 物體 2 代碼 | 物體 1 Y 像素 |
+| 原始藍 | 物體 2 位置（X×10＋Y） | 物體 1 面積 % |
+
+### ✔ 其他相機模式與可讀範圍
+
+| 相機模式 | 可讀資料 |
+| --- | --- |
+| 11 追蹤① 最多色 | 4 色位置 |
+| 12 追蹤② 多色 | 4 色位置 |
+| 13 追蹤③ 標準 | 4 色位置，8×6 格 |
+| 14 追蹤④ 精細 | 2 色位置和寬高。原始綠／藍以 W×10＋H 傳送色 1／2 的大小 |
+| 21 取色① 色相 | 原始 RGB 為 S1–S3 色相，反射光為 S4 色相÷2 |
+| 22 取色② 色相＋飽和 | 原始 RGB 為 S1 色相、S1 飽和、S2 色相，反射光為 S2 飽和 |
+| 23 取色③ 色相＋飽和＋明度 | 原始紅／藍為 S1／S2 色相，原始綠／反射光為各點飽和、明度的十位數組合 |
+| 30 依序取色號 | 反射光＝總塊數，原始 RGB＝前三塊色相 |
+| 41–43 黑線／白線／色線 | 顏色＝路口，反射光＝近線寬，原始 RGB＝近偏移、遠偏移、角度各＋100 |
+| 51 物體清單 | 前 2 個的代碼、位置 |
+| 52 物體詳細 | 第 1 個的代碼、像素位置、面積 |
+
+以 256 打包的欄位，先把原始值轉為無號 16 位元（負值加 65536），再取餘數與整除。色相 0 可以代表紅色，判斷色序時請搭配總塊數。循線的原始 RGB 各減 100；例：原始紅 80 表示近處偏移 −20。
+
+家用版 Python 的 device.get() 前五個值依序是教育版顏色、反射光、原始紅、綠、藍。第六個值的低位與高位是教育版 byte 8、9。以模式 13 為例，這兩個 byte 是色 1、2 的數量。完整欄位請看[站內 SPIKE App 教學](./spike-app.md)，並以這六個值的可讀範圍為準。
 
 ## 03 / 範例程式
-<script setup>
-  import { withBase } from 'vitepress'
-</script>
 
-<a
-  :href="withBase('/programs/S8/spike-inventor/S8_Example_Inventor.lms')"
-  download="S8_Example_Inventor.lms"
-  class="zip-download-btn">
-  ⬇ 範例程式下載
-</a>
+### ✔ 讀取色 2 的位置
 
-![範例程式](/images/tutorials/S8/spike-inventor/ex_program.webp){style="border-radius: 10px;"}
+1. 將兩種顏色分別教成目標色 1 與 2。先確認即時畫面能找到色 2。
+2. 在重複迴圈中讀取一次「原始紅」，存成變數，再用上表換算 X、Y。
+3. 顯示 X、Y。左右移動色 2，觀察 X 是否跟著改變。移出畫面時，確認 X 回到 0。
+
+*［圖片待補｜原始紅讀值、座標拆解與顯示的完整積木］*
 
 ## 04 / 【Lego】 Lau Xiao 示範影片
 
-<div style="
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
-  width: 100%;
-  margin: 24px auto;
-">
-
-  <!-- Shorts 影片 1 -->
-  <iframe
-    src="https://www.youtube.com/embed/WgacdWLatbk"
-    title="MBC S8 示範影片 1"
-    style="
-      width: 315px;
-      max-width: 100%;
-      aspect-ratio: 9 / 16;
-      height: auto;
-      border: none;
-      border-radius: 12px;
-      display: block;
-    "
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-
-  <!-- Shorts 影片 2 -->
-  <iframe
-    src="https://www.youtube.com/embed/Y2evkfTkOO4"
-    title="MBC S8 示範影片 2"
-    style="
-      width: 315px;
-      max-width: 100%;
-      aspect-ratio: 9 / 16;
-      height: auto;
-      border: none;
-      border-radius: 12px;
-      display: block;
-    "
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-
-</div>
+<CamDemoVideos />
 
 [回首頁選擇其他教學](/)

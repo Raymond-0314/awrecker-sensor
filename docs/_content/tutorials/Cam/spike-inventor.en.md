@@ -1,99 +1,85 @@
-
-**
-
-##**
-
 # Tutorial
 
-## 01 / Environment Setup
+## 01 / Environment setup
 
-### ✔ Please make sure your controller, sensor, and programming environment match the requirements of this tutorial:
+### ✔ Check your hub, sensor, and programming environment
 
-| Requirement | Supported Hardware / Software |
+| Requirement | Supported in this tutorial |
 | --- | --- |
-| Controller | • LEGO® MINDSTORMS® Robot Inventor |
-| Sensor | • MBC 8-Channel Line Tracking Sensor Board |
-| Programming Environment | • LEGO MINDSTORMS Inventor App |
+| Hub | LEGO® MINDSTORMS® Robot Inventor |
+| Sensor | MBC UniCam Vision Camera Sensor (SPIKE version) |
+| Programming environment | LEGO MINDSTORMS Inventor App / SPIKE App (Home) |
 
-### ✔ Before You Begin
-1. Turn on your robot and launch the LEGO MINDSTORMS Inventor App.
-2. Make sure everything is working properly.
-3. Calibrate the MBC 8-Channel Line Tracking Sensor Board for the lighting conditions of your track.
+### ✔ Before you begin
 
-## 02 / Functions and Features
+1. Connect UniCam to any hub port A–F. The examples use port C, and the hub powers the camera.
+2. Confirm the hub name at the top left of the camera display is green. If it is red, check the cable or try another port.
+3. In the camera’s `MODE` menu, select Color Tracking ③ Standard. Center the target, press `OK` to teach its color, and confirm the preview outlines it.
 
-::: info ℹ️ Additional Information
-In the official LEGO MINDSTORMS Inventor App, the S8 Line Tracking Sensor Board operates in "SPIKE Color Sensor" mode.
+## 02 / Functions and data
+
+::: info ℹ️ Note
+The official app shows UniCam as a Color Sensor. Use the numeric reporter blocks under More Sensors. Switch camera modes on the camera itself.
 :::
 
-| Official Programming Block | Function | Value Description |
+### ✔ Color Tracking ③ Standard
+
+Read up to four targets on a 8×6 grid. Smaller Y values are closer to the top of the image. X = 0 means no target was detected.
+
+| Official block | Function | How to read the value |
 | --- | --- | --- |
-| ![Black Line Width](/images/tutorials/S8/spike-app/color.png) | Black Line Width | `0-8`<br>• Indicates the number of sensors detecting the black line. |
-| ![Black Line Offset](/images/tutorials/S8/spike-app/reflect.png) | Black Line Offset | `0-16`<br>• 8 represents the center, 0 represents the far left, and 16 represents the far right.<br>• Subtract 8 from the reading to obtain the line-following position (negative values indicate that the black line is to the left, while positive values indicate that it is to the right). This provides a clear position value suitable for PID line following. |
-| ![Red Value](/images/tutorials/S8/spike-app/red.png) | High-Resolution Black Line Offset | `0-200`<br>• 100 represents the center, 0 represents the far left, and 200 represents the far right.<br>• Subtract 100 from the reading to obtain the high-precision line-following position (negative values indicate that the black line is to the left, while positive values indicate that it is to the right). An intelligent algorithm provides a higher-resolution position error value. Proper sensor calibration is essential when using this mode. |
-| ![Green Value](/images/tutorials/S8/spike-app/green.png) | First 4 Photosensor Values | `0-255`<br>• Every 2 bits represent one photosensor reading, with a value ranging from 0 to 3. |
-| ![Blue Value](/images/tutorials/S8/spike-app/blue.png) | Last 4 Photosensor Values | `0-255`<br>• Every 2 bits represent one photosensor reading, with a value ranging from 0 to 3. |
+| *[Image placeholder — Color block]* | Target 1 X | Read directly `1–8` |
+| *[Image placeholder — Reflected light block]* | Target 1 Y | Read directly `1–6` |
+| *[Image placeholder — Raw red block]* | Target 2 X / Y | Divide by 10 for X (integer quotient) and Y (remainder). |
+| *[Image placeholder — Raw green block]* | Target 3 X / Y | Divide by 10 for X (integer quotient) and Y (remainder). |
+| *[Image placeholder — Raw blue block]* | Target 4 X / Y | Divide by 10 for X (integer quotient) and Y (remainder). |
 
-## 03 / Example Program
-<script setup>
-  import { withBase } from 'vitepress'
-</script>
+Home app blocks report up to four targets in each of tracking modes ①, ②, and ③. In Home Python, use `hub.port.C.device.get()` to read six values and decode them using the Education layout.
 
-<a
-  :href="withBase('/programs/S8/spike-inventor/S8_Example_Inventor.lms')"
-  download="S8_Example_Inventor.lms"
-  class="zip-download-btn">
-  ⬇ Download Example Program
-</a>
+### ✔ Object detection
 
-![範例程式](/images/tutorials/S8/spike-inventor/ex_program.webp){style="border-radius: 10px;"}
+The camera sorts objects by size. Divide a code by 10 for the target color number and take the remainder for the shape. For example, `13` means a triangle in target color 1, and `0` means no object. Positions packed as X×10+Y use an 8×6 grid.
 
-## 04 / 【LEGO】 Lau Xiao Demonstration Videos
+| Block | ① Object list (51) | ② Object details (52) |
+| --- | --- | --- |
+| Color | Object count | Object count |
+| Reflected light | Object 1 code | Object 1 code |
+| Raw red | Object 1 position (X×10+Y) | Object 1 X pixel |
+| Raw green | Object 2 code | Object 1 Y pixel |
+| Raw blue | Object 2 position (X×10+Y) | Object 1 area % |
 
-<div style="
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
-  width: 100%;
-  margin: 24px auto;
-">
+### ✔ Camera modes and available fields
 
-  <!-- Shorts Video 1 -->
-  <iframe
-    src="https://www.youtube.com/embed/WgacdWLatbk"
-    title="MBC S8 Demo Video 1"
-    style="
-      width: 315px;
-      max-width: 100%;
-      aspect-ratio: 9 / 16;
-      height: auto;
-      border: none;
-      border-radius: 12px;
-      display: block;
-    "
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
+| Camera mode | Available data |
+| --- | --- |
+| 11 Tracking ① Most colors | 4 positions |
+| 12 Tracking ② Multiple colors | 4 positions |
+| 13 Tracking ③ Standard | 4 positions on an 8×6 grid |
+| 14 Tracking ④ Fine | 2 positions and sizes. Raw green and blue pack W×10+H for targets 1 and 2. |
+| 21 Sampling ① Hue | Raw RGB are hues for S1–S3, reflected light is S4 hue divided by 2 |
+| 22 Sampling ② Hue and saturation | Raw RGB are S1 hue, S1 saturation, S2 hue. Reflection is S2 saturation. |
+| 23 Sampling ③ HSV | Raw red and blue give S1 and S2 hue. Raw green and reflection pack the tens digits of saturation and brightness. |
+| 30 Color order | Reflection is total. Raw RGB give the first three hues. |
+| 41–43 Black, white, or colored line | Color gives junction, reflection gives near width, and raw RGB give near offset, far offset, and angle, each offset by 100 |
+| 51 Object list | Code and position of the first 2 objects |
+| 52 Object details | Code, pixel position, and area of the first object |
 
-  <!-- Shorts Video 2 -->
-  <iframe
-    src="https://www.youtube.com/embed/Y2evkfTkOO4"
-    title="MBC S8 Demo Video 2"
-    style="
-      width: 315px;
-      max-width: 100%;
-      aspect-ratio: 9 / 16;
-      height: auto;
-      border: none;
-      border-radius: 12px;
-      display: block;
-    "
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
+For fields packed in base 256, first convert the raw reading to unsigned 16-bit (add 65536 to a negative reading), then take the remainder and quotient. Hue 0 can mean red, so use the total to validate color-order entries. Subtract 100 from each raw RGB line field. For example, raw red 80 means a near offset of −20.
 
-</div>
+The first five Home Python device.get() values are the Education layout’s color, reflection, raw red, green, and blue. The sixth value packs Education bytes 8 and 9, low byte first. In mode 13 these are the counts for targets 1 and 2. See the [SPIKE App lesson](./spike-app.md) for the layout, limited to the six values this API returns.
 
-[Back to Home – Choose Another Tutorial](/)
+## 03 / Example program
+
+### ✔ Read target 2 position
+
+1. Teach two different colors as targets 1 and 2. Confirm target 2 appears in the camera preview.
+2. In a loop, read Raw red once, store it in a variable, and decode X and Y using the table.
+3. Display X and Y. Move target 2 sideways and check that X changes. Move it out of frame and confirm X returns to 0.
+
+*[Image placeholder — complete Raw red, coordinate decoding, and display blocks]*
+
+## 04 / 【Lego】 Lau Xiao demonstration videos
+
+<CamDemoVideos />
+
+[Back to the home page to choose another tutorial](/en/)

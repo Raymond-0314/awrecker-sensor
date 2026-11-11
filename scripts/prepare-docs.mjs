@@ -19,7 +19,8 @@ for(const product of products){
   if(!fs.existsSync(path.join(root,intro)))throw Error('Missing product introduction: '+intro)
   const overview=`docs/${prefix}products/${product.slug}.md`
   const home=locale==='en'?'/en/':'/'
-  emit(overview,`---\ntitle: ${JSON.stringify(product.name[locale])}\n---\n<!-- Generated route. Edit docs/_content and docs/_data. -->\n\n# ${product.name[locale]}\n\n${include(overview,intro)}\n\n[${locale==='en'?'Choose a learning path on the home page':'回首頁選擇教學路徑'}](${home})\n`)
+  const demos=product.slug==='Cam'?`\n\n## 【Lego】 Lau Xiao ${locale==='en'?'demonstration videos':'示範影片'}\n\n<CamDemoVideos />`:''
+  emit(overview,`---\ntitle: ${JSON.stringify(product.name[locale])}\n---\n<!-- Generated route. Edit docs/_content and docs/_data. -->\n\n# ${product.name[locale]}\n\n${include(overview,intro)}${demos}\n\n[${locale==='en'?'Choose a learning path on the home page':'回首頁選擇教學路徑'}](${home})\n`)
   for(const [controller,languageIds] of Object.entries(product.support||{})){
    const control=env.controllers.find(c=>c.id===controller)
    if(!control||!Array.isArray(languageIds))throw Error('Invalid controller support: '+product.slug)

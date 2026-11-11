@@ -13,6 +13,7 @@ import DownloadButton from './components/DownloadButton.vue'
 import Sensor8 from './components/Sensor8.vue'
 import Sensor16 from './components/Sensor16.vue'
 import FeatureSection from './components/FeatureSection.vue'
+import CamDemoVideos from './components/CamDemoVideos.vue'
 
 export default {
   extends: DefaultTheme,
@@ -29,6 +30,7 @@ export default {
     app.component('Sensor8', Sensor8)
     app.component('Sensor16', Sensor16)
     app.component('FeatureSection', FeatureSection)
+    app.component('CamDemoVideos', CamDemoVideos)
   },
 
   setup() {

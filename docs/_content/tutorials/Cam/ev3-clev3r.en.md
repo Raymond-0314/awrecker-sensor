@@ -67,26 +67,8 @@ The MBC 8-Channel Line-Following Sensor provides three subroutines. No additiona
 Place the subroutine call inside a forever loop to keep your robot continuously updated with the latest readings from the MBC 8-Channel Line-Following Sensor.
 :::
 
-## 04 / 【Lego】 Lau Xiao Demonstration Videos
+## 04 / 【Lego】 Lau Xiao demonstration videos
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 24px; flex-wrap: wrap; margin: 24px auto;">
-
-  <iframe
-    src="https://www.youtube.com/embed/WgacdWLatbk"
-    title="MBC S8 Demonstration Video 1"
-    style="width: 315px; max-width: 100%; aspect-ratio: 9 / 16; border: none; border-radius: 12px; display: block;"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-
-  <iframe
-    src="https://www.youtube.com/embed/Y2evkfTkOO4"
-    title="MBC S8 Demonstration Video 2"
-    style="width: 315px; max-width: 100%; aspect-ratio: 9 / 16; border: none; border-radius: 12px; display: block;"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-
-</div>
+<CamDemoVideos />
 
 [Return to the homepage to choose another tutorial](/en/)

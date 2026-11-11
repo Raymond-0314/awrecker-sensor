@@ -5,6 +5,10 @@ title: "MBC Vision Camera Sensor"
 
 # MBC Vision Camera Sensor
 
-<!--@include: ../../_content/products/神攝手.en.md-->
+<!--@include: ../../_content/products/Cam.en.md-->
+
+## 【Lego】 Lau Xiao demonstration videos
+
+<CamDemoVideos />
 
 [Choose a learning path on the home page](/en/)

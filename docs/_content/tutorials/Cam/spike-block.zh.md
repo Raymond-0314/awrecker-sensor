@@ -1,115 +1,135 @@
-##
-
 # 使用教學
 
 ## 01 / 環境準備
 
-### ✔ 請確認你所使用的控制器、感應器與程式語言和本教學頁面相同：
+### ✔ 請確認控制器、感應器與程式環境
+
 | 要求 | 符合本教學頁面的種類 |
 | --- | --- |
-| 控制器 | • LEGO® Education SPIKE™ Prime Set<br>• LEGO® MINDSTORMS® Robot Inventor |
-| 感應器 | • MBC 8 路巡跡板 |
-| 程式語言 | • Pybricks |
+| 控制器 | LEGO® Education SPIKE™ Prime Set<br>LEGO® MINDSTORMS® Robot Inventor |
+| 感應器 | MBC 神攝手視覺感應器（SPIKE 版） |
+| 程式語言 | Pybricks Blocks |
 
 ### ✔ 事前準備
-::: warning ⚠️ 注意
-針對 Pybricks 韌體版本，MBC 提供兩種函式庫，分別支援 Pybricks 韌體 V3.6.1 與 V4.0.0。請根據你的 Pybricks 韌體版本下載 MBC 8 路巡跡板專屬函式庫。
+
+1. 確認主機已安裝 Pybricks 韌體，並在 Pybricks 建立對應的程式專案。
+2. 將相機接到 C 埠，確認相機螢幕左上角的主機名稱顯示綠色。可改用 A～F 任一埠，程式需一起修改。
+3. 將目標置於畫面中央，按 `OK` 教色，再看即時畫面是否框出目標。
+
+::: info ℹ️ 補充資訊
+基礎控制使用內建顏色感應器。進階控制在 Python 專案直接讀取相機原始資料。
 :::
 
-<script setup>
-  import { withBase } from 'vitepress'
-</script>
+## 02 / 基礎控制-前置作業與函數功能說明
 
-<div class="library-downloads">
-    <a
-    :href="withBase('/programs/S8/spike-pybricks/MBC_line8_Lib_v361.py')"
-    download="MBC_line8_Lib_v361.py"
-    class="zip-download-btn">
-        ⬇ V3.6.1 函式庫
-    </a>
-    <a
-    :href="withBase('/programs/S8/spike-pybricks/MBC_line8_obj_Lib_v400.py')"
-    download="MBC_line8_obj_Lib_v400.py"
-    class="zip-download-btn">
-        ⬇ V4.0.0 函式庫
-    </a>
-</div>
+### ✔ 數值解碼設定
 
-1. 啟動你的機器人與 Pybricks。
-2. 確認一切運作正常。
-3. MBC 8 路巡跡板的場地光值校正。
-4. 匯入專為 Pybricks 與 MBC 8 路巡跡板設計的專屬 Python 函式庫。
-5. 函式庫匯入步驟
+在相機 `MODE` 選單選擇「顏色追蹤 ③ 標準」，再設定 C 埠為顏色感應器。Y 越小越靠近畫面上緣，X 為 0 表示未偵測到該色。
 
+*［圖片待補｜設定 C 埠顏色感應器］*
 
+### ✔ 函數功能說明
 
-## 02 / 函數與功能說明
-
-| 官方圖形指令 | 功能 | 數值意義說明 |
+| 圖形指令 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| ![黑線線寬](/images/tutorials/S8/spike-app/color.png) | 黑線線寬 | `0-8`<br>• 表示在黑線上的感應器數量。 |
-| ![黑線偏移](/images/tutorials/S8/spike-app/reflect.png) | 黑線偏移 | `0-16`<br>• 8 代表正中央，0 代表最左，16 代表最右。<br>• 數值讀取後 -8 即為循線位置 (數值為負代表黑線在左邊，數值為正代表黑線在右邊)，數值明確，適合 PID 循線。 |
-| ![紅色數值](/images/tutorials/S8/spike-app/red.png) | 高解析黑線偏移 | `0-200`<br>• 100 代表正中央，0 代表極左，200 代表極右。<br>• 數值讀取後 -100 即為高精度循線位置 (數值為負代表黑線在左邊，數值為正代表黑線在右邊)，使用智能演算法提供更高精度的誤差範圍，使用此模式須確保感應器校準確實。 |
-| ![綠色數值](/images/tutorials/S8/spike-app/green.png) | 前 4 顆光電數值 | `0-255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0~3。 |
-| ![藍色數值](/images/tutorials/S8/spike-app/blue.png) | 後 4 顆光電數值 | `0-255`<br>• 每 2-bit 代表一個光電數值，數值範圍 0~3。 |
+| *［圖片待補｜反射光積木與負值修正］* | 色 1 座標 | 40×30 格。先取整數，若原值小於 0，先加 6399。修正後整除 100 得 X，除以 100 的餘數得 Y。 |
+| *［圖片待補｜環境光積木與小數拆解］* | 色 2 座標 | 8×6 格。整數部分是 X，小數第一位是 Y。例如 `4.3` 代表 `(4, 3)`。 |
 
-## 03 / 範例程式
+每次迴圈各讀取一次反射光和環境光，將讀值存入變數再拆解。這兩個欄位也可用來讀取座標取色、色序、循線與物體資料，換算方式會隨相機模式改變。
 
-<a
-  :href="withBase('/programs/S8/spike-inventor/S8_Example_Inventor.lms')"
-  download="S8_Example_Inventor.lms"
-  class="zip-download-btn">
-  ⬇ 範例程式下載
-</a>
+### ✔ 各模式的內建積木讀值
 
-![範例程式](/images/tutorials/S8/spike-inventor/ex_program.webp){style="border-radius: 10px;"}
+| 相機模式 | 可讀資料 |
+| --- | --- |
+| 11 追蹤① 最多色 | 色 1、2 位置 |
+| 12 追蹤② 多色 | 色 1、2 位置 |
+| 13 追蹤③ 標準 | 色 1、2 位置 |
+| 14 追蹤④ 精細 | 反射光＝色 1 位置，環境光＝色 1 寬.高（8×6 格） |
+| 21 取色① 色相 | 反射光以十進位合併 S1 色相、飽和十位；環境光以整數和小數第一位傳送 S2 對應值 |
+| 22 取色② 色相＋飽和 | 同 21，飽和只到十位 |
+| 23 取色③ 色相＋飽和＋明度 | 反射光＝S1 色相；環境光整數＝飽和，小數第一位＝明度十位 |
+| 30 依序取色號 | 反射光＝第 1 塊色相；環境光＝第 2 塊色相.總數（最多顯示 9） |
+| 41–43 黑線／白線／色線 | 反射光以十進位打包近偏移＋100、路口；環境光以整數、小數第一位傳送遠偏移＋100、有線旗標 |
+| 51 物體清單 | 反射光＝物體 1 座標；環境光＝代碼.總數 |
+| 52 物體詳細 | 反射光＝物體 1 座標；環境光＝代碼.面積十位 |
 
-## 04 / 【Lego】 Lau Xiao 示範影片
+循線例：反射光 802 拆成 80 和 2，近處偏移為 −20，路口類型為 T 字。小數第一位用四捨五入後取餘數，避免浮點誤差。
 
-<div style="
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
-  width: 100%;
-  margin: 24px auto;
-">
+## 03 / 進階控制：讀取原始資料
 
-  <!-- Shorts 影片 1 -->
-  <iframe
-    src="https://www.youtube.com/embed/WgacdWLatbk"
-    title="MBC S8 示範影片 1"
-    style="
-      width: 315px;
-      max-width: 100%;
-      aspect-ratio: 9 / 16;
-      height: auto;
-      border: none;
-      border-radius: 12px;
-      display: block;
-    "
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
+在 Pybricks Python 專案使用 PUPDevice。相機的通訊模式 9 會回傳 7 個 int16。每個數值拆成低位和高位兩個 byte，組成 14 byte 的資料。相機模式請先在機身設定，例如 13 是顏色追蹤 ③ 標準。
 
-  <!-- Shorts 影片 2 -->
-  <iframe
-    src="https://www.youtube.com/embed/Y2evkfTkOO4"
-    title="MBC S8 示範影片 2"
-    style="
-      width: 315px;
-      max-width: 100%;
-      aspect-ratio: 9 / 16;
-      height: auto;
-      border: none;
-      border-radius: 12px;
-      display: block;
-    "
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
+### ✔ 原始資料怎麼拆
 
-</div>
+以下 byte 編號從 0 開始。像素 X、Y 從左上角計算，X=0 表示未找到。循線偏移、角度及左右緣是有號 byte：原始值 ≥128 時減 256。
+
+| 相機模式 | 模式 9 的排列 |
+| --- | --- |
+| 11 | byte 0–13 各為一色的 16×12 格號（1–192）。先減 1，再除以 16，餘數、商各加 1 得 X、Y。格號 0 代表未找到。 |
+| 12／13／14 | 每色依序為 X、Y（12）；X、Y、面積（13）；X、Y、寬、高、數量、面積（14）。13 的 byte 12、13 各放兩個色塊數量，以 16 拆開。14 的 byte 12 為找到的色數。 |
+| 21／22／23 | 每個取樣點依序為 H；H、S；H、S、V。 |
+| 30 | byte 0–12 為左起色相，byte 13 為總數。 |
+| 41–43 | 近、中、遠偏移，角度，近線寬，旗標，路口，路口距離，左緣，右緣，遠線寬，標記色號，標記累計，離線方向。 |
+| 51 | byte 0 是總數。接著每個物體為代碼、X、Y。 |
+| 52 | 每個物體依序為色號、形狀、X、Y、寬、高、面積。 |
+
+模式 11／12 要查數量時另讀通訊模式 6。11 用小端位元串，14 個色各占 3 bits，後接 4 bits 的找到色數。12 的前四個 byte 每個以高、低半位元組裝兩個數，依序是色 1–7 的數量與找到色數。
+
+### ✔ 進階讀值範圍
+
+| 相機模式 | 可讀資料 |
+| --- | --- |
+| 11 追蹤① 最多色 | 14 色格號，模式 6 另讀數量 |
+| 12 追蹤② 多色 | 7 色像素位置，模式 6 另讀數量 |
+| 13 追蹤③ 標準 | 4 色像素位置、面積、數量 |
+| 14 追蹤④ 精細 | 2 色位置、寬高、數量與面積 |
+| 21 取色① 色相 | 14 點色相 |
+| 22 取色② 色相＋飽和 | 7 點色相、飽和 |
+| 23 取色③ 色相＋飽和＋明度 | 4 點 H、S、V |
+| 30 依序取色號 | 13 塊色相與總數 |
+| 41–43 黑線／白線／色線 | 14 欄，含三段偏移、路口、標記線與離線方向 |
+| 51 物體清單 | 4 個物體代碼與質心，另有總數 |
+| 52 物體詳細 | 2 個物體色號、形狀、質心、寬高、面積 |
+
+## 04 / 範例程式
+
+### ✔ 基礎控制
+
+將相機切到顏色追蹤 ③ 標準，讀取並顯示色 1、色 2 的格座標。
+
+在重複迴圈中分別儲存反射光與環境光，依上方換算表拆出座標並輸出，兩次讀取間隔 100 毫秒。
+
+*［圖片待補｜基礎控制完整積木，含負值修正和座標顯示］*
+
+### ✔ 進階控制
+
+把相機切到模式 13。以下範例印出色 1 的 X、Y、面積與色塊數量。
+
+```python
+from pybricks.iodevices import PUPDevice
+from pybricks.parameters import Port
+from pybricks.tools import wait
+
+cam = PUPDevice(Port.C)
+
+def read_payload():
+    data = []
+    for word in cam.read(9):
+        data.extend((word & 255, (word >> 8) & 255))
+    return data
+
+while True:
+    data = read_payload()
+    x, y, area = data[:3]
+    if x:
+        print(x, y, area, data[12] >> 4)
+    else:
+        print("No target")
+    wait(100)
+```
+
+## 05 / 【Lego】 Lau Xiao 示範影片
+
+<CamDemoVideos />
 
 [回首頁選擇其他教學](/)
