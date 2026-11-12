@@ -1,413 +1,454 @@
 # Tutorial
 
-## 01 / Environment setup
+## 01 / Getting Started
 
-### ✔ Check your controller, sensor, and programming environment
+### ✔ Confirm Your Controller, Sensor, and Programming Environment
 
-| Requirement | Supported in this tutorial |
+| Requirement | Supported Hardware and Software |
 | --- | --- |
 | Controller | LEGO® MINDSTORMS® EV3 |
-| Sensor | MBC UniCam Vision Camera Sensor (EV3 edition) |
-| Programming environment | EV3 Classroom |
+| Sensor | MBC Vision Sensor (EV3 Version) |
+| Programming Environment | EV3 Classroom |
 
-### ✔ Before you begin
+### ✔ Preparation
 
-1. Start your robot and open EV3 Classroom.
-2. Check that the controller, camera, and programming environment work correctly.
-3. Set the camera mode and make sure it matches the mode used by the program.
+1. Turn on your robot and launch EV3 Classroom.
 
-## 02 / Functions and data
+2. Make sure the controller, camera, and programming environment are working properly.
 
-::: info ℹ️ Reading notes
-- In EV3 Classroom, use the Infrared Sensor numeric reporter blocks on sensor port 1. proximity reports camera Mode ID; select channels 1 ~ 4 for beacon heading and beacon distance. remote provides the Remote fields. Each table identifies the block and channel.
-- Here ÷ means integer division and mod means remainder. Camera Mode ID differs from the infrared read mode: camera mode 13 still returns its data through beacon read mode 1.
-- Area, saturation, value, line width and junction distance are percentages. Their range labels omit the percent sign.
+3. Set the sensor mode and make sure it matches the mode configured in your program.
+
+## 02 / Functions and Features
+
+::: info ℹ️ Additional Information
+
+- In the tables, “÷” means integer division and “mod” means the remainder operation. The camera Mode ID and the EV3 infrared communication mode are separate settings. For example, data from camera Mode 13 is still read through Beacon mode 1.
+
 :::
 
 ::: warning ⚠️ Note
-- Only one camera submode is active at a time. Make sure its Mode ID matches the program.
-- Modes reuse the same read expressions; decode their results using the table for the selected mode.
+
+- Only one camera submode can be used at a time. Make sure the camera Mode ID matches the mode configured in your program.
+
+- Different modes share the same read commands. Decode the returned data using the table for the selected mode.
+
 :::
 
 <CamModeAccordion>
 
-### ✔ Camera mode overview
+### ✔ Camera Mode Overview
 
-MBC UniCam provides five main modes, each with its own submodes. Use the tables and Mode ID numbers below to find the corresponding programming instructions.
+The MBC Vision Sensor has five main modes, each with several submodes. Refer to the descriptions and Mode IDs in the table below to find the corresponding programming instructions.
 
 <CamModeOverview />
 
-### ✔ Mode fields and decoding
+### ✔ Readings and Decoding by Mode
 
-#### Mode 1 — Color tracking
+#### Mode 1: Target Color Tracking
 
-<CamModeSection mode="11" title="Color tracking - ① Most colors">
+<CamModeSection mode="11" title="Color Tracking - ① Maximum Colors">
 
-`EV3 Classroom provides: 12 color positions`
+`EV3 Classroom reads: positions of 12 colors`
 
-::: info ℹ️ Reading notes
-- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
-- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
+::: info ℹ️ Additional Information
+
+- Coordinates use an `8 × 6` grid. X increases to the right, and Y increases from bottom to top, with Y = 1 at the bottom. Returned coordinates indicate grid cells rather than actual pixels. A position value of 0 means no target was found.
+
+- Switching between Beacon and Remote takes approximately 1.1 seconds. Read only the required communication mode in the control loop; avoid repeatedly switching modes to read every field. The camera mode is still configured on the camera itself.
+
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+| Programming Block / Readout | Function | Returned Values |
 | --- | --- | --- |
-| `proximity`<br>[Image pending: EV3 Classroom proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
-| `beacon heading (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading // 10.<br>• Color 1 Y = reading % 10. |
-| `beacon distance (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Color 2 position | `0, 11 ~ 86`<br>• Color 2 X = reading // 10.<br>• Color 2 Y = reading % 10. |
-| `beacon heading (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Color 3 position | `0, 11 ~ 86`<br>• Color 3 X = reading // 10.<br>• Color 3 Y = reading % 10. |
-| `beacon distance (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Color 4 position | `0, 11 ~ 86`<br>• Color 4 X = reading // 10.<br>• Color 4 Y = reading % 10. |
-| `beacon heading (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Color 5 position | `0, 11 ~ 86`<br>• Color 5 X = reading // 10.<br>• Color 5 Y = reading % 10. |
-| `beacon distance (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Color 6 position | `0, 11 ~ 86`<br>• Color 6 X = reading // 10.<br>• Color 6 Y = reading % 10. |
-| `beacon heading (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Color 7 position | `0, 11 ~ 86`<br>• Color 7 X = reading // 10.<br>• Color 7 Y = reading % 10. |
-| `beacon distance (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Color 8 position | `0, 11 ~ 86`<br>• Color 8 X = reading // 10.<br>• Color 8 Y = reading % 10. |
-| `remote (channel 1)`<br>[Image pending: EV3 Classroom remote block] | Color 9 position | `0, 11 ~ 86`<br>• Color 9 X = reading // 10.<br>• Color 9 Y = reading % 10. |
-| `remote (channel 2)`<br>[Image pending: EV3 Classroom remote block] | Color 10 position | `0, 11 ~ 86`<br>• Color 10 X = reading // 10.<br>• Color 10 Y = reading % 10. |
-| `remote (channel 3)`<br>[Image pending: EV3 Classroom remote block] | Color 11 position | `0, 11 ~ 86`<br>• Color 11 X = reading // 10.<br>• Color 11 Y = reading % 10. |
-| `remote (channel 4)`<br>[Image pending: EV3 Classroom remote block] | Color 12 position | `0, 11 ~ 86`<br>• Color 12 X = reading // 10.<br>• Color 12 Y = reading % 10. |
+| ![Line Position](/images/tutorials/S16/ev3-classroom/proximity.png) | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Make sure this value matches the Mode ID for this section. This field only reads the ID; it does not switch the camera mode. |
+| ![Channel 1 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | Color 1 Position | `0, 11 ~ 86`<br>• Color 1 X = reading ÷ 10.<br>• Color 1 Y = reading mod 10. |
+| ![Channel 1 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | Color 2 Position | `0, 11 ~ 86`<br>• Color 2 X = reading ÷ 10.<br>• Color 2 Y = reading mod 10. |
+| ![Channel 2 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | Color 3 Position | `0, 11 ~ 86`<br>• Color 3 X = reading ÷ 10.<br>• Color 3 Y = reading mod 10. |
+| ![Channel 2 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | Color 4 Position | `0, 11 ~ 86`<br>• Color 4 X = reading ÷ 10.<br>• Color 4 Y = reading mod 10. |
+| ![Channel 3 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | Color 5 Position | `0, 11 ~ 86`<br>• Color 5 X = reading ÷ 10.<br>• Color 5 Y = reading mod 10. |
+| ![Channel 3 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | Color 6 Position | `0, 11 ~ 86`<br>• Color 6 X = reading ÷ 10.<br>• Color 6 Y = reading mod 10. |
+| ![Channel 4 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | Color 7 Position | `0, 11 ~ 86`<br>• Color 7 X = reading ÷ 10.<br>• Color 7 Y = reading mod 10. |
+| ![Channel 4 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | Color 8 Position | `0, 11 ~ 86`<br>• Color 8 X = reading ÷ 10.<br>• Color 8 Y = reading mod 10. |
+| ![Remote Channel 1](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | Color 9 Position | `0, 11 ~ 86`<br>• Color 9 X = reading ÷ 10.<br>• Color 9 Y = reading mod 10. |
+| ![Remote Channel 2](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | Color 10 Position | `0, 11 ~ 86`<br>• Color 10 X = reading ÷ 10.<br>• Color 10 Y = reading mod 10. |
+| ![Remote Channel 3](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | Color 11 Position | `0, 11 ~ 86`<br>• Color 11 X = reading ÷ 10.<br>• Color 11 Y = reading mod 10. |
+| ![Remote Channel 4](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | Color 12 Position | `0, 11 ~ 86`<br>• Color 12 X = reading ÷ 10.<br>• Color 12 Y = reading mod 10. |
 
 </CamModeSection>
 
-<CamModeSection mode="12" title="Color tracking - ② Multiple colors">
+<CamModeSection mode="12" title="Color Tracking - ② Multiple Colors">
 
-`EV3 Classroom provides: 8 color positions`
+`EV3 Classroom reads: positions of 8 colors`
 
-::: info ℹ️ Reading notes
-- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+::: info ℹ️ Additional Information
+
+- Coordinates use an `8 × 6` grid. X increases to the right, and Y increases from bottom to top, with Y = 1 at the bottom. Returned coordinates indicate grid cells rather than actual pixels. A position value of 0 means no target was found.
+
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+| Programming Block / Readout | Function | Returned Values |
 | --- | --- | --- |
-| `proximity`<br>[Image pending: EV3 Classroom proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
-| `beacon heading (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading // 10.<br>• Color 1 Y = reading % 10. |
-| `beacon distance (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Color 2 position | `0, 11 ~ 86`<br>• Color 2 X = reading // 10.<br>• Color 2 Y = reading % 10. |
-| `beacon heading (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Color 3 position | `0, 11 ~ 86`<br>• Color 3 X = reading // 10.<br>• Color 3 Y = reading % 10. |
-| `beacon distance (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Color 4 position | `0, 11 ~ 86`<br>• Color 4 X = reading // 10.<br>• Color 4 Y = reading % 10. |
-| `beacon heading (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Color 5 position | `0, 11 ~ 86`<br>• Color 5 X = reading // 10.<br>• Color 5 Y = reading % 10. |
-| `beacon distance (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Color 6 position | `0, 11 ~ 86`<br>• Color 6 X = reading // 10.<br>• Color 6 Y = reading % 10. |
-| `beacon heading (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Color 7 position | `0, 11 ~ 86`<br>• Color 7 X = reading // 10.<br>• Color 7 Y = reading % 10. |
-| `beacon distance (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Color 8 position | `0, 11 ~ 86`<br>• Color 8 X = reading // 10.<br>• Color 8 Y = reading % 10. |
+| ![Camera Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Make sure this value matches the Mode ID for this section. This field only reads the ID; it does not switch the camera mode. |
+| ![Channel 1 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | Color 1 Position | `0, 11 ~ 86`<br>• Color 1 X = reading ÷ 10.<br>• Color 1 Y = reading mod 10. |
+| ![Channel 1 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | Color 2 Position | `0, 11 ~ 86`<br>• Color 2 X = reading ÷ 10.<br>• Color 2 Y = reading mod 10. |
+| ![Channel 2 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | Color 3 Position | `0, 11 ~ 86`<br>• Color 3 X = reading ÷ 10.<br>• Color 3 Y = reading mod 10. |
+| ![Channel 2 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | Color 4 Position | `0, 11 ~ 86`<br>• Color 4 X = reading ÷ 10.<br>• Color 4 Y = reading mod 10. |
+| ![Channel 3 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | Color 5 Position | `0, 11 ~ 86`<br>• Color 5 X = reading ÷ 10.<br>• Color 5 Y = reading mod 10. |
+| ![Channel 3 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | Color 6 Position | `0, 11 ~ 86`<br>• Color 6 X = reading ÷ 10.<br>• Color 6 Y = reading mod 10. |
+| ![Channel 4 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | Color 7 Position | `0, 11 ~ 86`<br>• Color 7 X = reading ÷ 10.<br>• Color 7 Y = reading mod 10. |
+| ![Channel 4 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | Color 8 Position | `0, 11 ~ 86`<br>• Color 8 X = reading ÷ 10.<br>• Color 8 Y = reading mod 10. |
 
 </CamModeSection>
 
-<CamModeSection mode="13" title="Color tracking - ③ Standard">
+<CamModeSection mode="13" title="Color Tracking - ③ Standard">
 
-`EV3 Classroom provides: 4 color positions and area`
+`EV3 Classroom reads: positions and areas of 4 colors`
 
-::: info ℹ️ Reading notes
-- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+::: info ℹ️ Additional Information
+
+- Coordinates use an `8 × 6` grid. X increases to the right, and Y increases from bottom to top, with Y = 1 at the bottom. Returned coordinates indicate grid cells rather than actual pixels. A position value of 0 means no target was found.
+
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+| Programming Block / Readout | Function | Returned Values |
 | --- | --- | --- |
-| `proximity`<br>[Image pending: EV3 Classroom proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
-| `beacon heading (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading // 10.<br>• Color 1 Y = reading % 10. |
-| `beacon distance (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Color 1 area | `0 ~ 100`<br>• Color 1 area = reading. |
-| `beacon heading (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Color 2 position | `0, 11 ~ 86`<br>• Color 2 X = reading // 10.<br>• Color 2 Y = reading % 10. |
-| `beacon distance (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Color 2 area | `0 ~ 100`<br>• Color 2 area = reading. |
-| `beacon heading (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Color 3 position | `0, 11 ~ 86`<br>• Color 3 X = reading // 10.<br>• Color 3 Y = reading % 10. |
-| `beacon distance (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Color 3 area | `0 ~ 100`<br>• Color 3 area = reading. |
-| `beacon heading (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Color 4 position | `0, 11 ~ 86`<br>• Color 4 X = reading // 10.<br>• Color 4 Y = reading % 10. |
-| `beacon distance (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Color 4 area | `0 ~ 100`<br>• Color 4 area = reading. |
+| ![Camera Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Make sure this value matches the Mode ID for this section. This field only reads the ID; it does not switch the camera mode. |
+| ![Channel 1 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | Color 1 Position | `0, 11 ~ 86`<br>• Color 1 X = reading ÷ 10.<br>• Color 1 Y = reading mod 10. |
+| ![Channel 1 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | Color 1 Area | `0 ~ 100`<br>• Color 1 Area = reading. |
+| ![Channel 2 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | Color 2 Position | `0, 11 ~ 86`<br>• Color 2 X = reading ÷ 10.<br>• Color 2 Y = reading mod 10. |
+| ![Channel 2 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | Color 2 Area | `0 ~ 100`<br>• Color 2 Area = reading. |
+| ![Channel 3 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | Color 3 Position | `0, 11 ~ 86`<br>• Color 3 X = reading ÷ 10.<br>• Color 3 Y = reading mod 10. |
+| ![Channel 3 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | Color 3 Area | `0 ~ 100`<br>• Color 3 Area = reading. |
+| ![Channel 4 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | Color 4 Position | `0, 11 ~ 86`<br>• Color 4 X = reading ÷ 10.<br>• Color 4 Y = reading mod 10. |
+| ![Channel 4 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | Color 4 Area | `0 ~ 100`<br>• Color 4 Area = reading. |
 
 </CamModeSection>
 
-<CamModeSection mode="14" title="Color tracking - ④ Fine">
+<CamModeSection mode="14" title="Color Tracking - ④ Detailed">
 
-`EV3 Classroom provides: 2 color positions and sizes`
+`EV3 Classroom reads: positions, widths, and heights of 2 colors`
 
-::: info ℹ️ Reading notes
-- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
+::: info ℹ️ Additional Information
+
+- Coordinates use an `8 × 6` grid. X increases to the right, and Y increases from bottom to top, with Y = 1 at the bottom. Returned coordinates indicate grid cells rather than actual pixels. A position value of 0 means no target was found.
+
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+| Programming Block / Readout | Function | Returned Values |
 | --- | --- | --- |
-| `proximity`<br>[Image pending: EV3 Classroom proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
-| `beacon heading (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading // 10.<br>• Color 1 Y = reading % 10. |
-| `beacon distance (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Color 1 size | `0, 11 ~ 86`<br>• Color 1 W = reading // 10.<br>• Color 1 H = reading % 10. |
-| `beacon heading (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Color 1 count | `0 ~ 15`<br>• Color 1 count = reading. |
-| `beacon distance (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Color 1 area | `0 ~ 100`<br>• Color 1 area = reading. |
-| `beacon heading (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Color 2 position | `0, 11 ~ 86`<br>• Color 2 X = reading // 10.<br>• Color 2 Y = reading % 10. |
-| `beacon distance (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Color 2 size | `0, 11 ~ 86`<br>• Color 2 W = reading // 10.<br>• Color 2 H = reading % 10. |
-| `beacon heading (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Color 2 count | `0 ~ 15`<br>• Color 2 count = reading. |
-| `beacon distance (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Color 2 area | `0 ~ 100`<br>• Color 2 area = reading. |
+| ![Camera Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Make sure this value matches the Mode ID for this section. This field only reads the ID; it does not switch the camera mode. |
+| ![Channel 1 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | Color 1 Position | `0, 11 ~ 86`<br>• Color 1 X = reading ÷ 10.<br>• Color 1 Y = reading mod 10. |
+| ![Channel 1 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | Color 1 Width and Height | `0, 11 ~ 86`<br>• Color 1 W = reading ÷ 10.<br>• Color 1 H = reading mod 10. |
+| ![Channel 2 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | Color 1 Count | `0 ~ 15`<br>• Color 1 Count = reading. |
+| ![Channel 2 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | Color 1 Area | `0 ~ 100`<br>• Color 1 Area = reading. |
+| ![Channel 3 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | Color 2 Position | `0, 11 ~ 86`<br>• Color 2 X = reading ÷ 10.<br>• Color 2 Y = reading mod 10. |
+| ![Channel 3 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | Color 2 Width and Height | `0, 11 ~ 86`<br>• Color 2 W = reading ÷ 10.<br>• Color 2 H = reading mod 10. |
+| ![Channel 4 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | Color 2 Count | `0 ~ 15`<br>• Color 2 Count = reading. |
+| ![Channel 4 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | Color 2 Area | `0 ~ 100`<br>• Color 2 Area = reading. |
 
 </CamModeSection>
 
-#### Mode 2 — Coordinate sampling
+#### Mode 2: Color Sampling at Specified Coordinates
 
-<CamModeSection mode="21" title="Coordinate sampling - ① Hue">
+<CamModeSection mode="21" title="Coordinate Color Sampling - ① Hue">
 
-`EV3 Classroom provides: 12 points: hue`
+`EV3 Classroom reads: hue at 12 sampling points`
 
-::: info ℹ️ Reading notes
-- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
-- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
-- -1 ~ -8 represents white through gray; -9 ~ -15 represents black. Do not convert negative values to hue.
-- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+::: info ℹ️ Additional Information
+
+- Configure the sampling point positions first. Unconfigured sampling points are not displayed on the screen, and their H, S, and V values sent to the controller are 0. H = hue, S = saturation, and V = value (brightness).
+
+- Switching between Beacon and Remote takes approximately 1.1 seconds. Read only the required communication mode in the control loop; avoid repeatedly switching modes to read every field. The camera mode is still configured on the camera itself.
+
+- -1 ~ -8 indicate white through gray, and -9 ~ -15 indicate black. Do not apply the hue conversion formula to negative values.
+
+- A hue of 0 can represent red. Confirm that the sampling point has been configured; a hue of 0 alone does not indicate that nothing was detected.
+
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+| Programming Block / Readout | Function | Returned Values |
 | --- | --- | --- |
-| `proximity`<br>[Image pending: EV3 Classroom proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
-| `beacon heading (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | S1 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon distance (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | S2 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon heading (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | S3 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon distance (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | S4 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon heading (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | S5 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon distance (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | S6 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon heading (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | S7 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon distance (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | S8 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `remote (channel 1)`<br>[Image pending: EV3 Classroom remote block] | S9 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `remote (channel 2)`<br>[Image pending: EV3 Classroom remote block] | S10 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `remote (channel 3)`<br>[Image pending: EV3 Classroom remote block] | S11 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `remote (channel 4)`<br>[Image pending: EV3 Classroom remote block] | S12 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
+| ![Camera Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Make sure this value matches the Mode ID for this section. This field only reads the ID; it does not switch the camera mode. |
+| ![Channel 1 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | S1 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 1 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | S2 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 2 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | S3 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 2 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | S4 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 3 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | S5 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 3 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | S6 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 4 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | S7 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 4 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | S8 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Remote Channel 1](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | S9 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Remote Channel 2](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | S10 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Remote Channel 3](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | S11 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Remote Channel 4](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | S12 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
 
 </CamModeSection>
 
-<CamModeSection mode="22" title="Coordinate sampling - ② Hue and saturation">
+<CamModeSection mode="22" title="Coordinate Color Sampling - ② Hue + Saturation">
 
-`EV3 Classroom provides: 4 points: hue and saturation`
+`EV3 Classroom reads: hue and saturation at 4 sampling points`
 
-::: info ℹ️ Reading notes
-- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
-- -1 ~ -8 represents white through gray; -9 ~ -15 represents black. Do not convert negative values to hue.
-- Both retain tens only; digit 9 means about 90 or higher.
-- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+::: info ℹ️ Additional Information
+
+- Configure the sampling point positions first. Unconfigured sampling points are not displayed on the screen, and their H, S, and V values sent to the controller are 0. H = hue, S = saturation, and V = value (brightness).
+
+- -1 ~ -8 indicate white through gray, and -9 ~ -15 indicate black. Do not apply the hue conversion formula to negative values.
+
+- Only the tens digit is retained for both values. A digit of 9 represents approximately 90 or higher.
+
+- A hue of 0 can represent red. Confirm that the sampling point has been configured; a hue of 0 alone does not indicate that nothing was detected.
+
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+| Programming Block / Readout | Function | Returned Values |
 | --- | --- | --- |
-| `proximity`<br>[Image pending: EV3 Classroom proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
-| `beacon heading (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | S1 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon distance (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | S1 saturation and value | `0 ~ 99`<br>• S1 saturation range: `0 ~ 90`{.code-green}.<br>• S1 saturation = (reading // 10) × 10.<br>• S1 value range: `0 ~ 90`{.code-green}.<br>• S1 value = (reading % 10) × 10. |
-| `beacon heading (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | S2 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon distance (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | S2 saturation and value | `0 ~ 99`<br>• S2 saturation range: `0 ~ 90`{.code-green}.<br>• S2 saturation = (reading // 10) × 10.<br>• S2 value range: `0 ~ 90`{.code-green}.<br>• S2 value = (reading % 10) × 10. |
-| `beacon heading (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | S3 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon distance (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | S3 saturation and value | `0 ~ 99`<br>• S3 saturation range: `0 ~ 90`{.code-green}.<br>• S3 saturation = (reading // 10) × 10.<br>• S3 value range: `0 ~ 90`{.code-green}.<br>• S3 value = (reading % 10) × 10. |
-| `beacon heading (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | S4 hue | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon distance (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | S4 saturation and value | `0 ~ 99`<br>• S4 saturation range: `0 ~ 90`{.code-green}.<br>• S4 saturation = (reading // 10) × 10.<br>• S4 value range: `0 ~ 90`{.code-green}.<br>• S4 value = (reading % 10) × 10. |
+| ![Camera Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Make sure this value matches the Mode ID for this section. This field only reads the ID; it does not switch the camera mode. |
+| ![Channel 1 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | S1 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 1 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | S1 Saturation and Value | `0 ~ 99`<br>• S1 Saturation range: `0 ~ 90`{.code-green}.<br>• S1 Saturation = (reading ÷ 10) × 10.<br>• S1 Value range: `0 ~ 90`{.code-green}.<br>• S1 Value = (reading mod 10) × 10. |
+| ![Channel 2 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | S2 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 2 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | S2 Saturation and Value | `0 ~ 99`<br>• S2 Saturation range: `0 ~ 90`{.code-green}.<br>• S2 Saturation = (reading ÷ 10) × 10.<br>• S2 Value range: `0 ~ 90`{.code-green}.<br>• S2 Value = (reading mod 10) × 10. |
+| ![Channel 3 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | S3 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 3 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | S3 Saturation and Value | `0 ~ 99`<br>• S3 Saturation range: `0 ~ 90`{.code-green}.<br>• S3 Saturation = (reading ÷ 10) × 10.<br>• S3 Value range: `0 ~ 90`{.code-green}.<br>• S3 Value = (reading mod 10) × 10. |
+| ![Channel 4 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | S4 Hue | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 4 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | S4 Saturation and Value | `0 ~ 99`<br>• S4 Saturation range: `0 ~ 90`{.code-green}.<br>• S4 Saturation = (reading ÷ 10) × 10.<br>• S4 Value range: `0 ~ 90`{.code-green}.<br>• S4 Value = (reading mod 10) × 10. |
 
 </CamModeSection>
 
-<CamModeSection mode="23" title="Coordinate sampling - ③ HSV">
+<CamModeSection mode="23" title="Coordinate Color Sampling - ③ Hue + Saturation + Value">
 
-`EV3 Classroom provides: 2 points: hue, saturation and value`
+`EV3 Classroom reads: hue, saturation, and value at 2 sampling points`
 
-::: info ℹ️ Reading notes
-- Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
-- Recombine the same point: hue = hundreds × 100 + remainder.
-- Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+::: info ℹ️ Additional Information
+
+- Configure the sampling point positions first. Unconfigured sampling points are not displayed on the screen, and their H, S, and V values sent to the controller are 0. H = hue, S = saturation, and V = value (brightness).
+
+- For each sampling point, the complete hue code = hundreds-digit reading × 100 + last-two-digits reading.
+
+- A hue of 0 can represent red. Confirm that the sampling point has been configured; a hue of 0 alone does not indicate that nothing was detected.
+
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+| Programming Block / Readout | Function | Returned Values |
 | --- | --- | --- |
-| `proximity`<br>[Image pending: EV3 Classroom proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
-| `beacon heading (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | S1 hue hundreds | `0 ~ 2`<br>• S1 hue hundreds = reading. |
-| `beacon distance (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | S1 hue remainder | `0 ~ 99`<br>• S1 hue remainder = reading. |
-| `beacon heading (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | S1 saturation | `0 ~ 100`<br>• S1 saturation = reading. |
-| `beacon distance (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | S1 value | `0 ~ 100`<br>• S1 value = reading. |
-| `beacon heading (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | S2 hue hundreds | `0 ~ 2`<br>• S2 hue hundreds = reading. |
-| `beacon distance (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | S2 hue remainder | `0 ~ 99`<br>• S2 hue remainder = reading. |
-| `beacon heading (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | S2 saturation | `0 ~ 100`<br>• S2 saturation = reading. |
-| `beacon distance (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | S2 value | `0 ~ 100`<br>• S2 value = reading. |
+| ![Camera Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Make sure this value matches the Mode ID for this section. This field only reads the ID; it does not switch the camera mode. |
+| ![Channel 1 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | S1 Hue Hundreds Digit | `0 ~ 2`<br>• S1 Hue Hundreds Digit = reading. |
+| ![Channel 1 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | S1 Hue Last Two Digits | `0 ~ 99`<br>• S1 Hue Last Two Digits = reading. |
+| ![Channel 2 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | S1 Saturation | `0 ~ 100`<br>• S1 Saturation = reading. |
+| ![Channel 2 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | S1 Value | `0 ~ 100`<br>• S1 Value = reading. |
+| ![Channel 3 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | S2 Hue Hundreds Digit | `0 ~ 2`<br>• S2 Hue Hundreds Digit = reading. |
+| ![Channel 3 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | S2 Hue Last Two Digits | `0 ~ 99`<br>• S2 Hue Last Two Digits = reading. |
+| ![Channel 4 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | S2 Saturation | `0 ~ 100`<br>• S2 Saturation = reading. |
+| ![Channel 4 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | S2 Value | `0 ~ 100`<br>• S2 Value = reading. |
 
 </CamModeSection>
 
-#### Mode 3 — Color order
+#### Mode 3: Sequential Color Reading
 
-<CamModeSection mode="30" title="Color order">
+<CamModeSection mode="30" title="Sequential Color Reading">
 
-`EV3 Classroom provides: the first 11 block hues and total count`
+`EV3 Classroom reads: hues of the first 11 blocks and the total block count`
 
-::: info ℹ️ Reading notes
-- Blocks are ordered left to right. Read the total count before using hue entries; hue 0 can be red.
-- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
-- -1 ~ -8 represents white through gray; -9 ~ -15 represents black. Do not convert negative values to hue.
+::: info ℹ️ Additional Information
+
+- Color blocks are ordered from left to right. Read the total block count first, then use the corresponding initial hue entries. A hue of 0 can represent red.
+
+- Switching between Beacon and Remote takes approximately 1.1 seconds. Read only the required communication mode in the control loop; avoid repeatedly switching modes to read every field. The camera mode is still configured on the camera itself.
+
+- -1 ~ -8 indicate white through gray, and -9 ~ -15 indicate black. Do not apply the hue conversion formula to negative values.
+
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+| Programming Block / Readout | Function | Returned Values |
 | --- | --- | --- |
-| `proximity`<br>[Image pending: EV3 Classroom proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
-| `beacon heading (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Block 1 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon distance (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Block 2 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon heading (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Block 3 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon distance (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Block 4 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon heading (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Block 5 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon distance (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Block 6 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon heading (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Block 7 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `beacon distance (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Block 8 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `remote (channel 1)`<br>[Image pending: EV3 Classroom remote block] | Block 9 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `remote (channel 2)`<br>[Image pending: EV3 Classroom remote block] | Block 10 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `remote (channel 3)`<br>[Image pending: EV3 Classroom remote block] | Block 11 hue from the left | `-15 ~ 100`<br>• For reading ≥ 0, hue code = reading × 240 / 100. |
-| `remote (channel 4)`<br>[Image pending: EV3 Classroom remote block] | Total color blocks | `0 ~ 18`<br>• Total color blocks = reading. |
+| ![Camera Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Make sure this value matches the Mode ID for this section. This field only reads the ID; it does not switch the camera mode. |
+| ![Channel 1 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | Hue of Block 1 from the Left | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 1 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | Hue of Block 2 from the Left | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 2 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | Hue of Block 3 from the Left | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 2 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | Hue of Block 4 from the Left | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 3 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | Hue of Block 5 from the Left | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 3 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | Hue of Block 6 from the Left | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 4 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | Hue of Block 7 from the Left | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Channel 4 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | Hue of Block 8 from the Left | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Remote Channel 1](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | Hue of Block 9 from the Left | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Remote Channel 2](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | Hue of Block 10 from the Left | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Remote Channel 3](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | Hue of Block 11 from the Left | `-15 ~ 100`<br>• When the reading ≥ 0, hue code = reading × 240 ÷ 100. |
+| ![Remote Channel 4](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | Total Color Block Count | `0 ~ 18`<br>• Total Color Block Count = reading. |
 
 </CamModeSection>
 
-#### Mode 4 — Line following
+#### Mode 4: Line Following
 
-<CamModeSection mode="41" title="Line following - ① Black">
+<CamModeSection mode="41" title="Line Following - ① Black Line">
 
-`EV3 Classroom provides: 12 line-following readings`
+`EV3 Classroom reads: 12 line-following values`
 
-::: info ℹ️ Reading notes
-- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
-- This submode detects a black line on a light surface.
-- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
-- Negative offsets place the line on the left; positive offsets place it on the right.
+::: info ℹ️ Additional Information
+
+- Junction types: 0 = none, 1 = crossroads, 2 = T-junction, 3 = left junction, 4 = right junction, and 5 = dead end. Line detection flags are the sum of 1, 2, and 4 for the near, middle, and far regions, respectively.
+
+- This submode detects black lines on a light background.
+
+- Switching between Beacon and Remote takes approximately 1.1 seconds. Read only the required communication mode in the control loop; avoid repeatedly switching modes to read every field. The camera mode is still configured on the camera itself.
+
+- A negative offset means the line is to the left; a positive offset means it is to the right.
+
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+| Programming Block / Readout | Function | Returned Values |
 | --- | --- | --- |
-| `proximity`<br>[Image pending: EV3 Classroom proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
-| `beacon heading (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Near offset | `-100 ~ 100`<br>• Near offset = reading; preserve the sign. |
-| `beacon distance (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Middle offset | `-100 ~ 100`<br>• Middle offset = reading; preserve the sign. |
-| `beacon heading (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Far offset | `-100 ~ 100`<br>• Far offset = reading; preserve the sign. |
-| `beacon distance (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Line angle | `-90 ~ 90°`<br>• Line angle = reading; preserve the sign. |
-| `beacon heading (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Near line width | `0 ~ 100`<br>• Near line width = reading. |
-| `beacon distance (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Junction type and line-found flags | `0 ~ 57`<br>• Junction type = reading // 10.<br>• Line-found flags = reading % 10. |
-| `beacon heading (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
-| `beacon distance (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Marker color ID | `0 ~ 16`<br>• Marker color ID = reading. |
-| `remote (channel 1)`<br>[Image pending: EV3 Classroom remote block] | Near left edge | `-100 ~ 100`<br>• Near left edge = reading; preserve the sign. |
-| `remote (channel 2)`<br>[Image pending: EV3 Classroom remote block] | Near right edge | `-100 ~ 100`<br>• Near right edge = reading; preserve the sign. |
-| `remote (channel 3)`<br>[Image pending: EV3 Classroom remote block] | Far line width | `0 ~ 100`<br>• Far line width = reading. |
-| `remote (channel 4)`<br>[Image pending: EV3 Classroom remote block] | Marker count | `0 ~ 99`<br>• Marker count = reading. |
+| ![Camera Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Make sure this value matches the Mode ID for this section. This field only reads the ID; it does not switch the camera mode. |
+| ![Channel 1 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | Near Offset | `-100 ~ 100`<br>• Near Offset = reading; preserve the sign. |
+| ![Channel 1 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | Middle Offset | `-100 ~ 100`<br>• Middle Offset = reading; preserve the sign. |
+| ![Channel 2 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | Far Offset | `-100 ~ 100`<br>• Far Offset = reading; preserve the sign. |
+| ![Channel 2 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | Line Angle | `-90 ~ 90°`<br>• Line Angle = reading; preserve the sign. |
+| ![Channel 3 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | Near Line Width | `0 ~ 100`<br>• Near Line Width = reading. |
+| ![Channel 3 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | Junction Type and Line Detection Flags | `0 ~ 57`<br>• Junction Type = reading ÷ 10.<br>• Line Detection Flags = reading mod 10. |
+| ![Channel 4 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | Junction Distance | `0 ~ 100`<br>• Junction Distance = reading. |
+| ![Channel 4 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | Marker Line Color ID | `0 ~ 16`<br>• Marker Line Color ID = reading. |
+| ![Remote Channel 1](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | Near Line Left Edge | `-100 ~ 100`<br>• Near Line Left Edge = reading; preserve the sign. |
+| ![Remote Channel 2](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | Near Line Right Edge | `-100 ~ 100`<br>• Near Line Right Edge = reading; preserve the sign. |
+| ![Remote Channel 3](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | Far Line Width | `0 ~ 100`<br>• Far Line Width = reading. |
+| ![Remote Channel 4](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | Cumulative Marker Line Count | `0 ~ 99`<br>• Cumulative Marker Line Count = reading. |
 
 </CamModeSection>
 
-<CamModeSection mode="42" title="Line following - ② White">
+<CamModeSection mode="42" title="Line Following - ② White Line">
 
-`EV3 Classroom provides: 12 line-following readings`
+`EV3 Classroom reads: 12 line-following values`
 
-::: info ℹ️ Reading notes
-- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
-- This submode detects a white line on a dark surface.
-- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
-- Negative offsets place the line on the left; positive offsets place it on the right.
+::: info ℹ️ Additional Information
+
+- Junction types: 0 = none, 1 = crossroads, 2 = T-junction, 3 = left junction, 4 = right junction, and 5 = dead end. Line detection flags are the sum of 1, 2, and 4 for the near, middle, and far regions, respectively.
+
+- This submode detects white lines on a dark background.
+
+- Switching between Beacon and Remote takes approximately 1.1 seconds. Read only the required communication mode in the control loop; avoid repeatedly switching modes to read every field. The camera mode is still configured on the camera itself.
+
+- A negative offset means the line is to the left; a positive offset means it is to the right.
+
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+| Programming Block / Readout | Function | Returned Values |
 | --- | --- | --- |
-| `proximity`<br>[Image pending: EV3 Classroom proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
-| `beacon heading (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Near offset | `-100 ~ 100`<br>• Near offset = reading; preserve the sign. |
-| `beacon distance (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Middle offset | `-100 ~ 100`<br>• Middle offset = reading; preserve the sign. |
-| `beacon heading (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Far offset | `-100 ~ 100`<br>• Far offset = reading; preserve the sign. |
-| `beacon distance (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Line angle | `-90 ~ 90°`<br>• Line angle = reading; preserve the sign. |
-| `beacon heading (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Near line width | `0 ~ 100`<br>• Near line width = reading. |
-| `beacon distance (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Junction type and line-found flags | `0 ~ 57`<br>• Junction type = reading // 10.<br>• Line-found flags = reading % 10. |
-| `beacon heading (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
-| `beacon distance (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Marker color ID | `0 ~ 16`<br>• Marker color ID = reading. |
-| `remote (channel 1)`<br>[Image pending: EV3 Classroom remote block] | Near left edge | `-100 ~ 100`<br>• Near left edge = reading; preserve the sign. |
-| `remote (channel 2)`<br>[Image pending: EV3 Classroom remote block] | Near right edge | `-100 ~ 100`<br>• Near right edge = reading; preserve the sign. |
-| `remote (channel 3)`<br>[Image pending: EV3 Classroom remote block] | Far line width | `0 ~ 100`<br>• Far line width = reading. |
-| `remote (channel 4)`<br>[Image pending: EV3 Classroom remote block] | Marker count | `0 ~ 99`<br>• Marker count = reading. |
+| ![Camera Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Make sure this value matches the Mode ID for this section. This field only reads the ID; it does not switch the camera mode. |
+| ![Channel 1 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | Near Offset | `-100 ~ 100`<br>• Near Offset = reading; preserve the sign. |
+| ![Channel 1 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | Middle Offset | `-100 ~ 100`<br>• Middle Offset = reading; preserve the sign. |
+| ![Channel 2 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | Far Offset | `-100 ~ 100`<br>• Far Offset = reading; preserve the sign. |
+| ![Channel 2 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | Line Angle | `-90 ~ 90°`<br>• Line Angle = reading; preserve the sign. |
+| ![Channel 3 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | Near Line Width | `0 ~ 100`<br>• Near Line Width = reading. |
+| ![Channel 3 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | Junction Type and Line Detection Flags | `0 ~ 57`<br>• Junction Type = reading ÷ 10.<br>• Line Detection Flags = reading mod 10. |
+| ![Channel 4 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | Junction Distance | `0 ~ 100`<br>• Junction Distance = reading. |
+| ![Channel 4 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | Marker Line Color ID | `0 ~ 16`<br>• Marker Line Color ID = reading. |
+| ![Remote Channel 1](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | Near Line Left Edge | `-100 ~ 100`<br>• Near Line Left Edge = reading; preserve the sign. |
+| ![Remote Channel 2](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | Near Line Right Edge | `-100 ~ 100`<br>• Near Line Right Edge = reading; preserve the sign. |
+| ![Remote Channel 3](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | Far Line Width | `0 ~ 100`<br>• Far Line Width = reading. |
+| ![Remote Channel 4](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | Cumulative Marker Line Count | `0 ~ 99`<br>• Cumulative Marker Line Count = reading. |
 
 </CamModeSection>
 
-<CamModeSection mode="43" title="Line following - ③ Colored">
+<CamModeSection mode="43" title="Line Following - ③ Colored Line">
 
-`EV3 Classroom provides: 12 line-following readings`
+`EV3 Classroom reads: 12 line-following values`
 
-::: info ℹ️ Reading notes
-- Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
-- Before using colored-line mode, teach the line color as target 1.
-- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
-- Negative offsets place the line on the left; positive offsets place it on the right.
+::: info ℹ️ Additional Information
+
+- Junction types: 0 = none, 1 = crossroads, 2 = T-junction, 3 = left junction, 4 = right junction, and 5 = dead end. Line detection flags are the sum of 1, 2, and 4 for the near, middle, and far regions, respectively.
+
+- Before following a colored line, teach its color as target color 1.
+
+- Switching between Beacon and Remote takes approximately 1.1 seconds. Read only the required communication mode in the control loop; avoid repeatedly switching modes to read every field. The camera mode is still configured on the camera itself.
+
+- A negative offset means the line is to the left; a positive offset means it is to the right.
+
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+| Programming Block / Readout | Function | Returned Values |
 | --- | --- | --- |
-| `proximity`<br>[Image pending: EV3 Classroom proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
-| `beacon heading (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Near offset | `-100 ~ 100`<br>• Near offset = reading; preserve the sign. |
-| `beacon distance (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Middle offset | `-100 ~ 100`<br>• Middle offset = reading; preserve the sign. |
-| `beacon heading (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Far offset | `-100 ~ 100`<br>• Far offset = reading; preserve the sign. |
-| `beacon distance (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Line angle | `-90 ~ 90°`<br>• Line angle = reading; preserve the sign. |
-| `beacon heading (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Near line width | `0 ~ 100`<br>• Near line width = reading. |
-| `beacon distance (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Junction type and line-found flags | `0 ~ 57`<br>• Junction type = reading // 10.<br>• Line-found flags = reading % 10. |
-| `beacon heading (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
-| `beacon distance (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Marker color ID | `0 ~ 16`<br>• Marker color ID = reading. |
-| `remote (channel 1)`<br>[Image pending: EV3 Classroom remote block] | Near left edge | `-100 ~ 100`<br>• Near left edge = reading; preserve the sign. |
-| `remote (channel 2)`<br>[Image pending: EV3 Classroom remote block] | Near right edge | `-100 ~ 100`<br>• Near right edge = reading; preserve the sign. |
-| `remote (channel 3)`<br>[Image pending: EV3 Classroom remote block] | Far line width | `0 ~ 100`<br>• Far line width = reading. |
-| `remote (channel 4)`<br>[Image pending: EV3 Classroom remote block] | Marker count | `0 ~ 99`<br>• Marker count = reading. |
+| ![Camera Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Make sure this value matches the Mode ID for this section. This field only reads the ID; it does not switch the camera mode. |
+| ![Channel 1 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | Near Offset | `-100 ~ 100`<br>• Near Offset = reading; preserve the sign. |
+| ![Channel 1 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | Middle Offset | `-100 ~ 100`<br>• Middle Offset = reading; preserve the sign. |
+| ![Channel 2 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | Far Offset | `-100 ~ 100`<br>• Far Offset = reading; preserve the sign. |
+| ![Channel 2 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | Line Angle | `-90 ~ 90°`<br>• Line Angle = reading; preserve the sign. |
+| ![Channel 3 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | Near Line Width | `0 ~ 100`<br>• Near Line Width = reading. |
+| ![Channel 3 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | Junction Type and Line Detection Flags | `0 ~ 57`<br>• Junction Type = reading ÷ 10.<br>• Line Detection Flags = reading mod 10. |
+| ![Channel 4 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | Junction Distance | `0 ~ 100`<br>• Junction Distance = reading. |
+| ![Channel 4 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | Marker Line Color ID | `0 ~ 16`<br>• Marker Line Color ID = reading. |
+| ![Remote Channel 1](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | Near Line Left Edge | `-100 ~ 100`<br>• Near Line Left Edge = reading; preserve the sign. |
+| ![Remote Channel 2](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | Near Line Right Edge | `-100 ~ 100`<br>• Near Line Right Edge = reading; preserve the sign. |
+| ![Remote Channel 3](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | Far Line Width | `0 ~ 100`<br>• Far Line Width = reading. |
+| ![Remote Channel 4](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | Cumulative Marker Line Count | `0 ~ 99`<br>• Cumulative Marker Line Count = reading. |
 
 </CamModeSection>
 
-#### Mode 5 — Object detection
+#### Mode 5: Object Detection
 
-<CamModeSection mode="51" title="Object detection - ① Object list">
+<CamModeSection mode="51" title="Object Detection - ① Object List">
 
-`EV3 Classroom provides: codes and positions of the first 5 objects, plus total count`
+`EV3 Classroom reads: codes and positions of the first 5 objects and the total object count`
 
-::: info ℹ️ Reading notes
-- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
-- Only target colors 1 ~ 8 are used. Objects are ordered largest first, and X/Y is the centroid. Shape codes 0 ~ 9 mean other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star and trapezoid.
-- Switching between beacon and remote reads takes about 1.1 seconds. Read only the mode needed by the control loop. Camera modes are selected on the camera.
-- For example, 13 means color 1 triangle; 0 means no object.
+::: info ℹ️ Additional Information
+
+- Coordinates use an `8 × 6` grid. X increases to the right, and Y increases from bottom to top, with Y = 1 at the bottom. Returned coordinates indicate grid cells rather than actual pixels. A position value of 0 means no target was found.
+
+- Only target colors 1 ~ 8 are detected. Objects are sorted by area in descending order, with Object 1 being the largest. X and Y indicate the object centroid. Shape codes 0 ~ 9 represent Other, Circle, Ellipse, Triangle, Square, Rectangle, Pentagon, Hexagon, Star, and Trapezoid, respectively.
+
+- Switching between Beacon and Remote takes approximately 1.1 seconds. Read only the required communication mode in the control loop; avoid repeatedly switching modes to read every field. The camera mode is still configured on the camera itself.
+
+- For example, 13 represents a triangle of color 1; 0 means no object was detected.
+
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+| Programming Block / Readout | Function | Returned Values |
 | --- | --- | --- |
-| `proximity`<br>[Image pending: EV3 Classroom proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
-| `beacon heading (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading // 10.<br>• Object 1 shape code = reading % 10. |
-| `beacon distance (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Object 1 position | `0, 11 ~ 86`<br>• Object 1 X = reading // 10.<br>• Object 1 Y = reading % 10. |
-| `beacon heading (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Object 2 code | `0, 10 ~ 89`<br>• Object 2 color ID = reading // 10.<br>• Object 2 shape code = reading % 10. |
-| `beacon distance (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Object 2 position | `0, 11 ~ 86`<br>• Object 2 X = reading // 10.<br>• Object 2 Y = reading % 10. |
-| `beacon heading (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Object 3 code | `0, 10 ~ 89`<br>• Object 3 color ID = reading // 10.<br>• Object 3 shape code = reading % 10. |
-| `beacon distance (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Object 3 position | `0, 11 ~ 86`<br>• Object 3 X = reading // 10.<br>• Object 3 Y = reading % 10. |
-| `beacon heading (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Object 4 code | `0, 10 ~ 89`<br>• Object 4 color ID = reading // 10.<br>• Object 4 shape code = reading % 10. |
-| `beacon distance (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Object 4 position | `0, 11 ~ 86`<br>• Object 4 X = reading // 10.<br>• Object 4 Y = reading % 10. |
-| `remote (channel 1)`<br>[Image pending: EV3 Classroom remote block] | Object 5 code | `0, 10 ~ 89`<br>• Object 5 color ID = reading // 10.<br>• Object 5 shape code = reading % 10. |
-| `remote (channel 2)`<br>[Image pending: EV3 Classroom remote block] | Object 5 position | `0, 11 ~ 86`<br>• Object 5 X = reading // 10.<br>• Object 5 Y = reading % 10. |
-| `remote (channel 4)`<br>[Image pending: EV3 Classroom remote block] | Object count | `0 ~ 8`<br>• Object count = reading. |
+| ![Camera Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Make sure this value matches the Mode ID for this section. This field only reads the ID; it does not switch the camera mode. |
+| ![Channel 1 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | Object 1 Code | `0, 10 ~ 89`<br>• Object 1 Color ID range: `0, 1 ~ 8`{.code-green}.<br>• Object 1 Color ID = reading ÷ 10.<br>• Object 1 Shape Code range: `0 ~ 9`{.code-green}.<br>• Object 1 Shape Code = reading mod 10. |
+| ![Channel 1 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | Object 1 Position | `0, 11 ~ 86`<br>• Object 1 X = reading ÷ 10.<br>• Object 1 Y = reading mod 10. |
+| ![Channel 2 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | Object 2 Code | `0, 10 ~ 89`<br>• Object 2 Color ID range: `0, 1 ~ 8`{.code-green}.<br>• Object 2 Color ID = reading ÷ 10.<br>• Object 2 Shape Code range: `0 ~ 9`{.code-green}.<br>• Object 2 Shape Code = reading mod 10. |
+| ![Channel 2 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | Object 2 Position | `0, 11 ~ 86`<br>• Object 2 X = reading ÷ 10.<br>• Object 2 Y = reading mod 10. |
+| ![Channel 3 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | Object 3 Code | `0, 10 ~ 89`<br>• Object 3 Color ID range: `0, 1 ~ 8`{.code-green}.<br>• Object 3 Color ID = reading ÷ 10.<br>• Object 3 Shape Code range: `0 ~ 9`{.code-green}.<br>• Object 3 Shape Code = reading mod 10. |
+| ![Channel 3 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | Object 3 Position | `0, 11 ~ 86`<br>• Object 3 X = reading ÷ 10.<br>• Object 3 Y = reading mod 10. |
+| ![Channel 4 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | Object 4 Code | `0, 10 ~ 89`<br>• Object 4 Color ID range: `0, 1 ~ 8`{.code-green}.<br>• Object 4 Color ID = reading ÷ 10.<br>• Object 4 Shape Code range: `0 ~ 9`{.code-green}.<br>• Object 4 Shape Code = reading mod 10. |
+| ![Channel 4 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | Object 4 Position | `0, 11 ~ 86`<br>• Object 4 X = reading ÷ 10.<br>• Object 4 Y = reading mod 10. |
+| ![Remote Channel 1](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | Object 5 Code | `0, 10 ~ 89`<br>• Object 5 Color ID range: `0, 1 ~ 8`{.code-green}.<br>• Object 5 Color ID = reading ÷ 10.<br>• Object 5 Shape Code range: `0 ~ 9`{.code-green}.<br>• Object 5 Shape Code = reading mod 10. |
+| ![Remote Channel 2](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | Object 5 Position | `0, 11 ~ 86`<br>• Object 5 X = reading ÷ 10.<br>• Object 5 Y = reading mod 10. |
+| ![Remote Channel 4](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | Total Object Count | `0 ~ 8`<br>• Total Object Count = reading. |
 
 </CamModeSection>
 
-<CamModeSection mode="52" title="Object detection - ② Object details">
+<CamModeSection mode="52" title="Object Detection - ② Object Details">
 
-`EV3 Classroom provides: details of the first 2 objects`
+`EV3 Classroom reads: details of the first 2 objects`
 
-::: info ℹ️ Reading notes
-- Coordinates use an `8 × 6` grid. X increases rightward; Y increases upward, with 1 at the bottom. Values are grid cells rather than pixels. Position 0 means not found.
-- Only target colors 1 ~ 8 are used. Objects are ordered largest first, and X/Y is the centroid. Shape codes 0 ~ 9 mean other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star and trapezoid.
-- For example, 13 means color 1 triangle; 0 means no object.
-- This reduced field can differ by one unit after conversion.
+::: info ℹ️ Additional Information
+
+- Coordinates use an `8 × 6` grid. X increases to the right, and Y increases from bottom to top, with Y = 1 at the bottom. Returned coordinates indicate grid cells rather than actual pixels. A position value of 0 means no target was found.
+
+- Only target colors 1 ~ 8 are detected. Objects are sorted by area in descending order, with Object 1 being the largest. X and Y indicate the object centroid. Shape codes 0 ~ 9 represent Other, Circle, Ellipse, Triangle, Square, Rectangle, Pentagon, Hexagon, Star, and Trapezoid, respectively.
+
+- This field uses reduced precision, so the converted value may have an error of 1 unit.
+
+- For example, 13 represents a triangle of color 1; 0 means no object was detected.
+
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+| Programming Block / Readout | Function | Returned Values |
 | --- | --- | --- |
-| `proximity`<br>[Image pending: EV3 Classroom proximity block] | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Check it matches this section’s Mode ID; reading this field does not switch the camera. |
-| `beacon heading (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading // 10.<br>• Object 1 shape code = reading % 10. |
-| `beacon distance (channel 1)`<br>[Image pending: EV3 Classroom beacon block] | Object 1 position | `0, 11 ~ 86`<br>• Object 1 X = reading // 10.<br>• Object 1 Y = reading % 10. |
-| `beacon heading (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Object 1 area | `0 ~ 100`<br>• Object 1 area = reading. |
-| `beacon distance (channel 2)`<br>[Image pending: EV3 Classroom beacon block] | Object 1 angle | `0 ~ 90`<br>• Object 1 angle = reading × 2, capped at 179°. |
-| `beacon heading (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Object 2 code | `0, 10 ~ 89`<br>• Object 2 color ID = reading // 10.<br>• Object 2 shape code = reading % 10. |
-| `beacon distance (channel 3)`<br>[Image pending: EV3 Classroom beacon block] | Object 2 position | `0, 11 ~ 86`<br>• Object 2 X = reading // 10.<br>• Object 2 Y = reading % 10. |
-| `beacon heading (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Object 2 area | `0 ~ 100`<br>• Object 2 area = reading. |
-| `beacon distance (channel 4)`<br>[Image pending: EV3 Classroom beacon block] | Object 2 angle | `0 ~ 90`<br>• Object 2 angle = reading × 2, capped at 179°. |
+| ![Camera Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | Camera Mode ID | `11 ~ 52`<br>• Camera Mode ID = reading.<br>• Make sure this value matches the Mode ID for this section. This field only reads the ID; it does not switch the camera mode. |
+| ![Channel 1 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | Object 1 Code | `0, 10 ~ 89`<br>• Object 1 Color ID range: `0, 1 ~ 8`{.code-green}.<br>• Object 1 Color ID = reading ÷ 10.<br>• Object 1 Shape Code range: `0 ~ 9`{.code-green}.<br>• Object 1 Shape Code = reading mod 10. |
+| ![Channel 1 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | Object 1 Position | `0, 11 ~ 86`<br>• Object 1 X = reading ÷ 10.<br>• Object 1 Y = reading mod 10. |
+| ![Channel 2 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | Object 1 Area | `0 ~ 100`<br>• Object 1 Area = reading. |
+| ![Channel 2 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | Object 1 Angle | `0 ~ 90`<br>• Object 1 Angle = reading × 2; capped at 179°. |
+| ![Channel 3 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | Object 2 Code | `0, 10 ~ 89`<br>• Object 2 Color ID range: `0, 1 ~ 8`{.code-green}.<br>• Object 2 Color ID = reading ÷ 10.<br>• Object 2 Shape Code range: `0 ~ 9`{.code-green}.<br>• Object 2 Shape Code = reading mod 10. |
+| ![Channel 3 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | Object 2 Position | `0, 11 ~ 86`<br>• Object 2 X = reading ÷ 10.<br>• Object 2 Y = reading mod 10. |
+| ![Channel 4 Heading](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | Object 2 Area | `0 ~ 100`<br>• Object 2 Area = reading. |
+| ![Channel 4 Distance](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | Object 2 Angle | `0 ~ 90`<br>• Object 2 Angle = reading × 2; capped at 179°. |
 
 </CamModeSection>
 
 </CamModeAccordion>
 
-## 03 / Example programs
-
-### ✔ Read target 1 position and area
-
-Connect the camera to sensor port 1, teach target color 1, and select Mode ID 13 (Color tracking - ③ Standard) on the camera.
-
-1. At program startup, read Infrared Sensor proximity and check that it is 13.
-2. Create position, area, X, and Y variables and add a forever loop.
-3. Store channel 1 beacon heading as position and beacon distance as area.
-4. Display “No target” when position = 0. Otherwise use math blocks to calculate X = floor(position/10) and Y = position modulo 10.
-5. Display X, Y, and area, wait 0.1 seconds, and repeat. For example, position = 43 and area = 18 mean column 4, row 3, and 18% area. EV3 Y = 1 is at the bottom.
-
-Keep the loop on Beacon readings. Check Mode ID with Proximity once at startup to avoid switching infrared modes every iteration and adding about 1.1 seconds of delay.
-
-*[Image pending: complete EV3 Classroom block program or project file; the steps above describe the reads and calculations.]*
-
-## 04 / 【Lego】 Lau Xiao demonstration videos
+## 03 / 【Lego】 Lau Xiao Demonstration Videos
 
 <CamDemoVideos />
 
-[Back to the home page to choose another tutorial](/en/)
+[Return to the Home Page for Other Tutorials](/en/)

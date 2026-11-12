@@ -8,20 +8,19 @@
 | --- | --- |
 | Controller | LEGO® MINDSTORMS® Robot Inventor |
 | Sensor | MBC UniCam Vision Camera Sensor (SPIKE edition) |
-| Programming environment | LEGO MINDSTORMS Inventor App / SPIKE App (Home) |
+| Programming environment | Robot Inventer App |
 
 ### ✔ Before you begin
 
-1. Start your robot and open LEGO MINDSTORMS Inventor App / SPIKE App (Home).
+1. Start your robot and open Robot Inventer App.
 2. Check that the controller, camera, and programming environment work correctly.
 3. Set the camera mode and make sure it matches the mode used by the program.
 
 ## 02 / Functions and data
 
 ::: info ℹ️ Reading notes
-- The Home app treats UniCam as a Color Sensor. The tables below describe its Color, Reflection, and Raw RGB blocks, mainly using an 8 × 6 position grid. Home Python switches to the Education layout and requires different decoding.
-- Here ÷ means integer division and mod means remainder. Store readings before decoding. These are home-app block layouts; do not apply Education App 256-based packing.
-- Area, saturation, value, line width and junction distance are percentages. Their range labels omit the percent sign.
+- The Robot Inventer App treats UniCam as a Color Sensor. The tables below describe its Color, Reflection, and Raw RGB blocks, mainly using an 8 × 6 position grid. Home Python switches to the Education layout and requires different decoding.
+- Here ÷ means integer division and mod means remainder. Store readings before decoding. These are Robot Inventer App block layouts; do not apply Education App 256-based packing.
 :::
 
 ::: warning ⚠️ Note
@@ -43,7 +42,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="11" title="Color tracking - ① Most colors">
 
-`Home app blocks provides: 4 color positions`
+`Robot Inventer App blocks provide: 4 color positions`
 
 ::: info ℹ️ Reading notes
 - Coordinates use a `8 × 6` grid. X increases rightward and Y downward. Values are grid cells rather than pixels. Position 0 means not found.
@@ -62,7 +61,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="12" title="Color tracking - ② Multiple colors">
 
-`Home app blocks provides: 4 color positions`
+`Robot Inventer App blocks provide: 4 color positions`
 
 ::: info ℹ️ Reading notes
 - Coordinates use a `8 × 6` grid. X increases rightward and Y downward. Values are grid cells rather than pixels. Position 0 means not found.
@@ -81,7 +80,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="13" title="Color tracking - ③ Standard">
 
-`Home app blocks provides: 4 color positions`
+`Robot Inventer App blocks provide: 4 color positions`
 
 ::: info ℹ️ Reading notes
 - Coordinates use a `8 × 6` grid. X increases rightward and Y downward. Values are grid cells rather than pixels. Position 0 means not found.
@@ -100,7 +99,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="14" title="Color tracking - ④ Fine">
 
-`Home app blocks provides: 2 color positions and sizes`
+`Robot Inventer App blocks provide: 2 color positions and sizes`
 
 ::: info ℹ️ Reading notes
 - Coordinates use a `8 × 6` grid. X increases rightward and Y downward. Values are grid cells rather than pixels. Position 0 means not found.
@@ -121,7 +120,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="21" title="Coordinate sampling - ① Hue">
 
-`Home app blocks provides: 4 points: hue`
+`Robot Inventer App blocks provide: 4 points: hue`
 
 ::: info ℹ️ Reading notes
 - Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
@@ -140,7 +139,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="22" title="Coordinate sampling - ② Hue and saturation">
 
-`Home app blocks provides: 2 points: hue and saturation`
+`Robot Inventer App blocks provide: 2 points: hue and saturation`
 
 ::: info ℹ️ Reading notes
 - Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
@@ -158,7 +157,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="23" title="Coordinate sampling - ③ HSV">
 
-`Home app blocks provides: 2 points: hue, saturation and value`
+`Robot Inventer App blocks provide: 2 points: hue, saturation and value`
 
 ::: info ℹ️ Reading notes
 - Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
@@ -179,7 +178,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="30" title="Color order">
 
-`Home app blocks provides: the first 3 block hues and total count`
+`Robot Inventer App blocks provide: the first 3 block hues and total count`
 
 ::: info ℹ️ Reading notes
 - Blocks are ordered left to right. Read the total count before using hue entries; hue 0 can be red.
@@ -198,7 +197,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="41" title="Line following - ① Black">
 
-`Home app blocks provides: 14 line-following readings`
+`Robot Inventer App blocks provide: 14 line-following readings`
 
 ::: info ℹ️ Reading notes
 - Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
@@ -218,7 +217,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="42" title="Line following - ② White">
 
-`Home app blocks provides: 14 line-following readings`
+`Robot Inventer App blocks provide: 14 line-following readings`
 
 ::: info ℹ️ Reading notes
 - Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
@@ -238,7 +237,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="43" title="Line following - ③ Colored">
 
-`Home app blocks provides: 14 line-following readings`
+`Robot Inventer App blocks provide: 14 line-following readings`
 
 ::: info ℹ️ Reading notes
 - Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
@@ -260,7 +259,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="51" title="Object detection - ① Object list">
 
-`Home app blocks provides: codes and positions of the first 2 objects, plus total count`
+`Robot Inventer App blocks provide: codes and positions of the first 2 objects, plus total count`
 
 ::: info ℹ️ Reading notes
 - Coordinates use a `8 × 6` grid. X increases rightward and Y downward. Values are grid cells rather than pixels. Position 0 means not found.
@@ -281,7 +280,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="52" title="Object detection - ② Object details">
 
-`Home app blocks provides: details of the first 1 objects`
+`Robot Inventer App blocks provide: details of the first 1 objects`
 
 ::: info ℹ️ Reading notes
 - Coordinates use `160 × 120` pixels. X increases rightward and Y downward. X = 0 means not found.
@@ -301,22 +300,8 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 </CamModeAccordion>
 
-## 03 / Example programs
 
-### ✔ Read target 2 with Home app blocks
-
-Use the Robot Inventor hub and Home app, with the camera on port C. Teach target colors 1 and 2 on the camera and select Mode ID 13 (Color tracking - ③ Standard).
-
-1. Add a forever loop. Read the Color Sensor Raw red value on port C and store it as position.
-2. Use math blocks to calculate X = floor(position/10) and Y = position modulo 10.
-3. Display “No target” when position = 0. Otherwise display X and Y. For example, 63 means X = 6 and Y = 3.
-4. Wait 0.1 seconds and repeat. Move the target to check that X increases rightward and Y downward. The reading should return to 0 when the target leaves the image.
-
-Split Home block Raw red positions in base 10. If you switch to Home Python device.get(), use the Education field layout in the [SPIKE App lesson](./spike-app.md).
-
-*[Image pending: complete Robot Inventor block program or project file; the steps above describe the reads and calculations.]*
-
-## 04 / 【Lego】 Lau Xiao demonstration videos
+## 03 / 【Lego】 Lau Xiao demonstration videos
 
 <CamDemoVideos />
 

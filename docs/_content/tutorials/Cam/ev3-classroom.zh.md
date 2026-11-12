@@ -19,9 +19,7 @@
 ## 02 / 函數與功能說明
 
 ::: info ℹ️ 補充資訊
-- 在 EV3 Classroom 選擇 Infrared Sensor 數值積木，感應器埠設為 1。proximity 對應相機 Mode ID；beacon heading 與 beacon distance 要選通道 1 ~ 4；remote 對應遙控欄位。下表直接列出各積木與通道。
 - 表中的「 ÷ 」表示整數除法，「mod」表示取餘數。相機 Mode ID 與 EV3 紅外線通訊模式是兩件事：例如相機 13 的資料仍透過信標模式 1 讀取。
-- 面積、飽和度、明度、線寬與路口距離以百分比表示，數值範圍不另外加百分號。
 :::
 
 ::: warning ⚠️ 注意
@@ -52,19 +50,19 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 | 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `proximity`<br>［圖片待補｜EV3 Classroom 近接數值積木］ | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
-| `beacon heading (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 1 位置 | `0, 11 ~ 86`<br>• 顏色 1 的 X = 讀取數值 ÷ 10。<br>• 顏色 1 的 Y = 讀取數值 mod 10。 |
-| `beacon distance (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 2 位置 | `0, 11 ~ 86`<br>• 顏色 2 的 X = 讀取數值 ÷ 10。<br>• 顏色 2 的 Y = 讀取數值 mod 10。 |
-| `beacon heading (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 3 位置 | `0, 11 ~ 86`<br>• 顏色 3 的 X = 讀取數值 ÷ 10。<br>• 顏色 3 的 Y = 讀取數值 mod 10。 |
-| `beacon distance (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 4 位置 | `0, 11 ~ 86`<br>• 顏色 4 的 X = 讀取數值 ÷ 10。<br>• 顏色 4 的 Y = 讀取數值 mod 10。 |
-| `beacon heading (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 5 位置 | `0, 11 ~ 86`<br>• 顏色 5 的 X = 讀取數值 ÷ 10。<br>• 顏色 5 的 Y = 讀取數值 mod 10。 |
-| `beacon distance (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 6 位置 | `0, 11 ~ 86`<br>• 顏色 6 的 X = 讀取數值 ÷ 10。<br>• 顏色 6 的 Y = 讀取數值 mod 10。 |
-| `beacon heading (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 7 位置 | `0, 11 ~ 86`<br>• 顏色 7 的 X = 讀取數值 ÷ 10。<br>• 顏色 7 的 Y = 讀取數值 mod 10。 |
-| `beacon distance (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 8 位置 | `0, 11 ~ 86`<br>• 顏色 8 的 X = 讀取數值 ÷ 10。<br>• 顏色 8 的 Y = 讀取數值 mod 10。 |
-| `remote (channel 1)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 顏色 9 位置 | `0, 11 ~ 86`<br>• 顏色 9 的 X = 讀取數值 ÷ 10。<br>• 顏色 9 的 Y = 讀取數值 mod 10。 |
-| `remote (channel 2)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 顏色 10 位置 | `0, 11 ~ 86`<br>• 顏色 10 的 X = 讀取數值 ÷ 10。<br>• 顏色 10 的 Y = 讀取數值 mod 10。 |
-| `remote (channel 3)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 顏色 11 位置 | `0, 11 ~ 86`<br>• 顏色 11 的 X = 讀取數值 ÷ 10。<br>• 顏色 11 的 Y = 讀取數值 mod 10。 |
-| `remote (channel 4)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 顏色 12 位置 | `0, 11 ~ 86`<br>• 顏色 12 的 X = 讀取數值 ÷ 10。<br>• 顏色 12 的 Y = 讀取數值 mod 10。 |
+| ![線位置](/images/tutorials/S16/ev3-classroom/proximity.png) | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
+| ![通道 1 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | 顏色 1 位置 | `0, 11 ~ 86`<br>• 顏色 1 的 X = 讀取數值 ÷ 10。<br>• 顏色 1 的 Y = 讀取數值 mod 10。 |
+| ![通道 1 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | 顏色 2 位置 | `0, 11 ~ 86`<br>• 顏色 2 的 X = 讀取數值 ÷ 10。<br>• 顏色 2 的 Y = 讀取數值 mod 10。 |
+| ![通道 2 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | 顏色 3 位置 | `0, 11 ~ 86`<br>• 顏色 3 的 X = 讀取數值 ÷ 10。<br>• 顏色 3 的 Y = 讀取數值 mod 10。 |
+| ![通道 2 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | 顏色 4 位置 | `0, 11 ~ 86`<br>• 顏色 4 的 X = 讀取數值 ÷ 10。<br>• 顏色 4 的 Y = 讀取數值 mod 10。 |
+| ![通道 3 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | 顏色 5 位置 | `0, 11 ~ 86`<br>• 顏色 5 的 X = 讀取數值 ÷ 10。<br>• 顏色 5 的 Y = 讀取數值 mod 10。 |
+| ![通道 3 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | 顏色 6 位置 | `0, 11 ~ 86`<br>• 顏色 6 的 X = 讀取數值 ÷ 10。<br>• 顏色 6 的 Y = 讀取數值 mod 10。 |
+| ![通道 4 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 顏色 7 位置 | `0, 11 ~ 86`<br>• 顏色 7 的 X = 讀取數值 ÷ 10。<br>• 顏色 7 的 Y = 讀取數值 mod 10。 |
+| ![通道 4 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | 顏色 8 位置 | `0, 11 ~ 86`<br>• 顏色 8 的 X = 讀取數值 ÷ 10。<br>• 顏色 8 的 Y = 讀取數值 mod 10。 |
+| ![遙控通道 1](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | 顏色 9 位置 | `0, 11 ~ 86`<br>• 顏色 9 的 X = 讀取數值 ÷ 10。<br>• 顏色 9 的 Y = 讀取數值 mod 10。 |
+| ![遙控通道 2](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | 顏色 10 位置 | `0, 11 ~ 86`<br>• 顏色 10 的 X = 讀取數值 ÷ 10。<br>• 顏色 10 的 Y = 讀取數值 mod 10。 |
+| ![遙控通道 3](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | 顏色 11 位置 | `0, 11 ~ 86`<br>• 顏色 11 的 X = 讀取數值 ÷ 10。<br>• 顏色 11 的 Y = 讀取數值 mod 10。 |
+| ![遙控通道 4](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | 顏色 12 位置 | `0, 11 ~ 86`<br>• 顏色 12 的 X = 讀取數值 ÷ 10。<br>• 顏色 12 的 Y = 讀取數值 mod 10。 |
 
 </CamModeSection>
 
@@ -78,15 +76,15 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 | 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `proximity`<br>［圖片待補｜EV3 Classroom 近接數值積木］ | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
-| `beacon heading (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 1 位置 | `0, 11 ~ 86`<br>• 顏色 1 的 X = 讀取數值 ÷ 10。<br>• 顏色 1 的 Y = 讀取數值 mod 10。 |
-| `beacon distance (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 2 位置 | `0, 11 ~ 86`<br>• 顏色 2 的 X = 讀取數值 ÷ 10。<br>• 顏色 2 的 Y = 讀取數值 mod 10。 |
-| `beacon heading (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 3 位置 | `0, 11 ~ 86`<br>• 顏色 3 的 X = 讀取數值 ÷ 10。<br>• 顏色 3 的 Y = 讀取數值 mod 10。 |
-| `beacon distance (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 4 位置 | `0, 11 ~ 86`<br>• 顏色 4 的 X = 讀取數值 ÷ 10。<br>• 顏色 4 的 Y = 讀取數值 mod 10。 |
-| `beacon heading (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 5 位置 | `0, 11 ~ 86`<br>• 顏色 5 的 X = 讀取數值 ÷ 10。<br>• 顏色 5 的 Y = 讀取數值 mod 10。 |
-| `beacon distance (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 6 位置 | `0, 11 ~ 86`<br>• 顏色 6 的 X = 讀取數值 ÷ 10。<br>• 顏色 6 的 Y = 讀取數值 mod 10。 |
-| `beacon heading (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 7 位置 | `0, 11 ~ 86`<br>• 顏色 7 的 X = 讀取數值 ÷ 10。<br>• 顏色 7 的 Y = 讀取數值 mod 10。 |
-| `beacon distance (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 8 位置 | `0, 11 ~ 86`<br>• 顏色 8 的 X = 讀取數值 ÷ 10。<br>• 顏色 8 的 Y = 讀取數值 mod 10。 |
+| ![相機 Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
+| ![通道 1 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | 顏色 1 位置 | `0, 11 ~ 86`<br>• 顏色 1 的 X = 讀取數值 ÷ 10。<br>• 顏色 1 的 Y = 讀取數值 mod 10。 |
+| ![通道 1 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | 顏色 2 位置 | `0, 11 ~ 86`<br>• 顏色 2 的 X = 讀取數值 ÷ 10。<br>• 顏色 2 的 Y = 讀取數值 mod 10。 |
+| ![通道 2 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | 顏色 3 位置 | `0, 11 ~ 86`<br>• 顏色 3 的 X = 讀取數值 ÷ 10。<br>• 顏色 3 的 Y = 讀取數值 mod 10。 |
+| ![通道 2 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | 顏色 4 位置 | `0, 11 ~ 86`<br>• 顏色 4 的 X = 讀取數值 ÷ 10。<br>• 顏色 4 的 Y = 讀取數值 mod 10。 |
+| ![通道 3 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | 顏色 5 位置 | `0, 11 ~ 86`<br>• 顏色 5 的 X = 讀取數值 ÷ 10。<br>• 顏色 5 的 Y = 讀取數值 mod 10。 |
+| ![通道 3 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | 顏色 6 位置 | `0, 11 ~ 86`<br>• 顏色 6 的 X = 讀取數值 ÷ 10。<br>• 顏色 6 的 Y = 讀取數值 mod 10。 |
+| ![通道 4 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 顏色 7 位置 | `0, 11 ~ 86`<br>• 顏色 7 的 X = 讀取數值 ÷ 10。<br>• 顏色 7 的 Y = 讀取數值 mod 10。 |
+| ![通道 4 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | 顏色 8 位置 | `0, 11 ~ 86`<br>• 顏色 8 的 X = 讀取數值 ÷ 10。<br>• 顏色 8 的 Y = 讀取數值 mod 10。 |
 
 </CamModeSection>
 
@@ -100,15 +98,15 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 | 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `proximity`<br>［圖片待補｜EV3 Classroom 近接數值積木］ | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
-| `beacon heading (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 1 位置 | `0, 11 ~ 86`<br>• 顏色 1 的 X = 讀取數值 ÷ 10。<br>• 顏色 1 的 Y = 讀取數值 mod 10。 |
-| `beacon distance (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 1 面積 | `0 ~ 100`<br>• 顏色 1 面積 = 讀取數值。 |
-| `beacon heading (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 2 位置 | `0, 11 ~ 86`<br>• 顏色 2 的 X = 讀取數值 ÷ 10。<br>• 顏色 2 的 Y = 讀取數值 mod 10。 |
-| `beacon distance (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 2 面積 | `0 ~ 100`<br>• 顏色 2 面積 = 讀取數值。 |
-| `beacon heading (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 3 位置 | `0, 11 ~ 86`<br>• 顏色 3 的 X = 讀取數值 ÷ 10。<br>• 顏色 3 的 Y = 讀取數值 mod 10。 |
-| `beacon distance (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 3 面積 | `0 ~ 100`<br>• 顏色 3 面積 = 讀取數值。 |
-| `beacon heading (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 4 位置 | `0, 11 ~ 86`<br>• 顏色 4 的 X = 讀取數值 ÷ 10。<br>• 顏色 4 的 Y = 讀取數值 mod 10。 |
-| `beacon distance (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 4 面積 | `0 ~ 100`<br>• 顏色 4 面積 = 讀取數值。 |
+| ![相機 Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
+| ![通道 1 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | 顏色 1 位置 | `0, 11 ~ 86`<br>• 顏色 1 的 X = 讀取數值 ÷ 10。<br>• 顏色 1 的 Y = 讀取數值 mod 10。 |
+| ![通道 1 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | 顏色 1 面積 | `0 ~ 100`<br>• 顏色 1 面積 = 讀取數值。 |
+| ![通道 2 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | 顏色 2 位置 | `0, 11 ~ 86`<br>• 顏色 2 的 X = 讀取數值 ÷ 10。<br>• 顏色 2 的 Y = 讀取數值 mod 10。 |
+| ![通道 2 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | 顏色 2 面積 | `0 ~ 100`<br>• 顏色 2 面積 = 讀取數值。 |
+| ![通道 3 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | 顏色 3 位置 | `0, 11 ~ 86`<br>• 顏色 3 的 X = 讀取數值 ÷ 10。<br>• 顏色 3 的 Y = 讀取數值 mod 10。 |
+| ![通道 3 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | 顏色 3 面積 | `0 ~ 100`<br>• 顏色 3 面積 = 讀取數值。 |
+| ![通道 4 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 顏色 4 位置 | `0, 11 ~ 86`<br>• 顏色 4 的 X = 讀取數值 ÷ 10。<br>• 顏色 4 的 Y = 讀取數值 mod 10。 |
+| ![通道 4 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | 顏色 4 面積 | `0 ~ 100`<br>• 顏色 4 面積 = 讀取數值。 |
 
 </CamModeSection>
 
@@ -122,15 +120,15 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 | 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `proximity`<br>［圖片待補｜EV3 Classroom 近接數值積木］ | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
-| `beacon heading (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 1 位置 | `0, 11 ~ 86`<br>• 顏色 1 的 X = 讀取數值 ÷ 10。<br>• 顏色 1 的 Y = 讀取數值 mod 10。 |
-| `beacon distance (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 1 寬高 | `0, 11 ~ 86`<br>• 顏色 1 的 W = 讀取數值 ÷ 10。<br>• 顏色 1 的 H = 讀取數值 mod 10。 |
-| `beacon heading (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 1 數量 | `0 ~ 15`<br>• 顏色 1 數量 = 讀取數值。 |
-| `beacon distance (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 1 面積 | `0 ~ 100`<br>• 顏色 1 面積 = 讀取數值。 |
-| `beacon heading (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 2 位置 | `0, 11 ~ 86`<br>• 顏色 2 的 X = 讀取數值 ÷ 10。<br>• 顏色 2 的 Y = 讀取數值 mod 10。 |
-| `beacon distance (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 2 寬高 | `0, 11 ~ 86`<br>• 顏色 2 的 W = 讀取數值 ÷ 10。<br>• 顏色 2 的 H = 讀取數值 mod 10。 |
-| `beacon heading (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 2 數量 | `0 ~ 15`<br>• 顏色 2 數量 = 讀取數值。 |
-| `beacon distance (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 顏色 2 面積 | `0 ~ 100`<br>• 顏色 2 面積 = 讀取數值。 |
+| ![相機 Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
+| ![通道 1 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | 顏色 1 位置 | `0, 11 ~ 86`<br>• 顏色 1 的 X = 讀取數值 ÷ 10。<br>• 顏色 1 的 Y = 讀取數值 mod 10。 |
+| ![通道 1 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | 顏色 1 寬高 | `0, 11 ~ 86`<br>• 顏色 1 的 W = 讀取數值 ÷ 10。<br>• 顏色 1 的 H = 讀取數值 mod 10。 |
+| ![通道 2 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | 顏色 1 數量 | `0 ~ 15`<br>• 顏色 1 數量 = 讀取數值。 |
+| ![通道 2 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | 顏色 1 面積 | `0 ~ 100`<br>• 顏色 1 面積 = 讀取數值。 |
+| ![通道 3 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | 顏色 2 位置 | `0, 11 ~ 86`<br>• 顏色 2 的 X = 讀取數值 ÷ 10。<br>• 顏色 2 的 Y = 讀取數值 mod 10。 |
+| ![通道 3 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | 顏色 2 寬高 | `0, 11 ~ 86`<br>• 顏色 2 的 W = 讀取數值 ÷ 10。<br>• 顏色 2 的 H = 讀取數值 mod 10。 |
+| ![通道 4 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 顏色 2 數量 | `0 ~ 15`<br>• 顏色 2 數量 = 讀取數值。 |
+| ![通道 4 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | 顏色 2 面積 | `0 ~ 100`<br>• 顏色 2 面積 = 讀取數值。 |
 
 </CamModeSection>
 
@@ -149,19 +147,19 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 | 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `proximity`<br>［圖片待補｜EV3 Classroom 近接數值積木］ | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
-| `beacon heading (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S1 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon distance (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S2 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon heading (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S3 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon distance (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S4 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon heading (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S5 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon distance (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S6 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon heading (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S7 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon distance (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S8 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `remote (channel 1)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | S9 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `remote (channel 2)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | S10 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `remote (channel 3)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | S11 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `remote (channel 4)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | S12 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![相機 Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
+| ![通道 1 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | S1 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 1 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | S2 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 2 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | S3 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 2 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | S4 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 3 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | S5 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 3 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | S6 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 4 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | S7 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 4 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | S8 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![遙控通道 1](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | S9 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![遙控通道 2](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | S10 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![遙控通道 3](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | S11 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![遙控通道 4](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | S12 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
 
 </CamModeSection>
 
@@ -178,15 +176,15 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 | 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `proximity`<br>［圖片待補｜EV3 Classroom 近接數值積木］ | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
-| `beacon heading (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S1 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon distance (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S1 飽和度與明度 | `0 ~ 99`<br>• S1 飽和度 範圍：`0 ~ 90`{.code-green}。<br>• S1 飽和度為 (讀取數值 ÷ 10) × 10。<br>• S1 明度 範圍：`0 ~ 90`{.code-green}。<br>• S1 明度為 (讀取數值 mod 10) × 10。 |
-| `beacon heading (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S2 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon distance (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S2 飽和度與明度 | `0 ~ 99`<br>• S2 飽和度 範圍：`0 ~ 90`{.code-green}。<br>• S2 飽和度為 (讀取數值 ÷ 10) × 10。<br>• S2 明度 範圍：`0 ~ 90`{.code-green}。<br>• S2 明度為 (讀取數值 mod 10) × 10。 |
-| `beacon heading (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S3 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon distance (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S3 飽和度與明度 | `0 ~ 99`<br>• S3 飽和度 範圍：`0 ~ 90`{.code-green}。<br>• S3 飽和度為 (讀取數值 ÷ 10) × 10。<br>• S3 明度 範圍：`0 ~ 90`{.code-green}。<br>• S3 明度為 (讀取數值 mod 10) × 10。 |
-| `beacon heading (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S4 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon distance (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S4 飽和度與明度 | `0 ~ 99`<br>• S4 飽和度 範圍：`0 ~ 90`{.code-green}。<br>• S4 飽和度為 (讀取數值 ÷ 10) × 10。<br>• S4 明度 範圍：`0 ~ 90`{.code-green}。<br>• S4 明度為 (讀取數值 mod 10) × 10。 |
+| ![相機 Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
+| ![通道 1 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | S1 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 1 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | S1 飽和度與明度 | `0 ~ 99`<br>• S1 飽和度 範圍：`0 ~ 90`{.code-green}。<br>• S1 飽和度為 (讀取數值 ÷ 10) × 10。<br>• S1 明度 範圍：`0 ~ 90`{.code-green}。<br>• S1 明度為 (讀取數值 mod 10) × 10。 |
+| ![通道 2 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | S2 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 2 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | S2 飽和度與明度 | `0 ~ 99`<br>• S2 飽和度 範圍：`0 ~ 90`{.code-green}。<br>• S2 飽和度為 (讀取數值 ÷ 10) × 10。<br>• S2 明度 範圍：`0 ~ 90`{.code-green}。<br>• S2 明度為 (讀取數值 mod 10) × 10。 |
+| ![通道 3 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | S3 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 3 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | S3 飽和度與明度 | `0 ~ 99`<br>• S3 飽和度 範圍：`0 ~ 90`{.code-green}。<br>• S3 飽和度為 (讀取數值 ÷ 10) × 10。<br>• S3 明度 範圍：`0 ~ 90`{.code-green}。<br>• S3 明度為 (讀取數值 mod 10) × 10。 |
+| ![通道 4 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | S4 色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 4 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | S4 飽和度與明度 | `0 ~ 99`<br>• S4 飽和度 範圍：`0 ~ 90`{.code-green}。<br>• S4 飽和度為 (讀取數值 ÷ 10) × 10。<br>• S4 明度 範圍：`0 ~ 90`{.code-green}。<br>• S4 明度為 (讀取數值 mod 10) × 10。 |
 
 </CamModeSection>
 
@@ -202,15 +200,15 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 | 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `proximity`<br>［圖片待補｜EV3 Classroom 近接數值積木］ | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
-| `beacon heading (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S1 色相百位 | `0 ~ 2`<br>• S1 色相百位 = 讀取數值。 |
-| `beacon distance (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S1 色相低兩位 | `0 ~ 99`<br>• S1 色相低兩位 = 讀取數值。 |
-| `beacon heading (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S1 飽和度 | `0 ~ 100`<br>• S1 飽和度 = 讀取數值。 |
-| `beacon distance (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S1 明度 | `0 ~ 100`<br>• S1 明度 = 讀取數值。 |
-| `beacon heading (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S2 色相百位 | `0 ~ 2`<br>• S2 色相百位 = 讀取數值。 |
-| `beacon distance (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S2 色相低兩位 | `0 ~ 99`<br>• S2 色相低兩位 = 讀取數值。 |
-| `beacon heading (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S2 飽和度 | `0 ~ 100`<br>• S2 飽和度 = 讀取數值。 |
-| `beacon distance (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | S2 明度 | `0 ~ 100`<br>• S2 明度 = 讀取數值。 |
+| ![相機 Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
+| ![通道 1 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | S1 色相百位 | `0 ~ 2`<br>• S1 色相百位 = 讀取數值。 |
+| ![通道 1 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | S1 色相低兩位 | `0 ~ 99`<br>• S1 色相低兩位 = 讀取數值。 |
+| ![通道 2 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | S1 飽和度 | `0 ~ 100`<br>• S1 飽和度 = 讀取數值。 |
+| ![通道 2 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | S1 明度 | `0 ~ 100`<br>• S1 明度 = 讀取數值。 |
+| ![通道 3 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | S2 色相百位 | `0 ~ 2`<br>• S2 色相百位 = 讀取數值。 |
+| ![通道 3 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | S2 色相低兩位 | `0 ~ 99`<br>• S2 色相低兩位 = 讀取數值。 |
+| ![通道 4 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | S2 飽和度 | `0 ~ 100`<br>• S2 飽和度 = 讀取數值。 |
+| ![通道 4 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | S2 明度 | `0 ~ 100`<br>• S2 明度 = 讀取數值。 |
 
 </CamModeSection>
 
@@ -228,19 +226,19 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 | 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `proximity`<br>［圖片待補｜EV3 Classroom 近接數值積木］ | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
-| `beacon heading (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 左起第 1 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon distance (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 左起第 2 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon heading (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 左起第 3 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon distance (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 左起第 4 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon heading (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 左起第 5 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon distance (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 左起第 6 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon heading (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 左起第 7 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `beacon distance (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 左起第 8 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `remote (channel 1)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 左起第 9 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `remote (channel 2)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 左起第 10 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `remote (channel 3)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 左起第 11 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
-| `remote (channel 4)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 色塊總數 | `0 ~ 18`<br>• 色塊總數 = 讀取數值。 |
+| ![相機 Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
+| ![通道 1 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | 左起第 1 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 1 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | 左起第 2 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 2 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | 左起第 3 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 2 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | 左起第 4 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 3 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | 左起第 5 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 3 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | 左起第 6 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 4 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 左起第 7 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![通道 4 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | 左起第 8 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![遙控通道 1](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | 左起第 9 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![遙控通道 2](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | 左起第 10 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![遙控通道 3](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | 左起第 11 塊色相 | `-15 ~ 100`<br>• 讀取數值 ≥ 0 時，色相碼為 讀取數值 × 240 ÷ 100。 |
+| ![遙控通道 4](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | 色塊總數 | `0 ~ 18`<br>• 色塊總數 = 讀取數值。 |
 
 </CamModeSection>
 
@@ -259,19 +257,19 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 | 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `proximity`<br>［圖片待補｜EV3 Classroom 近接數值積木］ | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
-| `beacon heading (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 近處偏移 | `-100 ~ 100`<br>• 近處偏移 = 讀取數值，保留正負號。 |
-| `beacon distance (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 中段偏移 | `-100 ~ 100`<br>• 中段偏移 = 讀取數值，保留正負號。 |
-| `beacon heading (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 遠處偏移 | `-100 ~ 100`<br>• 遠處偏移 = 讀取數值，保留正負號。 |
-| `beacon distance (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 線角度 | `-90 ~ 90°`<br>• 線角度 = 讀取數值，保留正負號。 |
-| `beacon heading (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 近處線寬 | `0 ~ 100`<br>• 近處線寬 = 讀取數值。 |
-| `beacon distance (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 路口類型與有線旗標 | `0 ~ 57`<br>• 路口類型 = 讀取數值 ÷ 10。<br>• 有線旗標 = 讀取數值 mod 10。 |
-| `beacon heading (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 路口距離 | `0 ~ 100`<br>• 路口距離 = 讀取數值。 |
-| `beacon distance (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 標記線色號 | `0 ~ 16`<br>• 標記線色號 = 讀取數值。 |
-| `remote (channel 1)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 近處線左緣 | `-100 ~ 100`<br>• 近處線左緣 = 讀取數值，保留正負號。 |
-| `remote (channel 2)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 近處線右緣 | `-100 ~ 100`<br>• 近處線右緣 = 讀取數值，保留正負號。 |
-| `remote (channel 3)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 遠處線寬 | `0 ~ 100`<br>• 遠處線寬 = 讀取數值。 |
-| `remote (channel 4)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 標記線累計條數 | `0 ~ 99`<br>• 標記線累計條數 = 讀取數值。 |
+| ![相機 Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
+| ![通道 1 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | 近處偏移 | `-100 ~ 100`<br>• 近處偏移 = 讀取數值，保留正負號。 |
+| ![通道 1 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | 中段偏移 | `-100 ~ 100`<br>• 中段偏移 = 讀取數值，保留正負號。 |
+| ![通道 2 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | 遠處偏移 | `-100 ~ 100`<br>• 遠處偏移 = 讀取數值，保留正負號。 |
+| ![通道 2 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | 線角度 | `-90 ~ 90°`<br>• 線角度 = 讀取數值，保留正負號。 |
+| ![通道 3 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | 近處線寬 | `0 ~ 100`<br>• 近處線寬 = 讀取數值。 |
+| ![通道 3 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | 路口類型與有線旗標 | `0 ~ 57`<br>• 路口類型 = 讀取數值 ÷ 10。<br>• 有線旗標 = 讀取數值 mod 10。 |
+| ![通道 4 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 路口距離 | `0 ~ 100`<br>• 路口距離 = 讀取數值。 |
+| ![通道 4 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | 標記線色號 | `0 ~ 16`<br>• 標記線色號 = 讀取數值。 |
+| ![遙控通道 1](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | 近處線左緣 | `-100 ~ 100`<br>• 近處線左緣 = 讀取數值，保留正負號。 |
+| ![遙控通道 2](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | 近處線右緣 | `-100 ~ 100`<br>• 近處線右緣 = 讀取數值，保留正負號。 |
+| ![遙控通道 3](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | 遠處線寬 | `0 ~ 100`<br>• 遠處線寬 = 讀取數值。 |
+| ![遙控通道 4](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | 標記線累計條數 | `0 ~ 99`<br>• 標記線累計條數 = 讀取數值。 |
 
 </CamModeSection>
 
@@ -288,19 +286,19 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 | 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `proximity`<br>［圖片待補｜EV3 Classroom 近接數值積木］ | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
-| `beacon heading (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 近處偏移 | `-100 ~ 100`<br>• 近處偏移 = 讀取數值，保留正負號。 |
-| `beacon distance (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 中段偏移 | `-100 ~ 100`<br>• 中段偏移 = 讀取數值，保留正負號。 |
-| `beacon heading (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 遠處偏移 | `-100 ~ 100`<br>• 遠處偏移 = 讀取數值，保留正負號。 |
-| `beacon distance (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 線角度 | `-90 ~ 90°`<br>• 線角度 = 讀取數值，保留正負號。 |
-| `beacon heading (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 近處線寬 | `0 ~ 100`<br>• 近處線寬 = 讀取數值。 |
-| `beacon distance (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 路口類型與有線旗標 | `0 ~ 57`<br>• 路口類型 = 讀取數值 ÷ 10。<br>• 有線旗標 = 讀取數值 mod 10。 |
-| `beacon heading (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 路口距離 | `0 ~ 100`<br>• 路口距離 = 讀取數值。 |
-| `beacon distance (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 標記線色號 | `0 ~ 16`<br>• 標記線色號 = 讀取數值。 |
-| `remote (channel 1)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 近處線左緣 | `-100 ~ 100`<br>• 近處線左緣 = 讀取數值，保留正負號。 |
-| `remote (channel 2)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 近處線右緣 | `-100 ~ 100`<br>• 近處線右緣 = 讀取數值，保留正負號。 |
-| `remote (channel 3)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 遠處線寬 | `0 ~ 100`<br>• 遠處線寬 = 讀取數值。 |
-| `remote (channel 4)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 標記線累計條數 | `0 ~ 99`<br>• 標記線累計條數 = 讀取數值。 |
+| ![相機 Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
+| ![通道 1 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | 近處偏移 | `-100 ~ 100`<br>• 近處偏移 = 讀取數值，保留正負號。 |
+| ![通道 1 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | 中段偏移 | `-100 ~ 100`<br>• 中段偏移 = 讀取數值，保留正負號。 |
+| ![通道 2 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | 遠處偏移 | `-100 ~ 100`<br>• 遠處偏移 = 讀取數值，保留正負號。 |
+| ![通道 2 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | 線角度 | `-90 ~ 90°`<br>• 線角度 = 讀取數值，保留正負號。 |
+| ![通道 3 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | 近處線寬 | `0 ~ 100`<br>• 近處線寬 = 讀取數值。 |
+| ![通道 3 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | 路口類型與有線旗標 | `0 ~ 57`<br>• 路口類型 = 讀取數值 ÷ 10。<br>• 有線旗標 = 讀取數值 mod 10。 |
+| ![通道 4 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 路口距離 | `0 ~ 100`<br>• 路口距離 = 讀取數值。 |
+| ![通道 4 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | 標記線色號 | `0 ~ 16`<br>• 標記線色號 = 讀取數值。 |
+| ![遙控通道 1](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | 近處線左緣 | `-100 ~ 100`<br>• 近處線左緣 = 讀取數值，保留正負號。 |
+| ![遙控通道 2](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | 近處線右緣 | `-100 ~ 100`<br>• 近處線右緣 = 讀取數值，保留正負號。 |
+| ![遙控通道 3](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | 遠處線寬 | `0 ~ 100`<br>• 遠處線寬 = 讀取數值。 |
+| ![遙控通道 4](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | 標記線累計條數 | `0 ~ 99`<br>• 標記線累計條數 = 讀取數值。 |
 
 </CamModeSection>
 
@@ -317,19 +315,19 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 | 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `proximity`<br>［圖片待補｜EV3 Classroom 近接數值積木］ | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
-| `beacon heading (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 近處偏移 | `-100 ~ 100`<br>• 近處偏移 = 讀取數值，保留正負號。 |
-| `beacon distance (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 中段偏移 | `-100 ~ 100`<br>• 中段偏移 = 讀取數值，保留正負號。 |
-| `beacon heading (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 遠處偏移 | `-100 ~ 100`<br>• 遠處偏移 = 讀取數值，保留正負號。 |
-| `beacon distance (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 線角度 | `-90 ~ 90°`<br>• 線角度 = 讀取數值，保留正負號。 |
-| `beacon heading (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 近處線寬 | `0 ~ 100`<br>• 近處線寬 = 讀取數值。 |
-| `beacon distance (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 路口類型與有線旗標 | `0 ~ 57`<br>• 路口類型 = 讀取數值 ÷ 10。<br>• 有線旗標 = 讀取數值 mod 10。 |
-| `beacon heading (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 路口距離 | `0 ~ 100`<br>• 路口距離 = 讀取數值。 |
-| `beacon distance (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 標記線色號 | `0 ~ 16`<br>• 標記線色號 = 讀取數值。 |
-| `remote (channel 1)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 近處線左緣 | `-100 ~ 100`<br>• 近處線左緣 = 讀取數值，保留正負號。 |
-| `remote (channel 2)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 近處線右緣 | `-100 ~ 100`<br>• 近處線右緣 = 讀取數值，保留正負號。 |
-| `remote (channel 3)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 遠處線寬 | `0 ~ 100`<br>• 遠處線寬 = 讀取數值。 |
-| `remote (channel 4)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 標記線累計條數 | `0 ~ 99`<br>• 標記線累計條數 = 讀取數值。 |
+| ![相機 Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
+| ![通道 1 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | 近處偏移 | `-100 ~ 100`<br>• 近處偏移 = 讀取數值，保留正負號。 |
+| ![通道 1 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | 中段偏移 | `-100 ~ 100`<br>• 中段偏移 = 讀取數值，保留正負號。 |
+| ![通道 2 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | 遠處偏移 | `-100 ~ 100`<br>• 遠處偏移 = 讀取數值，保留正負號。 |
+| ![通道 2 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | 線角度 | `-90 ~ 90°`<br>• 線角度 = 讀取數值，保留正負號。 |
+| ![通道 3 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | 近處線寬 | `0 ~ 100`<br>• 近處線寬 = 讀取數值。 |
+| ![通道 3 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | 路口類型與有線旗標 | `0 ~ 57`<br>• 路口類型 = 讀取數值 ÷ 10。<br>• 有線旗標 = 讀取數值 mod 10。 |
+| ![通道 4 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 路口距離 | `0 ~ 100`<br>• 路口距離 = 讀取數值。 |
+| ![通道 4 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | 標記線色號 | `0 ~ 16`<br>• 標記線色號 = 讀取數值。 |
+| ![遙控通道 1](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | 近處線左緣 | `-100 ~ 100`<br>• 近處線左緣 = 讀取數值，保留正負號。 |
+| ![遙控通道 2](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | 近處線右緣 | `-100 ~ 100`<br>• 近處線右緣 = 讀取數值，保留正負號。 |
+| ![遙控通道 3](/images/tutorials/S16/ev3-classroom/beacon_btn_3.png) | 遠處線寬 | `0 ~ 100`<br>• 遠處線寬 = 讀取數值。 |
+| ![遙控通道 4](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | 標記線累計條數 | `0 ~ 99`<br>• 標記線累計條數 = 讀取數值。 |
 
 </CamModeSection>
 
@@ -348,18 +346,18 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 | 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `proximity`<br>［圖片待補｜EV3 Classroom 近接數值積木］ | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
-| `beacon heading (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 1 代碼 | `0, 10 ~ 89`<br>• 物體 1 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 1 色號 = 讀取數值 ÷ 10。<br>• 物體 1 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 1 形狀碼 = 讀取數值 mod 10。 |
-| `beacon distance (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 1 位置 | `0, 11 ~ 86`<br>• 物體 1 的 X = 讀取數值 ÷ 10。<br>• 物體 1 的 Y = 讀取數值 mod 10。 |
-| `beacon heading (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 2 代碼 | `0, 10 ~ 89`<br>• 物體 2 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 2 色號 = 讀取數值 ÷ 10。<br>• 物體 2 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 2 形狀碼 = 讀取數值 mod 10。 |
-| `beacon distance (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 2 位置 | `0, 11 ~ 86`<br>• 物體 2 的 X = 讀取數值 ÷ 10。<br>• 物體 2 的 Y = 讀取數值 mod 10。 |
-| `beacon heading (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 3 代碼 | `0, 10 ~ 89`<br>• 物體 3 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 3 色號 = 讀取數值 ÷ 10。<br>• 物體 3 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 3 形狀碼 = 讀取數值 mod 10。 |
-| `beacon distance (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 3 位置 | `0, 11 ~ 86`<br>• 物體 3 的 X = 讀取數值 ÷ 10。<br>• 物體 3 的 Y = 讀取數值 mod 10。 |
-| `beacon heading (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 4 代碼 | `0, 10 ~ 89`<br>• 物體 4 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 4 色號 = 讀取數值 ÷ 10。<br>• 物體 4 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 4 形狀碼 = 讀取數值 mod 10。 |
-| `beacon distance (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 4 位置 | `0, 11 ~ 86`<br>• 物體 4 的 X = 讀取數值 ÷ 10。<br>• 物體 4 的 Y = 讀取數值 mod 10。 |
-| `remote (channel 1)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 物體 5 代碼 | `0, 10 ~ 89`<br>• 物體 5 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 5 色號 = 讀取數值 ÷ 10。<br>• 物體 5 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 5 形狀碼 = 讀取數值 mod 10。 |
-| `remote (channel 2)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 物體 5 位置 | `0, 11 ~ 86`<br>• 物體 5 的 X = 讀取數值 ÷ 10。<br>• 物體 5 的 Y = 讀取數值 mod 10。 |
-| `remote (channel 4)`<br>［圖片待補｜EV3 Classroom 遙控數值積木］ | 物體總數 | `0 ~ 8`<br>• 物體總數 = 讀取數值。 |
+| ![相機 Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
+| ![通道 1 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | 物體 1 代碼 | `0, 10 ~ 89`<br>• 物體 1 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 1 色號 = 讀取數值 ÷ 10。<br>• 物體 1 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 1 形狀碼 = 讀取數值 mod 10。 |
+| ![通道 1 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | 物體 1 位置 | `0, 11 ~ 86`<br>• 物體 1 的 X = 讀取數值 ÷ 10。<br>• 物體 1 的 Y = 讀取數值 mod 10。 |
+| ![通道 2 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | 物體 2 代碼 | `0, 10 ~ 89`<br>• 物體 2 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 2 色號 = 讀取數值 ÷ 10。<br>• 物體 2 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 2 形狀碼 = 讀取數值 mod 10。 |
+| ![通道 2 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | 物體 2 位置 | `0, 11 ~ 86`<br>• 物體 2 的 X = 讀取數值 ÷ 10。<br>• 物體 2 的 Y = 讀取數值 mod 10。 |
+| ![通道 3 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | 物體 3 代碼 | `0, 10 ~ 89`<br>• 物體 3 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 3 色號 = 讀取數值 ÷ 10。<br>• 物體 3 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 3 形狀碼 = 讀取數值 mod 10。 |
+| ![通道 3 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | 物體 3 位置 | `0, 11 ~ 86`<br>• 物體 3 的 X = 讀取數值 ÷ 10。<br>• 物體 3 的 Y = 讀取數值 mod 10。 |
+| ![通道 4 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 物體 4 代碼 | `0, 10 ~ 89`<br>• 物體 4 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 4 色號 = 讀取數值 ÷ 10。<br>• 物體 4 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 4 形狀碼 = 讀取數值 mod 10。 |
+| ![通道 4 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | 物體 4 位置 | `0, 11 ~ 86`<br>• 物體 4 的 X = 讀取數值 ÷ 10。<br>• 物體 4 的 Y = 讀取數值 mod 10。 |
+| ![遙控通道 1](/images/tutorials/S16/ev3-classroom/beacon_btn_1.png) | 物體 5 代碼 | `0, 10 ~ 89`<br>• 物體 5 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 5 色號 = 讀取數值 ÷ 10。<br>• 物體 5 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 5 形狀碼 = 讀取數值 mod 10。 |
+| ![遙控通道 2](/images/tutorials/S16/ev3-classroom/beacon_btn_2.png) | 物體 5 位置 | `0, 11 ~ 86`<br>• 物體 5 的 X = 讀取數值 ÷ 10。<br>• 物體 5 的 Y = 讀取數值 mod 10。 |
+| ![遙控通道 4](/images/tutorials/S16/ev3-classroom/beacon_btn_4.png) | 物體總數 | `0 ~ 8`<br>• 物體總數 = 讀取數值。 |
 
 </CamModeSection>
 
@@ -376,37 +374,21 @@ MBC 神攝手視覺感應器共有 5 大主模式，各主模式下還有細分�
 
 | 官方圖形指令 / 讀取位置 | 功能 | 數值意義說明 |
 | --- | --- | --- |
-| `proximity`<br>［圖片待補｜EV3 Classroom 近接數值積木］ | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
-| `beacon heading (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 1 代碼 | `0, 10 ~ 89`<br>• 物體 1 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 1 色號 = 讀取數值 ÷ 10。<br>• 物體 1 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 1 形狀碼 = 讀取數值 mod 10。 |
-| `beacon distance (channel 1)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 1 位置 | `0, 11 ~ 86`<br>• 物體 1 的 X = 讀取數值 ÷ 10。<br>• 物體 1 的 Y = 讀取數值 mod 10。 |
-| `beacon heading (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 1 面積 | `0 ~ 100`<br>• 物體 1 面積 = 讀取數值。 |
-| `beacon distance (channel 2)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 1 角度 | `0 ~ 90`<br>• 物體 1 角度為 讀取數值 × 2，最大取 179°。 |
-| `beacon heading (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 2 代碼 | `0, 10 ~ 89`<br>• 物體 2 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 2 色號 = 讀取數值 ÷ 10。<br>• 物體 2 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 2 形狀碼 = 讀取數值 mod 10。 |
-| `beacon distance (channel 3)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 2 位置 | `0, 11 ~ 86`<br>• 物體 2 的 X = 讀取數值 ÷ 10。<br>• 物體 2 的 Y = 讀取數值 mod 10。 |
-| `beacon heading (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 2 面積 | `0 ~ 100`<br>• 物體 2 面積 = 讀取數值。 |
-| `beacon distance (channel 4)`<br>［圖片待補｜EV3 Classroom 信標數值積木］ | 物體 2 角度 | `0 ~ 90`<br>• 物體 2 角度為 讀取數值 × 2，最大取 179°。 |
+| ![相機 Mode ID](/images/tutorials/S16/ev3-classroom/proximity.png) | 相機 Mode ID | `11 ~ 52`<br>• 相機 Mode ID = 讀取數值。<br>• 確認此值與本欄的 Mode ID 相同；此欄只讀取，不會切換相機。 |
+| ![通道 1 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_1.png) | 物體 1 代碼 | `0, 10 ~ 89`<br>• 物體 1 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 1 色號 = 讀取數值 ÷ 10。<br>• 物體 1 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 1 形狀碼 = 讀取數值 mod 10。 |
+| ![通道 1 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_1.png) | 物體 1 位置 | `0, 11 ~ 86`<br>• 物體 1 的 X = 讀取數值 ÷ 10。<br>• 物體 1 的 Y = 讀取數值 mod 10。 |
+| ![通道 2 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_2.png) | 物體 1 面積 | `0 ~ 100`<br>• 物體 1 面積 = 讀取數值。 |
+| ![通道 2 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_2.png) | 物體 1 角度 | `0 ~ 90`<br>• 物體 1 角度為 讀取數值 × 2，最大取 179°。 |
+| ![通道 3 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_3.png) | 物體 2 代碼 | `0, 10 ~ 89`<br>• 物體 2 色號 範圍：`0, 1 ~ 8`{.code-green}。<br>• 物體 2 色號 = 讀取數值 ÷ 10。<br>• 物體 2 形狀碼 範圍：`0 ~ 9`{.code-green}。<br>• 物體 2 形狀碼 = 讀取數值 mod 10。 |
+| ![通道 3 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_3.png) | 物體 2 位置 | `0, 11 ~ 86`<br>• 物體 2 的 X = 讀取數值 ÷ 10。<br>• 物體 2 的 Y = 讀取數值 mod 10。 |
+| ![通道 4 方向](/images/tutorials/S16/ev3-classroom/heading_beacon_4.png) | 物體 2 面積 | `0 ~ 100`<br>• 物體 2 面積 = 讀取數值。 |
+| ![通道 4 距離](/images/tutorials/S16/ev3-classroom/proximity_beacon_4.png) | 物體 2 角度 | `0 ~ 90`<br>• 物體 2 角度為 讀取數值 × 2，最大取 179°。 |
 
 </CamModeSection>
 
 </CamModeAccordion>
 
-## 03 / 範例程式
-
-### ✔ 讀取目標色 1 的位置與面積
-
-相機接感應器埠 1，先教目標色 1，再於相機選單選 Mode ID 13 (顏色追蹤 - ③ 標準)。
-
-1. 在程式啟動時讀 Infrared Sensor 的 proximity，確認數值為 13。
-2. 建立 position、area、X、Y 變數，新增重複執行迴圈。
-3. 讀取 channel 1 的 beacon heading 存為 position，beacon distance 存為 area。
-4. position = 0 時顯示「未找到」。其餘以數學積木計算 X = 向下取整(position ÷ 10)、Y = position 除以 10 的餘數。
-5. 顯示 X、Y 和 area，等待 0.1 秒再重複。例：position = 43、area = 18，代表第 4 欄、第 3 列，面積 18%。EV3 的 Y = 1 在畫面底部。
-
-迴圈只使用信標值。近接的 Mode ID 檢查放在啟動時執行一次，避免每輪切換紅外線模式造成約 1.1 秒等待。
-
-*［圖片待補｜EV3 Classroom 完整範例積木圖或專案檔；上方步驟已說明讀值與計算流程］*
-
-## 04 / 【Lego】 Lau Xiao 示範影片
+## 03 / 【Lego】 Lau Xiao 示範影片
 
 <CamDemoVideos />
 

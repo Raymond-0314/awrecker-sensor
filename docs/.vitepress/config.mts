@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import imageStyleAttributes from './markdown-image-style.mjs'
 
 const base = process.env.PAGES_BASE || '/'
 
@@ -9,6 +10,11 @@ export default defineConfig({
   appearance: 'dark',
   cleanUrls: false,
   srcExclude: ['_content/**'],
+  markdown: {
+    config(md) {
+      md.use(imageStyleAttributes)
+    }
+  },
 
   head: [
     ['link', {

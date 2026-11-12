@@ -7,16 +7,19 @@ const props = defineProps({
 })
 const accordion = inject('cam-mode-accordion')
 const isOpen = computed(() => accordion.activeMode.value === props.mode)
+const sectionId = computed(() => accordion.sectionId(props.mode))
+const triggerId = computed(() => `${sectionId.value}-trigger`)
+const panelId = computed(() => `${sectionId.value}-panel`)
 </script>
 
 <template>
-  <section :id="`cam-mode-${mode}`" class="cam-mode-section">
+  <section :id="sectionId" class="cam-mode-section">
     <h5 class="cam-mode-heading">
       <button
-        :id="`cam-mode-trigger-${mode}`"
+        :id="triggerId"
         type="button"
         :aria-expanded="isOpen"
-        :aria-controls="`cam-mode-panel-${mode}`"
+        :aria-controls="panelId"
         @click="accordion.toggle(mode)"
       >
         <span class="cam-mode-chevron" :class="{ expanded: isOpen }" aria-hidden="true">▸</span>
@@ -25,10 +28,10 @@ const isOpen = computed(() => accordion.activeMode.value === props.mode)
     </h5>
     <div
       v-show="isOpen"
-      :id="`cam-mode-panel-${mode}`"
+      :id="panelId"
       class="cam-mode-content"
       role="region"
-      :aria-labelledby="`cam-mode-trigger-${mode}`"
+      :aria-labelledby="triggerId"
     >
       <slot />
     </div>

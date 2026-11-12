@@ -21,7 +21,6 @@
 ::: info ℹ️ Reading notes
 - The official app shows UniCam as a Color Sensor. Use numeric reporter blocks under More Sensors. Select the camera mode on the camera.
 - In these tables, ÷ means integer division with the fraction discarded, and mod means remainder. Store each reading before decoding so its fields come from the same frame.
-- Area, saturation, value, line width and junction distance are percentages. Their range labels omit the percent sign.
 :::
 
 ::: warning ⚠️ Note
@@ -297,17 +296,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 </CamModeAccordion>
 
-## 03 / Example programs
-
-### ✔ Read target 2 position
-
-1. Teach two different colors as targets 1 and 2. Confirm target 2 appears in the camera preview.
-2. In a loop, read Raw red once, store it in a variable, and decode X and Y using the table.
-3. Display X and Y. Move target 2 sideways and check that X changes. Move it out of frame and confirm X returns to 0.
-
-*[Image placeholder — complete Raw red, coordinate decoding, and display blocks]*
-
-## 04 / 【Lego】 Lau Xiao demonstration videos
+## 03 / 【Lego】 Lau Xiao demonstration videos
 
 <CamDemoVideos />
 

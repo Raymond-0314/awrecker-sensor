@@ -5,7 +5,7 @@ import {
   onMounted,
   onBeforeUnmount
 } from 'vue'
-import { useData } from 'vitepress'
+import { useData, withBase } from 'vitepress'
 
 defineProps<{
   horizontal?: boolean
@@ -92,7 +92,7 @@ onBeforeUnmount(() => {
         <img
           v-if="card.image"
           class="feature-illustration"
-          :src="card.image"
+          :src="withBase(card.image)"
           :alt="card.imageAlt || card.title"
           loading="lazy"
           width="480"

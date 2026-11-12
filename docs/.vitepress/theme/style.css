@@ -1720,6 +1720,18 @@ body:has(.sensor-home) {
   }
 }
 
+.vp-doc table td:first-child img.cam-ev3g-block-image {
+  height: 80px;
+  width: auto;
+  max-width: none;
+}
+
+@media (max-width: 640px) {
+  .vp-doc table td:first-child img.cam-ev3g-block-image {
+    height: 96px;
+  }
+}
+
 .vp-doc .ev3g-function-table table td:first-child img {
   height: 80px;
   width: auto;

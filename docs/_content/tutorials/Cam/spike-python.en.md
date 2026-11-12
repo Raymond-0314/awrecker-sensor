@@ -16,14 +16,17 @@
 2. Check that the hub runs Pybricks firmware and that the camera is connected.
 3. Set the camera mode and make sure it matches the mode used by the program.
 
-## 02 / Functions and data
+## 02 / Basic control - Preparation and functions
+
+### ✔ Preparation
+
+1. No external library is required. Connect the camera to Port C and use the built-in Pybricks Color Sensor.
+2. Select the Mode ID on the camera so it matches the reading table.
+3. Import `ColorSensor`, create `cam = ColorSensor(Port.C)`, and use `cam.reflection()` and `cam.ambient()`.
 
 ::: info ℹ️ Reading notes
-- Use `PUPDevice(Port.C)`. Select the camera mode on the camera. Transport mode 9 provides the main data; tracking modes 11 and 12 use transport mode 6 for counts.
-- In the tables, `data = read_payload()` unpacks mode 9 into 14 bytes; `counts = read_payload(6)` unpacks mode 6 into six bytes. Unpack each int16 low byte first; indices start at 0.
-- “reading” means the result of the expression in the first column. `signed_byte()` handles signed bytes and `count_mode11()` handles mode 11 counts. The complete helpers appear once in section 03; no additional library is required.
-- Here ÷ means integer division and mod means remainder. Read the data once into a variable, then decode its fields.
-- Area, saturation, value, line width and junction distance are percentages. Their range labels omit the percent sign.
+- Use the built-in Color Sensor blocks. Store reflection and ambient readings in variables and decode them for the selected camera mode. Select that mode on the camera.
+- Here // means integer division and % means remainder. Ambient readings retain one decimal place: use floor(reading) for the integer and round(reading × 10) % 10 for the digit.
 :::
 
 ::: warning ⚠️ Note
@@ -31,7 +34,7 @@
 - Modes reuse the same read expressions; decode their results using the table for the selected mode.
 :::
 
-<CamModeAccordion>
+<CamModeAccordion namespace="basic">
 
 ### ✔ Camera mode overview
 
@@ -45,132 +48,65 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="11" title="Color tracking - ① Most colors">
 
-`Pybricks Python provides: 14 color positions, counts`
+`Built-in Color Sensor provides: 2 color positions`
 
 ::: info ℹ️ Reading notes
-- Coordinates use a `16 × 12` grid. X increases rightward and Y downward. Values are grid cells rather than pixels. Position 0 means not found.
-- Positions are grid IDs 1 ~ 192. Check for 0 before calculating X and Y; 0 means not found.
-- Use `data = read_payload()` for positions and `counts = read_payload(6)` for counts. Each color count occupies three bits; 7 means seven or more. Section 03’s `count_mode11()` combines only the required two bytes, rather than building a 48-bit integer.
+- Reflected-light positions use a `40 × 30` grid; ambient-light positions or sizes use an `8 × 6` grid. X increases rightward and Y downward. These are grid units, not pixels; position 0 means not found.
+- For a negative reflected-light position, add 6399 before decoding.
 :::
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| `data[0]` | Color 1 position | `0, 1 ~ 192`<br>• Color 1 X range: `0, 1 ~ 16`{.code-green}.<br>• Color 1 X = ((reading - 1) % 16) + 1.<br>• Color 1 Y range: `0, 1 ~ 12`{.code-green}.<br>• Color 1 Y = ((reading - 1) // 16) + 1. |
-| `data[1]` | Color 2 position | `0, 1 ~ 192`<br>• Color 2 X range: `0, 1 ~ 16`{.code-green}.<br>• Color 2 X = ((reading - 1) % 16) + 1.<br>• Color 2 Y range: `0, 1 ~ 12`{.code-green}.<br>• Color 2 Y = ((reading - 1) // 16) + 1. |
-| `data[2]` | Color 3 position | `0, 1 ~ 192`<br>• Color 3 X range: `0, 1 ~ 16`{.code-green}.<br>• Color 3 X = ((reading - 1) % 16) + 1.<br>• Color 3 Y range: `0, 1 ~ 12`{.code-green}.<br>• Color 3 Y = ((reading - 1) // 16) + 1. |
-| `data[3]` | Color 4 position | `0, 1 ~ 192`<br>• Color 4 X range: `0, 1 ~ 16`{.code-green}.<br>• Color 4 X = ((reading - 1) % 16) + 1.<br>• Color 4 Y range: `0, 1 ~ 12`{.code-green}.<br>• Color 4 Y = ((reading - 1) // 16) + 1. |
-| `data[4]` | Color 5 position | `0, 1 ~ 192`<br>• Color 5 X range: `0, 1 ~ 16`{.code-green}.<br>• Color 5 X = ((reading - 1) % 16) + 1.<br>• Color 5 Y range: `0, 1 ~ 12`{.code-green}.<br>• Color 5 Y = ((reading - 1) // 16) + 1. |
-| `data[5]` | Color 6 position | `0, 1 ~ 192`<br>• Color 6 X range: `0, 1 ~ 16`{.code-green}.<br>• Color 6 X = ((reading - 1) % 16) + 1.<br>• Color 6 Y range: `0, 1 ~ 12`{.code-green}.<br>• Color 6 Y = ((reading - 1) // 16) + 1. |
-| `data[6]` | Color 7 position | `0, 1 ~ 192`<br>• Color 7 X range: `0, 1 ~ 16`{.code-green}.<br>• Color 7 X = ((reading - 1) % 16) + 1.<br>• Color 7 Y range: `0, 1 ~ 12`{.code-green}.<br>• Color 7 Y = ((reading - 1) // 16) + 1. |
-| `data[7]` | Color 8 position | `0, 1 ~ 192`<br>• Color 8 X range: `0, 1 ~ 16`{.code-green}.<br>• Color 8 X = ((reading - 1) % 16) + 1.<br>• Color 8 Y range: `0, 1 ~ 12`{.code-green}.<br>• Color 8 Y = ((reading - 1) // 16) + 1. |
-| `data[8]` | Color 9 position | `0, 1 ~ 192`<br>• Color 9 X range: `0, 1 ~ 16`{.code-green}.<br>• Color 9 X = ((reading - 1) % 16) + 1.<br>• Color 9 Y range: `0, 1 ~ 12`{.code-green}.<br>• Color 9 Y = ((reading - 1) // 16) + 1. |
-| `data[9]` | Color 10 position | `0, 1 ~ 192`<br>• Color 10 X range: `0, 1 ~ 16`{.code-green}.<br>• Color 10 X = ((reading - 1) % 16) + 1.<br>• Color 10 Y range: `0, 1 ~ 12`{.code-green}.<br>• Color 10 Y = ((reading - 1) // 16) + 1. |
-| `data[10]` | Color 11 position | `0, 1 ~ 192`<br>• Color 11 X range: `0, 1 ~ 16`{.code-green}.<br>• Color 11 X = ((reading - 1) % 16) + 1.<br>• Color 11 Y range: `0, 1 ~ 12`{.code-green}.<br>• Color 11 Y = ((reading - 1) // 16) + 1. |
-| `data[11]` | Color 12 position | `0, 1 ~ 192`<br>• Color 12 X range: `0, 1 ~ 16`{.code-green}.<br>• Color 12 X = ((reading - 1) % 16) + 1.<br>• Color 12 Y range: `0, 1 ~ 12`{.code-green}.<br>• Color 12 Y = ((reading - 1) // 16) + 1. |
-| `data[12]` | Color 13 position | `0, 1 ~ 192`<br>• Color 13 X range: `0, 1 ~ 16`{.code-green}.<br>• Color 13 X = ((reading - 1) % 16) + 1.<br>• Color 13 Y range: `0, 1 ~ 12`{.code-green}.<br>• Color 13 Y = ((reading - 1) // 16) + 1. |
-| `data[13]` | Color 14 position | `0, 1 ~ 192`<br>• Color 14 X range: `0, 1 ~ 16`{.code-green}.<br>• Color 14 X = ((reading - 1) % 16) + 1.<br>• Color 14 Y range: `0, 1 ~ 12`{.code-green}.<br>• Color 14 Y = ((reading - 1) // 16) + 1. |
-| `count_mode11(counts, 1)` | Color 1 count | `0 ~ 7`<br>• Color 1 count = reading. |
-| `count_mode11(counts, 2)` | Color 2 count | `0 ~ 7`<br>• Color 2 count = reading. |
-| `count_mode11(counts, 3)` | Color 3 count | `0 ~ 7`<br>• Color 3 count = reading. |
-| `count_mode11(counts, 4)` | Color 4 count | `0 ~ 7`<br>• Color 4 count = reading. |
-| `count_mode11(counts, 5)` | Color 5 count | `0 ~ 7`<br>• Color 5 count = reading. |
-| `count_mode11(counts, 6)` | Color 6 count | `0 ~ 7`<br>• Color 6 count = reading. |
-| `count_mode11(counts, 7)` | Color 7 count | `0 ~ 7`<br>• Color 7 count = reading. |
-| `count_mode11(counts, 8)` | Color 8 count | `0 ~ 7`<br>• Color 8 count = reading. |
-| `count_mode11(counts, 9)` | Color 9 count | `0 ~ 7`<br>• Color 9 count = reading. |
-| `count_mode11(counts, 10)` | Color 10 count | `0 ~ 7`<br>• Color 10 count = reading. |
-| `count_mode11(counts, 11)` | Color 11 count | `0 ~ 7`<br>• Color 11 count = reading. |
-| `count_mode11(counts, 12)` | Color 12 count | `0 ~ 7`<br>• Color 12 count = reading. |
-| `count_mode11(counts, 13)` | Color 13 count | `0 ~ 7`<br>• Color 13 count = reading. |
-| `count_mode11(counts, 14)` | Color 14 count | `0 ~ 7`<br>• Color 14 count = reading. |
-| `count_mode11(counts, 0)` | Colors found | `0 ~ 15`<br>• Colors found = reading. |
+| `cam.reflection()` | Color 1 X and Color 1 Y | `-3199 ~ 3199`<br>• Color 1 X range: `0, 1 ~ 40`{.code-green}.<br>• Color 1 X = reading // 100.<br>• Color 1 Y range: `0, 1 ~ 30`{.code-green}.<br>• Color 1 Y = reading % 100. |
+| `cam.ambient()` | Color 2 X and Color 2 Y | `0 ~ 8.6`<br>• Color 2 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 2 X = floor(reading).<br>• Color 2 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 2 Y = round(reading × 10) % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="12" title="Color tracking - ② Multiple colors">
 
-`Pybricks Python provides: 7 color positions, counts`
+`Built-in Color Sensor provides: 2 color positions`
 
 ::: info ℹ️ Reading notes
-- Coordinates use `160 × 120` pixels. X increases rightward and Y downward. X = 0 means not found.
-- Each nibble can represent at most 15.
-- Use `data = read_payload()` for positions and `counts = read_payload(6)` for counts. Split each counts byte into high and low four-bit nibbles with division and remainder by 16, as shown below.
+- Reflected-light positions use a `40 × 30` grid; ambient-light positions or sizes use an `8 × 6` grid. X increases rightward and Y downward. These are grid units, not pixels; position 0 means not found.
+- For a negative reflected-light position, add 6399 before decoding.
 :::
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| `data[0]` | Color 1 X | `0 ~ 159`<br>• Color 1 X = reading. |
-| `data[1]` | Color 1 Y | `0 ~ 119`<br>• Color 1 Y = reading. |
-| `data[2]` | Color 2 X | `0 ~ 159`<br>• Color 2 X = reading. |
-| `data[3]` | Color 2 Y | `0 ~ 119`<br>• Color 2 Y = reading. |
-| `data[4]` | Color 3 X | `0 ~ 159`<br>• Color 3 X = reading. |
-| `data[5]` | Color 3 Y | `0 ~ 119`<br>• Color 3 Y = reading. |
-| `data[6]` | Color 4 X | `0 ~ 159`<br>• Color 4 X = reading. |
-| `data[7]` | Color 4 Y | `0 ~ 119`<br>• Color 4 Y = reading. |
-| `data[8]` | Color 5 X | `0 ~ 159`<br>• Color 5 X = reading. |
-| `data[9]` | Color 5 Y | `0 ~ 119`<br>• Color 5 Y = reading. |
-| `data[10]` | Color 6 X | `0 ~ 159`<br>• Color 6 X = reading. |
-| `data[11]` | Color 6 Y | `0 ~ 119`<br>• Color 6 Y = reading. |
-| `data[12]` | Color 7 X | `0 ~ 159`<br>• Color 7 X = reading. |
-| `data[13]` | Color 7 Y | `0 ~ 119`<br>• Color 7 Y = reading. |
-| `counts[0]` | Color 1 count and Color 2 count | `0 ~ 255`<br>• Color 1 count = reading // 16.<br>• Color 2 count = reading % 16. |
-| `counts[1]` | Color 3 count and Color 4 count | `0 ~ 255`<br>• Color 3 count = reading // 16.<br>• Color 4 count = reading % 16. |
-| `counts[2]` | Color 5 count and Color 6 count | `0 ~ 255`<br>• Color 5 count = reading // 16.<br>• Color 6 count = reading % 16. |
-| `counts[3]` | Color 7 count and Colors found | `0 ~ 255`<br>• Color 7 count = reading // 16.<br>• Colors found = reading % 16. |
+| `cam.reflection()` | Color 1 X and Color 1 Y | `-3199 ~ 3199`<br>• Color 1 X range: `0, 1 ~ 40`{.code-green}.<br>• Color 1 X = reading // 100.<br>• Color 1 Y range: `0, 1 ~ 30`{.code-green}.<br>• Color 1 Y = reading % 100. |
+| `cam.ambient()` | Color 2 X and Color 2 Y | `0 ~ 8.6`<br>• Color 2 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 2 X = floor(reading).<br>• Color 2 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 2 Y = round(reading × 10) % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="13" title="Color tracking - ③ Standard">
 
-`Pybricks Python provides: 4 color positions, counts and area`
+`Built-in Color Sensor provides: 2 color positions`
 
 ::: info ℹ️ Reading notes
-- Coordinates use `160 × 120` pixels. X increases rightward and Y downward. X = 0 means not found.
-- Each nibble can represent at most 15.
+- Reflected-light positions use a `40 × 30` grid; ambient-light positions or sizes use an `8 × 6` grid. X increases rightward and Y downward. These are grid units, not pixels; position 0 means not found.
+- For a negative reflected-light position, add 6399 before decoding.
 :::
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| `data[0]` | Color 1 X | `0 ~ 159`<br>• Color 1 X = reading. |
-| `data[1]` | Color 1 Y | `0 ~ 119`<br>• Color 1 Y = reading. |
-| `data[2]` | Color 1 area | `0 ~ 100`<br>• Color 1 area = reading. |
-| `data[3]` | Color 2 X | `0 ~ 159`<br>• Color 2 X = reading. |
-| `data[4]` | Color 2 Y | `0 ~ 119`<br>• Color 2 Y = reading. |
-| `data[5]` | Color 2 area | `0 ~ 100`<br>• Color 2 area = reading. |
-| `data[6]` | Color 3 X | `0 ~ 159`<br>• Color 3 X = reading. |
-| `data[7]` | Color 3 Y | `0 ~ 119`<br>• Color 3 Y = reading. |
-| `data[8]` | Color 3 area | `0 ~ 100`<br>• Color 3 area = reading. |
-| `data[9]` | Color 4 X | `0 ~ 159`<br>• Color 4 X = reading. |
-| `data[10]` | Color 4 Y | `0 ~ 119`<br>• Color 4 Y = reading. |
-| `data[11]` | Color 4 area | `0 ~ 100`<br>• Color 4 area = reading. |
-| `data[12]` | Color 1 count and Color 2 count | `0 ~ 255`<br>• Color 1 count = reading // 16.<br>• Color 2 count = reading % 16. |
-| `data[13]` | Color 3 count and Color 4 count | `0 ~ 255`<br>• Color 3 count = reading // 16.<br>• Color 4 count = reading % 16. |
+| `cam.reflection()` | Color 1 X and Color 1 Y | `-3199 ~ 3199`<br>• Color 1 X range: `0, 1 ~ 40`{.code-green}.<br>• Color 1 X = reading // 100.<br>• Color 1 Y range: `0, 1 ~ 30`{.code-green}.<br>• Color 1 Y = reading % 100. |
+| `cam.ambient()` | Color 2 X and Color 2 Y | `0 ~ 8.6`<br>• Color 2 X range: `0, 1 ~ 8`{.code-green}.<br>• Color 2 X = floor(reading).<br>• Color 2 Y range: `0, 1 ~ 6`{.code-green}.<br>• Color 2 Y = round(reading × 10) % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="14" title="Color tracking - ④ Fine">
 
-`Pybricks Python provides: 2 color positions and sizes, counts and area`
+`Built-in Color Sensor provides: 1 color positions and sizes`
 
 ::: info ℹ️ Reading notes
-- Coordinates use `160 × 120` pixels. X increases rightward and Y downward. X = 0 means not found.
+- Reflected-light positions use a `40 × 30` grid; ambient-light positions or sizes use an `8 × 6` grid. X increases rightward and Y downward. These are grid units, not pixels; position 0 means not found.
+- For a negative reflected-light position, add 6399 before decoding.
 :::
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| `data[0]` | Color 1 X | `0 ~ 159`<br>• Color 1 X = reading. |
-| `data[1]` | Color 1 Y | `0 ~ 119`<br>• Color 1 Y = reading. |
-| `data[2]` | Color 1 W | `0 ~ 160`<br>• Color 1 W = reading. |
-| `data[3]` | Color 1 H | `0 ~ 120`<br>• Color 1 H = reading. |
-| `data[4]` | Color 1 count | `0 ~ 15`<br>• Color 1 count = reading. |
-| `data[5]` | Color 1 area | `0 ~ 100`<br>• Color 1 area = reading. |
-| `data[6]` | Color 2 X | `0 ~ 159`<br>• Color 2 X = reading. |
-| `data[7]` | Color 2 Y | `0 ~ 119`<br>• Color 2 Y = reading. |
-| `data[8]` | Color 2 W | `0 ~ 160`<br>• Color 2 W = reading. |
-| `data[9]` | Color 2 H | `0 ~ 120`<br>• Color 2 H = reading. |
-| `data[10]` | Color 2 count | `0 ~ 15`<br>• Color 2 count = reading. |
-| `data[11]` | Color 2 area | `0 ~ 100`<br>• Color 2 area = reading. |
-| `data[12]` | Colors found | `0 ~ 16`<br>• Colors found = reading.<br>• This is the total found, distinct from the number of positions available in this mode. |
+| `cam.reflection()` | Color 1 X and Color 1 Y | `-3199 ~ 3199`<br>• Color 1 X range: `0, 1 ~ 40`{.code-green}.<br>• Color 1 X = reading // 100.<br>• Color 1 Y range: `0, 1 ~ 30`{.code-green}.<br>• Color 1 Y = reading % 100. |
+| `cam.ambient()` | Color 1 W and Color 1 H | `0 ~ 8.6`<br>• Color 1 W range: `0, 1 ~ 8`{.code-green}.<br>• Color 1 W = floor(reading).<br>• Color 1 H range: `0, 1 ~ 6`{.code-green}.<br>• Color 1 H = round(reading × 10) % 10. |
 
 </CamModeSection>
 
@@ -178,83 +114,54 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="21" title="Coordinate sampling - ① Hue">
 
-`Pybricks Python provides: 14 points: hue`
+`Built-in Color Sensor provides: 2 points: hue`
 
 ::: info ℹ️ Reading notes
 - Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
 - Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+- Saturation retains tens only; the reconstructed value is approximate.
+- Only tens are retained; 9 represents about 90 or higher. Units are lost.
 :::
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| `data[0]` | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
-| `data[1]` | S2 hue | `0 ~ 255`<br>• S2 hue = reading. |
-| `data[2]` | S3 hue | `0 ~ 255`<br>• S3 hue = reading. |
-| `data[3]` | S4 hue | `0 ~ 255`<br>• S4 hue = reading. |
-| `data[4]` | S5 hue | `0 ~ 255`<br>• S5 hue = reading. |
-| `data[5]` | S6 hue | `0 ~ 255`<br>• S6 hue = reading. |
-| `data[6]` | S7 hue | `0 ~ 255`<br>• S7 hue = reading. |
-| `data[7]` | S8 hue | `0 ~ 255`<br>• S8 hue = reading. |
-| `data[8]` | S9 hue | `0 ~ 255`<br>• S9 hue = reading. |
-| `data[9]` | S10 hue | `0 ~ 255`<br>• S10 hue = reading. |
-| `data[10]` | S11 hue | `0 ~ 255`<br>• S11 hue = reading. |
-| `data[11]` | S12 hue | `0 ~ 255`<br>• S12 hue = reading. |
-| `data[12]` | S13 hue | `0 ~ 255`<br>• S13 hue = reading. |
-| `data[13]` | S14 hue | `0 ~ 255`<br>• S14 hue = reading. |
+| `cam.reflection()` | S1 hue and S1 saturation | `0 ~ 2559`<br>• S1 hue range: `0 ~ 255`{.code-green}.<br>• S1 hue = reading // 10.<br>• S1 saturation range: `0 ~ 90`{.code-green}.<br>• S1 saturation = (reading % 10) × 10. |
+| `cam.ambient()` | S2 hue and S2 saturation (tens precision) | `0 ~ 255.9`<br>• S2 hue range: `0 ~ 255`{.code-green}.<br>• S2 hue = floor(reading).<br>• S2 saturation (tens precision) range: `0 ~ 90`{.code-green}.<br>• S2 saturation = (round(reading × 10) % 10) × 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="22" title="Coordinate sampling - ② Hue and saturation">
 
-`Pybricks Python provides: 7 points: hue and saturation`
+`Built-in Color Sensor provides: 2 points: hue and saturation`
 
 ::: info ℹ️ Reading notes
 - Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
 - Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+- Saturation retains tens only; the reconstructed value is approximate.
+- Only tens are retained; 9 represents about 90 or higher. Units are lost.
 :::
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| `data[0]` | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
-| `data[1]` | S1 saturation | `0 ~ 100`<br>• S1 saturation = reading. |
-| `data[2]` | S2 hue | `0 ~ 255`<br>• S2 hue = reading. |
-| `data[3]` | S2 saturation | `0 ~ 100`<br>• S2 saturation = reading. |
-| `data[4]` | S3 hue | `0 ~ 255`<br>• S3 hue = reading. |
-| `data[5]` | S3 saturation | `0 ~ 100`<br>• S3 saturation = reading. |
-| `data[6]` | S4 hue | `0 ~ 255`<br>• S4 hue = reading. |
-| `data[7]` | S4 saturation | `0 ~ 100`<br>• S4 saturation = reading. |
-| `data[8]` | S5 hue | `0 ~ 255`<br>• S5 hue = reading. |
-| `data[9]` | S5 saturation | `0 ~ 100`<br>• S5 saturation = reading. |
-| `data[10]` | S6 hue | `0 ~ 255`<br>• S6 hue = reading. |
-| `data[11]` | S6 saturation | `0 ~ 100`<br>• S6 saturation = reading. |
-| `data[12]` | S7 hue | `0 ~ 255`<br>• S7 hue = reading. |
-| `data[13]` | S7 saturation | `0 ~ 100`<br>• S7 saturation = reading. |
+| `cam.reflection()` | S1 hue and S1 saturation | `0 ~ 2559`<br>• S1 hue range: `0 ~ 255`{.code-green}.<br>• S1 hue = reading // 10.<br>• S1 saturation range: `0 ~ 90`{.code-green}.<br>• S1 saturation = (reading % 10) × 10. |
+| `cam.ambient()` | S2 hue and S2 saturation (tens precision) | `0 ~ 255.9`<br>• S2 hue range: `0 ~ 255`{.code-green}.<br>• S2 hue = floor(reading).<br>• S2 saturation (tens precision) range: `0 ~ 90`{.code-green}.<br>• S2 saturation = (round(reading × 10) % 10) × 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="23" title="Coordinate sampling - ③ HSV">
 
-`Pybricks Python provides: 4 points: hue, saturation and value`
+`Built-in Color Sensor provides: 1 points: hue, saturation and value`
 
 ::: info ℹ️ Reading notes
 - Configure sample positions first. Unset points are not drawn and send H, S and V as 0. H is hue, S saturation and V value.
 - Hue 0 can be red. Confirm the sample position is configured rather than treating hue 0 alone as absence.
+- Only tens are retained; 9 represents about 90 or higher. Units are lost.
 :::
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| `data[0]` | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
-| `data[1]` | S1 saturation | `0 ~ 100`<br>• S1 saturation = reading. |
-| `data[2]` | S1 value | `0 ~ 100`<br>• S1 value = reading. |
-| `data[3]` | S2 hue | `0 ~ 255`<br>• S2 hue = reading. |
-| `data[4]` | S2 saturation | `0 ~ 100`<br>• S2 saturation = reading. |
-| `data[5]` | S2 value | `0 ~ 100`<br>• S2 value = reading. |
-| `data[6]` | S3 hue | `0 ~ 255`<br>• S3 hue = reading. |
-| `data[7]` | S3 saturation | `0 ~ 100`<br>• S3 saturation = reading. |
-| `data[8]` | S3 value | `0 ~ 100`<br>• S3 value = reading. |
-| `data[9]` | S4 hue | `0 ~ 255`<br>• S4 hue = reading. |
-| `data[10]` | S4 saturation | `0 ~ 100`<br>• S4 saturation = reading. |
-| `data[11]` | S4 value | `0 ~ 100`<br>• S4 value = reading. |
+| `cam.reflection()` | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
+| `cam.ambient()` | S1 saturation and S1 value (tens precision) | `0 ~ 100.9`<br>• S1 saturation range: `0 ~ 100`{.code-green}.<br>• S1 saturation = floor(reading).<br>• S1 value (tens precision) range: `0 ~ 90`{.code-green}.<br>• S1 value = (round(reading × 10) % 10) × 10. |
 
 </CamModeSection>
 
@@ -262,28 +169,17 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="30" title="Color order">
 
-`Pybricks Python provides: the first 13 block hues and total count`
+`Built-in Color Sensor provides: the first 2 block hues and total count`
 
 ::: info ℹ️ Reading notes
 - Blocks are ordered left to right. Read the total count before using hue entries; hue 0 can be red.
+- 9 means 9 or more.
 :::
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| `data[0]` | Block 1 hue from the left | `0 ~ 255`<br>• Block 1 hue from the left = reading. |
-| `data[1]` | Block 2 hue from the left | `0 ~ 255`<br>• Block 2 hue from the left = reading. |
-| `data[2]` | Block 3 hue from the left | `0 ~ 255`<br>• Block 3 hue from the left = reading. |
-| `data[3]` | Block 4 hue from the left | `0 ~ 255`<br>• Block 4 hue from the left = reading. |
-| `data[4]` | Block 5 hue from the left | `0 ~ 255`<br>• Block 5 hue from the left = reading. |
-| `data[5]` | Block 6 hue from the left | `0 ~ 255`<br>• Block 6 hue from the left = reading. |
-| `data[6]` | Block 7 hue from the left | `0 ~ 255`<br>• Block 7 hue from the left = reading. |
-| `data[7]` | Block 8 hue from the left | `0 ~ 255`<br>• Block 8 hue from the left = reading. |
-| `data[8]` | Block 9 hue from the left | `0 ~ 255`<br>• Block 9 hue from the left = reading. |
-| `data[9]` | Block 10 hue from the left | `0 ~ 255`<br>• Block 10 hue from the left = reading. |
-| `data[10]` | Block 11 hue from the left | `0 ~ 255`<br>• Block 11 hue from the left = reading. |
-| `data[11]` | Block 12 hue from the left | `0 ~ 255`<br>• Block 12 hue from the left = reading. |
-| `data[12]` | Block 13 hue from the left | `0 ~ 255`<br>• Block 13 hue from the left = reading. |
-| `data[13]` | Total color blocks | `0 ~ 18`<br>• Total color blocks = reading. |
+| `cam.reflection()` | Block 1 hue from the left | `0 ~ 255`<br>• Block 1 hue from the left = reading. |
+| `cam.ambient()` | Block 2 hue from the left and Total color blocks | `0 ~ 255.9`<br>• Block 2 hue from the left range: `0 ~ 255`{.code-green}.<br>• Block 2 hue from the left = floor(reading).<br>• Total color blocks range: `0 ~ 9`{.code-green}.<br>• Total color blocks = round(reading × 10) % 10. |
 
 </CamModeSection>
 
@@ -291,91 +187,52 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="41" title="Line following - ① Black">
 
-`Pybricks Python provides: 14 line-following readings`
+`Built-in Color Sensor provides: near/far offsets, junction type and line-found flags`
 
 ::: info ℹ️ Reading notes
 - Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
 - This submode detects a black line on a light surface.
-- Negative offsets place the line on the left; positive offsets place it on the right.
-- Offsets, angle and left/right edges use `signed_byte()` to restore signed values. Negative values retain directional meaning. The helper appears in section 03.
+- For example, a reading of 80 decodes to - 20.
 :::
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| `signed_byte(data[0])` | Near offset | `-100 ~ 100`<br>• Near offset = reading. |
-| `signed_byte(data[1])` | Middle offset | `-100 ~ 100`<br>• Middle offset = reading. |
-| `signed_byte(data[2])` | Far offset | `-100 ~ 100`<br>• Far offset = reading. |
-| `signed_byte(data[3])` | Line angle | `-90 ~ 90`<br>• Line angle = reading. |
-| `data[4]` | Near line width | `0 ~ 100`<br>• Near line width = reading. |
-| `data[5]` | Line-found flags | `0 ~ 7`<br>• Line-found flags = reading. |
-| `data[6]` | Junction type | `0 ~ 5`<br>• Junction type = reading. |
-| `data[7]` | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
-| `signed_byte(data[8])` | Near left edge | `-100 ~ 100`<br>• Near left edge = reading. |
-| `signed_byte(data[9])` | Near right edge | `-100 ~ 100`<br>• Near right edge = reading. |
-| `data[10]` | Far line width | `0 ~ 100`<br>• Far line width = reading. |
-| `data[11]` | Marker color ID | `0 ~ 16`<br>• Marker color ID = reading. |
-| `data[12]` | Marker count | `0 ~ 99`<br>• Marker count = reading. |
-| `data[13]` | Last lost-line direction | `0 ~ 2`<br>• Last lost-line direction = reading.<br>• 0 line present, 1 last lost to the left, 2 last lost to the right. |
+| `cam.reflection()` | Near offset and Junction type | `0 ~ 2005`<br>• Near offset range: `-100 ~ 100`{.code-green}.<br>• Near offset = (reading // 10) - 100.<br>• Junction type range: `0 ~ 5`{.code-green}.<br>• Junction type = reading % 10. |
+| `cam.ambient()` | Far offset and Line-found flags | `0 ~ 200.7`<br>• Far offset range: `-100 ~ 100`{.code-green}.<br>• Far offset = (floor(reading)) - 100.<br>• Line-found flags range: `0 ~ 7`{.code-green}.<br>• Line-found flags = round(reading × 10) % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="42" title="Line following - ② White">
 
-`Pybricks Python provides: 14 line-following readings`
+`Built-in Color Sensor provides: near/far offsets, junction type and line-found flags`
 
 ::: info ℹ️ Reading notes
 - Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
 - This submode detects a white line on a dark surface.
-- Negative offsets place the line on the left; positive offsets place it on the right.
-- Offsets, angle and left/right edges use `signed_byte()` to restore signed values. Negative values retain directional meaning. The helper appears in section 03.
+- For example, a reading of 80 decodes to - 20.
 :::
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| `signed_byte(data[0])` | Near offset | `-100 ~ 100`<br>• Near offset = reading. |
-| `signed_byte(data[1])` | Middle offset | `-100 ~ 100`<br>• Middle offset = reading. |
-| `signed_byte(data[2])` | Far offset | `-100 ~ 100`<br>• Far offset = reading. |
-| `signed_byte(data[3])` | Line angle | `-90 ~ 90`<br>• Line angle = reading. |
-| `data[4]` | Near line width | `0 ~ 100`<br>• Near line width = reading. |
-| `data[5]` | Line-found flags | `0 ~ 7`<br>• Line-found flags = reading. |
-| `data[6]` | Junction type | `0 ~ 5`<br>• Junction type = reading. |
-| `data[7]` | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
-| `signed_byte(data[8])` | Near left edge | `-100 ~ 100`<br>• Near left edge = reading. |
-| `signed_byte(data[9])` | Near right edge | `-100 ~ 100`<br>• Near right edge = reading. |
-| `data[10]` | Far line width | `0 ~ 100`<br>• Far line width = reading. |
-| `data[11]` | Marker color ID | `0 ~ 16`<br>• Marker color ID = reading. |
-| `data[12]` | Marker count | `0 ~ 99`<br>• Marker count = reading. |
-| `data[13]` | Last lost-line direction | `0 ~ 2`<br>• Last lost-line direction = reading.<br>• 0 line present, 1 last lost to the left, 2 last lost to the right. |
+| `cam.reflection()` | Near offset and Junction type | `0 ~ 2005`<br>• Near offset range: `-100 ~ 100`{.code-green}.<br>• Near offset = (reading // 10) - 100.<br>• Junction type range: `0 ~ 5`{.code-green}.<br>• Junction type = reading % 10. |
+| `cam.ambient()` | Far offset and Line-found flags | `0 ~ 200.7`<br>• Far offset range: `-100 ~ 100`{.code-green}.<br>• Far offset = (floor(reading)) - 100.<br>• Line-found flags range: `0 ~ 7`{.code-green}.<br>• Line-found flags = round(reading × 10) % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="43" title="Line following - ③ Colored">
 
-`Pybricks Python provides: 14 line-following readings`
+`Built-in Color Sensor provides: near/far offsets, junction type and line-found flags`
 
 ::: info ℹ️ Reading notes
 - Junction types: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 dead end. Line-found flags add 1, 2 and 4 for near, middle and far.
 - Before using colored-line mode, teach the line color as target 1.
-- Negative offsets place the line on the left; positive offsets place it on the right.
-- Offsets, angle and left/right edges use `signed_byte()` to restore signed values. Negative values retain directional meaning. The helper appears in section 03.
+- For example, a reading of 80 decodes to - 20.
 :::
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| `signed_byte(data[0])` | Near offset | `-100 ~ 100`<br>• Near offset = reading. |
-| `signed_byte(data[1])` | Middle offset | `-100 ~ 100`<br>• Middle offset = reading. |
-| `signed_byte(data[2])` | Far offset | `-100 ~ 100`<br>• Far offset = reading. |
-| `signed_byte(data[3])` | Line angle | `-90 ~ 90`<br>• Line angle = reading. |
-| `data[4]` | Near line width | `0 ~ 100`<br>• Near line width = reading. |
-| `data[5]` | Line-found flags | `0 ~ 7`<br>• Line-found flags = reading. |
-| `data[6]` | Junction type | `0 ~ 5`<br>• Junction type = reading. |
-| `data[7]` | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
-| `signed_byte(data[8])` | Near left edge | `-100 ~ 100`<br>• Near left edge = reading. |
-| `signed_byte(data[9])` | Near right edge | `-100 ~ 100`<br>• Near right edge = reading. |
-| `data[10]` | Far line width | `0 ~ 100`<br>• Far line width = reading. |
-| `data[11]` | Marker color ID | `0 ~ 16`<br>• Marker color ID = reading. |
-| `data[12]` | Marker count | `0 ~ 99`<br>• Marker count = reading. |
-| `data[13]` | Last lost-line direction | `0 ~ 2`<br>• Last lost-line direction = reading.<br>• 0 line present, 1 last lost to the left, 2 last lost to the right. |
+| `cam.reflection()` | Near offset and Junction type | `0 ~ 2005`<br>• Near offset range: `-100 ~ 100`{.code-green}.<br>• Near offset = (reading // 10) - 100.<br>• Junction type range: `0 ~ 5`{.code-green}.<br>• Junction type = reading % 10. |
+| `cam.ambient()` | Far offset and Line-found flags | `0 ~ 200.7`<br>• Far offset range: `-100 ~ 100`{.code-green}.<br>• Far offset = (floor(reading)) - 100.<br>• Line-found flags range: `0 ~ 7`{.code-green}.<br>• Line-found flags = round(reading × 10) % 10. |
 
 </CamModeSection>
 
@@ -383,149 +240,605 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 <CamModeSection mode="51" title="Object detection - ① Object list">
 
-`Pybricks Python provides: codes and positions of the first 4 objects, plus total count`
+`Built-in Color Sensor provides: codes and positions of the first 1 objects, plus total count`
 
 ::: info ℹ️ Reading notes
-- Coordinates use `160 × 120` pixels. X increases rightward and Y downward. X = 0 means not found.
+- Reflected-light positions use a `40 × 30` grid. X increases rightward and Y downward. These are grid units, not pixels; position 0 means not found. Ambient light provides object data, rather than a second position.
 - Only target colors 1 ~ 8 are used. Objects are ordered largest first, and X/Y is the centroid. Shape codes 0 ~ 9 mean other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star and trapezoid.
+- For a negative reflected-light position, add 6399 before decoding.
 - For example, 13 means color 1 triangle; 0 means no object.
+- 9 means 9 or more.
 :::
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| `data[0]` | Object count | `0 ~ 8`<br>• Object count = reading. |
-| `data[1]` | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading // 10.<br>• Object 1 shape code = reading % 10. |
-| `data[2]` | Object 1 X | `0 ~ 159`<br>• Object 1 X = reading. |
-| `data[3]` | Object 1 Y | `0 ~ 119`<br>• Object 1 Y = reading. |
-| `data[4]` | Object 2 code | `0, 10 ~ 89`<br>• Object 2 color ID = reading // 10.<br>• Object 2 shape code = reading % 10. |
-| `data[5]` | Object 2 X | `0 ~ 159`<br>• Object 2 X = reading. |
-| `data[6]` | Object 2 Y | `0 ~ 119`<br>• Object 2 Y = reading. |
-| `data[7]` | Object 3 code | `0, 10 ~ 89`<br>• Object 3 color ID = reading // 10.<br>• Object 3 shape code = reading % 10. |
-| `data[8]` | Object 3 X | `0 ~ 159`<br>• Object 3 X = reading. |
-| `data[9]` | Object 3 Y | `0 ~ 119`<br>• Object 3 Y = reading. |
-| `data[10]` | Object 4 code | `0, 10 ~ 89`<br>• Object 4 color ID = reading // 10.<br>• Object 4 shape code = reading % 10. |
-| `data[11]` | Object 4 X | `0 ~ 159`<br>• Object 4 X = reading. |
-| `data[12]` | Object 4 Y | `0 ~ 119`<br>• Object 4 Y = reading. |
+| `cam.reflection()` | Object 1 X and Object 1 Y | `-3199 ~ 3199`<br>• Object 1 X range: `0, 1 ~ 40`{.code-green}.<br>• Object 1 X = reading // 100.<br>• Object 1 Y range: `0, 1 ~ 30`{.code-green}.<br>• Object 1 Y = reading % 100. |
+| `cam.ambient()` | Object 1 code and Object count | `0 ~ 89.9`<br>• Object 1 code range: `0, 10 ~ 89`{.code-green}.<br>• Object 1 color ID = (floor(reading)) // 10.<br>• Object 1 shape code = (floor(reading)) % 10.<br>• Object count range: `0 ~ 9`{.code-green}.<br>• Object count = round(reading × 10) % 10. |
 
 </CamModeSection>
 
 <CamModeSection mode="52" title="Object detection - ② Object details">
 
-`Pybricks Python provides: details of the first 2 objects`
+`Built-in Color Sensor provides: details of the first 1 objects`
 
 ::: info ℹ️ Reading notes
-- Coordinates use `160 × 120` pixels. X increases rightward and Y downward. X = 0 means not found.
+- Reflected-light positions use a `40 × 30` grid. X increases rightward and Y downward. These are grid units, not pixels; position 0 means not found. Ambient light provides object data, rather than a second position.
 - Only target colors 1 ~ 8 are used. Objects are ordered largest first, and X/Y is the centroid. Shape codes 0 ~ 9 mean other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star and trapezoid.
-- This readout provides color ID, shape, position, size and area for the first two objects. It does not provide object count, angle or vertex count.
+- For a negative reflected-light position, add 6399 before decoding.
+- For example, 13 means color 1 triangle; 0 means no object.
+- Only tens are retained; 9 represents about 90 or higher. Units are lost.
 :::
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| `data[0]` | Object 1 color ID | `0 ~ 8`<br>• Object 1 color ID = reading. |
-| `data[1]` | Object 1 shape code | `0 ~ 9`<br>• Object 1 shape code = reading. |
-| `data[2]` | Object 1 X | `0 ~ 159`<br>• Object 1 X = reading. |
-| `data[3]` | Object 1 Y | `0 ~ 119`<br>• Object 1 Y = reading. |
-| `data[4]` | Object 1 W | `0 ~ 160`<br>• Object 1 W = reading. |
-| `data[5]` | Object 1 H | `0 ~ 120`<br>• Object 1 H = reading. |
-| `data[6]` | Object 1 area | `0 ~ 100`<br>• Object 1 area = reading. |
-| `data[7]` | Object 2 color ID | `0 ~ 8`<br>• Object 2 color ID = reading. |
-| `data[8]` | Object 2 shape code | `0 ~ 9`<br>• Object 2 shape code = reading. |
-| `data[9]` | Object 2 X | `0 ~ 159`<br>• Object 2 X = reading. |
-| `data[10]` | Object 2 Y | `0 ~ 119`<br>• Object 2 Y = reading. |
-| `data[11]` | Object 2 W | `0 ~ 160`<br>• Object 2 W = reading. |
-| `data[12]` | Object 2 H | `0 ~ 120`<br>• Object 2 H = reading. |
-| `data[13]` | Object 2 area | `0 ~ 100`<br>• Object 2 area = reading. |
+| `cam.reflection()` | Object 1 X and Object 1 Y | `-3199 ~ 3199`<br>• Object 1 X range: `0, 1 ~ 40`{.code-green}.<br>• Object 1 X = reading // 100.<br>• Object 1 Y range: `0, 1 ~ 30`{.code-green}.<br>• Object 1 Y = reading % 100. |
+| `cam.ambient()` | Object 1 code and Object 1 area (tens precision) | `0 ~ 89.9`<br>• Object 1 code range: `0, 10 ~ 89`{.code-green}.<br>• Object 1 color ID = (floor(reading)) // 10.<br>• Object 1 shape code = (floor(reading)) % 10.<br>• Object 1 area (tens precision) range: `0 ~ 90`{.code-green}.<br>• Object 1 area = (round(reading × 10) % 10) × 10. |
 
 </CamModeSection>
 
 </CamModeAccordion>
 
-## 03 / Example programs
+### ✔ Basic control example
 
-### ✔ Read color 1 position, area and count
-
-1. Connect the camera to port C, teach target color 1 and select Mode ID 13 (Color tracking - ③ Standard) on the camera.
-2. Run the complete program below. Each iteration calls `read_payload()` once and reads `data[0]`, `data[1]`, `data[2]` and `data[12]`.
-3. Move the target to check that X increases rightward and Y downward. Moving it out of view displays “No target”.
+Select Mode ID 13 on the camera and teach target colors 1 and 2. Color 1 uses a 40 × 30 grid; color 2 uses an 8 × 6 grid. X = 0 means that color was not found.
 
 ```python
-from pybricks.iodevices import PUPDevice
+from pybricks.pupdevices import ColorSensor
 from pybricks.parameters import Port
 from pybricks.tools import wait
+from math import floor
 
-cam = PUPDevice(Port.C)
-
-
-def read_payload(read_mode=9):
-    words = cam.read(read_mode)
-    if read_mode == 6:
-        wait(30)
-        words = cam.read(read_mode)
-    payload = []
-    for word in words:
-        payload.extend((word & 255, (word >> 8) & 255))
-    return payload
-
-
-def signed_byte(value):
-    return value - 256 if value >= 128 else value
-
-
-def count_mode11(counts, color):
-    if not 0 <= color <= 14:
-        raise ValueError("Color index must be 0 ~ 14")
-    offset = 3 * (color - 1) if color else 42
-    index, shift = divmod(offset, 8)
-    pair = counts[index]
-    if index + 1 < len(counts):
-        pair |= counts[index + 1] << 8
-    return (pair >> shift) & (7 if color else 15)
-
+cam = ColorSensor(Port.C)
 
 while True:
-    data = read_payload()
-    if data[0]:
-        x, y, area = data[0], data[1], data[2]
-        count = data[12] // 16
-        print("Color 1:", x, y, "Area:", area, "Count:", count)
-    else:
+    reflected = cam.reflection()
+    ambient = cam.ambient()
+    if reflected < 0:
+        reflected += 6399
+    x1 = reflected // 100
+    y1 = reflected % 100
+    x2 = floor(ambient)
+    y2 = round(ambient * 10) % 10
+    print("Color 1:", x1, y1, "Color 2:", x2, y2)
+    wait(100)
+```
+
+For reflected = 2015 and ambient = 4.3, the grid positions are (20, 15) for color 1 and (4, 3) for color 2.
+
+## 03 / Advanced control - Preparation and functions
+
+### ✔ Preparation
+
+<DownloadButton href="/programs/Cam/spike-pybricks/MBC_UniCam.py" download="MBC_UniCam.py" label="MBC_UniCam.py" />
+
+1. Download `MBC_UniCam.py`, import it into Pybricks without renaming it, and keep it next to the main program.
+2. Connect the camera to Port C, import `UniCam`, and create `cam = UniCam(Port.C, mode=13)`. Construction selects the camera mode; use `cam.set_mode(Mode ID)` to change it later.
+3. Use the decoded library methods below; no manual byte decoding is needed.
+
+::: info ℹ️ Reading notes
+- Main data uses sensor mode 9. Counts in camera modes 11 and 12 use sensor mode 6; switching read modes adds delay, so request counts only when needed.
+- Use one camera submode at a time. The program Mode ID must match the camera. The library handles packing, coordinates and signed line values; no extra 65536 adjustment is needed.
+- Positions are pixels, with X increasing rightward and Y downward. Mode 11 also provides 16 × 12 grid cells; its pixel coordinates are cell centers rather than per-pixel measurements.
+- A call can return `None` before the first successful read. Disconnection can retain an older reading. Check connection status before using results.
+- `cam.sensor_ok()` reports connection status. For tuple indexing such as `cam.size(1)[0]`, check the tuple is not `None` first. Store a tuple once before accessing its components.
+:::
+
+<CamModeAccordion namespace="advanced">
+
+### ✔ Camera mode overview
+
+<CamModeOverview />
+
+### ✔ Mode fields and decoding
+
+#### Mode 1 - Color tracking
+
+<CamModeSection mode="11" title="Color tracking - ① Most colors">
+
+`Library provides: 14 color positions and counts`
+
+::: info ℹ️ Reading notes
+- Position (0, 0) means no target. Check for a target before using coordinates.
+- Pixel coordinates are cell centers: X = (cell X - 1) × 10 + 5 and Y = (cell Y - 1) × 10 + 5. Count 7 means 7 or more blobs.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `cam.x(1)` | Color 1 X | `0, 5 ~ 155`<br>• Color 1 X = reading. |
+| `cam.y(1)` | Color 1 Y | `0, 5 ~ 115`<br>• Color 1 Y = reading. |
+| `cam.cell(1)[0]` | Color 1 cell X | `0, 1 ~ 16`<br>• Color 1 cell X = reading. |
+| `cam.cell(1)[1]` | Color 1 cell Y | `0, 1 ~ 12`<br>• Color 1 cell Y = reading. |
+| `cam.count(1)` | Color 1 count | `0 ~ 7`<br>• Color 1 count = reading. |
+| `cam.x(2)` | Color 2 X | `0, 5 ~ 155`<br>• Color 2 X = reading. |
+| `cam.y(2)` | Color 2 Y | `0, 5 ~ 115`<br>• Color 2 Y = reading. |
+| `cam.cell(2)[0]` | Color 2 cell X | `0, 1 ~ 16`<br>• Color 2 cell X = reading. |
+| `cam.cell(2)[1]` | Color 2 cell Y | `0, 1 ~ 12`<br>• Color 2 cell Y = reading. |
+| `cam.count(2)` | Color 2 count | `0 ~ 7`<br>• Color 2 count = reading. |
+| `cam.x(3)` | Color 3 X | `0, 5 ~ 155`<br>• Color 3 X = reading. |
+| `cam.y(3)` | Color 3 Y | `0, 5 ~ 115`<br>• Color 3 Y = reading. |
+| `cam.cell(3)[0]` | Color 3 cell X | `0, 1 ~ 16`<br>• Color 3 cell X = reading. |
+| `cam.cell(3)[1]` | Color 3 cell Y | `0, 1 ~ 12`<br>• Color 3 cell Y = reading. |
+| `cam.count(3)` | Color 3 count | `0 ~ 7`<br>• Color 3 count = reading. |
+| `cam.x(4)` | Color 4 X | `0, 5 ~ 155`<br>• Color 4 X = reading. |
+| `cam.y(4)` | Color 4 Y | `0, 5 ~ 115`<br>• Color 4 Y = reading. |
+| `cam.cell(4)[0]` | Color 4 cell X | `0, 1 ~ 16`<br>• Color 4 cell X = reading. |
+| `cam.cell(4)[1]` | Color 4 cell Y | `0, 1 ~ 12`<br>• Color 4 cell Y = reading. |
+| `cam.count(4)` | Color 4 count | `0 ~ 7`<br>• Color 4 count = reading. |
+| `cam.x(5)` | Color 5 X | `0, 5 ~ 155`<br>• Color 5 X = reading. |
+| `cam.y(5)` | Color 5 Y | `0, 5 ~ 115`<br>• Color 5 Y = reading. |
+| `cam.cell(5)[0]` | Color 5 cell X | `0, 1 ~ 16`<br>• Color 5 cell X = reading. |
+| `cam.cell(5)[1]` | Color 5 cell Y | `0, 1 ~ 12`<br>• Color 5 cell Y = reading. |
+| `cam.count(5)` | Color 5 count | `0 ~ 7`<br>• Color 5 count = reading. |
+| `cam.x(6)` | Color 6 X | `0, 5 ~ 155`<br>• Color 6 X = reading. |
+| `cam.y(6)` | Color 6 Y | `0, 5 ~ 115`<br>• Color 6 Y = reading. |
+| `cam.cell(6)[0]` | Color 6 cell X | `0, 1 ~ 16`<br>• Color 6 cell X = reading. |
+| `cam.cell(6)[1]` | Color 6 cell Y | `0, 1 ~ 12`<br>• Color 6 cell Y = reading. |
+| `cam.count(6)` | Color 6 count | `0 ~ 7`<br>• Color 6 count = reading. |
+| `cam.x(7)` | Color 7 X | `0, 5 ~ 155`<br>• Color 7 X = reading. |
+| `cam.y(7)` | Color 7 Y | `0, 5 ~ 115`<br>• Color 7 Y = reading. |
+| `cam.cell(7)[0]` | Color 7 cell X | `0, 1 ~ 16`<br>• Color 7 cell X = reading. |
+| `cam.cell(7)[1]` | Color 7 cell Y | `0, 1 ~ 12`<br>• Color 7 cell Y = reading. |
+| `cam.count(7)` | Color 7 count | `0 ~ 7`<br>• Color 7 count = reading. |
+| `cam.x(8)` | Color 8 X | `0, 5 ~ 155`<br>• Color 8 X = reading. |
+| `cam.y(8)` | Color 8 Y | `0, 5 ~ 115`<br>• Color 8 Y = reading. |
+| `cam.cell(8)[0]` | Color 8 cell X | `0, 1 ~ 16`<br>• Color 8 cell X = reading. |
+| `cam.cell(8)[1]` | Color 8 cell Y | `0, 1 ~ 12`<br>• Color 8 cell Y = reading. |
+| `cam.count(8)` | Color 8 count | `0 ~ 7`<br>• Color 8 count = reading. |
+| `cam.x(9)` | Color 9 X | `0, 5 ~ 155`<br>• Color 9 X = reading. |
+| `cam.y(9)` | Color 9 Y | `0, 5 ~ 115`<br>• Color 9 Y = reading. |
+| `cam.cell(9)[0]` | Color 9 cell X | `0, 1 ~ 16`<br>• Color 9 cell X = reading. |
+| `cam.cell(9)[1]` | Color 9 cell Y | `0, 1 ~ 12`<br>• Color 9 cell Y = reading. |
+| `cam.count(9)` | Color 9 count | `0 ~ 7`<br>• Color 9 count = reading. |
+| `cam.x(10)` | Color 10 X | `0, 5 ~ 155`<br>• Color 10 X = reading. |
+| `cam.y(10)` | Color 10 Y | `0, 5 ~ 115`<br>• Color 10 Y = reading. |
+| `cam.cell(10)[0]` | Color 10 cell X | `0, 1 ~ 16`<br>• Color 10 cell X = reading. |
+| `cam.cell(10)[1]` | Color 10 cell Y | `0, 1 ~ 12`<br>• Color 10 cell Y = reading. |
+| `cam.count(10)` | Color 10 count | `0 ~ 7`<br>• Color 10 count = reading. |
+| `cam.x(11)` | Color 11 X | `0, 5 ~ 155`<br>• Color 11 X = reading. |
+| `cam.y(11)` | Color 11 Y | `0, 5 ~ 115`<br>• Color 11 Y = reading. |
+| `cam.cell(11)[0]` | Color 11 cell X | `0, 1 ~ 16`<br>• Color 11 cell X = reading. |
+| `cam.cell(11)[1]` | Color 11 cell Y | `0, 1 ~ 12`<br>• Color 11 cell Y = reading. |
+| `cam.count(11)` | Color 11 count | `0 ~ 7`<br>• Color 11 count = reading. |
+| `cam.x(12)` | Color 12 X | `0, 5 ~ 155`<br>• Color 12 X = reading. |
+| `cam.y(12)` | Color 12 Y | `0, 5 ~ 115`<br>• Color 12 Y = reading. |
+| `cam.cell(12)[0]` | Color 12 cell X | `0, 1 ~ 16`<br>• Color 12 cell X = reading. |
+| `cam.cell(12)[1]` | Color 12 cell Y | `0, 1 ~ 12`<br>• Color 12 cell Y = reading. |
+| `cam.count(12)` | Color 12 count | `0 ~ 7`<br>• Color 12 count = reading. |
+| `cam.x(13)` | Color 13 X | `0, 5 ~ 155`<br>• Color 13 X = reading. |
+| `cam.y(13)` | Color 13 Y | `0, 5 ~ 115`<br>• Color 13 Y = reading. |
+| `cam.cell(13)[0]` | Color 13 cell X | `0, 1 ~ 16`<br>• Color 13 cell X = reading. |
+| `cam.cell(13)[1]` | Color 13 cell Y | `0, 1 ~ 12`<br>• Color 13 cell Y = reading. |
+| `cam.count(13)` | Color 13 count | `0 ~ 7`<br>• Color 13 count = reading. |
+| `cam.x(14)` | Color 14 X | `0, 5 ~ 155`<br>• Color 14 X = reading. |
+| `cam.y(14)` | Color 14 Y | `0, 5 ~ 115`<br>• Color 14 Y = reading. |
+| `cam.cell(14)[0]` | Color 14 cell X | `0, 1 ~ 16`<br>• Color 14 cell X = reading. |
+| `cam.cell(14)[1]` | Color 14 cell Y | `0, 1 ~ 12`<br>• Color 14 cell Y = reading. |
+| `cam.count(14)` | Color 14 count | `0 ~ 7`<br>• Color 14 count = reading. |
+| `cam.colors_found()` | Colors found | `0 ~ 15`<br>• Colors found = reading. |
+
+</CamModeSection>
+
+<CamModeSection mode="12" title="Color tracking - ② Multiple colors">
+
+`Library provides: 7 color positions and counts`
+
+::: info ℹ️ Reading notes
+- Position (0, 0) means no target. Check for a target before using coordinates.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `cam.x(1)` | Color 1 X | `0 ~ 159`<br>• Color 1 X = reading. |
+| `cam.y(1)` | Color 1 Y | `0 ~ 119`<br>• Color 1 Y = reading. |
+| `cam.count(1)` | Color 1 count | `0 ~ 15`<br>• Color 1 count = reading. |
+| `cam.x(2)` | Color 2 X | `0 ~ 159`<br>• Color 2 X = reading. |
+| `cam.y(2)` | Color 2 Y | `0 ~ 119`<br>• Color 2 Y = reading. |
+| `cam.count(2)` | Color 2 count | `0 ~ 15`<br>• Color 2 count = reading. |
+| `cam.x(3)` | Color 3 X | `0 ~ 159`<br>• Color 3 X = reading. |
+| `cam.y(3)` | Color 3 Y | `0 ~ 119`<br>• Color 3 Y = reading. |
+| `cam.count(3)` | Color 3 count | `0 ~ 15`<br>• Color 3 count = reading. |
+| `cam.x(4)` | Color 4 X | `0 ~ 159`<br>• Color 4 X = reading. |
+| `cam.y(4)` | Color 4 Y | `0 ~ 119`<br>• Color 4 Y = reading. |
+| `cam.count(4)` | Color 4 count | `0 ~ 15`<br>• Color 4 count = reading. |
+| `cam.x(5)` | Color 5 X | `0 ~ 159`<br>• Color 5 X = reading. |
+| `cam.y(5)` | Color 5 Y | `0 ~ 119`<br>• Color 5 Y = reading. |
+| `cam.count(5)` | Color 5 count | `0 ~ 15`<br>• Color 5 count = reading. |
+| `cam.x(6)` | Color 6 X | `0 ~ 159`<br>• Color 6 X = reading. |
+| `cam.y(6)` | Color 6 Y | `0 ~ 119`<br>• Color 6 Y = reading. |
+| `cam.count(6)` | Color 6 count | `0 ~ 15`<br>• Color 6 count = reading. |
+| `cam.x(7)` | Color 7 X | `0 ~ 159`<br>• Color 7 X = reading. |
+| `cam.y(7)` | Color 7 Y | `0 ~ 119`<br>• Color 7 Y = reading. |
+| `cam.count(7)` | Color 7 count | `0 ~ 15`<br>• Color 7 count = reading. |
+| `cam.colors_found()` | Colors found | `0 ~ 15`<br>• Colors found = reading. |
+
+</CamModeSection>
+
+<CamModeSection mode="13" title="Color tracking - ③ Standard">
+
+`Library provides: 4 color positions and counts, area`
+
+::: info ℹ️ Reading notes
+- Position (0, 0) means no target. Check for a target before using coordinates.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `cam.x(1)` | Color 1 X | `0 ~ 159`<br>• Color 1 X = reading. |
+| `cam.y(1)` | Color 1 Y | `0 ~ 119`<br>• Color 1 Y = reading. |
+| `cam.count(1)` | Color 1 count | `0 ~ 15`<br>• Color 1 count = reading. |
+| `cam.area(1)` | Color 1 area | `0 ~ 100`<br>• Color 1 area = reading. |
+| `cam.x(2)` | Color 2 X | `0 ~ 159`<br>• Color 2 X = reading. |
+| `cam.y(2)` | Color 2 Y | `0 ~ 119`<br>• Color 2 Y = reading. |
+| `cam.count(2)` | Color 2 count | `0 ~ 15`<br>• Color 2 count = reading. |
+| `cam.area(2)` | Color 2 area | `0 ~ 100`<br>• Color 2 area = reading. |
+| `cam.x(3)` | Color 3 X | `0 ~ 159`<br>• Color 3 X = reading. |
+| `cam.y(3)` | Color 3 Y | `0 ~ 119`<br>• Color 3 Y = reading. |
+| `cam.count(3)` | Color 3 count | `0 ~ 15`<br>• Color 3 count = reading. |
+| `cam.area(3)` | Color 3 area | `0 ~ 100`<br>• Color 3 area = reading. |
+| `cam.x(4)` | Color 4 X | `0 ~ 159`<br>• Color 4 X = reading. |
+| `cam.y(4)` | Color 4 Y | `0 ~ 119`<br>• Color 4 Y = reading. |
+| `cam.count(4)` | Color 4 count | `0 ~ 15`<br>• Color 4 count = reading. |
+| `cam.area(4)` | Color 4 area | `0 ~ 100`<br>• Color 4 area = reading. |
+
+</CamModeSection>
+
+<CamModeSection mode="14" title="Color tracking - ④ Fine">
+
+`Library provides: 2 color positions and counts, area and size`
+
+::: info ℹ️ Reading notes
+- Position (0, 0) means no target. Check for a target before using coordinates.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `cam.x(1)` | Color 1 X | `0 ~ 159`<br>• Color 1 X = reading. |
+| `cam.y(1)` | Color 1 Y | `0 ~ 119`<br>• Color 1 Y = reading. |
+| `cam.size(1)[0]` | Color 1 W | `0 ~ 160`<br>• Color 1 W = reading. |
+| `cam.size(1)[1]` | Color 1 H | `0 ~ 120`<br>• Color 1 H = reading. |
+| `cam.count(1)` | Color 1 count | `0 ~ 15`<br>• Color 1 count = reading. |
+| `cam.area(1)` | Color 1 area | `0 ~ 100`<br>• Color 1 area = reading. |
+| `cam.x(2)` | Color 2 X | `0 ~ 159`<br>• Color 2 X = reading. |
+| `cam.y(2)` | Color 2 Y | `0 ~ 119`<br>• Color 2 Y = reading. |
+| `cam.size(2)[0]` | Color 2 W | `0 ~ 160`<br>• Color 2 W = reading. |
+| `cam.size(2)[1]` | Color 2 H | `0 ~ 120`<br>• Color 2 H = reading. |
+| `cam.count(2)` | Color 2 count | `0 ~ 15`<br>• Color 2 count = reading. |
+| `cam.area(2)` | Color 2 area | `0 ~ 100`<br>• Color 2 area = reading. |
+| `cam.colors_found()` | Colors found | `0 ~ 16`<br>• Colors found = reading. |
+
+</CamModeSection>
+
+#### Mode 2 - Coordinate sampling
+
+<CamModeSection mode="21" title="Coordinate sampling - ① Hue">
+
+`Library provides: 14 points: hue`
+
+::: info ℹ️ Reading notes
+- Configure sampling points on the camera first. Unset points return 0; hue 0 can also mean red, so it does not identify an unset point by itself.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `cam.hue(1)` | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
+| `cam.hue(2)` | S2 hue | `0 ~ 255`<br>• S2 hue = reading. |
+| `cam.hue(3)` | S3 hue | `0 ~ 255`<br>• S3 hue = reading. |
+| `cam.hue(4)` | S4 hue | `0 ~ 255`<br>• S4 hue = reading. |
+| `cam.hue(5)` | S5 hue | `0 ~ 255`<br>• S5 hue = reading. |
+| `cam.hue(6)` | S6 hue | `0 ~ 255`<br>• S6 hue = reading. |
+| `cam.hue(7)` | S7 hue | `0 ~ 255`<br>• S7 hue = reading. |
+| `cam.hue(8)` | S8 hue | `0 ~ 255`<br>• S8 hue = reading. |
+| `cam.hue(9)` | S9 hue | `0 ~ 255`<br>• S9 hue = reading. |
+| `cam.hue(10)` | S10 hue | `0 ~ 255`<br>• S10 hue = reading. |
+| `cam.hue(11)` | S11 hue | `0 ~ 255`<br>• S11 hue = reading. |
+| `cam.hue(12)` | S12 hue | `0 ~ 255`<br>• S12 hue = reading. |
+| `cam.hue(13)` | S13 hue | `0 ~ 255`<br>• S13 hue = reading. |
+| `cam.hue(14)` | S14 hue | `0 ~ 255`<br>• S14 hue = reading. |
+
+</CamModeSection>
+
+<CamModeSection mode="22" title="Coordinate sampling - ② Hue and saturation">
+
+`Library provides: 7 points: hue, saturation`
+
+::: info ℹ️ Reading notes
+- Configure sampling points on the camera first. Unset points return 0; hue 0 can also mean red, so it does not identify an unset point by itself.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `cam.hue(1)` | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
+| `cam.sat(1)` | S1 saturation | `0 ~ 100`<br>• S1 saturation = reading. |
+| `cam.hue(2)` | S2 hue | `0 ~ 255`<br>• S2 hue = reading. |
+| `cam.sat(2)` | S2 saturation | `0 ~ 100`<br>• S2 saturation = reading. |
+| `cam.hue(3)` | S3 hue | `0 ~ 255`<br>• S3 hue = reading. |
+| `cam.sat(3)` | S3 saturation | `0 ~ 100`<br>• S3 saturation = reading. |
+| `cam.hue(4)` | S4 hue | `0 ~ 255`<br>• S4 hue = reading. |
+| `cam.sat(4)` | S4 saturation | `0 ~ 100`<br>• S4 saturation = reading. |
+| `cam.hue(5)` | S5 hue | `0 ~ 255`<br>• S5 hue = reading. |
+| `cam.sat(5)` | S5 saturation | `0 ~ 100`<br>• S5 saturation = reading. |
+| `cam.hue(6)` | S6 hue | `0 ~ 255`<br>• S6 hue = reading. |
+| `cam.sat(6)` | S6 saturation | `0 ~ 100`<br>• S6 saturation = reading. |
+| `cam.hue(7)` | S7 hue | `0 ~ 255`<br>• S7 hue = reading. |
+| `cam.sat(7)` | S7 saturation | `0 ~ 100`<br>• S7 saturation = reading. |
+
+</CamModeSection>
+
+<CamModeSection mode="23" title="Coordinate sampling - ③ HSV">
+
+`Library provides: 4 points: hue, saturation and value`
+
+::: info ℹ️ Reading notes
+- Configure sampling points on the camera first. Unset points return 0; hue 0 can also mean red, so it does not identify an unset point by itself.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `cam.hue(1)` | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
+| `cam.sat(1)` | S1 saturation | `0 ~ 100`<br>• S1 saturation = reading. |
+| `cam.val(1)` | S1 value | `0 ~ 100`<br>• S1 value = reading. |
+| `cam.hue(2)` | S2 hue | `0 ~ 255`<br>• S2 hue = reading. |
+| `cam.sat(2)` | S2 saturation | `0 ~ 100`<br>• S2 saturation = reading. |
+| `cam.val(2)` | S2 value | `0 ~ 100`<br>• S2 value = reading. |
+| `cam.hue(3)` | S3 hue | `0 ~ 255`<br>• S3 hue = reading. |
+| `cam.sat(3)` | S3 saturation | `0 ~ 100`<br>• S3 saturation = reading. |
+| `cam.val(3)` | S3 value | `0 ~ 100`<br>• S3 value = reading. |
+| `cam.hue(4)` | S4 hue | `0 ~ 255`<br>• S4 hue = reading. |
+| `cam.sat(4)` | S4 saturation | `0 ~ 100`<br>• S4 saturation = reading. |
+| `cam.val(4)` | S4 value | `0 ~ 100`<br>• S4 value = reading. |
+
+</CamModeSection>
+
+#### Mode 3 - Color order
+
+<CamModeSection mode="30" title="Color order">
+
+`Library provides: the first 13 hues and total block count`
+
+::: info ℹ️ Reading notes
+- Blocks are ordered left to right. Total count can exceed 13, but the list contains at most 13 blocks. Check its length before indexing. Hue 0 can mean red.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `cam.order()[0]` | Block 1 hue from the left | `0 ~ 255`<br>• Block 1 hue from the left = reading. |
+| `cam.order()[1]` | Block 2 hue from the left | `0 ~ 255`<br>• Block 2 hue from the left = reading. |
+| `cam.order()[2]` | Block 3 hue from the left | `0 ~ 255`<br>• Block 3 hue from the left = reading. |
+| `cam.order()[3]` | Block 4 hue from the left | `0 ~ 255`<br>• Block 4 hue from the left = reading. |
+| `cam.order()[4]` | Block 5 hue from the left | `0 ~ 255`<br>• Block 5 hue from the left = reading. |
+| `cam.order()[5]` | Block 6 hue from the left | `0 ~ 255`<br>• Block 6 hue from the left = reading. |
+| `cam.order()[6]` | Block 7 hue from the left | `0 ~ 255`<br>• Block 7 hue from the left = reading. |
+| `cam.order()[7]` | Block 8 hue from the left | `0 ~ 255`<br>• Block 8 hue from the left = reading. |
+| `cam.order()[8]` | Block 9 hue from the left | `0 ~ 255`<br>• Block 9 hue from the left = reading. |
+| `cam.order()[9]` | Block 10 hue from the left | `0 ~ 255`<br>• Block 10 hue from the left = reading. |
+| `cam.order()[10]` | Block 11 hue from the left | `0 ~ 255`<br>• Block 11 hue from the left = reading. |
+| `cam.order()[11]` | Block 12 hue from the left | `0 ~ 255`<br>• Block 12 hue from the left = reading. |
+| `cam.order()[12]` | Block 13 hue from the left | `0 ~ 255`<br>• Block 13 hue from the left = reading. |
+| `cam.total()` | Total color blocks | `0 ~ 18`<br>• Total color blocks = reading. |
+
+</CamModeSection>
+
+#### Mode 4 - Line following
+
+<CamModeSection mode="41" title="Line following - ① Black">
+
+`Library provides: 14 line-following values`
+
+::: info ℹ️ Reading notes
+- Offsets are negative to the left and positive to the right; angles are signed. Junction: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 end. Flags = near 1 + middle 2 + far 4.
+- Last lost side: 0 on line, 1 left, 2 right.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `cam.near()` | Near offset | `-100 ~ 100`<br>• Near offset = reading. |
+| `cam.mid()` | Middle offset | `-100 ~ 100`<br>• Middle offset = reading. |
+| `cam.far()` | Far offset | `-100 ~ 100`<br>• Far offset = reading. |
+| `cam.angle()` | Line angle | `-90 ~ 90`<br>• Line angle = reading. |
+| `cam.width()` | Near line width | `0 ~ 100`<br>• Near line width = reading. |
+| `cam.flags()` | Line-found flags | `0 ~ 7`<br>• Line-found flags = reading. |
+| `cam.junction()` | Junction type | `0 ~ 5`<br>• Junction type = reading. |
+| `cam.junction_dist()` | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
+| `cam.edges()[0]` | Near left edge | `-100 ~ 100`<br>• Near left edge = reading. |
+| `cam.edges()[1]` | Near right edge | `-100 ~ 100`<br>• Near right edge = reading. |
+| `cam.far_width()` | Far line width | `0 ~ 100`<br>• Far line width = reading. |
+| `cam.marker()[0]` | Marker color | `0 ~ 8`<br>• Marker color = reading. |
+| `cam.marker()[1]` | Marker count | `0 ~ 99`<br>• Marker count = reading. |
+| `cam.lost()` | Last lost side | `0 ~ 2`<br>• Last lost side = reading. |
+
+</CamModeSection>
+
+<CamModeSection mode="42" title="Line following - ② White">
+
+`Library provides: 14 line-following values`
+
+::: info ℹ️ Reading notes
+- Offsets are negative to the left and positive to the right; angles are signed. Junction: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 end. Flags = near 1 + middle 2 + far 4.
+- Last lost side: 0 on line, 1 left, 2 right.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `cam.near()` | Near offset | `-100 ~ 100`<br>• Near offset = reading. |
+| `cam.mid()` | Middle offset | `-100 ~ 100`<br>• Middle offset = reading. |
+| `cam.far()` | Far offset | `-100 ~ 100`<br>• Far offset = reading. |
+| `cam.angle()` | Line angle | `-90 ~ 90`<br>• Line angle = reading. |
+| `cam.width()` | Near line width | `0 ~ 100`<br>• Near line width = reading. |
+| `cam.flags()` | Line-found flags | `0 ~ 7`<br>• Line-found flags = reading. |
+| `cam.junction()` | Junction type | `0 ~ 5`<br>• Junction type = reading. |
+| `cam.junction_dist()` | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
+| `cam.edges()[0]` | Near left edge | `-100 ~ 100`<br>• Near left edge = reading. |
+| `cam.edges()[1]` | Near right edge | `-100 ~ 100`<br>• Near right edge = reading. |
+| `cam.far_width()` | Far line width | `0 ~ 100`<br>• Far line width = reading. |
+| `cam.marker()[0]` | Marker color | `0 ~ 8`<br>• Marker color = reading. |
+| `cam.marker()[1]` | Marker count | `0 ~ 99`<br>• Marker count = reading. |
+| `cam.lost()` | Last lost side | `0 ~ 2`<br>• Last lost side = reading. |
+
+</CamModeSection>
+
+<CamModeSection mode="43" title="Line following - ③ Colored">
+
+`Library provides: 14 line-following values`
+
+::: info ℹ️ Reading notes
+- Offsets are negative to the left and positive to the right; angles are signed. Junction: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 end. Flags = near 1 + middle 2 + far 4.
+- Teach the line color as target color 1 first.
+- Last lost side: 0 on line, 1 left, 2 right.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `cam.near()` | Near offset | `-100 ~ 100`<br>• Near offset = reading. |
+| `cam.mid()` | Middle offset | `-100 ~ 100`<br>• Middle offset = reading. |
+| `cam.far()` | Far offset | `-100 ~ 100`<br>• Far offset = reading. |
+| `cam.angle()` | Line angle | `-90 ~ 90`<br>• Line angle = reading. |
+| `cam.width()` | Near line width | `0 ~ 100`<br>• Near line width = reading. |
+| `cam.flags()` | Line-found flags | `0 ~ 7`<br>• Line-found flags = reading. |
+| `cam.junction()` | Junction type | `0 ~ 5`<br>• Junction type = reading. |
+| `cam.junction_dist()` | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
+| `cam.edges()[0]` | Near left edge | `-100 ~ 100`<br>• Near left edge = reading. |
+| `cam.edges()[1]` | Near right edge | `-100 ~ 100`<br>• Near right edge = reading. |
+| `cam.far_width()` | Far line width | `0 ~ 100`<br>• Far line width = reading. |
+| `cam.marker()[0]` | Marker color | `0 ~ 8`<br>• Marker color = reading. |
+| `cam.marker()[1]` | Marker count | `0 ~ 99`<br>• Marker count = reading. |
+| `cam.lost()` | Last lost side | `0 ~ 2`<br>• Last lost side = reading. |
+
+</CamModeSection>
+
+#### Mode 5 - Object detection
+
+<CamModeSection mode="51" title="Object detection - ① Object list">
+
+`Library provides: the first 4 objects and total count`
+
+::: info ℹ️ Reading notes
+- Only target colors 1 ~ 8 are used. Objects are sorted by decreasing area. Code = color ID × 10 + shape code; 0 means no object. Check for an object before using its data.
+- Shape codes 0 ~ 9: other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star, trapezoid.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `cam.object_count()` | Object count | `0 ~ 8`<br>• Object count = reading. |
+| `cam.object(1)` | Object 1 code | `0, 10 ~ 89`<br>• Object 1 code = reading. |
+| `cam.object_color(1)` | Object 1 color ID | `0 ~ 8`<br>• Object 1 color ID = reading. |
+| `cam.object_shape(1)` | Object 1 shape code | `0 ~ 9`<br>• Object 1 shape code = reading. |
+| `cam.object_xy(1)[0]` | Object 1 X | `0 ~ 159`<br>• Object 1 X = reading. |
+| `cam.object_xy(1)[1]` | Object 1 Y | `0 ~ 119`<br>• Object 1 Y = reading. |
+| `cam.object(2)` | Object 2 code | `0, 10 ~ 89`<br>• Object 2 code = reading. |
+| `cam.object_color(2)` | Object 2 color ID | `0 ~ 8`<br>• Object 2 color ID = reading. |
+| `cam.object_shape(2)` | Object 2 shape code | `0 ~ 9`<br>• Object 2 shape code = reading. |
+| `cam.object_xy(2)[0]` | Object 2 X | `0 ~ 159`<br>• Object 2 X = reading. |
+| `cam.object_xy(2)[1]` | Object 2 Y | `0 ~ 119`<br>• Object 2 Y = reading. |
+| `cam.object(3)` | Object 3 code | `0, 10 ~ 89`<br>• Object 3 code = reading. |
+| `cam.object_color(3)` | Object 3 color ID | `0 ~ 8`<br>• Object 3 color ID = reading. |
+| `cam.object_shape(3)` | Object 3 shape code | `0 ~ 9`<br>• Object 3 shape code = reading. |
+| `cam.object_xy(3)[0]` | Object 3 X | `0 ~ 159`<br>• Object 3 X = reading. |
+| `cam.object_xy(3)[1]` | Object 3 Y | `0 ~ 119`<br>• Object 3 Y = reading. |
+| `cam.object(4)` | Object 4 code | `0, 10 ~ 89`<br>• Object 4 code = reading. |
+| `cam.object_color(4)` | Object 4 color ID | `0 ~ 8`<br>• Object 4 color ID = reading. |
+| `cam.object_shape(4)` | Object 4 shape code | `0 ~ 9`<br>• Object 4 shape code = reading. |
+| `cam.object_xy(4)[0]` | Object 4 X | `0 ~ 159`<br>• Object 4 X = reading. |
+| `cam.object_xy(4)[1]` | Object 4 Y | `0 ~ 119`<br>• Object 4 Y = reading. |
+
+</CamModeSection>
+
+<CamModeSection mode="52" title="Object detection - ② Object details">
+
+`Library provides: the first 2 objects: position, size and area`
+
+::: info ℹ️ Reading notes
+- Only target colors 1 ~ 8 are used. Objects are sorted by decreasing area. Code = color ID × 10 + shape code; 0 means no object. Check for an object before using its data.
+- Shape codes 0 ~ 9: other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star, trapezoid.
+:::
+
+| Block / read location | Function | Value meaning and decoding |
+| --- | --- | --- |
+| `cam.object(1)` | Object 1 code | `0, 10 ~ 89`<br>• Object 1 code = reading. |
+| `cam.object_color(1)` | Object 1 color ID | `0 ~ 8`<br>• Object 1 color ID = reading. |
+| `cam.object_shape(1)` | Object 1 shape code | `0 ~ 9`<br>• Object 1 shape code = reading. |
+| `cam.object_xy(1)[0]` | Object 1 X | `0 ~ 159`<br>• Object 1 X = reading. |
+| `cam.object_xy(1)[1]` | Object 1 Y | `0 ~ 119`<br>• Object 1 Y = reading. |
+| `cam.object_size(1)[0]` | Object 1 W | `0 ~ 160`<br>• Object 1 W = reading. |
+| `cam.object_size(1)[1]` | Object 1 H | `0 ~ 120`<br>• Object 1 H = reading. |
+| `cam.object_area(1)` | Object 1 area | `0 ~ 100`<br>• Object 1 area = reading. |
+| `cam.object(2)` | Object 2 code | `0, 10 ~ 89`<br>• Object 2 code = reading. |
+| `cam.object_color(2)` | Object 2 color ID | `0 ~ 8`<br>• Object 2 color ID = reading. |
+| `cam.object_shape(2)` | Object 2 shape code | `0 ~ 9`<br>• Object 2 shape code = reading. |
+| `cam.object_xy(2)[0]` | Object 2 X | `0 ~ 159`<br>• Object 2 X = reading. |
+| `cam.object_xy(2)[1]` | Object 2 Y | `0 ~ 119`<br>• Object 2 Y = reading. |
+| `cam.object_size(2)[0]` | Object 2 W | `0 ~ 160`<br>• Object 2 W = reading. |
+| `cam.object_size(2)[1]` | Object 2 H | `0 ~ 120`<br>• Object 2 H = reading. |
+| `cam.object_area(2)` | Object 2 area | `0 ~ 100`<br>• Object 2 area = reading. |
+
+</CamModeSection>
+
+</CamModeAccordion>
+
+### ✔ Advanced control example
+
+Teach target color 1 and run this complete mode 13 example. The library decodes position, area and count.
+
+```python
+from pybricks.parameters import Port
+from pybricks.tools import wait
+from MBC_UniCam import UniCam
+
+cam = UniCam(Port.C, mode=13)
+
+while True:
+    position = cam.xy(1)
+    if not cam.sensor_ok() or position is None:
+        print("Camera not connected")
+    elif position == (0, 0):
         print("No target")
+    else:
+        print("Color 1:", position, "Area:", cam.area(1), "Count:", cam.count(1))
     wait(100)
 ```
 
-### ✔ Mode 11: read positions and counts
+### ✔ Switching modes and reading other data
 
-Select Mode ID 11 on the camera. Keep the imports, camera declaration and three helpers above; replace only the final `while True` block with the following. Count decoding combines at most two bytes at a time to fit the hub’s integer capacity.
+Use each snippet as an alternative reading flow. Select a mode before entering its loop and keep each loop consistent with that mode.
 
 ```python
-while True:
-    data = read_payload()
-    counts = read_payload(6)
-    print("Colors found:", count_mode11(counts, 0))
-    for color in range(1, 15):
-        grid_id = data[color - 1]
-        if grid_id == 0:
-            continue
-        x = (grid_id - 1) % 16 + 1
-        y = (grid_id - 1) // 16 + 1
-        print(color, x, y, count_mode11(counts, color))
-    wait(100)
+cam.set_mode(11)
+position = cam.xy(1)
+cell = cam.cell(1)
+count = cam.count(1)
+print(position, cell, count)
+
+cam.set_mode(23)
+print(cam.hsv(1))
+
+cam.set_mode(41)
+print(cam.near(), cam.far(), cam.angle(), cam.junction())
+
+cam.set_mode(52)
+if cam.object_found(1):
+    print(cam.object(1), cam.object_xy(1), cam.object_size(1), cam.object_area(1))
 ```
 
-### ✔ Line mode: read offsets and angle
+### ✔ Library control and status
 
-Select Mode ID 41, 42 or 43 on the camera. Keep the same imports, camera declaration and helpers; replace only the final loop. Offsets and angle follow the signed-byte layout and are not increased by 100.
+| Method | Purpose |
+| --- | --- |
+| `cam.set_mode(13)` | Select the requested Mode ID. |
+| `cam.sensor_ok()` | Check whether the most recent read succeeded. |
+| `cam.mode_number()` | Get the configured Mode ID. |
+| `cam.device_id()` | Read address, hardware code and firmware word. |
+| `cam.is_unicam()` | Check the camera identity. |
+| `cam.firmware_version()` | Read (major, minor) firmware version. |
+| `cam.max_color() / cam.max_point() / cam.max_object()` | Read the supported color, point or object count for the selected mode. |
+| `cam.light(50)` | Lamp level 0 ~ 100; light(None) uses the camera menu setting. |
+| `cam.teach(1) / cam.clear(1)` | Teach from the image center or clear a target, index 1 ~ 16. |
+| `cam.target_range(1, hue=20, sat=10, size=10, search=2)` | Set hue tolerance 1 ~ 119, saturation tolerance 0 ~ 31, minimum area 4 ~ 254 and search behavior of a taught target. 255 keeps a value; search 0 keeps, 1 locks, 2 selects the largest blob. |
+| `cam.shape_tolerance(3) / cam.target_shape(1, 3)` | Shape tolerance 1 ~ 5; expected shape 0 ~ 9 for target 1 ~ 8, with 0 meaning any. |
+| `cam.camera_setting(item, value)` | Setup item 0 ~ 12 follows camera menu order; a setting can be negative. |
+| `cam.white_cal()` | Fill the image center with white paper before calibrating white. |
+| `cam.power(0)` | 0 full speed, 1 power saving, 2 standby; waking takes 1 ~ 2.5 seconds. |
+| `cam.cmd(code, *parameters) / cam.busy() / cam.wait_done()` | Send a command, check busy status or wait for completion. Avoid repeated status checks inside the reading loop. |
 
-```python
-while True:
-    data = read_payload()
-    near = signed_byte(data[0])
-    far = signed_byte(data[2])
-    angle = signed_byte(data[3])
-    junction = data[6]
-    print(near, far, angle, junction)
-    wait(100)
-```
+Command completion: 0 done, 2 failed, 3 rejected, `None` no completion result. `cmd()` returns a sequence number and `busy()` returns a boolean.
 
 ## 04 / 【Lego】 Lau Xiao demonstration videos
 

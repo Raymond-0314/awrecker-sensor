@@ -1,8 +1,10 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, inject, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useData } from 'vitepress'
 
 const { lang } = useData()
+const accordion = inject('cam-mode-accordion', null)
+const sectionId = mode => accordion?.sectionId(mode) || `cam-mode-${mode}`
 const en = computed(() => lang.value.startsWith('en'))
 const scrollArea = ref(null)
 const canScrollLeft = ref(false)
@@ -101,7 +103,7 @@ const groups = [
               <td>{{ en ? mode[2] : mode[1] }}</td>
               <td>
                 <a
-                  :href="`#cam-mode-${mode[0]}`"
+                  :href="`#${sectionId(mode[0])}`"
                   class="cam-mode-jump"
                   :aria-label="`${en ? 'Open mode' : '展開模式'} ${mode[0]} ${en ? mode[2] : mode[1]}`"
                 >{{ en ? 'Open' : '展開' }}</a>

@@ -25,7 +25,6 @@ Check that your Pybricks EV3 blocks expose numeric beacon readings. The tables s
 ::: info ℹ️ Reading notes
 - UniCam appears as an Infrared Sensor. Proximity (0) reports camera Mode ID; Beacon (1) has eight slots and Remote (2) has four. Select the camera mode on the camera. The EV3 connection reads data only.
 - Here ÷ means integer division and mod means remainder. Camera Mode ID differs from the infrared read mode: camera mode 13 still returns its data through beacon read mode 1.
-- Area, saturation, value, line width and junction distance are percentages. Their range labels omit the percent sign.
 :::
 
 ::: warning ⚠️ Note

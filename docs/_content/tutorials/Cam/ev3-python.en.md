@@ -21,7 +21,6 @@
 ::: info ℹ️ Reading notes
 - Read the camera with LUMPDevice(Port.S1). cam.read(0)[0] reports camera Mode ID, cam.read(1) returns eight Beacon values, and cam.read(2) returns four Remote values. The tables show the exact indexes. Read once into a variable before extracting fields in a loop. Select the camera mode on the camera.
 - Here ÷ means integer division and mod means remainder. Camera Mode ID differs from the infrared read mode: camera mode 13 still returns its data through beacon read mode 1.
-- Area, saturation, value, line width and junction distance are percentages. Their range labels omit the percent sign.
 :::
 
 ::: warning ⚠️ Note
