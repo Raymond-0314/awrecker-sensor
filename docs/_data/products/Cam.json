@@ -26,7 +26,6 @@
     "ev3": [
       "classroom",
       "ev3g",
-      "block",
       "python"
     ],
     "i2c":[

@@ -19,7 +19,7 @@
 ## 02 / Functions and data
 
 ::: info ℹ️ Reading notes
-- The Robot Inventer App treats UniCam as a Color Sensor. The tables below describe its Color, Reflection, and Raw RGB blocks, mainly using an 8 × 6 position grid. Home Python switches to the Education layout and requires different decoding.
+- The Robot Inventer App treats UniCam as a Color Sensor. The tables below describe its Color, Reflection, and Raw RGB blocks. Home Python switches to the Education layout and requires different decoding.
 - Here ÷ means integer division and mod means remainder. Store readings before decoding. These are Robot Inventer App block layouts; do not apply Education App 256-based packing.
 :::
 
@@ -167,9 +167,9 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | S2 saturation and value | `0 ~ 99`<br>• S2 saturation range: `0 ~ 90`{.code-green}.<br>• S2 saturation = (reading // 10) × 10.<br>• S2 value range: `0 ~ 90`{.code-green}.<br>• S2 value = (reading % 10) × 10. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | S2 saturation and value | `0 ~ 99`<br>• S2 saturation range: `0 ~ 90`{.code-green}.<br>• S2 saturation = (reading ÷ 10) × 10.<br>• S2 value range: `0 ~ 90`{.code-green}.<br>• S2 value = (reading % 10) × 10. |
 | ![Raw red](/images/tutorials/S8/spike-app/red.png) | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
-| ![Raw green](/images/tutorials/S8/spike-app/green.png) | S1 saturation and value | `0 ~ 99`<br>• S1 saturation range: `0 ~ 90`{.code-green}.<br>• S1 saturation = (reading // 10) × 10.<br>• S1 value range: `0 ~ 90`{.code-green}.<br>• S1 value = (reading % 10) × 10. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | S1 saturation and value | `0 ~ 99`<br>• S1 saturation range: `0 ~ 90`{.code-green}.<br>• S1 saturation = (reading ÷ 10) × 10.<br>• S1 value range: `0 ~ 90`{.code-green}.<br>• S1 value = (reading % 10) × 10. |
 | ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | S2 hue | `0 ~ 255`<br>• S2 hue = reading. |
 
 </CamModeSection>
@@ -271,10 +271,10 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
 | ![Color value](/images/tutorials/S8/spike-app/color.png) | Object count | `0 ~ 8`<br>• Object count = reading. |
-| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading // 10.<br>• Object 1 shape code = reading % 10. |
-| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Object 1 position | `0, 11 ~ 86`<br>• Object 1 X = reading // 10.<br>• Object 1 Y = reading % 10. |
-| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Object 2 code | `0, 10 ~ 89`<br>• Object 2 color ID = reading // 10.<br>• Object 2 shape code = reading % 10. |
-| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Object 2 position | `0, 11 ~ 86`<br>• Object 2 X = reading // 10.<br>• Object 2 Y = reading % 10. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading ÷ 10.<br>• Object 1 shape code = reading % 10. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Object 1 position | `0, 11 ~ 86`<br>• Object 1 X = reading ÷ 10.<br>• Object 1 Y = reading % 10. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Object 2 code | `0, 10 ~ 89`<br>• Object 2 color ID = reading ÷ 10.<br>• Object 2 shape code = reading % 10. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Object 2 position | `0, 11 ~ 86`<br>• Object 2 X = reading ÷ 10.<br>• Object 2 Y = reading % 10. |
 
 </CamModeSection>
 
@@ -291,7 +291,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
 | ![Color value](/images/tutorials/S8/spike-app/color.png) | Object count | `0 ~ 8`<br>• Object count = reading. |
-| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading // 10.<br>• Object 1 shape code = reading % 10. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading ÷ 10.<br>• Object 1 shape code = reading % 10. |
 | ![Raw red](/images/tutorials/S8/spike-app/red.png) | Object 1 X | `0 ~ 159`<br>• Object 1 X = reading. |
 | ![Raw green](/images/tutorials/S8/spike-app/green.png) | Object 1 Y | `0 ~ 119`<br>• Object 1 Y = reading. |
 | ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Object 1 area | `0 ~ 100`<br>• Object 1 area = reading. |

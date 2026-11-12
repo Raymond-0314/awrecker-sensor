@@ -755,4 +755,3 @@ class UniCam:
         """工作模式（EB；不存，相機重開機回全速）：0 全速 full、1 省電 save（25fps）、2 待機 standby（鏡頭關）
         待機 → 開工約 1～2.5 秒，這期間讀到的都是「沒有」/ standby -> working takes 1~2.5 s"""
         return self._do(5000, 0xEB, mode)
-

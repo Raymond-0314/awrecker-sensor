@@ -5,7 +5,7 @@
 ## 支援範圍與檔案
 
 - 產品 slug 為 `Cam`。共用產品介紹為 `Cam.zh.md`、`Cam.en.md`。
-- 教學共九組：SPIKE App、Robot Inventor、SPIKE Pybricks Blocks、SPIKE Pybricks Python、EV3 Classroom、EV3-G、EV3 Pybricks Blocks、EV3 Pybricks Python、通用 I2C。各有中文與英文，共 18 份教學。
+- 教學共八組：SPIKE App、Robot Inventor、SPIKE Pybricks Blocks、SPIKE Pybricks Python、EV3 Classroom、EV3-G、EV3 Pybricks Python、通用 I2C。各有中文與英文，共 16 份教學。
 - Cam 不支援 clev3r，不得加入其頁面或入口。不得更動 S8、S16 的教學來完成 Cam 的修改。
 - 相機模式內容放在各教學檔內，不再另外 include `cam-mode`。路由檔由 `docs:prepare` 產生。
 - 內容與實際欄位參考 MBC GitHub 的 `sensors/unicam/reference.md`、各平台讀值教學與 `cam_universal_layout.json`；Python 位元解碼另核對 `MBC_UniCam.py`。
@@ -56,7 +56,7 @@
 
 ## 修改後檢查
 
-- 檢查九組中英文、共 18 份教學與兩份產品介紹。
+- 檢查八組中英文、共 16 份教學與兩份產品介紹。
 - 每份教學具五組主模式、13 個子模式；欄位與平台來源一致。
 - 共用說明沒有在所有 Mode ID 重複；模式表格後沒有重複的共用函式。
 - 重新檢查未使用列、全形運算符號、百分號範圍、約為、直接讀取、未定義縮寫與舊版敘述。
@@ -66,7 +66,7 @@
 
 - spike-block、spike-python 的中英文頁面，均使用第 02 節基礎控制、第 03 節進階控制，第 04 節示範影片。範例放在各自章節內。
 - 基礎控制只用內建顏色感應器 reflection / ambient；Python 使用 ColorSensor，不以 PUPDevice 原始讀值冒充基礎控制。
-- 進階控制使用外加 MBC_UniCam.py 函式庫。Blocks 另提供 Cam_Blocks.py 外部任務轉接檔，Python 直接呼叫 UniCam。
+- 進階控制使用外加 MBC_UniCam.py 函式庫，Blocks 與 Python 皆使用 UniCam 類別；Blocks 以實際物件積木圖片說明，不再使用 camera_read 轉接函式。
 - 兩篇各有 13 個子模式，使用 basic / advanced namespace，避免跳轉 ID 與 aria-controls 重複。
 - 四捨五入公式統一使用 round(...)。
 
@@ -76,3 +76,18 @@
 - 每個欄位只標明實際欄位編號 (例如 0x10)、功能、數值範圍與公式，不顯示 values 陣列索引。每種語言共 513 個欄位。
 - values、readCamera 與分批讀取實作只保留在第 03 節範例程式，不放在第 02 節補充資訊及模式表格中。
 - 移除各模式的陣列宣告與分批讀取說明。座標單位、方向與 X = 0 的說明集中於第 02 節開頭的補充資訊。
+
+## Pybricks Python 應用範例
+
+- spike-python 的第 02 節維持 ColorSensor 基礎控制，提供 reflection / ambient 的設定、函式說明與完整兩色位置讀取範例。
+- 第 03 節提供外加 MBC_UniCam 函式庫的 6 個應用範例：色塊追蹤、多色定位、座標取色、色序、PD 循線與物體搜尋。
+- 每個範例都要有模式、準備、接線、完整程式、參數、預期結果及檢查方式。程式與函式庫使用站內下載，中英文同步。
+- 官方 SPIKE App Python 與 Pybricks Python 為不同環境，不可直接混用來源頁的官方 App 範例。
+
+## Cam SPIKE Blocks 進階積木
+
+- 第 03 節的函數設定、函數功能說明與同步模式說明，以 S8 SPIKE Blocks 為敘述範本，替換成 Cam 的模組 MBC_UniCam、類別 UniCam、物件 Cam 與正確輸入欄位。
+- 進階積木的白色數字欄位，在數值意義說明解釋顏色／取樣點／物體編號及依模式不同的輸入範圍；同一函數每個模式只列一次。
+- 各子模式的表格前放對應 setup 圖，並提醒機身 Mode ID 與程式的 Mode ID 相同。範本說明使用 Mode ID 11 的 setup 圖。
+- import.png 為導入函式庫；init_true.png 為函式庫設定與非同步設定；init_false.png 為同步設定。true 搭配 await，false 搭配 call，依函式庫實際行為。
+- 非同步讀值說明用 xy.png，同步說明用 xy_call.png；圖片依 advanced/main1 ~ main5、sensor 與 setup 資料夾配置。

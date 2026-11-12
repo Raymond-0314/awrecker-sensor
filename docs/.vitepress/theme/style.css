@@ -1582,6 +1582,12 @@ body:has(.sensor-home) {
 
 .vp-doc .table-scroll-content {
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.vp-doc .table-scroll-content::-webkit-scrollbar {
+  display: none;
 }
 
 .vp-doc .table-scroll-btn {

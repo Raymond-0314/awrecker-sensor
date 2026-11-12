@@ -53,10 +53,10 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
 | ![Color value](/images/tutorials/S8/spike-app/color.png) | Colors found | `0 ~ 16`<br>• Colors found = reading.<br>• This is the total found, distinct from the number of positions available in this mode. |
-| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading // 10.<br>• Color 1 Y = reading % 10. |
-| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Color 2 position and Color 3 position | `0 ~ 8686`<br>• Color 2 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 2 X = (reading ÷ 100) // 10.<br>• Color 2 Y = (reading ÷ 100) % 10.<br>• Color 3 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 3 X = (reading mod 100) // 10.<br>• Color 3 Y = (reading mod 100) % 10. |
-| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Color 4 position and Color 5 position | `0 ~ 8686`<br>• Color 4 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 4 X = (reading ÷ 100) // 10.<br>• Color 4 Y = (reading ÷ 100) % 10.<br>• Color 5 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 5 X = (reading mod 100) // 10.<br>• Color 5 Y = (reading mod 100) % 10. |
-| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Color 6 position and Color 7 position | `0 ~ 8686`<br>• Color 6 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 6 X = (reading ÷ 100) // 10.<br>• Color 6 Y = (reading ÷ 100) % 10.<br>• Color 7 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 7 X = (reading mod 100) // 10.<br>• Color 7 Y = (reading mod 100) % 10. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading ÷ 10.<br>• Color 1 Y = reading % 10. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Color 2 position and Color 3 position | `0 ~ 8686`<br>• Color 2 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 2 X = (reading ÷ 100) ÷ 10.<br>• Color 2 Y = (reading ÷ 100) % 10.<br>• Color 3 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 3 X = (reading mod 100) ÷ 10.<br>• Color 3 Y = (reading mod 100) % 10. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Color 4 position and Color 5 position | `0 ~ 8686`<br>• Color 4 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 4 X = (reading ÷ 100) ÷ 10.<br>• Color 4 Y = (reading ÷ 100) % 10.<br>• Color 5 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 5 X = (reading mod 100) ÷ 10.<br>• Color 5 Y = (reading mod 100) % 10. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Color 6 position and Color 7 position | `0 ~ 8686`<br>• Color 6 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 6 X = (reading ÷ 100) ÷ 10.<br>• Color 6 Y = (reading ÷ 100) % 10.<br>• Color 7 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 7 X = (reading mod 100) ÷ 10.<br>• Color 7 Y = (reading mod 100) % 10. |
 
 </CamModeSection>
 
@@ -73,10 +73,10 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
 | ![Color value](/images/tutorials/S8/spike-app/color.png) | Colors found | `0 ~ 16`<br>• Colors found = reading.<br>• This is the total found, distinct from the number of positions available in this mode. |
-| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading // 10.<br>• Color 1 Y = reading % 10. |
-| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Color 2 position and Color 3 position | `0 ~ 8686`<br>• Color 2 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 2 X = (reading ÷ 100) // 10.<br>• Color 2 Y = (reading ÷ 100) % 10.<br>• Color 3 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 3 X = (reading mod 100) // 10.<br>• Color 3 Y = (reading mod 100) % 10. |
-| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Color 4 position and Color 5 position | `0 ~ 8686`<br>• Color 4 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 4 X = (reading ÷ 100) // 10.<br>• Color 4 Y = (reading ÷ 100) % 10.<br>• Color 5 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 5 X = (reading mod 100) // 10.<br>• Color 5 Y = (reading mod 100) % 10. |
-| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Color 6 position and Color 7 position | `0 ~ 8686`<br>• Color 6 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 6 X = (reading ÷ 100) // 10.<br>• Color 6 Y = (reading ÷ 100) % 10.<br>• Color 7 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 7 X = (reading mod 100) // 10.<br>• Color 7 Y = (reading mod 100) % 10. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Color 1 position | `0, 11 ~ 86`<br>• Color 1 X = reading ÷ 10.<br>• Color 1 Y = reading % 10. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Color 2 position and Color 3 position | `0 ~ 8686`<br>• Color 2 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 2 X = (reading ÷ 100) ÷ 10.<br>• Color 2 Y = (reading ÷ 100) % 10.<br>• Color 3 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 3 X = (reading mod 100) ÷ 10.<br>• Color 3 Y = (reading mod 100) % 10. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Color 4 position and Color 5 position | `0 ~ 8686`<br>• Color 4 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 4 X = (reading ÷ 100) ÷ 10.<br>• Color 4 Y = (reading ÷ 100) % 10.<br>• Color 5 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 5 X = (reading mod 100) ÷ 10.<br>• Color 5 Y = (reading mod 100) % 10. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Color 6 position and Color 7 position | `0 ~ 8686`<br>• Color 6 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 6 X = (reading ÷ 100) ÷ 10.<br>• Color 6 Y = (reading ÷ 100) % 10.<br>• Color 7 position range: `0, 11 ~ 86`{.code-green}.<br>• Color 7 X = (reading mod 100) ÷ 10.<br>• Color 7 Y = (reading mod 100) % 10. |
 
 </CamModeSection>
 
@@ -267,10 +267,10 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
 | ![Color value](/images/tutorials/S8/spike-app/color.png) | Object count | `0 ~ 8`<br>• Object count = reading. |
-| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading // 10.<br>• Object 1 shape code = reading % 10. |
-| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Object 1 position | `0, 11 ~ 86`<br>• Object 1 X = reading // 10.<br>• Object 1 Y = reading % 10. |
-| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Object 2 code and Object 2 position | `0 ~ 8986`<br>• Object 2 code range: `0, 10 ~ 89`{.code-green}.<br>• Object 2 position range: `0, 11 ~ 86`{.code-green}.<br>• Object 2 color ID = (reading ÷ 100) // 10.<br>• Object 2 shape code = (reading ÷ 100) % 10.<br>• Object 2 X = (reading mod 100) // 10.<br>• Object 2 Y = (reading mod 100) % 10. |
-| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Object 3 code and Object 3 position | `0 ~ 8986`<br>• Object 3 code range: `0, 10 ~ 89`{.code-green}.<br>• Object 3 position range: `0, 11 ~ 86`{.code-green}.<br>• Object 3 color ID = (reading ÷ 100) // 10.<br>• Object 3 shape code = (reading ÷ 100) % 10.<br>• Object 3 X = (reading mod 100) // 10.<br>• Object 3 Y = (reading mod 100) % 10. |
+| ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading ÷ 10.<br>• Object 1 shape code = reading % 10. |
+| ![Raw red](/images/tutorials/S8/spike-app/red.png) | Object 1 position | `0, 11 ~ 86`<br>• Object 1 X = reading ÷ 10.<br>• Object 1 Y = reading % 10. |
+| ![Raw green](/images/tutorials/S8/spike-app/green.png) | Object 2 code and Object 2 position | `0 ~ 8986`<br>• Object 2 code range: `0, 10 ~ 89`{.code-green}.<br>• Object 2 position range: `0, 11 ~ 86`{.code-green}.<br>• Object 2 color ID = (reading ÷ 100) ÷ 10.<br>• Object 2 shape code = (reading ÷ 100) % 10.<br>• Object 2 X = (reading mod 100) ÷ 10.<br>• Object 2 Y = (reading mod 100) % 10. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Object 3 code and Object 3 position | `0 ~ 8986`<br>• Object 3 code range: `0, 10 ~ 89`{.code-green}.<br>• Object 3 position range: `0, 11 ~ 86`{.code-green}.<br>• Object 3 color ID = (reading ÷ 100) ÷ 10.<br>• Object 3 shape code = (reading ÷ 100) % 10.<br>• Object 3 X = (reading mod 100) ÷ 10.<br>• Object 3 Y = (reading mod 100) % 10. |
 
 </CamModeSection>
 
@@ -286,11 +286,11 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
-| ![Color value](/images/tutorials/S8/spike-app/color.png) | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading // 10.<br>• Object 1 shape code = reading % 10. |
+| ![Color value](/images/tutorials/S8/spike-app/color.png) | Object 1 code | `0, 10 ~ 89`<br>• Object 1 color ID = reading ÷ 10.<br>• Object 1 shape code = reading % 10. |
 | ![Reflected-light value](/images/tutorials/S8/spike-app/reflect.png) | Object 1 area | `0 ~ 100`<br>• Object 1 area = reading. |
 | ![Raw red](/images/tutorials/S8/spike-app/red.png) | Object 1 X and Object 1 Y | `0 ~ 30623`<br>• Object 1 X range: `0 ~ 159`{.code-green}.<br>• Object 1 X = reading mod 256.<br>• Object 1 Y range: `0 ~ 119`{.code-green}.<br>• Object 1 Y = reading ÷ 256. |
 | ![Raw green](/images/tutorials/S8/spike-app/green.png) | Object 1 W and Object 1 H | `0 ~ 30880`<br>• Object 1 W range: `0 ~ 160`{.code-green}.<br>• Object 1 W = reading mod 256.<br>• Object 1 H range: `0 ~ 120`{.code-green}.<br>• Object 1 H = reading ÷ 256. |
-| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Object 2 code and Object 2 area | `0 ~ 25689`<br>• Object 2 code range: `0, 10 ~ 89`{.code-green}.<br>• Object 2 color ID = (reading mod 256) // 10.<br>• Object 2 shape code = (reading mod 256) % 10.<br>• Object 2 area range: `0 ~ 100`{.code-green}.<br>• Object 2 area = reading ÷ 256. |
+| ![Raw blue](/images/tutorials/S8/spike-app/blue.png) | Object 2 code and Object 2 area | `0 ~ 25689`<br>• Object 2 code range: `0, 10 ~ 89`{.code-green}.<br>• Object 2 color ID = (reading mod 256) ÷ 10.<br>• Object 2 shape code = (reading mod 256) % 10.<br>• Object 2 area range: `0 ~ 100`{.code-green}.<br>• Object 2 area = reading ÷ 256. |
 
 </CamModeSection>
 

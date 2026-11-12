@@ -253,7 +253,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
 | ![Reflected-light value](/images/tutorials/Cam/spike-block/reflected.png) | Object 1 X and Object 1 Y | `-3199 ~ 3199`<br>• Object 1 X range: `0, 1 ~ 40`{.code-green}.<br>• Object 1 X = reading ÷ 100.<br>• Object 1 Y range: `0, 1 ~ 30`{.code-green}.<br>• Object 1 Y = reading mod 100. |
-| ![Ambient-light value](/images/tutorials/Cam/spike-block/ambient.png) | Object 1 code and Object count | `0 ~ 89.9`<br>• Object 1 code range: `0, 10 ~ 89`{.code-green}.<br>• Object 1 color ID = (floor(reading)) // 10.<br>• Object 1 shape code = (floor(reading)) % 10.<br>• Object count range: `0 ~ 9`{.code-green}.<br>• Object count = round(reading × 10) % 10. |
+| ![Ambient-light value](/images/tutorials/Cam/spike-block/ambient.png) | Object 1 code and Object count | `0 ~ 89.9`<br>• Object 1 code range: `0, 10 ~ 89`{.code-green}.<br>• Object 1 color ID = (floor(reading)) ÷ 10.<br>• Object 1 shape code = (floor(reading)) % 10.<br>• Object count range: `0 ~ 9`{.code-green}.<br>• Object count = round(reading × 10) % 10. |
 
 </CamModeSection>
 
@@ -272,7 +272,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
 | ![Reflected-light value](/images/tutorials/Cam/spike-block/reflected.png) | Object 1 X and Object 1 Y | `-3199 ~ 3199`<br>• Object 1 X range: `0, 1 ~ 40`{.code-green}.<br>• Object 1 X = reading ÷ 100.<br>• Object 1 Y range: `0, 1 ~ 30`{.code-green}.<br>• Object 1 Y = reading mod 100. |
-| ![Ambient-light value](/images/tutorials/Cam/spike-block/ambient.png) | Object 1 code and Object 1 area (tens precision) | `0 ~ 89.9`<br>• Object 1 code range: `0, 10 ~ 89`{.code-green}.<br>• Object 1 color ID = (floor(reading)) // 10.<br>• Object 1 shape code = (floor(reading)) % 10.<br>• Object 1 area (tens precision) range: `0 ~ 90`{.code-green}.<br>• Object 1 area = (round(reading × 10) % 10) × 10. |
+| ![Ambient-light value](/images/tutorials/Cam/spike-block/ambient.png) | Object 1 code and Object 1 area (tens precision) | `0 ~ 89.9`<br>• Object 1 code range: `0, 10 ~ 89`{.code-green}.<br>• Object 1 color ID = (floor(reading)) ÷ 10.<br>• Object 1 shape code = (floor(reading)) % 10.<br>• Object 1 area (tens precision) range: `0 ~ 90`{.code-green}.<br>• Object 1 area = (round(reading × 10) % 10) × 10. |
 
 </CamModeSection>
 
@@ -303,23 +303,50 @@ For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junc
 
 ## 03 / Advanced control - Preparation and functions
 
-### ✔ Preparation
+<DownloadButton href="/programs/Cam/spike-pybricks/MBC_UniCam.py" download="MBC_UniCam.py" label="v4.1 Library" />
 
-<DownloadButton href="/programs/Cam/spike-pybricks/MBC_UniCam.py" download="MBC_UniCam.py" label="MBC_UniCam.py" />
+### ✔ Function Setup
 
-<DownloadButton href="/programs/Cam/spike-pybricks/Cam_Blocks.py" download="Cam_Blocks.py" label="Cam_Blocks.py" />
+1. Click the <code class="code-blue"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: inline-block; vertical-align: -0.125em; margin-right: 4px;"><path d="M12 3v12m-5-5 5 5 5-5"></path><path d="M5 16v5h14v-5"></path></svg>v4.1 Library</code> button above to download the `MBC UniCam Vision Camera Sensor Pybricks - SPIKE Library`{.code-blue}.
+2. Confirm that the library filename is `MBC_UniCam.py`{.code-blue}.
+3. Return to Pybricks and click the `import a file`{.code-blue} button ![Import](/images/tutorials/S8/spike-block/pybricks-import.svg){style = "width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; margin: 0 4px;"} in the `file explorer`{.code-blue} workspace.
+4. Select and import the `MBC_UniCam.py`{.code-blue} library.
+5. Confirm that `MBC_UniCam.py`{.code-blue} appears in the `file explorer`{.code-blue} workspace. The library and your main program must be in the same project.
+6. Open your Pybricks program and place the library import and configuration blocks under the `set up`{.code-blue} block, as shown below. Place the remaining drivetrain, motor, and sensor initialization blocks after them under the `set up`{.code-blue} block.
 
-1. Download `MBC_UniCam.py`, import it into Pybricks without renaming it, and keep it next to the main program.
-2. Also download and import `Cam_Blocks.py`. It exposes scalar external tasks backed by the library. Connect the camera to Port C; change `Port.C` in this file for another port.
-3. Import `camera_mode` and `camera_read` from `Cam_Blocks`. Call `camera_mode(13)` once and check for result 0 before entering the reading loop. Do not also initialize the basic Color Sensor blocks.
+![Mode ID setup 11](/images/tutorials/Cam/spike-block/advanced/setup/1/setup_11.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
 
-::: info ℹ️ Reading notes
-- Main data uses sensor mode 9. Counts in camera modes 11 and 12 use sensor mode 6; switching read modes adds delay, so request counts only when needed.
-- Use one camera submode at a time. The program Mode ID must match the camera. The library handles packing, coordinates and signed line values; no extra 65536 adjustment is needed.
-- Positions are pixels, with X increasing rightward and Y downward. Mode 11 also provides 16 × 12 grid cells; its pixel coordinates are cell centers rather than per-pixel measurements.
-- A call can return `None` before the first successful read. Disconnection can retain an older reading. Check connection status before using results.
-- In `camera_read("field", index)`, index selects the color, point or object starting at 1. Pass 1 for fields without an index. Store each result in a variable. `camera_read("sensor_ok", 1)` reports connection status.
+### ✔ Function Reference
+
+#### set up
+
+| Programming Block | Function | Description |
+| --- | --- | --- |
+| ![Import the UniCam class](/images/tutorials/Cam/spike-block/advanced/setup/import.png) | Import Library | • Import the `UniCam`{.code-green} class from the `MBC_UniCam`{.code-green} module.<br>• Enter `MBC_UniCam`{.code-green} in the `from` field without the `.py` extension, and `UniCam`{.code-green} in the `import` field.<br>• Keep `MBC_UniCam.py`{.code-green} and the main program in the same project; spelling and capitalization must match. |
+| ![Configure the Cam object](/images/tutorials/Cam/spike-block/advanced/setup/init_true.png) | Library Configuration | • `Cam`{.code-green} is the object name selected by subsequent reading blocks.<br>• `UniCam`{.code-green} is the class imported from `MBC_UniCam`{.code-green}.<br>• First number: `1`{.code-green} is Port A. `1 ~ 6`{.code-green} correspond to `A ~ F`{.code-green}; match the wiring.<br>• Second number: `11`{.code-green} is the camera Mode ID. Change it for the chosen submode and select the same mode on the camera.<br>• Boolean: `true`{.code-green} enables asynchronous mode with `await`{.code-green}; `false`{.code-green} uses synchronous mode with `call`{.code-green}. |
+
+
+::: info ℹ️ Additional Information
+- Synchronization settings:
+
+| Programming Block | Mode | Description |
+| --- | --- | --- |
+| ![Asynchronous setup: true](/images/tutorials/Cam/spike-block/advanced/setup/init_true.png) | Asynchronous mode: set to `true`{.code-green} | • Use `await`{.code-green} when reading values.![await](/images/tutorials/Cam/spike-block/advanced/main1/xy.png){style = "display: block; width: 300px; max-width: 100%; height: auto; margin: 10px;"}• Can be used with the `multitask`{.code-green} block.![multitask](/images/tutorials/S8/spike-block/multitask.png){style = "display: block; width: 250px; max-width: 100%; height: auto; margin: 10px;"} |
+| ![Synchronous setup: false](/images/tutorials/Cam/spike-block/advanced/setup/init_false.png) | Synchronous mode: set to `false`{.code-green} | • Use `call`{.code-green} when reading values.![call](/images/tutorials/Cam/spike-block/advanced/main1/xy_call.png){style = "display: block; width: 300px; max-width: 100%; height: auto; margin: 10px;"}• Cannot be used with the `multitask`{.code-green} block. |
+
 :::
+
+
+
+#### Sensor status and device information
+
+| Programming Block | Function | Description |
+| --- | --- | --- |
+| ![Sensor read status](/images/tutorials/Cam/spike-block/advanced/sensor/sensor_ok.png) | Sensor read status | `true / false`<br>• Reports whether the most recent read succeeded. true = success; false = no successful read. |
+| ![Configured Mode ID](/images/tutorials/Cam/spike-block/advanced/sensor/mode_number.png) | Configured Mode ID | `11 ~ 52`<br>• Returns the configured Mode ID. Valid IDs are 11, 12, 13, 14, 21, 22, 23, 30, 41, 42, 43, 51 and 52. |
+| ![Device identification](/images/tutorials/Cam/spike-block/advanced/sensor/device_id.png) | Device identification | `tuple[3]`<br>• Returns (device address, hardware code, firmware word). For example (76, 3, 100), where 76 = 0x4C.<br>• Device information uses sensor communication mode `8`. |
+| ![Whether the device is UniCam](/images/tutorials/Cam/spike-block/advanced/sensor/is_unicam.png) | Whether the device is UniCam | `true / false`<br>• Checks the device identification for UniCam. |
+| ![Firmware version](/images/tutorials/Cam/spike-block/advanced/sensor/firmware_version.png) | Firmware version | `tuple[2]`<br>• Returns (major, minor), for example (1, 0). |
 
 <CamModeAccordion namespace="advanced">
 
@@ -336,83 +363,31 @@ For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junc
 `Library provides: 14 color positions and counts`
 
 ::: info ℹ️ Reading notes
-- Position (0, 0) means no target. Check for a target before using coordinates.
+- Positions are in pixels. X increases rightward and Y downward; `(0, 0)` means no target.
+- `cell()` uses a `16 × 12` grid. Pixel coordinates represent cell centers.
+- Main data uses sensor communication mode `9`.
+- Counts use sensor communication mode `6`. Request them only when needed because switching read modes adds a delay.
 - Pixel coordinates are cell centers: X = (cell X - 1) × 10 + 5 and Y = (cell Y - 1) × 10 + 5. Count 7 means 7 or more blobs.
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+**Mode ID setup**
+
+Set the `set up` Mode ID to `11`{.code-green} and select the same Mode ID `11`{.code-green} on the camera. Match the port to the wiring and the object name to subsequent blocks.
+
+![Mode ID setup 11](/images/tutorials/Cam/spike-block/advanced/setup/1/setup_11.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+
+**Submode function reference**
+
+| Programming Block | Function | Description |
 | --- | --- | --- |
-| `camera_read("x", 1)` | Color 1 X | `0, 5 ~ 155`<br>• Color 1 X = reading. |
-| `camera_read("y", 1)` | Color 1 Y | `0, 5 ~ 115`<br>• Color 1 Y = reading. |
-| `camera_read("cell_x", 1)` | Color 1 cell X | `0, 1 ~ 16`<br>• Color 1 cell X = reading. |
-| `camera_read("cell_y", 1)` | Color 1 cell Y | `0, 1 ~ 12`<br>• Color 1 cell Y = reading. |
-| `camera_read("count", 1)` | Color 1 count | `0 ~ 7`<br>• Color 1 count = reading. |
-| `camera_read("x", 2)` | Color 2 X | `0, 5 ~ 155`<br>• Color 2 X = reading. |
-| `camera_read("y", 2)` | Color 2 Y | `0, 5 ~ 115`<br>• Color 2 Y = reading. |
-| `camera_read("cell_x", 2)` | Color 2 cell X | `0, 1 ~ 16`<br>• Color 2 cell X = reading. |
-| `camera_read("cell_y", 2)` | Color 2 cell Y | `0, 1 ~ 12`<br>• Color 2 cell Y = reading. |
-| `camera_read("count", 2)` | Color 2 count | `0 ~ 7`<br>• Color 2 count = reading. |
-| `camera_read("x", 3)` | Color 3 X | `0, 5 ~ 155`<br>• Color 3 X = reading. |
-| `camera_read("y", 3)` | Color 3 Y | `0, 5 ~ 115`<br>• Color 3 Y = reading. |
-| `camera_read("cell_x", 3)` | Color 3 cell X | `0, 1 ~ 16`<br>• Color 3 cell X = reading. |
-| `camera_read("cell_y", 3)` | Color 3 cell Y | `0, 1 ~ 12`<br>• Color 3 cell Y = reading. |
-| `camera_read("count", 3)` | Color 3 count | `0 ~ 7`<br>• Color 3 count = reading. |
-| `camera_read("x", 4)` | Color 4 X | `0, 5 ~ 155`<br>• Color 4 X = reading. |
-| `camera_read("y", 4)` | Color 4 Y | `0, 5 ~ 115`<br>• Color 4 Y = reading. |
-| `camera_read("cell_x", 4)` | Color 4 cell X | `0, 1 ~ 16`<br>• Color 4 cell X = reading. |
-| `camera_read("cell_y", 4)` | Color 4 cell Y | `0, 1 ~ 12`<br>• Color 4 cell Y = reading. |
-| `camera_read("count", 4)` | Color 4 count | `0 ~ 7`<br>• Color 4 count = reading. |
-| `camera_read("x", 5)` | Color 5 X | `0, 5 ~ 155`<br>• Color 5 X = reading. |
-| `camera_read("y", 5)` | Color 5 Y | `0, 5 ~ 115`<br>• Color 5 Y = reading. |
-| `camera_read("cell_x", 5)` | Color 5 cell X | `0, 1 ~ 16`<br>• Color 5 cell X = reading. |
-| `camera_read("cell_y", 5)` | Color 5 cell Y | `0, 1 ~ 12`<br>• Color 5 cell Y = reading. |
-| `camera_read("count", 5)` | Color 5 count | `0 ~ 7`<br>• Color 5 count = reading. |
-| `camera_read("x", 6)` | Color 6 X | `0, 5 ~ 155`<br>• Color 6 X = reading. |
-| `camera_read("y", 6)` | Color 6 Y | `0, 5 ~ 115`<br>• Color 6 Y = reading. |
-| `camera_read("cell_x", 6)` | Color 6 cell X | `0, 1 ~ 16`<br>• Color 6 cell X = reading. |
-| `camera_read("cell_y", 6)` | Color 6 cell Y | `0, 1 ~ 12`<br>• Color 6 cell Y = reading. |
-| `camera_read("count", 6)` | Color 6 count | `0 ~ 7`<br>• Color 6 count = reading. |
-| `camera_read("x", 7)` | Color 7 X | `0, 5 ~ 155`<br>• Color 7 X = reading. |
-| `camera_read("y", 7)` | Color 7 Y | `0, 5 ~ 115`<br>• Color 7 Y = reading. |
-| `camera_read("cell_x", 7)` | Color 7 cell X | `0, 1 ~ 16`<br>• Color 7 cell X = reading. |
-| `camera_read("cell_y", 7)` | Color 7 cell Y | `0, 1 ~ 12`<br>• Color 7 cell Y = reading. |
-| `camera_read("count", 7)` | Color 7 count | `0 ~ 7`<br>• Color 7 count = reading. |
-| `camera_read("x", 8)` | Color 8 X | `0, 5 ~ 155`<br>• Color 8 X = reading. |
-| `camera_read("y", 8)` | Color 8 Y | `0, 5 ~ 115`<br>• Color 8 Y = reading. |
-| `camera_read("cell_x", 8)` | Color 8 cell X | `0, 1 ~ 16`<br>• Color 8 cell X = reading. |
-| `camera_read("cell_y", 8)` | Color 8 cell Y | `0, 1 ~ 12`<br>• Color 8 cell Y = reading. |
-| `camera_read("count", 8)` | Color 8 count | `0 ~ 7`<br>• Color 8 count = reading. |
-| `camera_read("x", 9)` | Color 9 X | `0, 5 ~ 155`<br>• Color 9 X = reading. |
-| `camera_read("y", 9)` | Color 9 Y | `0, 5 ~ 115`<br>• Color 9 Y = reading. |
-| `camera_read("cell_x", 9)` | Color 9 cell X | `0, 1 ~ 16`<br>• Color 9 cell X = reading. |
-| `camera_read("cell_y", 9)` | Color 9 cell Y | `0, 1 ~ 12`<br>• Color 9 cell Y = reading. |
-| `camera_read("count", 9)` | Color 9 count | `0 ~ 7`<br>• Color 9 count = reading. |
-| `camera_read("x", 10)` | Color 10 X | `0, 5 ~ 155`<br>• Color 10 X = reading. |
-| `camera_read("y", 10)` | Color 10 Y | `0, 5 ~ 115`<br>• Color 10 Y = reading. |
-| `camera_read("cell_x", 10)` | Color 10 cell X | `0, 1 ~ 16`<br>• Color 10 cell X = reading. |
-| `camera_read("cell_y", 10)` | Color 10 cell Y | `0, 1 ~ 12`<br>• Color 10 cell Y = reading. |
-| `camera_read("count", 10)` | Color 10 count | `0 ~ 7`<br>• Color 10 count = reading. |
-| `camera_read("x", 11)` | Color 11 X | `0, 5 ~ 155`<br>• Color 11 X = reading. |
-| `camera_read("y", 11)` | Color 11 Y | `0, 5 ~ 115`<br>• Color 11 Y = reading. |
-| `camera_read("cell_x", 11)` | Color 11 cell X | `0, 1 ~ 16`<br>• Color 11 cell X = reading. |
-| `camera_read("cell_y", 11)` | Color 11 cell Y | `0, 1 ~ 12`<br>• Color 11 cell Y = reading. |
-| `camera_read("count", 11)` | Color 11 count | `0 ~ 7`<br>• Color 11 count = reading. |
-| `camera_read("x", 12)` | Color 12 X | `0, 5 ~ 155`<br>• Color 12 X = reading. |
-| `camera_read("y", 12)` | Color 12 Y | `0, 5 ~ 115`<br>• Color 12 Y = reading. |
-| `camera_read("cell_x", 12)` | Color 12 cell X | `0, 1 ~ 16`<br>• Color 12 cell X = reading. |
-| `camera_read("cell_y", 12)` | Color 12 cell Y | `0, 1 ~ 12`<br>• Color 12 cell Y = reading. |
-| `camera_read("count", 12)` | Color 12 count | `0 ~ 7`<br>• Color 12 count = reading. |
-| `camera_read("x", 13)` | Color 13 X | `0, 5 ~ 155`<br>• Color 13 X = reading. |
-| `camera_read("y", 13)` | Color 13 Y | `0, 5 ~ 115`<br>• Color 13 Y = reading. |
-| `camera_read("cell_x", 13)` | Color 13 cell X | `0, 1 ~ 16`<br>• Color 13 cell X = reading. |
-| `camera_read("cell_y", 13)` | Color 13 cell Y | `0, 1 ~ 12`<br>• Color 13 cell Y = reading. |
-| `camera_read("count", 13)` | Color 13 count | `0 ~ 7`<br>• Color 13 count = reading. |
-| `camera_read("x", 14)` | Color 14 X | `0, 5 ~ 155`<br>• Color 14 X = reading. |
-| `camera_read("y", 14)` | Color 14 Y | `0, 5 ~ 115`<br>• Color 14 Y = reading. |
-| `camera_read("cell_x", 14)` | Color 14 cell X | `0, 1 ~ 16`<br>• Color 14 cell X = reading. |
-| `camera_read("cell_y", 14)` | Color 14 cell Y | `0, 1 ~ 12`<br>• Color 14 cell Y = reading. |
-| `camera_read("count", 14)` | Color 14 count | `0 ~ 7`<br>• Color 14 count = reading. |
-| `camera_read("colors_found", 1)` | Colors found | `0 ~ 15`<br>• Colors found = reading. |
+| ![Position X/Y of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/xy.png) | Position X/Y of a selected color | `X: 0, 5 ~ 155 / Y: 0, 5 ~ 115`<br>• Returns `(X, Y)`{.code-green} in pixels.<br>• Input range: `1 ~ 14`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![X of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/x.png) | X of a selected color | `0, 5 ~ 155`<br>• Returns X, increasing rightward.<br>• Input range: `1 ~ 14`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Y of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/y.png) | Y of a selected color | `0, 5 ~ 115`<br>• Returns Y, increasing downward.<br>• Input range: `1 ~ 14`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Whether a selected color was found](/images/tutorials/Cam/spike-block/advanced/main1/found.png) | Whether a selected color was found | `true / false`<br>• `true`{.code-green} means found; `false`{.code-green} means not found.<br>• Input range: `1 ~ 14`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Grid position of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/cell.png) | Grid position of a selected color | `X: 0 ~ 16 / Y: 0 ~ 12`<br>• Returns `(X, Y)`{.code-green} on a `16 × 12`{.code-green} grid rather than pixels; `(0, 0)`{.code-green} means not found.<br>• Input range: `1 ~ 14`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Blob count of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/count.png) | Blob count of a selected color | `0 ~ 7`<br>• Returns the blob count for that target color, not the total number of colors found.<br>• Input range: `1 ~ 14`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Colors found](/images/tutorials/Cam/spike-block/advanced/main1/colors_found.png) | Colors found | `0 ~ 15`<br>• Returns the reported total colors found, distinct from this mode’s position capacity. |
+| ![Maximum readable colors](/images/tutorials/Cam/spike-block/advanced/main1/max_color.png) | Maximum readable colors | `14`<br>• This mode provides data for up to `14`{.code-green} colors; use it as the read-loop limit. |
 
 </CamModeSection>
 
@@ -421,33 +396,28 @@ For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junc
 `Library provides: 7 color positions and counts`
 
 ::: info ℹ️ Reading notes
-- Position (0, 0) means no target. Check for a target before using coordinates.
+- Positions are in pixels. X increases rightward and Y downward; `(0, 0)` means no target.
+- Main data uses sensor communication mode `9`.
+- Counts use sensor communication mode `6`. Request them only when needed because switching read modes adds a delay.
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+**Mode ID setup**
+
+Set the `set up` Mode ID to `12`{.code-green} and select the same Mode ID `12`{.code-green} on the camera. Match the port to the wiring and the object name to subsequent blocks.
+
+![Mode ID setup 12](/images/tutorials/Cam/spike-block/advanced/setup/1/setup_12.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+
+**Submode function reference**
+
+| Programming Block | Function | Description |
 | --- | --- | --- |
-| `camera_read("x", 1)` | Color 1 X | `0 ~ 159`<br>• Color 1 X = reading. |
-| `camera_read("y", 1)` | Color 1 Y | `0 ~ 119`<br>• Color 1 Y = reading. |
-| `camera_read("count", 1)` | Color 1 count | `0 ~ 15`<br>• Color 1 count = reading. |
-| `camera_read("x", 2)` | Color 2 X | `0 ~ 159`<br>• Color 2 X = reading. |
-| `camera_read("y", 2)` | Color 2 Y | `0 ~ 119`<br>• Color 2 Y = reading. |
-| `camera_read("count", 2)` | Color 2 count | `0 ~ 15`<br>• Color 2 count = reading. |
-| `camera_read("x", 3)` | Color 3 X | `0 ~ 159`<br>• Color 3 X = reading. |
-| `camera_read("y", 3)` | Color 3 Y | `0 ~ 119`<br>• Color 3 Y = reading. |
-| `camera_read("count", 3)` | Color 3 count | `0 ~ 15`<br>• Color 3 count = reading. |
-| `camera_read("x", 4)` | Color 4 X | `0 ~ 159`<br>• Color 4 X = reading. |
-| `camera_read("y", 4)` | Color 4 Y | `0 ~ 119`<br>• Color 4 Y = reading. |
-| `camera_read("count", 4)` | Color 4 count | `0 ~ 15`<br>• Color 4 count = reading. |
-| `camera_read("x", 5)` | Color 5 X | `0 ~ 159`<br>• Color 5 X = reading. |
-| `camera_read("y", 5)` | Color 5 Y | `0 ~ 119`<br>• Color 5 Y = reading. |
-| `camera_read("count", 5)` | Color 5 count | `0 ~ 15`<br>• Color 5 count = reading. |
-| `camera_read("x", 6)` | Color 6 X | `0 ~ 159`<br>• Color 6 X = reading. |
-| `camera_read("y", 6)` | Color 6 Y | `0 ~ 119`<br>• Color 6 Y = reading. |
-| `camera_read("count", 6)` | Color 6 count | `0 ~ 15`<br>• Color 6 count = reading. |
-| `camera_read("x", 7)` | Color 7 X | `0 ~ 159`<br>• Color 7 X = reading. |
-| `camera_read("y", 7)` | Color 7 Y | `0 ~ 119`<br>• Color 7 Y = reading. |
-| `camera_read("count", 7)` | Color 7 count | `0 ~ 15`<br>• Color 7 count = reading. |
-| `camera_read("colors_found", 1)` | Colors found | `0 ~ 15`<br>• Colors found = reading. |
+| ![Position X/Y of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/xy.png) | Position X/Y of a selected color | `X: 0 ~ 159 / Y: 0 ~ 119`<br>• Returns `(X, Y)`{.code-green} in pixels.<br>• Input range: `1 ~ 7`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![X of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/x.png) | X of a selected color | `0 ~ 159`<br>• Returns X, increasing rightward.<br>• Input range: `1 ~ 7`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Y of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/y.png) | Y of a selected color | `0 ~ 119`<br>• Returns Y, increasing downward.<br>• Input range: `1 ~ 7`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Whether a selected color was found](/images/tutorials/Cam/spike-block/advanced/main1/found.png) | Whether a selected color was found | `true / false`<br>• `true`{.code-green} means found; `false`{.code-green} means not found.<br>• Input range: `1 ~ 7`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Blob count of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/count.png) | Blob count of a selected color | `0 ~ 15`<br>• Returns the blob count for that target color, not the total number of colors found.<br>• Input range: `1 ~ 7`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Colors found](/images/tutorials/Cam/spike-block/advanced/main1/colors_found.png) | Colors found | `0 ~ 15`<br>• Returns the reported total colors found, distinct from this mode’s position capacity. |
+| ![Maximum readable colors](/images/tutorials/Cam/spike-block/advanced/main1/max_color.png) | Maximum readable colors | `7`<br>• This mode provides data for up to `7`{.code-green} colors; use it as the read-loop limit. |
 
 </CamModeSection>
 
@@ -456,27 +426,27 @@ For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junc
 `Library provides: 4 color positions and counts, area`
 
 ::: info ℹ️ Reading notes
-- Position (0, 0) means no target. Check for a target before using coordinates.
+- Positions are in pixels. X increases rightward and Y downward; `(0, 0)` means no target.
+- Main data uses sensor communication mode `9`.
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+**Mode ID setup**
+
+Set the `set up` Mode ID to `13`{.code-green} and select the same Mode ID `13`{.code-green} on the camera. Match the port to the wiring and the object name to subsequent blocks.
+
+![Mode ID setup 13](/images/tutorials/Cam/spike-block/advanced/setup/1/setup_13.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+
+**Submode function reference**
+
+| Programming Block | Function | Description |
 | --- | --- | --- |
-| `camera_read("x", 1)` | Color 1 X | `0 ~ 159`<br>• Color 1 X = reading. |
-| `camera_read("y", 1)` | Color 1 Y | `0 ~ 119`<br>• Color 1 Y = reading. |
-| `camera_read("count", 1)` | Color 1 count | `0 ~ 15`<br>• Color 1 count = reading. |
-| `camera_read("area", 1)` | Color 1 area | `0 ~ 100`<br>• Color 1 area = reading. |
-| `camera_read("x", 2)` | Color 2 X | `0 ~ 159`<br>• Color 2 X = reading. |
-| `camera_read("y", 2)` | Color 2 Y | `0 ~ 119`<br>• Color 2 Y = reading. |
-| `camera_read("count", 2)` | Color 2 count | `0 ~ 15`<br>• Color 2 count = reading. |
-| `camera_read("area", 2)` | Color 2 area | `0 ~ 100`<br>• Color 2 area = reading. |
-| `camera_read("x", 3)` | Color 3 X | `0 ~ 159`<br>• Color 3 X = reading. |
-| `camera_read("y", 3)` | Color 3 Y | `0 ~ 119`<br>• Color 3 Y = reading. |
-| `camera_read("count", 3)` | Color 3 count | `0 ~ 15`<br>• Color 3 count = reading. |
-| `camera_read("area", 3)` | Color 3 area | `0 ~ 100`<br>• Color 3 area = reading. |
-| `camera_read("x", 4)` | Color 4 X | `0 ~ 159`<br>• Color 4 X = reading. |
-| `camera_read("y", 4)` | Color 4 Y | `0 ~ 119`<br>• Color 4 Y = reading. |
-| `camera_read("count", 4)` | Color 4 count | `0 ~ 15`<br>• Color 4 count = reading. |
-| `camera_read("area", 4)` | Color 4 area | `0 ~ 100`<br>• Color 4 area = reading. |
+| ![Position X/Y of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/xy.png) | Position X/Y of a selected color | `X: 0 ~ 159 / Y: 0 ~ 119`<br>• Returns `(X, Y)`{.code-green} in pixels.<br>• Input range: `1 ~ 4`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![X of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/x.png) | X of a selected color | `0 ~ 159`<br>• Returns X, increasing rightward.<br>• Input range: `1 ~ 4`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Y of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/y.png) | Y of a selected color | `0 ~ 119`<br>• Returns Y, increasing downward.<br>• Input range: `1 ~ 4`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Whether a selected color was found](/images/tutorials/Cam/spike-block/advanced/main1/found.png) | Whether a selected color was found | `true / false`<br>• `true`{.code-green} means found; `false`{.code-green} means not found.<br>• Input range: `1 ~ 4`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Blob count of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/count.png) | Blob count of a selected color | `0 ~ 15`<br>• Returns the blob count for that target color, not the total number of colors found.<br>• Input range: `1 ~ 4`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Area of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/area.png) | Area of a selected color | `0 ~ 100`<br>• Returns blob area as a percentage of the image; `0`{.code-green} means not found.<br>• Input range: `1 ~ 4`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Maximum readable colors](/images/tutorials/Cam/spike-block/advanced/main1/max_color.png) | Maximum readable colors | `4`<br>• This mode provides data for up to `4`{.code-green} colors; use it as the read-loop limit. |
 
 </CamModeSection>
 
@@ -485,24 +455,29 @@ For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junc
 `Library provides: 2 color positions and counts, area and size`
 
 ::: info ℹ️ Reading notes
-- Position (0, 0) means no target. Check for a target before using coordinates.
+- Positions are in pixels. X increases rightward and Y downward; `(0, 0)` means no target.
+- Main data uses sensor communication mode `9`.
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+**Mode ID setup**
+
+Set the `set up` Mode ID to `14`{.code-green} and select the same Mode ID `14`{.code-green} on the camera. Match the port to the wiring and the object name to subsequent blocks.
+
+![Mode ID setup 14](/images/tutorials/Cam/spike-block/advanced/setup/1/setup_14.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+
+**Submode function reference**
+
+| Programming Block | Function | Description |
 | --- | --- | --- |
-| `camera_read("x", 1)` | Color 1 X | `0 ~ 159`<br>• Color 1 X = reading. |
-| `camera_read("y", 1)` | Color 1 Y | `0 ~ 119`<br>• Color 1 Y = reading. |
-| `camera_read("w", 1)` | Color 1 W | `0 ~ 160`<br>• Color 1 W = reading. |
-| `camera_read("h", 1)` | Color 1 H | `0 ~ 120`<br>• Color 1 H = reading. |
-| `camera_read("count", 1)` | Color 1 count | `0 ~ 15`<br>• Color 1 count = reading. |
-| `camera_read("area", 1)` | Color 1 area | `0 ~ 100`<br>• Color 1 area = reading. |
-| `camera_read("x", 2)` | Color 2 X | `0 ~ 159`<br>• Color 2 X = reading. |
-| `camera_read("y", 2)` | Color 2 Y | `0 ~ 119`<br>• Color 2 Y = reading. |
-| `camera_read("w", 2)` | Color 2 W | `0 ~ 160`<br>• Color 2 W = reading. |
-| `camera_read("h", 2)` | Color 2 H | `0 ~ 120`<br>• Color 2 H = reading. |
-| `camera_read("count", 2)` | Color 2 count | `0 ~ 15`<br>• Color 2 count = reading. |
-| `camera_read("area", 2)` | Color 2 area | `0 ~ 100`<br>• Color 2 area = reading. |
-| `camera_read("colors_found", 1)` | Colors found | `0 ~ 16`<br>• Colors found = reading. |
+| ![Position X/Y of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/xy.png) | Position X/Y of a selected color | `X: 0 ~ 159 / Y: 0 ~ 119`<br>• Returns `(X, Y)`{.code-green} in pixels.<br>• Input range: `1 ~ 2`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![X of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/x.png) | X of a selected color | `0 ~ 159`<br>• Returns X, increasing rightward.<br>• Input range: `1 ~ 2`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Y of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/y.png) | Y of a selected color | `0 ~ 119`<br>• Returns Y, increasing downward.<br>• Input range: `1 ~ 2`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Whether a selected color was found](/images/tutorials/Cam/spike-block/advanced/main1/found.png) | Whether a selected color was found | `true / false`<br>• `true`{.code-green} means found; `false`{.code-green} means not found.<br>• Input range: `1 ~ 2`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Width/height of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/size.png) | Width/height of a selected color | `W: 0 ~ 160 / H: 0 ~ 120`<br>• Returns `(W, H)`{.code-green} in pixels.<br>• Input range: `1 ~ 2`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Blob count of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/count.png) | Blob count of a selected color | `0 ~ 15`<br>• Returns the blob count for that target color, not the total number of colors found.<br>• Input range: `1 ~ 2`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Area of a selected color](/images/tutorials/Cam/spike-block/advanced/main1/area.png) | Area of a selected color | `0 ~ 100`<br>• Returns blob area as a percentage of the image; `0`{.code-green} means not found.<br>• Input range: `1 ~ 2`{.code-green}, selecting the color index. The pictured `1`{.code-green} selects color 1. |
+| ![Colors found](/images/tutorials/Cam/spike-block/advanced/main1/colors_found.png) | Colors found | `0 ~ 16`<br>• Returns the reported total colors found, distinct from this mode’s position capacity. |
+| ![Maximum readable colors](/images/tutorials/Cam/spike-block/advanced/main1/max_color.png) | Maximum readable colors | `2`<br>• This mode provides data for up to `2`{.code-green} colors; use it as the read-loop limit. |
 
 </CamModeSection>
 
@@ -513,25 +488,24 @@ For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junc
 `Library provides: 14 points: hue`
 
 ::: info ℹ️ Reading notes
+- Main data uses sensor communication mode `9`.
 - Configure sampling points on the camera first. Unset points return 0; hue 0 can also mean red, so it does not identify an unset point by itself.
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+**Mode ID setup**
+
+Set the `set up` Mode ID to `21`{.code-green} and select the same Mode ID `21`{.code-green} on the camera. Match the port to the wiring and the object name to subsequent blocks.
+
+![Mode ID setup 21](/images/tutorials/Cam/spike-block/advanced/setup/2/setup_21.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+
+**Submode function reference**
+
+| Programming Block | Function | Description |
 | --- | --- | --- |
-| `camera_read("hue", 1)` | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
-| `camera_read("hue", 2)` | S2 hue | `0 ~ 255`<br>• S2 hue = reading. |
-| `camera_read("hue", 3)` | S3 hue | `0 ~ 255`<br>• S3 hue = reading. |
-| `camera_read("hue", 4)` | S4 hue | `0 ~ 255`<br>• S4 hue = reading. |
-| `camera_read("hue", 5)` | S5 hue | `0 ~ 255`<br>• S5 hue = reading. |
-| `camera_read("hue", 6)` | S6 hue | `0 ~ 255`<br>• S6 hue = reading. |
-| `camera_read("hue", 7)` | S7 hue | `0 ~ 255`<br>• S7 hue = reading. |
-| `camera_read("hue", 8)` | S8 hue | `0 ~ 255`<br>• S8 hue = reading. |
-| `camera_read("hue", 9)` | S9 hue | `0 ~ 255`<br>• S9 hue = reading. |
-| `camera_read("hue", 10)` | S10 hue | `0 ~ 255`<br>• S10 hue = reading. |
-| `camera_read("hue", 11)` | S11 hue | `0 ~ 255`<br>• S11 hue = reading. |
-| `camera_read("hue", 12)` | S12 hue | `0 ~ 255`<br>• S12 hue = reading. |
-| `camera_read("hue", 13)` | S13 hue | `0 ~ 255`<br>• S13 hue = reading. |
-| `camera_read("hue", 14)` | S14 hue | `0 ~ 255`<br>• S14 hue = reading. |
+| ![Hue of a selected sampling point](/images/tutorials/Cam/spike-block/advanced/main2/hue.png) | Hue of a selected sampling point | `0 ~ 255`<br>• Returns the sampling point’s hue code; `0`{.code-green} can mean red.<br>• Input range: `1 ~ 14`{.code-green}, selecting the sampling-point index. The pictured `1`{.code-green} selects sampling point S1. |
+| ![HSV of a selected sampling point](/images/tutorials/Cam/spike-block/advanced/main2/hsv.png) | HSV of a selected sampling point | `H: 0 ~ 255 / S: None / V: None`<br>• Returns `(H, S, V)`{.code-green}: hue, saturation and value. Components unavailable in this mode are `None`{.code-green}.<br>• Input range: `1 ~ 14`{.code-green}, selecting the sampling-point index. The pictured `1`{.code-green} selects sampling point S1. |
+| ![Color name at a selected sampling point](/images/tutorials/Cam/spike-block/advanced/main2/color.png) | Color name at a selected sampling point | `str`<br>• Converts hue to one of: `red`, `orange`, `yellow`, `green`, `cyan`, `blue`, `purple`, `white`, `black`.<br>• Input range: `1 ~ 14`{.code-green}, selecting the sampling-point index. The pictured `1`{.code-green} selects sampling point S1. |
+| ![Maximum readable sampling points](/images/tutorials/Cam/spike-block/advanced/main2/max_point.png) | Maximum readable sampling points | `14`<br>• This mode provides up to `14`{.code-green} sampling points. |
 
 </CamModeSection>
 
@@ -540,25 +514,25 @@ For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junc
 `Library provides: 7 points: hue, saturation`
 
 ::: info ℹ️ Reading notes
+- Main data uses sensor communication mode `9`.
 - Configure sampling points on the camera first. Unset points return 0; hue 0 can also mean red, so it does not identify an unset point by itself.
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+**Mode ID setup**
+
+Set the `set up` Mode ID to `22`{.code-green} and select the same Mode ID `22`{.code-green} on the camera. Match the port to the wiring and the object name to subsequent blocks.
+
+![Mode ID setup 22](/images/tutorials/Cam/spike-block/advanced/setup/2/setup_22.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+
+**Submode function reference**
+
+| Programming Block | Function | Description |
 | --- | --- | --- |
-| `camera_read("hue", 1)` | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
-| `camera_read("sat", 1)` | S1 saturation | `0 ~ 100`<br>• S1 saturation = reading. |
-| `camera_read("hue", 2)` | S2 hue | `0 ~ 255`<br>• S2 hue = reading. |
-| `camera_read("sat", 2)` | S2 saturation | `0 ~ 100`<br>• S2 saturation = reading. |
-| `camera_read("hue", 3)` | S3 hue | `0 ~ 255`<br>• S3 hue = reading. |
-| `camera_read("sat", 3)` | S3 saturation | `0 ~ 100`<br>• S3 saturation = reading. |
-| `camera_read("hue", 4)` | S4 hue | `0 ~ 255`<br>• S4 hue = reading. |
-| `camera_read("sat", 4)` | S4 saturation | `0 ~ 100`<br>• S4 saturation = reading. |
-| `camera_read("hue", 5)` | S5 hue | `0 ~ 255`<br>• S5 hue = reading. |
-| `camera_read("sat", 5)` | S5 saturation | `0 ~ 100`<br>• S5 saturation = reading. |
-| `camera_read("hue", 6)` | S6 hue | `0 ~ 255`<br>• S6 hue = reading. |
-| `camera_read("sat", 6)` | S6 saturation | `0 ~ 100`<br>• S6 saturation = reading. |
-| `camera_read("hue", 7)` | S7 hue | `0 ~ 255`<br>• S7 hue = reading. |
-| `camera_read("sat", 7)` | S7 saturation | `0 ~ 100`<br>• S7 saturation = reading. |
+| ![Hue of a selected sampling point](/images/tutorials/Cam/spike-block/advanced/main2/hue.png) | Hue of a selected sampling point | `0 ~ 255`<br>• Returns the sampling point’s hue code; `0`{.code-green} can mean red.<br>• Input range: `1 ~ 7`{.code-green}, selecting the sampling-point index. The pictured `1`{.code-green} selects sampling point S1. |
+| ![Saturation of a selected sampling point](/images/tutorials/Cam/spike-block/advanced/main2/sat.png) | Saturation of a selected sampling point | `0 ~ 100`<br>• Returns saturation at the selected sampling point.<br>• Input range: `1 ~ 7`{.code-green}, selecting the sampling-point index. The pictured `1`{.code-green} selects sampling point S1. |
+| ![HSV of a selected sampling point](/images/tutorials/Cam/spike-block/advanced/main2/hsv.png) | HSV of a selected sampling point | `H: 0 ~ 255 / S: 0 ~ 100 / V: None`<br>• Returns `(H, S, V)`{.code-green}: hue, saturation and value. Components unavailable in this mode are `None`{.code-green}.<br>• Input range: `1 ~ 7`{.code-green}, selecting the sampling-point index. The pictured `1`{.code-green} selects sampling point S1. |
+| ![Color name at a selected sampling point](/images/tutorials/Cam/spike-block/advanced/main2/color.png) | Color name at a selected sampling point | `str`<br>• Converts hue to one of: `red`, `orange`, `yellow`, `green`, `cyan`, `blue`, `purple`, `white`, `black`.<br>• Input range: `1 ~ 7`{.code-green}, selecting the sampling-point index. The pictured `1`{.code-green} selects sampling point S1. |
+| ![Maximum readable sampling points](/images/tutorials/Cam/spike-block/advanced/main2/max_point.png) | Maximum readable sampling points | `7`<br>• This mode provides up to `7`{.code-green} sampling points. |
 
 </CamModeSection>
 
@@ -567,23 +541,26 @@ For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junc
 `Library provides: 4 points: hue, saturation and value`
 
 ::: info ℹ️ Reading notes
+- Main data uses sensor communication mode `9`.
 - Configure sampling points on the camera first. Unset points return 0; hue 0 can also mean red, so it does not identify an unset point by itself.
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+**Mode ID setup**
+
+Set the `set up` Mode ID to `23`{.code-green} and select the same Mode ID `23`{.code-green} on the camera. Match the port to the wiring and the object name to subsequent blocks.
+
+![Mode ID setup 23](/images/tutorials/Cam/spike-block/advanced/setup/2/setup_23.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+
+**Submode function reference**
+
+| Programming Block | Function | Description |
 | --- | --- | --- |
-| `camera_read("hue", 1)` | S1 hue | `0 ~ 255`<br>• S1 hue = reading. |
-| `camera_read("sat", 1)` | S1 saturation | `0 ~ 100`<br>• S1 saturation = reading. |
-| `camera_read("val", 1)` | S1 value | `0 ~ 100`<br>• S1 value = reading. |
-| `camera_read("hue", 2)` | S2 hue | `0 ~ 255`<br>• S2 hue = reading. |
-| `camera_read("sat", 2)` | S2 saturation | `0 ~ 100`<br>• S2 saturation = reading. |
-| `camera_read("val", 2)` | S2 value | `0 ~ 100`<br>• S2 value = reading. |
-| `camera_read("hue", 3)` | S3 hue | `0 ~ 255`<br>• S3 hue = reading. |
-| `camera_read("sat", 3)` | S3 saturation | `0 ~ 100`<br>• S3 saturation = reading. |
-| `camera_read("val", 3)` | S3 value | `0 ~ 100`<br>• S3 value = reading. |
-| `camera_read("hue", 4)` | S4 hue | `0 ~ 255`<br>• S4 hue = reading. |
-| `camera_read("sat", 4)` | S4 saturation | `0 ~ 100`<br>• S4 saturation = reading. |
-| `camera_read("val", 4)` | S4 value | `0 ~ 100`<br>• S4 value = reading. |
+| ![Hue of a selected sampling point](/images/tutorials/Cam/spike-block/advanced/main2/hue.png) | Hue of a selected sampling point | `0 ~ 255`<br>• Returns the sampling point’s hue code; `0`{.code-green} can mean red.<br>• Input range: `1 ~ 4`{.code-green}, selecting the sampling-point index. The pictured `1`{.code-green} selects sampling point S1. |
+| ![Saturation of a selected sampling point](/images/tutorials/Cam/spike-block/advanced/main2/sat.png) | Saturation of a selected sampling point | `0 ~ 100`<br>• Returns saturation at the selected sampling point.<br>• Input range: `1 ~ 4`{.code-green}, selecting the sampling-point index. The pictured `1`{.code-green} selects sampling point S1. |
+| ![Value of a selected sampling point](/images/tutorials/Cam/spike-block/advanced/main2/val.png) | Value of a selected sampling point | `0 ~ 100`<br>• Returns value at the selected sampling point.<br>• Input range: `1 ~ 4`{.code-green}, selecting the sampling-point index. The pictured `1`{.code-green} selects sampling point S1. |
+| ![HSV of a selected sampling point](/images/tutorials/Cam/spike-block/advanced/main2/hsv.png) | HSV of a selected sampling point | `H: 0 ~ 255 / S: 0 ~ 100 / V: 0 ~ 100`<br>• Returns `(H, S, V)`{.code-green}: hue, saturation and value. Components unavailable in this mode are `None`{.code-green}.<br>• Input range: `1 ~ 4`{.code-green}, selecting the sampling-point index. The pictured `1`{.code-green} selects sampling point S1. |
+| ![Color name at a selected sampling point](/images/tutorials/Cam/spike-block/advanced/main2/color.png) | Color name at a selected sampling point | `str`<br>• Converts hue to one of: `red`, `orange`, `yellow`, `green`, `cyan`, `blue`, `purple`, `white`, `black`.<br>• Input range: `1 ~ 4`{.code-green}, selecting the sampling-point index. The pictured `1`{.code-green} selects sampling point S1. |
+| ![Maximum readable sampling points](/images/tutorials/Cam/spike-block/advanced/main2/max_point.png) | Maximum readable sampling points | `4`<br>• This mode provides up to `4`{.code-green} sampling points. |
 
 </CamModeSection>
 
@@ -594,25 +571,22 @@ For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junc
 `Library provides: the first 13 hues and total block count`
 
 ::: info ℹ️ Reading notes
+- Main data uses sensor communication mode `9`.
 - Blocks are ordered left to right. Total count can exceed 13, but the list contains at most 13 blocks. Check its length before indexing. Hue 0 can mean red.
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+**Mode ID setup**
+
+Set the `set up` Mode ID to `30`{.code-green} and select the same Mode ID `30`{.code-green} on the camera. Match the port to the wiring and the object name to subsequent blocks.
+
+![Mode ID setup 30](/images/tutorials/Cam/spike-block/advanced/setup/3/setup_30.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+
+**Submode function reference**
+
+| Programming Block | Function | Description |
 | --- | --- | --- |
-| `camera_read("order", 1)` | Block 1 hue from the left | `0 ~ 255`<br>• Block 1 hue from the left = reading. |
-| `camera_read("order", 2)` | Block 2 hue from the left | `0 ~ 255`<br>• Block 2 hue from the left = reading. |
-| `camera_read("order", 3)` | Block 3 hue from the left | `0 ~ 255`<br>• Block 3 hue from the left = reading. |
-| `camera_read("order", 4)` | Block 4 hue from the left | `0 ~ 255`<br>• Block 4 hue from the left = reading. |
-| `camera_read("order", 5)` | Block 5 hue from the left | `0 ~ 255`<br>• Block 5 hue from the left = reading. |
-| `camera_read("order", 6)` | Block 6 hue from the left | `0 ~ 255`<br>• Block 6 hue from the left = reading. |
-| `camera_read("order", 7)` | Block 7 hue from the left | `0 ~ 255`<br>• Block 7 hue from the left = reading. |
-| `camera_read("order", 8)` | Block 8 hue from the left | `0 ~ 255`<br>• Block 8 hue from the left = reading. |
-| `camera_read("order", 9)` | Block 9 hue from the left | `0 ~ 255`<br>• Block 9 hue from the left = reading. |
-| `camera_read("order", 10)` | Block 10 hue from the left | `0 ~ 255`<br>• Block 10 hue from the left = reading. |
-| `camera_read("order", 11)` | Block 11 hue from the left | `0 ~ 255`<br>• Block 11 hue from the left = reading. |
-| `camera_read("order", 12)` | Block 12 hue from the left | `0 ~ 255`<br>• Block 12 hue from the left = reading. |
-| `camera_read("order", 13)` | Block 13 hue from the left | `0 ~ 255`<br>• Block 13 hue from the left = reading. |
-| `camera_read("total", 1)` | Total color blocks | `0 ~ 18`<br>• Total color blocks = reading. |
+| ![Hue list from left to right](/images/tutorials/Cam/spike-block/advanced/main3/order.png) | Hue list from left to right | `list[int]`<br>• Returns hues ordered left to right, up to 13 blocks; each hue is `0 ~ 255`{.code-green}.<br>• The list length is the number of entries provided; hue 0 can mean red. |
+| ![Total color blocks](/images/tutorials/Cam/spike-block/advanced/main3/total.png) | Total color blocks | `0 ~ 18`<br>• Returns the total blocks in view, which can exceed the list capacity of 13. |
 
 </CamModeSection>
 
@@ -623,26 +597,34 @@ For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junc
 `Library provides: 14 line-following values`
 
 ::: info ℹ️ Reading notes
+- Main data uses sensor communication mode `9`.
 - Offsets are negative to the left and positive to the right; angles are signed. Junction: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 end. Flags = near 1 + middle 2 + far 4.
 - Last lost side: 0 on line, 1 left, 2 right.
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+**Mode ID setup**
+
+Set the `set up` Mode ID to `41`{.code-green} and select the same Mode ID `41`{.code-green} on the camera. Match the port to the wiring and the object name to subsequent blocks.
+
+![Mode ID setup 41](/images/tutorials/Cam/spike-block/advanced/setup/4/setup_41.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+
+**Submode function reference**
+
+| Programming Block | Function | Description |
 | --- | --- | --- |
-| `camera_read("near", 1)` | Near offset | `-100 ~ 100`<br>• Near offset = reading. |
-| `camera_read("mid", 1)` | Middle offset | `-100 ~ 100`<br>• Middle offset = reading. |
-| `camera_read("far", 1)` | Far offset | `-100 ~ 100`<br>• Far offset = reading. |
-| `camera_read("angle", 1)` | Line angle | `-90 ~ 90`<br>• Line angle = reading. |
-| `camera_read("width", 1)` | Near line width | `0 ~ 100`<br>• Near line width = reading. |
-| `camera_read("flags", 1)` | Line-found flags | `0 ~ 7`<br>• Line-found flags = reading. |
-| `camera_read("junction", 1)` | Junction type | `0 ~ 5`<br>• Junction type = reading. |
-| `camera_read("junction_dist", 1)` | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
-| `camera_read("left", 1)` | Near left edge | `-100 ~ 100`<br>• Near left edge = reading. |
-| `camera_read("right", 1)` | Near right edge | `-100 ~ 100`<br>• Near right edge = reading. |
-| `camera_read("far_width", 1)` | Far line width | `0 ~ 100`<br>• Far line width = reading. |
-| `camera_read("marker_color", 1)` | Marker color | `0 ~ 8`<br>• Marker color = reading. |
-| `camera_read("marker_count", 1)` | Marker count | `0 ~ 99`<br>• Marker count = reading. |
-| `camera_read("lost", 1)` | Last lost side | `0 ~ 2`<br>• Last lost side = reading. |
+| ![Near offset](/images/tutorials/Cam/spike-block/advanced/main4/near.png) | Near offset | `-100 ~ 100`<br>• Returns near offset. |
+| ![Middle offset](/images/tutorials/Cam/spike-block/advanced/main4/mid.png) | Middle offset | `-100 ~ 100`<br>• Returns middle offset. |
+| ![Far offset](/images/tutorials/Cam/spike-block/advanced/main4/far.png) | Far offset | `-100 ~ 100`<br>• Returns far offset. |
+| ![Line angle](/images/tutorials/Cam/spike-block/advanced/main4/angle.png) | Line angle | `-90 ~ 90`<br>• Returns line angle. Unit: degrees. |
+| ![Near line width](/images/tutorials/Cam/spike-block/advanced/main4/width.png) | Near line width | `0 ~ 100`<br>• Returns near line width. Unit: percent. |
+| ![Line-found flags](/images/tutorials/Cam/spike-block/advanced/main4/flags.png) | Line-found flags | `0 ~ 7`<br>• Returns line-found flags. |
+| ![Junction type](/images/tutorials/Cam/spike-block/advanced/main4/junction.png) | Junction type | `0 ~ 5`<br>• Returns junction type. |
+| ![Junction distance](/images/tutorials/Cam/spike-block/advanced/main4/junction_dist.png) | Junction distance | `0 ~ 100`<br>• Returns junction distance. Unit: percent. |
+| ![Near left/right edges](/images/tutorials/Cam/spike-block/advanced/main4/edges.png) | Near left/right edges | `left: -100 ~ 100 / right: -100 ~ 100`<br>• Returns `(left, right)`{.code-green}; negative is left of the image center and positive is right. |
+| ![Far line width](/images/tutorials/Cam/spike-block/advanced/main4/far_width.png) | Far line width | `0 ~ 100`<br>• Returns far line width. Unit: percent. |
+| ![Marker color and count](/images/tutorials/Cam/spike-block/advanced/main4/marker.png) | Marker color and count | `color: 0 ~ 8 / count: 0 ~ 99`<br>• Returns `(color, count)`{.code-green}, not a scalar. |
+| ![Last lost side](/images/tutorials/Cam/spike-block/advanced/main4/lost.png) | Last lost side | `0 ~ 2`<br>• Returns last lost side. |
+| ![Read all line data at once](/images/tutorials/Cam/spike-block/advanced/main4/line_all.png) | Read all line data at once | `tuple[14]`<br>• Returns, in order: near offset, middle offset, far offset, angle, near width, flags, junction, junction distance, left edge, right edge, far width, marker color, marker count, lost side.<br>• Each component has the range shown above. Use this when several line values are needed in one pass. |
 
 </CamModeSection>
 
@@ -651,26 +633,34 @@ For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junc
 `Library provides: 14 line-following values`
 
 ::: info ℹ️ Reading notes
+- Main data uses sensor communication mode `9`.
 - Offsets are negative to the left and positive to the right; angles are signed. Junction: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 end. Flags = near 1 + middle 2 + far 4.
 - Last lost side: 0 on line, 1 left, 2 right.
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+**Mode ID setup**
+
+Set the `set up` Mode ID to `42`{.code-green} and select the same Mode ID `42`{.code-green} on the camera. Match the port to the wiring and the object name to subsequent blocks.
+
+![Mode ID setup 42](/images/tutorials/Cam/spike-block/advanced/setup/4/setup_42.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+
+**Submode function reference**
+
+| Programming Block | Function | Description |
 | --- | --- | --- |
-| `camera_read("near", 1)` | Near offset | `-100 ~ 100`<br>• Near offset = reading. |
-| `camera_read("mid", 1)` | Middle offset | `-100 ~ 100`<br>• Middle offset = reading. |
-| `camera_read("far", 1)` | Far offset | `-100 ~ 100`<br>• Far offset = reading. |
-| `camera_read("angle", 1)` | Line angle | `-90 ~ 90`<br>• Line angle = reading. |
-| `camera_read("width", 1)` | Near line width | `0 ~ 100`<br>• Near line width = reading. |
-| `camera_read("flags", 1)` | Line-found flags | `0 ~ 7`<br>• Line-found flags = reading. |
-| `camera_read("junction", 1)` | Junction type | `0 ~ 5`<br>• Junction type = reading. |
-| `camera_read("junction_dist", 1)` | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
-| `camera_read("left", 1)` | Near left edge | `-100 ~ 100`<br>• Near left edge = reading. |
-| `camera_read("right", 1)` | Near right edge | `-100 ~ 100`<br>• Near right edge = reading. |
-| `camera_read("far_width", 1)` | Far line width | `0 ~ 100`<br>• Far line width = reading. |
-| `camera_read("marker_color", 1)` | Marker color | `0 ~ 8`<br>• Marker color = reading. |
-| `camera_read("marker_count", 1)` | Marker count | `0 ~ 99`<br>• Marker count = reading. |
-| `camera_read("lost", 1)` | Last lost side | `0 ~ 2`<br>• Last lost side = reading. |
+| ![Near offset](/images/tutorials/Cam/spike-block/advanced/main4/near.png) | Near offset | `-100 ~ 100`<br>• Returns near offset. |
+| ![Middle offset](/images/tutorials/Cam/spike-block/advanced/main4/mid.png) | Middle offset | `-100 ~ 100`<br>• Returns middle offset. |
+| ![Far offset](/images/tutorials/Cam/spike-block/advanced/main4/far.png) | Far offset | `-100 ~ 100`<br>• Returns far offset. |
+| ![Line angle](/images/tutorials/Cam/spike-block/advanced/main4/angle.png) | Line angle | `-90 ~ 90`<br>• Returns line angle. Unit: degrees. |
+| ![Near line width](/images/tutorials/Cam/spike-block/advanced/main4/width.png) | Near line width | `0 ~ 100`<br>• Returns near line width. Unit: percent. |
+| ![Line-found flags](/images/tutorials/Cam/spike-block/advanced/main4/flags.png) | Line-found flags | `0 ~ 7`<br>• Returns line-found flags. |
+| ![Junction type](/images/tutorials/Cam/spike-block/advanced/main4/junction.png) | Junction type | `0 ~ 5`<br>• Returns junction type. |
+| ![Junction distance](/images/tutorials/Cam/spike-block/advanced/main4/junction_dist.png) | Junction distance | `0 ~ 100`<br>• Returns junction distance. Unit: percent. |
+| ![Near left/right edges](/images/tutorials/Cam/spike-block/advanced/main4/edges.png) | Near left/right edges | `left: -100 ~ 100 / right: -100 ~ 100`<br>• Returns `(left, right)`{.code-green}; negative is left of the image center and positive is right. |
+| ![Far line width](/images/tutorials/Cam/spike-block/advanced/main4/far_width.png) | Far line width | `0 ~ 100`<br>• Returns far line width. Unit: percent. |
+| ![Marker color and count](/images/tutorials/Cam/spike-block/advanced/main4/marker.png) | Marker color and count | `color: 0 ~ 8 / count: 0 ~ 99`<br>• Returns `(color, count)`{.code-green}, not a scalar. |
+| ![Last lost side](/images/tutorials/Cam/spike-block/advanced/main4/lost.png) | Last lost side | `0 ~ 2`<br>• Returns last lost side. |
+| ![Read all line data at once](/images/tutorials/Cam/spike-block/advanced/main4/line_all.png) | Read all line data at once | `tuple[14]`<br>• Returns, in order: near offset, middle offset, far offset, angle, near width, flags, junction, junction distance, left edge, right edge, far width, marker color, marker count, lost side.<br>• Each component has the range shown above. Use this when several line values are needed in one pass. |
 
 </CamModeSection>
 
@@ -679,27 +669,35 @@ For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junc
 `Library provides: 14 line-following values`
 
 ::: info ℹ️ Reading notes
+- Main data uses sensor communication mode `9`.
 - Offsets are negative to the left and positive to the right; angles are signed. Junction: 0 none, 1 cross, 2 T, 3 left, 4 right, 5 end. Flags = near 1 + middle 2 + far 4.
 - Teach the line color as target color 1 first.
 - Last lost side: 0 on line, 1 left, 2 right.
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+**Mode ID setup**
+
+Set the `set up` Mode ID to `43`{.code-green} and select the same Mode ID `43`{.code-green} on the camera. Match the port to the wiring and the object name to subsequent blocks.
+
+![Mode ID setup 43](/images/tutorials/Cam/spike-block/advanced/setup/4/setup_43.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+
+**Submode function reference**
+
+| Programming Block | Function | Description |
 | --- | --- | --- |
-| `camera_read("near", 1)` | Near offset | `-100 ~ 100`<br>• Near offset = reading. |
-| `camera_read("mid", 1)` | Middle offset | `-100 ~ 100`<br>• Middle offset = reading. |
-| `camera_read("far", 1)` | Far offset | `-100 ~ 100`<br>• Far offset = reading. |
-| `camera_read("angle", 1)` | Line angle | `-90 ~ 90`<br>• Line angle = reading. |
-| `camera_read("width", 1)` | Near line width | `0 ~ 100`<br>• Near line width = reading. |
-| `camera_read("flags", 1)` | Line-found flags | `0 ~ 7`<br>• Line-found flags = reading. |
-| `camera_read("junction", 1)` | Junction type | `0 ~ 5`<br>• Junction type = reading. |
-| `camera_read("junction_dist", 1)` | Junction distance | `0 ~ 100`<br>• Junction distance = reading. |
-| `camera_read("left", 1)` | Near left edge | `-100 ~ 100`<br>• Near left edge = reading. |
-| `camera_read("right", 1)` | Near right edge | `-100 ~ 100`<br>• Near right edge = reading. |
-| `camera_read("far_width", 1)` | Far line width | `0 ~ 100`<br>• Far line width = reading. |
-| `camera_read("marker_color", 1)` | Marker color | `0 ~ 8`<br>• Marker color = reading. |
-| `camera_read("marker_count", 1)` | Marker count | `0 ~ 99`<br>• Marker count = reading. |
-| `camera_read("lost", 1)` | Last lost side | `0 ~ 2`<br>• Last lost side = reading. |
+| ![Near offset](/images/tutorials/Cam/spike-block/advanced/main4/near.png) | Near offset | `-100 ~ 100`<br>• Returns near offset. |
+| ![Middle offset](/images/tutorials/Cam/spike-block/advanced/main4/mid.png) | Middle offset | `-100 ~ 100`<br>• Returns middle offset. |
+| ![Far offset](/images/tutorials/Cam/spike-block/advanced/main4/far.png) | Far offset | `-100 ~ 100`<br>• Returns far offset. |
+| ![Line angle](/images/tutorials/Cam/spike-block/advanced/main4/angle.png) | Line angle | `-90 ~ 90`<br>• Returns line angle. Unit: degrees. |
+| ![Near line width](/images/tutorials/Cam/spike-block/advanced/main4/width.png) | Near line width | `0 ~ 100`<br>• Returns near line width. Unit: percent. |
+| ![Line-found flags](/images/tutorials/Cam/spike-block/advanced/main4/flags.png) | Line-found flags | `0 ~ 7`<br>• Returns line-found flags. |
+| ![Junction type](/images/tutorials/Cam/spike-block/advanced/main4/junction.png) | Junction type | `0 ~ 5`<br>• Returns junction type. |
+| ![Junction distance](/images/tutorials/Cam/spike-block/advanced/main4/junction_dist.png) | Junction distance | `0 ~ 100`<br>• Returns junction distance. Unit: percent. |
+| ![Near left/right edges](/images/tutorials/Cam/spike-block/advanced/main4/edges.png) | Near left/right edges | `left: -100 ~ 100 / right: -100 ~ 100`<br>• Returns `(left, right)`{.code-green}; negative is left of the image center and positive is right. |
+| ![Far line width](/images/tutorials/Cam/spike-block/advanced/main4/far_width.png) | Far line width | `0 ~ 100`<br>• Returns far line width. Unit: percent. |
+| ![Marker color and count](/images/tutorials/Cam/spike-block/advanced/main4/marker.png) | Marker color and count | `color: 0 ~ 8 / count: 0 ~ 99`<br>• Returns `(color, count)`{.code-green}, not a scalar. |
+| ![Last lost side](/images/tutorials/Cam/spike-block/advanced/main4/lost.png) | Last lost side | `0 ~ 2`<br>• Returns last lost side. |
+| ![Read all line data at once](/images/tutorials/Cam/spike-block/advanced/main4/line_all.png) | Read all line data at once | `tuple[14]`<br>• Returns, in order: near offset, middle offset, far offset, angle, near width, flags, junction, junction distance, left edge, right edge, far width, marker color, marker count, lost side.<br>• Each component has the range shown above. Use this when several line values are needed in one pass. |
 
 </CamModeSection>
 
@@ -710,33 +708,29 @@ For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junc
 `Library provides: the first 4 objects and total count`
 
 ::: info ℹ️ Reading notes
+- Positions are in pixels. X increases rightward and Y downward; `(0, 0)` means no target.
+- Main data uses sensor communication mode `9`.
 - Only target colors 1 ~ 8 are used. Objects are sorted by decreasing area. Code = color ID × 10 + shape code; 0 means no object. Check for an object before using its data.
 - Shape codes 0 ~ 9: other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star, trapezoid.
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+**Mode ID setup**
+
+Set the `set up` Mode ID to `51`{.code-green} and select the same Mode ID `51`{.code-green} on the camera. Match the port to the wiring and the object name to subsequent blocks.
+
+![Mode ID setup 51](/images/tutorials/Cam/spike-block/advanced/setup/5/setup_51.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+
+**Submode function reference**
+
+| Programming Block | Function | Description |
 | --- | --- | --- |
-| `camera_read("object_count", 1)` | Object count | `0 ~ 8`<br>• Object count = reading. |
-| `camera_read("object", 1)` | Object 1 code | `0, 10 ~ 89`<br>• Object 1 code = reading. |
-| `camera_read("object_color", 1)` | Object 1 color ID | `0 ~ 8`<br>• Object 1 color ID = reading. |
-| `camera_read("object_shape", 1)` | Object 1 shape code | `0 ~ 9`<br>• Object 1 shape code = reading. |
-| `camera_read("object_x", 1)` | Object 1 X | `0 ~ 159`<br>• Object 1 X = reading. |
-| `camera_read("object_y", 1)` | Object 1 Y | `0 ~ 119`<br>• Object 1 Y = reading. |
-| `camera_read("object", 2)` | Object 2 code | `0, 10 ~ 89`<br>• Object 2 code = reading. |
-| `camera_read("object_color", 2)` | Object 2 color ID | `0 ~ 8`<br>• Object 2 color ID = reading. |
-| `camera_read("object_shape", 2)` | Object 2 shape code | `0 ~ 9`<br>• Object 2 shape code = reading. |
-| `camera_read("object_x", 2)` | Object 2 X | `0 ~ 159`<br>• Object 2 X = reading. |
-| `camera_read("object_y", 2)` | Object 2 Y | `0 ~ 119`<br>• Object 2 Y = reading. |
-| `camera_read("object", 3)` | Object 3 code | `0, 10 ~ 89`<br>• Object 3 code = reading. |
-| `camera_read("object_color", 3)` | Object 3 color ID | `0 ~ 8`<br>• Object 3 color ID = reading. |
-| `camera_read("object_shape", 3)` | Object 3 shape code | `0 ~ 9`<br>• Object 3 shape code = reading. |
-| `camera_read("object_x", 3)` | Object 3 X | `0 ~ 159`<br>• Object 3 X = reading. |
-| `camera_read("object_y", 3)` | Object 3 Y | `0 ~ 119`<br>• Object 3 Y = reading. |
-| `camera_read("object", 4)` | Object 4 code | `0, 10 ~ 89`<br>• Object 4 code = reading. |
-| `camera_read("object_color", 4)` | Object 4 color ID | `0 ~ 8`<br>• Object 4 color ID = reading. |
-| `camera_read("object_shape", 4)` | Object 4 shape code | `0 ~ 9`<br>• Object 4 shape code = reading. |
-| `camera_read("object_x", 4)` | Object 4 X | `0 ~ 159`<br>• Object 4 X = reading. |
-| `camera_read("object_y", 4)` | Object 4 Y | `0 ~ 119`<br>• Object 4 Y = reading. |
+| ![Maximum readable objects](/images/tutorials/Cam/spike-block/advanced/main5/max_object.png) | Maximum readable objects | `4`<br>• This mode provides the first `4`{.code-green} objects, sorted by decreasing area. |
+| ![Object count](/images/tutorials/Cam/spike-block/advanced/main5/object_count.png) | Object count | `0 ~ 8`<br>• Returns the total objects in view, which can exceed the readable object limit. |
+| ![Code of a selected object](/images/tutorials/Cam/spike-block/advanced/main5/object.png) | Code of a selected object | `0, 10 ~ 89`<br>• Object code = color ID × 10 + shape code. For example, `13`{.code-green} is a target-color-1 triangle; `0`{.code-green} means no object.<br>• Input range: `1 ~ 4`{.code-green}, selecting the object index. The pictured `1`{.code-green} selects object 1. |
+| ![Whether a selected object exists](/images/tutorials/Cam/spike-block/advanced/main5/object_found.png) | Whether a selected object exists | `true / false`<br>• `true`{.code-green} means the object exists; `false`{.code-green} means absent. Check this before using shape and position.<br>• Input range: `1 ~ 4`{.code-green}, selecting the object index. The pictured `1`{.code-green} selects object 1. |
+| ![Color ID of a selected object](/images/tutorials/Cam/spike-block/advanced/main5/object_color.png) | Color ID of a selected object | `0 ~ 8`<br>• Returns the target-color index; `0`{.code-green} means no object.<br>• Input range: `1 ~ 4`{.code-green}, selecting the object index. The pictured `1`{.code-green} selects object 1. |
+| ![Shape code of a selected object](/images/tutorials/Cam/spike-block/advanced/main5/object_shape.png) | Shape code of a selected object | `0 ~ 9`<br>• Returns the shape code. No object can also yield 0, so check object presence first.<br>• Input range: `1 ~ 4`{.code-green}, selecting the object index. The pictured `1`{.code-green} selects object 1. |
+| ![Position X/Y of a selected object](/images/tutorials/Cam/spike-block/advanced/main5/object_xy.png) | Position X/Y of a selected object | `X: 0 ~ 159 / Y: 0 ~ 119`<br>• Returns centroid `(X, Y)`{.code-green} in pixels; `(0, 0)`{.code-green} means no object.<br>• Input range: `1 ~ 4`{.code-green}, selecting the object index. The pictured `1`{.code-green} selects object 1. |
 
 </CamModeSection>
 
@@ -745,49 +739,34 @@ For camera modes 41, 42, and 43: near offset = floor(reflected / 10) - 100; junc
 `Library provides: the first 2 objects: position, size and area`
 
 ::: info ℹ️ Reading notes
+- Positions are in pixels. X increases rightward and Y downward; `(0, 0)` means no target.
+- Main data uses sensor communication mode `9`.
 - Only target colors 1 ~ 8 are used. Objects are sorted by decreasing area. Code = color ID × 10 + shape code; 0 means no object. Check for an object before using its data.
 - Shape codes 0 ~ 9: other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star, trapezoid.
 :::
 
-| Block / read location | Function | Value meaning and decoding |
+**Mode ID setup**
+
+Set the `set up` Mode ID to `52`{.code-green} and select the same Mode ID `52`{.code-green} on the camera. Match the port to the wiring and the object name to subsequent blocks.
+
+![Mode ID setup 52](/images/tutorials/Cam/spike-block/advanced/setup/5/setup_52.png){style = "display: block; width: 400px; max-width: 100%; height: auto; margin: 10px auto;"}
+
+**Submode function reference**
+
+| Programming Block | Function | Description |
 | --- | --- | --- |
-| `camera_read("object", 1)` | Object 1 code | `0, 10 ~ 89`<br>• Object 1 code = reading. |
-| `camera_read("object_color", 1)` | Object 1 color ID | `0 ~ 8`<br>• Object 1 color ID = reading. |
-| `camera_read("object_shape", 1)` | Object 1 shape code | `0 ~ 9`<br>• Object 1 shape code = reading. |
-| `camera_read("object_x", 1)` | Object 1 X | `0 ~ 159`<br>• Object 1 X = reading. |
-| `camera_read("object_y", 1)` | Object 1 Y | `0 ~ 119`<br>• Object 1 Y = reading. |
-| `camera_read("object_w", 1)` | Object 1 W | `0 ~ 160`<br>• Object 1 W = reading. |
-| `camera_read("object_h", 1)` | Object 1 H | `0 ~ 120`<br>• Object 1 H = reading. |
-| `camera_read("object_area", 1)` | Object 1 area | `0 ~ 100`<br>• Object 1 area = reading. |
-| `camera_read("object", 2)` | Object 2 code | `0, 10 ~ 89`<br>• Object 2 code = reading. |
-| `camera_read("object_color", 2)` | Object 2 color ID | `0 ~ 8`<br>• Object 2 color ID = reading. |
-| `camera_read("object_shape", 2)` | Object 2 shape code | `0 ~ 9`<br>• Object 2 shape code = reading. |
-| `camera_read("object_x", 2)` | Object 2 X | `0 ~ 159`<br>• Object 2 X = reading. |
-| `camera_read("object_y", 2)` | Object 2 Y | `0 ~ 119`<br>• Object 2 Y = reading. |
-| `camera_read("object_w", 2)` | Object 2 W | `0 ~ 160`<br>• Object 2 W = reading. |
-| `camera_read("object_h", 2)` | Object 2 H | `0 ~ 120`<br>• Object 2 H = reading. |
-| `camera_read("object_area", 2)` | Object 2 area | `0 ~ 100`<br>• Object 2 area = reading. |
+| ![Maximum readable objects](/images/tutorials/Cam/spike-block/advanced/main5/max_object.png) | Maximum readable objects | `2`<br>• This mode provides the first `2`{.code-green} objects, sorted by decreasing area. |
+| ![Code of a selected object](/images/tutorials/Cam/spike-block/advanced/main5/object.png) | Code of a selected object | `0, 10 ~ 89`<br>• Object code = color ID × 10 + shape code. For example, `13`{.code-green} is a target-color-1 triangle; `0`{.code-green} means no object.<br>• Input range: `1 ~ 2`{.code-green}, selecting the object index. The pictured `1`{.code-green} selects object 1. |
+| ![Whether a selected object exists](/images/tutorials/Cam/spike-block/advanced/main5/object_found.png) | Whether a selected object exists | `true / false`<br>• `true`{.code-green} means the object exists; `false`{.code-green} means absent. Check this before using shape and position.<br>• Input range: `1 ~ 2`{.code-green}, selecting the object index. The pictured `1`{.code-green} selects object 1. |
+| ![Color ID of a selected object](/images/tutorials/Cam/spike-block/advanced/main5/object_color.png) | Color ID of a selected object | `0 ~ 8`<br>• Returns the target-color index; `0`{.code-green} means no object.<br>• Input range: `1 ~ 2`{.code-green}, selecting the object index. The pictured `1`{.code-green} selects object 1. |
+| ![Shape code of a selected object](/images/tutorials/Cam/spike-block/advanced/main5/object_shape.png) | Shape code of a selected object | `0 ~ 9`<br>• Returns the shape code. No object can also yield 0, so check object presence first.<br>• Input range: `1 ~ 2`{.code-green}, selecting the object index. The pictured `1`{.code-green} selects object 1. |
+| ![Position X/Y of a selected object](/images/tutorials/Cam/spike-block/advanced/main5/object_xy.png) | Position X/Y of a selected object | `X: 0 ~ 159 / Y: 0 ~ 119`<br>• Returns centroid `(X, Y)`{.code-green} in pixels; `(0, 0)`{.code-green} means no object.<br>• Input range: `1 ~ 2`{.code-green}, selecting the object index. The pictured `1`{.code-green} selects object 1. |
+| ![Width/height of a selected object](/images/tutorials/Cam/spike-block/advanced/main5/object_size.png) | Width/height of a selected object | `W: 0 ~ 160 / H: 0 ~ 120`<br>• Returns bounding-box `(W, H)`{.code-green} in pixels.<br>• Input range: `1 ~ 2`{.code-green}, selecting the object index. The pictured `1`{.code-green} selects object 1. |
+| ![Area of a selected object](/images/tutorials/Cam/spike-block/advanced/main5/object_area.png) | Area of a selected object | `0 ~ 100`<br>• Returns object area as a percentage of the image.<br>• Input range: `1 ~ 2`{.code-green}, selecting the object index. The pictured `1`{.code-green} selects object 1. |
 
 </CamModeSection>
 
 </CamModeAccordion>
-
-### ✔ Advanced control example
-
-Teach target color 1, then import the two external tasks and build the steps below. The function names refer to external tasks, not native Color Sensor blocks.
-
-| Step | Block operation |
-| --- | --- |
-| 1 | Call `camera_mode(13)` once before the loop and check for result 0. |
-| 2 | Repeat: store `camera_read("x", 1)`, `camera_read("y", 1)`, `camera_read("area", 1)` and `camera_read("count", 1)` in X, Y, area and count. |
-| 3 | Check `camera_read("sensor_ok", 1)` is true and X is not `None`. X = 0 means not found; otherwise show X, Y, area and count. |
-| 4 | Wait 0.1 seconds and repeat. |
-
-*[Image pending: Cam Pybricks Blocks external-task imports, camera_mode and camera_read configuration, and the full advanced example]*
-
-### ✔ Library control and status
-
-`camera_mode(Mode ID)` selects a camera mode; `camera_read("mode_number", 1)` reports the configured mode. Use the field tables above for readings. For lamp control, remote teaching and camera settings, see the [local Pybricks Python advanced section](./spike-python.md#_03-advanced-control-preparation-and-functions).
 
 ## 04 / 【Lego】 Lau Xiao demonstration videos
 

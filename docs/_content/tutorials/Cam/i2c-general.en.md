@@ -31,7 +31,6 @@ The v1 data layout is defined, with Arduino hardware validation pending. Camera-
 
 ::: info ℹ️ Reading notes
 - Use the general I²C firmware at device address `0x4C`. Data field numbers such as `0x10` select values inside the camera; they are not the I²C device address. E0 selects the camera mode and E1 sets sampling positions.
-- Coordinates use `160 × 120` pixels. X increases rightward and Y downward. X = 0 means not found.
 - To read over I²C, write the start field, wait 2 ms, then read low-byte-first int16 values, at most 16 values per request.
 :::
 
@@ -56,6 +55,10 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 `I2C provides: 16 color positions`
 
+
+::: info ℹ️ Reading notes
+- Coordinates use `160 × 120` pixels. X increases rightward and Y downward. X = 0 means not found.
+:::
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
 | `0x10` | Color 1 X | `0 ~ 159`<br>• Color 1 X = reading. |
@@ -98,6 +101,10 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 `I2C provides: 16 color positions, counts`
 
+
+::: info ℹ️ Reading notes
+- Coordinates use `160 × 120` pixels. X increases rightward and Y downward. X = 0 means not found.
+:::
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
 | `0x10` | Color 1 X | `0 ~ 159`<br>• Color 1 X = reading. |
@@ -156,6 +163,10 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 `I2C provides: 16 color positions, counts and area`
 
+
+::: info ℹ️ Reading notes
+- Coordinates use `160 × 120` pixels. X increases rightward and Y downward. X = 0 means not found.
+:::
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
 | `0x10` | Color 1 X | `0 ~ 159`<br>• Color 1 X = reading. |
@@ -230,6 +241,10 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 
 `I2C provides: 16 color positions and sizes, counts and area`
 
+
+::: info ℹ️ Reading notes
+- Coordinates use `160 × 120` pixels. X increases rightward and Y downward. X = 0 means not found.
+:::
 | Block / read location | Function | Value meaning and decoding |
 | --- | --- | --- |
 | `0x10` | Color 1 X | `0 ~ 159`<br>• Color 1 X = reading. |
@@ -600,6 +615,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 `I2C provides: color IDs, shapes and positions of the first 8 objects, plus total count`
 
 ::: info ℹ️ Reading notes
+- Coordinates use `160 × 120` pixels. X increases rightward and Y downward. X = 0 means not found.
 - Only target colors 1 ~ 8 are used. Objects are ordered largest first, and X/Y is the centroid. Shape codes 0 ~ 9 mean other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star and trapezoid.
 :::
 
@@ -646,6 +662,7 @@ MBC UniCam provides five main modes, each with its own submodes. Use the tables 
 `I2C provides: details of the first 8 objects`
 
 ::: info ℹ️ Reading notes
+- Coordinates use `160 × 120` pixels. X increases rightward and Y downward. X = 0 means not found.
 - Only target colors 1 ~ 8 are used. Objects are ordered largest first, and X/Y is the centroid. Shape codes 0 ~ 9 mean other, circle, ellipse, triangle, square, rectangle, pentagon, hexagon, star and trapezoid.
 :::
 
