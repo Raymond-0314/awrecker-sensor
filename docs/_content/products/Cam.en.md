@@ -61,7 +61,7 @@ Preview the image and detection results directly on the camera screen. Use the b
 SPIKE, EV3, MATRIX, and general I²C each use their own firmware. Check the camera version before connecting it and follow the wiring instructions for the corresponding tutorial.
 
 
-### ✔ Five vision functions
+### ✔ Five-in-One Vision Recognition
 
 <FeatureSection horizontal
   :cards="[

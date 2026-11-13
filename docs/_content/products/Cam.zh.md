@@ -61,7 +61,7 @@ MBC 神攝手視覺感應器 (Vision Camera Sensor) 是專為機器人競賽與�
 SPIKE、EV3、MATRIX 與通用 I²C 各有對應韌體。連接前先確認相機版本，並依各教學接線。
 
 
-### ✔ 5 大視覺辨識功能
+### ✔ 五合一視覺辨識功能
 
 <FeatureSection horizontal
   :cards="[
